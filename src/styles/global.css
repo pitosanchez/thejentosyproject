@@ -22,11 +22,14 @@
   --fg-soft: #2a333b;
   --fg-muted: rgba(42, 51, 59, 0.72);
 
-  /* Accents — two distinct jobs, not one accent doing everything */
-  --rust: #b15a34;
-  --rust-hover: #9a4c2b;
+  /* Accents — two distinct jobs, not one accent doing everything.
+     Darkened from the original mood-board values (#b15a34 / #4c7a93) to
+     clear WCAG 2.2 AA (4.5:1 text, 3:1 UI components) — verified via
+     contrast-check.mjs, not just asserted. See ticket 08 for the record. */
+  --rust: #a34f2c;
+  --rust-hover: #8f4526;
   --rust-ink: #fbf6f0;
-  --steel: #4c7a93;
+  --steel: #456f87;
   --steel-hover: #3f6a80;
   --steel-ink: #f4f8fa;
   --eyebrow-accent: #e8a87c;
@@ -234,7 +237,10 @@ p:last-child {
 .btn-steel-outline {
   background: transparent;
   color: var(--ink-fg);
-  border-color: var(--ink-line-strong);
+  /* var(--steel), not --ink-line-strong: a button's visible boundary is a
+     UI component under WCAG 2.2 SC 1.4.11 and needs 3:1 against its
+     background — the old muted border color measured 1.82:1. */
+  border-color: var(--steel);
 }
 
 .btn-steel-outline:hover {
@@ -407,6 +413,15 @@ p:last-child {
 }
 
 /* ---------- Utility spacing helpers (keeps gaps consistent, no ad hoc margins) ---------- */
+
+.linkline {
+  font-size: 13px;
+  color: var(--fg-muted);
+}
+
+.linkline a {
+  color: var(--steel);
+}
 
 .gap-2 { gap: var(--space-2); }
 .gap-3 { gap: var(--space-3); }

@@ -34,7 +34,7 @@ A build-ready spec for The Jentosy Project website: site architecture, page list
 - [Tech stack decision](issues/07-tech-stack-decision.md) — Astro (Markdown/MDX, no CMS at v1) on Cloudflare Pages; Zeffy embed for donations, Formspree for forms; security baseline locked in (static output, CSP, Dependabot, no PII on TJP's own infra).
 - [SEO & acquisition strategy](issues/11-seo-acquisition-strategy.md) — 3 Ad Grants campaigns mapped to disease sub-pages, The Need hub, and Partner/Donate; national geo-targeting; conversions = donation, partnership inquiry, contact form.
 - [Analytics & conversion tracking](issues/12-analytics-conversion-tracking.md) — GA4 + Search Console; conversions fire on thank-you-page redirects (not cross-iframe events); 4 tracked conversions feed Google Ads Smart Bidding directly.
-- [Brand visual system](issues/08-brand-visual-system.md) — merged B+C: dark charcoal-navy opens every page, non-cream light paper informs; rust=Donate/steel=Partner; pushed to a new, separate claude.ai/design project (REP untouched). WCAG AA contrast still needs verifying at build time.
+- [Brand visual system](issues/08-brand-visual-system.md) — merged B+C: dark charcoal-navy opens every page, non-cream light paper informs; rust=Donate/steel=Partner; pushed to a new, separate claude.ai/design project (REP untouched). WCAG AA contrast verified and corrected at build time (rust/steel darkened, outline-button border fixed) — see ticket for before/after ratios.
 
 ## Not yet specified
 

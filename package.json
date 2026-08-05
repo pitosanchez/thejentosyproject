@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "contrast-check": "node scripts/contrast-check.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
