@@ -1,0 +1,74 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+---
+
+<BaseLayout
+  title="About"
+  description="The Jentosy Project's mission, vision, and why our focus shifted from transplantation toward kidney disease education and health equity."
+>
+  <PageHero
+    eyebrow="About The Jentosy Project"
+    heading="Health equity, treated as inseparable from the systems that produce disease."
+  />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <div>
+        <p class="eyebrow">Mission</p>
+        <p class="pull">
+          The Jentosy Project advances health equity for underserved communities by educating
+          people about rare kidney diseases — including FSGS, APOL1-mediated kidney disease, and
+          IgA Nephropathy — and building the partnerships needed to close the gap in kidney care.
+        </p>
+      </div>
+
+      <div style="margin-top:var(--space-8);">
+        <p class="eyebrow">Vision</p>
+        <p class="pull" style="border-left-color:var(--steel);">
+          A future where no one's zip code determines their access to kidney health education,
+          early detection, or life-saving care — starting in the Bronx and expanding to
+          underserved communities nationwide.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2">Why our focus is education, not just transplantation.</h2>
+      <p>
+        The Jentosy Project's work began with transplantation — but the deeper problem is
+        upstream: too many people from underserved communities are diagnosed too late, or never
+        learn they're at risk, for diseases like FSGS, APOL1-mediated kidney disease, and IgA
+        Nephropathy. That's why our current focus is education and health equity — reaching
+        people before they reach the transplant list. Transplantation equity remains part of our
+        long-term mission, and it's where we're headed next.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2">Kidney disease doesn't happen in isolation.</h2>
+      <p>
+        Kidney disease disparities are downstream of poverty, unequal access to education,
+        incarceration, broken homes, and the chronic stress those conditions produce — all of
+        which take a measurable toll on the body, including the kidneys. The Jentosy Project
+        treats health equity as inseparable from these upstream social conditions, not just a
+        matter of medical access.
+      </p>
+      <p>
+        We start in the Bronx, where these conditions are concentrated and where our founder's
+        own story began — and we intend to expand as the organization grows.
+        <a href="/founders-story/">Read the founder's story &rarr;</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 720px;
+  }
+</style>

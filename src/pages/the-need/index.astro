@@ -1,0 +1,104 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+
+const diseases = [
+  {
+    slug: "fsgs",
+    name: "FSGS",
+    full: "Focal Segmental Glomerulosclerosis",
+    blurb: "Scarring in the kidney's filtering units — the disease our founder lives with.",
+  },
+  {
+    slug: "apol1",
+    name: "APOL1-Mediated Kidney Disease",
+    full: "APOL1 Gene Variants",
+    blurb: "A genetic risk factor concentrated in Black and Brown communities.",
+  },
+  {
+    slug: "iga-nephropathy",
+    name: "IgA Nephropathy",
+    full: "IgA Nephropathy (Berger's Disease)",
+    blurb: "One of the most common forms of kidney disease worldwide.",
+  },
+];
+---
+
+<BaseLayout
+  title="The Need"
+  description="Kidney disease disparities are downstream of poverty, education access, incarceration, and chronic stress. Learn about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy."
+>
+  <PageHero
+    eyebrow="The Need"
+    heading="Rare kidney disease, plainly explained."
+    lede="Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce."
+  />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <p>
+        These conditions take a measurable toll on the body, including the kidneys. The Jentosy
+        Project treats health equity as inseparable from these upstream social conditions, not
+        just a matter of medical access — which is why our education work starts with three
+        specific, under-discussed diseases.
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="grid disease-grid">
+        {diseases.map((d, i) => (
+          <a href={`/the-need/${d.slug}/`} class="card card-steel reveal disease-card" style={`--reveal-delay:${i * 0.1}s`}>
+            <p class="disease-full">{d.full}</p>
+            <h2 class="h3">{d.name}</h2>
+            <p>{d.blurb}</p>
+            <span class="read-more">Read more &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .disease-grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--space-4);
+  }
+
+  @media (max-width: 780px) {
+    .disease-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .disease-card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .disease-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(16, 22, 28, 0.08);
+  }
+
+  .disease-full {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-muted);
+    margin: 0 0 var(--space-2);
+  }
+
+  .read-more {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--steel);
+  }
+</style>

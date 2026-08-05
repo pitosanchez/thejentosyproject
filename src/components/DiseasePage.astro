@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "./PageHero.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  fullName: string;
+  whatItIs: string;
+  whoItAffects: string;
+  whyItMatters: string;
+}
+
+const { title, description, fullName, whatItIs, whoItAffects, whyItMatters } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <PageHero eyebrow="The Need" heading={title} lede={fullName} />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <div>
+        <h2 class="h3">What it is</h2>
+        <p><slot name="what-it-is">{whatItIs}</slot></p>
+      </div>
+      <div style="margin-top:var(--space-6);">
+        <h2 class="h3">Who it affects</h2>
+        <p><slot name="who-it-affects">{whoItAffects}</slot></p>
+      </div>
+      <div style="margin-top:var(--space-6);">
+        <h2 class="h3">Why it matters to our mission</h2>
+        <p><slot name="why-it-matters">{whyItMatters}</slot></p>
+      </div>
+
+      <div class="disclaimer reveal">
+        <p>
+          This page provides general, credibility-level information — not medical advice. Content
+          pending clinical-accuracy review before publication.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow reveal">
+      <a href="/the-need/" class="btn btn-steel">&larr; Back to The Need</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 680px;
+  }
+
+  .disclaimer {
+    margin-top: var(--space-7);
+    padding: var(--space-4) var(--space-5);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+  }
+
+  .disclaimer p {
+    font-size: 12.5px;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+</style>

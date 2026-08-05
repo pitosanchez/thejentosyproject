@@ -1,0 +1,41 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Page Not Found" description="This page could not be found.">
+  <section class="on-dark not-found-section">
+    <div class="container not-found-inner">
+      <p class="eyebrow reveal">404</p>
+      <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">
+        We couldn't find that page.
+      </h1>
+      <p class="lede reveal" style="--reveal-delay:0.16s;">
+        The page you're looking for may have moved. Head back to the homepage to find your way.
+      </p>
+      <a href="/" class="btn btn-steel-outline reveal" style="--reveal-delay:0.24s;">Back to Home</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .not-found-inner {
+    max-width: 520px;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .not-found-inner .lede {
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .not-found-inner .btn {
+    margin-top: var(--space-6);
+  }
+</style>

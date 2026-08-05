@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+
+const timeline = [
+  { year: "2009", label: "First transplant, from a friend" },
+  { year: "2014", label: "FSGS recurs; dialysis begins" },
+  { year: "2019", label: "Matched, then cancer cancels surgery" },
+  { year: "2021", label: "Transplanted via the donor chain" },
+];
+---
+
+<BaseLayout
+  title="Founder's Story"
+  description="Robert Sanchez has needed two kidney transplants. This is the story behind The Jentosy Project's name and mission."
+>
+  <PageHero
+    eyebrow="Founder's Story"
+    heading="Two transplants. Two women who wouldn't give up. One organization named for both of them."
+  />
+
+  <section class="on-dark section-tight divider-dark">
+    <div class="container">
+      <div class="timeline">
+        {timeline.map((item) => (
+          <div class="timeline-item">
+            <div class="timeline-year">{item.year}</div>
+            <div class="timeline-label">{item.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <div>
+        <p>
+          In 2009, Robert Sanchez received his first kidney transplant — a living-donor kidney
+          from a close friend. It was a second chance most people never get. But FSGS, the
+          disease that had taken his own kidneys, recurred in the transplanted one. By 2014, he
+          was back on dialysis, three times a week.
+        </p>
+        <p>
+          In 2019, Robert posted on Facebook asking if anyone knew someone willing to donate a
+          kidney. Within about a week, organ matchmaker Chaya Lipschutz had found a potential
+          match: Elizabeth Antosy. A transplant was scheduled for December 19, 2019.
+        </p>
+        <p>
+          The night before surgery, transplant surgeon Dr. Stuart Greenstein called with the
+          news: Robert had been found to have kidney cancer. The transplant could not go forward.
+        </p>
+      </div>
+
+      <p class="pull reveal">
+        Elizabeth was heartbroken — but she refused to give up on giving Robert a kidney. Instead
+        of walking away, she joined a kidney exchange chain.
+      </p>
+
+      <div>
+        <p>
+          Through that chain, Robert was matched with a new donor: Jen Keller. After he cleared
+          cancer, Robert and Jen were transplanted on October 20, 2021. Elizabeth's decision to
+          join the chain rather than step back didn't just help Robert — it set off a sequence of
+          matches that ultimately gave <strong>8 people</strong> new kidneys.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2">Where the name comes from.</h2>
+      <p>
+        <strong>The Jentosy Project</strong> is named for the two women who made that second
+        transplant possible: <strong>Jen</strong> Keller, Robert's donor, and Elizabeth
+        An<strong>tosy</strong>, whose decision to join the exchange chain made the match happen
+        at all. The organization exists to pay their gift forward.
+      </p>
+      <p class="linkline">
+        Independently covered by
+        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2">Why this became a mission, not just a memory.</h2>
+      <p>
+        Robert's path to founding The Jentosy Project didn't begin in a hospital. Before he
+        became a social worker, he spent 15 years incarcerated on drug charges — an experience
+        that, along with the poverty and instability he witnessed growing up, shaped his
+        understanding of how deeply health and circumstance are linked. When FSGS took his
+        kidneys years later, he recognized the same pattern he'd spent his career trying to
+        interrupt: that the body often pays the price for systems that fail people first.
+      </p>
+      <p>
+        That conviction — that kidney disease disparities can't be separated from poverty,
+        education, incarceration, and the stress they produce —
+        <a href="/the-need/">is the foundation of The Jentosy Project's mission</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight cta-band">
+    <div class="container cta-inner reveal">
+      <h2 class="h2">Help extend what Jen and Elizabeth started.</h2>
+      <div class="cluster gap-3" style="margin-top:var(--space-5);">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+</style>

@@ -1,0 +1,230 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Home"
+  description="The Jentosy Project advances health equity for underserved communities by educating people about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — starting in the Bronx."
+>
+  <!-- HERO — dark, bold opening -->
+  <section class="on-dark hero-section">
+    <div class="container hero-inner">
+      <p class="eyebrow reveal">Health Equity &middot; Rare Kidney Disease</p>
+      <h1 class="h1 reveal" style="--reveal-delay:0.08s">
+        Kidney disease disparities don't exist in isolation.
+      </h1>
+      <p class="lede reveal" style="--reveal-delay:0.16s">
+        We educate underserved communities about FSGS, APOL1-mediated kidney disease, and IgA
+        Nephropathy — building the partnerships needed to close the gap in kidney care, starting
+        in the Bronx.
+      </p>
+      <div class="cluster gap-3 reveal" style="--reveal-delay:0.24s">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+
+    <div class="container credibility divider-dark">
+      <span class="ink-fg-muted">Independently reported by</span>&nbsp;<strong>CBS News New York</strong>
+    </div>
+
+    <div class="container stats-row">
+      <div class="stat reveal">
+        <div class="stat-num" data-count="8">0</div>
+        <p class="stat-label">Lives changed by one donor's decision to join a kidney exchange chain</p>
+      </div>
+      <div class="stat reveal" style="--reveal-delay:0.1s">
+        <div class="stat-num" data-count="3">0</div>
+        <p class="stat-label">Rare kidney diseases at the center of our education work</p>
+      </div>
+      <div class="stat reveal" style="--reveal-delay:0.2s">
+        <div class="stat-num" data-count="2">0</div>
+        <p class="stat-label">Kidney transplants — the founder's own story, start to now</p>
+      </div>
+    </div>
+
+    <div class="container timeline-wrap divider-dark">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2009</div>
+          <div class="timeline-label">First transplant, from a friend</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2014</div>
+          <div class="timeline-label">FSGS recurs; dialysis begins</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2019</div>
+          <div class="timeline-label">Matched, then cancer cancels surgery</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2021</div>
+          <div class="timeline-label">Transplanted via the donor chain</div>
+        </div>
+      </div>
+      <a href="/founders-story/" class="timeline-link">Read the founder's full story &rarr;</a>
+    </div>
+  </section>
+
+  <!-- THE NEED — light, informative -->
+  <section class="on-light section">
+    <div class="container">
+      <p class="eyebrow">The Need</p>
+      <h2 class="h2">Rare kidney disease, plainly explained.</h2>
+      <p class="lede" style="max-width:62ch;">
+        Kidney disease disparities are downstream of poverty, unequal access to education,
+        incarceration, broken homes, and the chronic stress those conditions produce. The Jentosy
+        Project treats health equity as inseparable from these upstream social conditions.
+      </p>
+
+      <div class="grid disease-grid">
+        <a href="/the-need/fsgs/" class="card card-steel reveal disease-card">
+          <h3 class="h3">FSGS</h3>
+          <p>Focal segmental glomerulosclerosis — how it presents, and why early awareness matters.</p>
+        </a>
+        <a href="/the-need/apol1/" class="card card-steel reveal disease-card" style="--reveal-delay:0.1s">
+          <h3 class="h3">APOL1-Mediated Kidney Disease</h3>
+          <p>A genetic risk factor concentrated in Black and Brown communities.</p>
+        </a>
+        <a href="/the-need/iga-nephropathy/" class="card card-steel reveal disease-card" style="--reveal-delay:0.2s">
+          <h3 class="h3">IgA Nephropathy</h3>
+          <p>One of the most common forms of kidney disease worldwide — and one of the least discussed.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT WE DO teaser -->
+  <section class="on-light section-tight teaser-band">
+    <div class="container teaser-grid">
+      <div>
+        <p class="eyebrow">What We Do</p>
+        <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">
+          Education and outreach in the Bronx — expanding over time.
+        </h2>
+        <p>
+          Our current focus is education and health equity: reaching people before they reach the
+          transplant list. Transplantation equity remains part of our long-term mission.
+        </p>
+        <a href="/what-we-do/" class="btn btn-steel" style="margin-top:var(--space-3);">Learn what we do</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING CTA — dark band -->
+  <section class="on-dark section-tight cta-band">
+    <div class="container cta-inner">
+      <div class="reveal">
+        <h2 class="h2">Fund it. Partner with it. Be part of it.</h2>
+        <p class="lede">
+          A funder, researcher, or healthcare partner should be able to understand why this work
+          matters in minutes — and a supporter should be able to act in seconds.
+        </p>
+      </div>
+      <div class="cluster gap-3 reveal" style="--reveal-delay:0.1s">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-inner {
+    padding-top: clamp(var(--space-8), 8vw, var(--space-9));
+    padding-bottom: clamp(var(--space-6), 6vw, var(--space-7));
+    max-width: 760px;
+  }
+
+  .credibility {
+    padding-block: var(--space-4);
+    font-size: 14px;
+  }
+
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    flex: 1 1 220px;
+    padding: var(--space-6) var(--space-3) var(--space-6) 0;
+  }
+
+  .stat-label {
+    font-size: 13.5px;
+    color: var(--ink-fg-muted);
+    margin-top: var(--space-2);
+    line-height: 1.4;
+    max-width: 30ch;
+  }
+
+  .timeline-wrap {
+    padding-block: var(--space-6);
+  }
+
+  .timeline-year {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--rust);
+    letter-spacing: 0.02em;
+  }
+
+  .timeline-label {
+    font-size: 12.5px;
+    color: var(--ink-fg-muted);
+    margin-top: var(--space-1);
+    line-height: 1.4;
+  }
+
+  .timeline-link {
+    display: inline-block;
+    margin-top: var(--space-5);
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--eyebrow-accent);
+    text-decoration: none;
+  }
+
+  .timeline-link:hover {
+    text-decoration: underline;
+  }
+
+  .disease-grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 780px) {
+    .disease-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .disease-card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .disease-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(16, 22, 28, 0.08);
+  }
+
+  .teaser-band {
+    border-top: 1px solid var(--line);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .cta-inner .lede {
+    max-width: 52ch;
+  }
+</style>

@@ -1,0 +1,145 @@
+---
+import Nav from "../components/Nav.astro";
+import Footer from "../components/Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const pageTitle = `${title} — The Jentosy Project`;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!--
+      GA4 — placeholder, per ticket 12 (Analytics & Conversion Tracking).
+      Replace G-XXXXXXXXXX with the real Measurement ID once the GA4
+      property and the Google for Nonprofits / Ad Grants account exist.
+      Conversions fire on the /thank-you routes, not via events here.
+    -->
+    <!--
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    -->
+  </head>
+  <body>
+    <a href="#main" class="skip-link">Skip to content</a>
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+
+    <script>
+      // Scroll-reveal: elements with .reveal fade/rise into view once,
+      // staggered via an optional --reveal-delay custom property set inline.
+      //
+      // Safety net: reading content must never depend on a scroll event
+      // firing correctly to become visible (fast navigation, programmatic
+      // scroll, or an observer edge case can all leave it stuck at
+      // opacity:0 — a real bug, not hypothetical: found via a full-page
+      // screenshot where content below the fold never revealed). A short
+      // timeout force-reveals everything regardless of scroll state, so
+      // the animation is strictly a bonus, never a gate.
+      const revealables = document.querySelectorAll(".reveal, .timeline-item");
+      const revealAll = () => revealables.forEach((el) => el.classList.add("is-visible"));
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.15, rootMargin: "200px 0px -10% 0px" }
+        );
+        revealables.forEach((el) => observer.observe(el));
+        window.setTimeout(revealAll, 2500);
+      } else {
+        revealAll();
+      }
+
+      // Count-up for stat numbers: [data-count="8"]
+      const counters = document.querySelectorAll<HTMLElement>("[data-count]");
+      const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      const animateCount = (el: HTMLElement) => {
+        const target = Number(el.dataset.count);
+        if (prefersReducedMotion || Number.isNaN(target)) {
+          el.textContent = String(target);
+          return;
+        }
+        const duration = 900;
+        const start = performance.now();
+        const tick = (now: number) => {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = String(Math.round(eased * target));
+          if (progress < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+
+      if ("IntersectionObserver" in window && counters.length) {
+        const countObserver = new IntersectionObserver(
+          (entries) => {
+            for (const entry of entries) {
+              if (entry.isIntersecting) {
+                animateCount(entry.target as HTMLElement);
+                countObserver.unobserve(entry.target);
+              }
+            }
+          },
+          { threshold: 0.6 }
+        );
+        counters.forEach((el) => countObserver.observe(el));
+      }
+    </script>
+
+    <style is:global>
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: 0;
+        background: var(--ink);
+        color: var(--ink-fg);
+        padding: 12px 18px;
+        z-index: 100;
+        border-radius: 0 0 var(--radius-sm) 0;
+      }
+
+      .skip-link:focus {
+        left: 0;
+      }
+
+      :focus-visible {
+        outline: 2px solid var(--steel);
+        outline-offset: 2px;
+      }
+    </style>
+  </body>
+</html>

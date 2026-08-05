@@ -1,0 +1,70 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+---
+
+<BaseLayout
+  title="Leadership"
+  description="Meet the founder and leadership of The Jentosy Project, Inc."
+>
+  <PageHero eyebrow="Leadership" heading="Led by lived experience." />
+
+  <section class="on-light section">
+    <div class="container">
+      <div class="grid people-grid">
+        <div class="card person-card">
+          <div class="person-photo" aria-hidden="true">RS</div>
+          <h3 class="h3">Robert Sanchez</h3>
+          <p class="role">Founder</p>
+          <p>
+            A two-time kidney transplant recipient living with FSGS, and a social worker by
+            training. Robert founded The Jentosy Project to turn his own experience with rare
+            kidney disease and health inequity into education and partnership for underserved
+            communities.
+            <a href="/founders-story/">Read his full story &rarr;</a>
+          </p>
+        </div>
+      </div>
+
+      <p class="board-note">
+        Board and advisory members will be added here as they're formalized.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .people-grid {
+    grid-template-columns: 1fr;
+    max-width: 560px;
+  }
+
+  .person-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--ink-fg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 15px;
+    margin-bottom: var(--space-4);
+  }
+
+  .role {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--steel);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 var(--space-3);
+  }
+
+  .board-note {
+    margin-top: var(--space-6);
+    font-size: 13.5px;
+    color: var(--fg-muted);
+  }
+</style>

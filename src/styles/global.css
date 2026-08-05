@@ -1,0 +1,415 @@
+/* ============================================================
+   The Jentosy Project — Design Tokens
+   Source of truth: brand visual system (ticket 08), pushed to
+   claude.ai/design as "The Jentosy Project — Website Design System"
+   ============================================================ */
+
+:root {
+  /* Dark — nav, hero, CTA bands, footer (the bold opening) */
+  --ink: #10161c;
+  --ink-soft: #2a333b;
+  --ink-line: #263039;
+  --ink-line-strong: #37444f;
+  --ink-fg: #f0eee8;
+  --ink-fg-muted: rgba(240, 238, 232, 0.72);
+
+  /* Light — informative reading sections (deliberately not cream) */
+  --paper: #efede6;
+  --card: #f7f5ef;
+  --line: #dedace;
+  --line-strong: #c7c0ae;
+  --fg: #10161c;
+  --fg-soft: #2a333b;
+  --fg-muted: rgba(42, 51, 59, 0.72);
+
+  /* Accents — two distinct jobs, not one accent doing everything */
+  --rust: #b15a34;
+  --rust-hover: #9a4c2b;
+  --rust-ink: #fbf6f0;
+  --steel: #4c7a93;
+  --steel-hover: #3f6a80;
+  --steel-ink: #f4f8fa;
+  --eyebrow-accent: #e8a87c;
+
+  /* Type */
+  --font-display: -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-body: -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+
+  /* Spacing scale — used for every section/gap, nothing ad hoc */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  --radius-sm: 3px;
+  --radius-md: 6px;
+
+  --content-max: 1160px;
+  --reading-max: 68ch;
+
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 0.2s;
+  --dur-med: 0.5s;
+  --dur-slow: 0.8s;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--fg);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- Layout primitives ---------- */
+
+.container {
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 56px);
+}
+
+.section {
+  padding-block: clamp(var(--space-7), 8vw, var(--space-9));
+}
+
+.section-tight {
+  padding-block: clamp(var(--space-6), 5vw, var(--space-7));
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+}
+
+/* ---------- Typography ---------- */
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--rust);
+  margin: 0 0 var(--space-4);
+}
+
+.on-dark .eyebrow {
+  color: var(--eyebrow-accent);
+}
+
+h1,
+h2,
+h3,
+.h1,
+.h2,
+.h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.1;
+  text-wrap: balance;
+  margin: 0;
+}
+
+.h1 {
+  font-size: clamp(32px, 5vw, 54px);
+}
+
+.h2 {
+  font-size: clamp(26px, 3.4vw, 36px);
+}
+
+.h3 {
+  font-size: clamp(18px, 2vw, 22px);
+}
+
+p {
+  margin: 0 0 var(--space-4);
+  max-width: var(--reading-max);
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.lede {
+  font-size: clamp(16px, 1.6vw, 19px);
+  line-height: 1.65;
+  color: var(--fg-muted);
+}
+
+.on-dark .lede {
+  color: var(--ink-fg-muted);
+}
+
+.pull {
+  border-left: 3px solid var(--rust);
+  padding-left: var(--space-5);
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.5;
+  font-weight: 500;
+  max-width: 58ch;
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: inherit;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 13px 22px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-rust {
+  background: var(--rust);
+  color: var(--rust-ink);
+}
+
+.btn-rust:hover {
+  background: var(--rust-hover);
+}
+
+.btn-steel-outline {
+  background: transparent;
+  color: var(--ink-fg);
+  border-color: var(--ink-line-strong);
+}
+
+.btn-steel-outline:hover {
+  border-color: var(--steel);
+  color: var(--steel-ink);
+  background: rgba(76, 122, 147, 0.16);
+}
+
+.btn-steel {
+  background: var(--steel);
+  color: var(--steel-ink);
+}
+
+.btn-steel:hover {
+  background: var(--steel-hover);
+}
+
+/* ---------- Cards ---------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: var(--space-5);
+}
+
+.card-steel {
+  border-left: 3px solid var(--steel);
+}
+
+.card-rust {
+  border-left: 3px solid var(--rust);
+}
+
+/* ---------- Sections: dark vs light ---------- */
+
+.on-dark {
+  background: var(--ink);
+  color: var(--ink-fg);
+}
+
+.on-light {
+  background: var(--paper);
+  color: var(--fg);
+}
+
+.divider-dark {
+  border-top: 1px solid var(--ink-line);
+  border-bottom: 1px solid var(--ink-line);
+}
+
+/* ---------- Animation: scroll reveal ---------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--dur-slow) var(--ease), transform var(--dur-slow) var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ---------- Nav link underline ---------- */
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--ink-fg-muted);
+  padding-block: 4px;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0%;
+  height: 1.5px;
+  background: var(--eyebrow-accent);
+  transition: width var(--dur-fast) var(--ease);
+}
+
+.nav-link:hover {
+  color: var(--ink-fg);
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ---------- Stat cluster ---------- */
+
+.stat-num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 36px);
+  color: var(--eyebrow-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Timeline ---------- */
+
+.timeline {
+  display: flex;
+  overflow-x: auto;
+  gap: 0;
+}
+
+.timeline-item {
+  flex: 1 0 130px;
+  min-width: 130px;
+  position: relative;
+  padding: var(--space-6) var(--space-3) 0 0;
+}
+
+.timeline-item::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--rust);
+  transform: scale(0);
+  transition: transform var(--dur-med) var(--ease);
+  transition-delay: var(--reveal-delay, 0s);
+}
+
+.timeline-item.is-visible::before {
+  transform: scale(1);
+}
+
+.timeline-item::after {
+  content: "";
+  position: absolute;
+  top: 9.5px;
+  left: 9px;
+  right: var(--space-3);
+  height: 1px;
+  background: var(--ink-line-strong);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform var(--dur-slow) var(--ease);
+  transition-delay: calc(var(--reveal-delay, 0s) + 0.15s);
+}
+
+.timeline-item.is-visible::after {
+  transform: scaleX(1);
+}
+
+.timeline-item:last-child::after {
+  display: none;
+}
+
+/* ---------- Utility spacing helpers (keeps gaps consistent, no ad hoc margins) ---------- */
+
+.gap-2 { gap: var(--space-2); }
+.gap-3 { gap: var(--space-3); }
+.gap-4 { gap: var(--space-4); }
+.gap-5 { gap: var(--space-5); }
+.gap-6 { gap: var(--space-6); }

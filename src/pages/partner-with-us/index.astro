@@ -1,0 +1,152 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+
+const audiences = [
+  {
+    name: "Funders & Foundations",
+    pitch:
+      "Support an organization led by lived experience, with a clear, credibility-first approach to closing the kidney-care gap in underserved communities.",
+  },
+  {
+    name: "Researchers & Research Institutions",
+    pitch:
+      "Partner on education, awareness, and community engagement around FSGS, APOL1-mediated kidney disease, and IgA Nephropathy.",
+  },
+  {
+    name: "Healthcare Organizations",
+    pitch:
+      "Collaborate on reaching underserved patients earlier — before diseases like FSGS progress to dialysis or transplant.",
+  },
+  {
+    name: "Policymakers",
+    pitch:
+      "Work with us on the systemic, upstream drivers of kidney disease disparities — from healthcare access to housing and education.",
+  },
+];
+---
+
+<BaseLayout
+  title="Partner With Us"
+  description="Partner with The Jentosy Project — funders, researchers, healthcare organizations, and policymakers working to close the kidney-care gap."
+>
+  <PageHero
+    eyebrow="Partner With Us"
+    heading="Institutional partnerships that close the kidney-care gap."
+  />
+
+  <section class="on-light section">
+    <div class="container">
+      <div class="grid audience-grid">
+        {audiences.map((a, i) => (
+          <div class="card card-steel reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <h3 class="h3">{a.name}</h3>
+            <p>{a.pitch}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Start the conversation</h2>
+      <p>Tell us a bit about your organization and how you'd like to partner.</p>
+
+      <form
+        class="inquiry-form"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+      >
+        <input type="hidden" name="_next" value="/partner-with-us/thank-you/" />
+        <input type="hidden" name="form_type" value="Partnership Inquiry" />
+
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Organization
+          <input type="text" name="organization" />
+        </label>
+        <label>
+          I'm interested as a
+          <select name="audience">
+            <option>Funder / Foundation</option>
+            <option>Researcher / Research Institution</option>
+            <option>Healthcare Organization</option>
+            <option>Policymaker</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-rust">Send Inquiry</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .audience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .narrow {
+    max-width: 560px;
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .inquiry-form label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-soft);
+  }
+
+  .inquiry-form input,
+  .inquiry-form select,
+  .inquiry-form textarea {
+    font: inherit;
+    font-size: 14.5px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    color: var(--fg);
+    font-weight: 400;
+  }
+
+  .inquiry-form input:focus,
+  .inquiry-form select:focus,
+  .inquiry-form textarea:focus {
+    outline: 2px solid var(--steel);
+    outline-offset: 1px;
+    border-color: var(--steel);
+  }
+
+  .inquiry-form button {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+</style>

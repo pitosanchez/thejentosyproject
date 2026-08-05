@@ -1,0 +1,80 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+---
+
+<BaseLayout title="Contact" description="Get in touch with The Jentosy Project.">
+  <PageHero eyebrow="Contact" heading="Get in touch." />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <form
+        class="inquiry-form"
+        action="https://formspree.io/f/YOUR_FORM_ID"
+        method="POST"
+      >
+        <input type="hidden" name="_next" value="/contact/thank-you/" />
+        <input type="hidden" name="form_type" value="General Contact" />
+
+        <label>
+          Name
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Email
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Message
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-rust">Send Message</button>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 560px;
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .inquiry-form label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-soft);
+  }
+
+  .inquiry-form input,
+  .inquiry-form textarea {
+    font: inherit;
+    font-size: 14.5px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    color: var(--fg);
+    font-weight: 400;
+  }
+
+  .inquiry-form input:focus,
+  .inquiry-form textarea:focus {
+    outline: 2px solid var(--steel);
+    outline-offset: 1px;
+    border-color: var(--steel);
+  }
+
+  .inquiry-form button {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+</style>

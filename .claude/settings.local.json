@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.aihero.dev)",
+      "Bash(npx skills *)",
+      "WebFetch(domain:www.w3.org)",
+      "WebFetch(domain:www.ada.gov)",
+      "WebFetch(domain:vercel.com)",
+      "WebFetch(domain:docs.astro.build)",
+      "WebFetch(domain:donorbox.org)",
+      "WebFetch(domain:www.givelively.org)",
+      "WebFetch(domain:www.zeffy.com)",
+      "WebFetch(domain:bloomerang.co)",
+      "WebFetch(domain:www.paypal.com)",
+      "WebSearch",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:support.google.com)",
+      "WebFetch(domain:bloomerang.com)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

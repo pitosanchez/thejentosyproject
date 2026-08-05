@@ -1,0 +1,86 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+---
+
+<BaseLayout
+  title="Donate"
+  description="Support The Jentosy Project's work in kidney disease education and health equity — one-time or recurring donations."
+>
+  <PageHero
+    eyebrow="Donate"
+    heading="Every gift funds education that reaches people before they reach the transplant list."
+  />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <p>
+        The Jentosy Project is a 501(c)(3) public charity. Your donation directly funds education
+        and outreach around FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — starting
+        in the Bronx.
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="donate-embed-wrap">
+        <!--
+          Zeffy embed — per ticket 05/07. Replace the placeholder below with
+          Zeffy's real embed code once the account and form are created:
+          https://www.zeffy.com/en-US/embed/donation-form
+          Zeffy supports a post-donation redirect to /donate/thank-you/,
+          which is the conversion trigger per ticket 12.
+        -->
+        <div class="donate-embed-placeholder">
+          <p class="eyebrow" style="color:var(--steel);">Donation form</p>
+          <p>
+            The Zeffy donation embed goes here. Configure Zeffy's post-donation redirect to
+            <code>/donate/thank-you/</code> so the conversion is tracked correctly.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,24px);">What your gift supports</h2>
+      <ul class="supports-list">
+        <li>Plain-language education on FSGS, APOL1-mediated kidney disease, and IgA Nephropathy</li>
+        <li>Community outreach in the Bronx, with plans to expand</li>
+        <li>Building partnerships with researchers, healthcare organizations, and policymakers</li>
+      </ul>
+      <p class="disclaimer-note">
+        One-time and recurring monthly donations are supported. You'll receive an automated,
+        tax-compliant receipt for every gift.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 640px;
+  }
+
+  .donate-embed-wrap {
+    margin-top: var(--space-6);
+    max-width: 640px;
+  }
+
+  .donate-embed-placeholder {
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-7) var(--space-6);
+    background: var(--card);
+  }
+
+  .supports-list li {
+    max-width: 60ch;
+  }
+
+  .disclaimer-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin-top: var(--space-5);
+  }
+</style>

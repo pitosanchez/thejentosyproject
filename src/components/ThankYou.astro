@@ -1,0 +1,46 @@
+---
+interface Props {
+  title: string;
+  heading: string;
+  body: string;
+}
+const { title, heading, body } = Astro.props;
+---
+
+<script>
+  // GA4 conversion signal — per ticket 12, conversions fire on thank-you-page
+  // load, not via cross-iframe events. Uncomment once GA4 is wired in BaseLayout.
+  // gtag('event', 'conversion');
+</script>
+
+<section class="on-dark thank-you-section">
+  <div class="container thank-you-inner">
+    <p class="eyebrow reveal">Thank You</p>
+    <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">{heading}</h1>
+    <p class="lede reveal" style="--reveal-delay:0.16s;">{body}</p>
+    <a href="/" class="btn btn-steel-outline reveal" style="--reveal-delay:0.24s;">Back to Home</a>
+  </div>
+</section>
+
+<style>
+  .thank-you-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .thank-you-inner {
+    max-width: 560px;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .thank-you-inner .lede {
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .thank-you-inner .btn {
+    margin-top: var(--space-6);
+  }
+</style>

@@ -1,0 +1,27 @@
+---
+interface Props {
+  eyebrow: string;
+  heading: string;
+  lede?: string;
+}
+const { eyebrow, heading, lede } = Astro.props;
+---
+
+<section class="on-dark page-hero">
+  <div class="container page-hero-inner">
+    <p class="eyebrow reveal">{eyebrow}</p>
+    <h1 class="h1 reveal" style="--reveal-delay:0.08s">{heading}</h1>
+    {lede && (
+      <p class="lede reveal" style="--reveal-delay:0.16s">
+        {lede}
+      </p>
+    )}
+  </div>
+</section>
+
+<style>
+  .page-hero-inner {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
+    max-width: 720px;
+  }
+</style>

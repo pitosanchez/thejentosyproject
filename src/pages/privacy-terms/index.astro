@@ -1,0 +1,64 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+---
+
+<BaseLayout
+  title="Privacy & Terms"
+  description="The Jentosy Project's privacy policy and terms of use."
+>
+  <PageHero eyebrow="Legal" heading="Privacy &amp; Terms" />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <div class="flag-note">
+        <p>
+          <strong>Placeholder content.</strong> This page needs a legal review before launch —
+          see the content map (ticket 04). Replace with a finalized nonprofit-standard privacy
+          policy and terms of use, including donor disclosures, before go-live.
+        </p>
+      </div>
+
+      <h2 class="h3">Privacy Policy</h2>
+      <p>
+        The Jentosy Project, Inc. collects only the information needed to process donations,
+        respond to inquiries, and understand how visitors use this site (via Google Analytics).
+        We do not sell or share your personal information. Donation payment data is processed and
+        held by Zeffy, our donation platform, not by The Jentosy Project directly.
+      </p>
+
+      <h2 class="h3">Donor Disclosures</h2>
+      <p>
+        The Jentosy Project, Inc. is a 501(c)(3) public charity. Donations are tax-deductible to
+        the extent allowed by law. You will receive an automated receipt for every donation.
+      </p>
+
+      <h2 class="h3">Terms of Use</h2>
+      <p>
+        Content on this site, including information about FSGS, APOL1-mediated kidney disease,
+        and IgA Nephropathy, is provided for general educational purposes only and is not medical
+        advice. Consult a qualified healthcare provider for medical guidance.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 680px;
+  }
+
+  .flag-note {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--rust);
+    border-radius: var(--radius-sm);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-7);
+  }
+
+  .flag-note p {
+    font-size: 13.5px;
+    margin: 0;
+  }
+</style>
