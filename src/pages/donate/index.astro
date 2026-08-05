@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+
+const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
 ---
 
 <BaseLayout
@@ -23,20 +25,23 @@ import PageHero from "../../components/PageHero.astro";
 
     <div class="container">
       <div class="donate-embed-wrap">
-        <!--
-          Zeffy embed — per ticket 05/07. Replace the placeholder below with
-          Zeffy's real embed code once the account and form are created:
-          https://www.zeffy.com/en-US/embed/donation-form
-          Zeffy supports a post-donation redirect to /donate/thank-you/,
-          which is the conversion trigger per ticket 12.
-        -->
-        <div class="donate-embed-placeholder">
-          <p class="eyebrow" style="color:var(--steel);">Donation form</p>
-          <p>
-            The Zeffy donation embed goes here. Configure Zeffy's post-donation redirect to
-            <code>/donate/thank-you/</code> so the conversion is tracked correctly.
-          </p>
-        </div>
+        {zeffyEmbedUrl ? (
+          <iframe
+            title="Donation form"
+            src={zeffyEmbedUrl}
+            class="donate-embed-frame"
+            allowpaymentrequest
+          />
+        ) : (
+          <div class="donate-embed-placeholder">
+            <p class="eyebrow" style="color:var(--steel);">Donation form</p>
+            <p>
+              This form isn't connected yet — set <code>PUBLIC_ZEFFY_EMBED_URL</code> once the
+              Zeffy account and form are created. Configure Zeffy's post-donation redirect to
+              <code>/donate/thank-you/</code> so the conversion is tracked correctly.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -72,6 +77,13 @@ import PageHero from "../../components/PageHero.astro";
     border-radius: var(--radius-md);
     padding: var(--space-7) var(--space-6);
     background: var(--card);
+  }
+
+  .donate-embed-frame {
+    width: 100%;
+    min-height: 900px;
+    border: none;
+    border-radius: var(--radius-md);
   }
 
   .supports-list li {

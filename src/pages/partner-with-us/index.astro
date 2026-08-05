@@ -24,6 +24,8 @@ const audiences = [
       "Work with us on the systemic, upstream drivers of kidney disease disparities — from healthcare access to housing and education.",
   },
 ];
+
+const formId = import.meta.env.PUBLIC_FORMSPREE_PARTNER_ID;
 ---
 
 <BaseLayout
@@ -53,9 +55,15 @@ const audiences = [
       <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Start the conversation</h2>
       <p>Tell us a bit about your organization and how you'd like to partner.</p>
 
+      {!formId && (
+        <p class="form-unconfigured-note">
+          This form isn't connected yet — set <code>PUBLIC_FORMSPREE_PARTNER_ID</code> to enable it.
+        </p>
+      )}
+
       <form
         class="inquiry-form"
-        action="https://formspree.io/f/YOUR_FORM_ID"
+        action={formId ? `https://formspree.io/f/${formId}` : "#"}
         method="POST"
       >
         <input type="hidden" name="_next" value="/partner-with-us/thank-you/" />
@@ -87,7 +95,7 @@ const audiences = [
           Message
           <textarea name="message" rows="4" required></textarea>
         </label>
-        <button type="submit" class="btn btn-rust">Send Inquiry</button>
+        <button type="submit" class="btn btn-rust" disabled={!formId}>Send Inquiry</button>
       </form>
     </div>
   </section>
@@ -148,5 +156,20 @@ const audiences = [
   .inquiry-form button {
     align-self: flex-start;
     margin-top: var(--space-2);
+  }
+
+  .inquiry-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-unconfigured-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    background: var(--card);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-5);
   }
 </style>

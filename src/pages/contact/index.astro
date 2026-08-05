@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+
+const formId = import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID;
 ---
 
 <BaseLayout title="Contact" description="Get in touch with The Jentosy Project.">
@@ -8,9 +10,15 @@ import PageHero from "../../components/PageHero.astro";
 
   <section class="on-light section">
     <div class="container narrow">
+      {!formId && (
+        <p class="form-unconfigured-note">
+          This form isn't connected yet — set <code>PUBLIC_FORMSPREE_CONTACT_ID</code> to enable it.
+        </p>
+      )}
+
       <form
         class="inquiry-form"
-        action="https://formspree.io/f/YOUR_FORM_ID"
+        action={formId ? `https://formspree.io/f/${formId}` : "#"}
         method="POST"
       >
         <input type="hidden" name="_next" value="/contact/thank-you/" />
@@ -28,7 +36,7 @@ import PageHero from "../../components/PageHero.astro";
           Message
           <textarea name="message" rows="5" required></textarea>
         </label>
-        <button type="submit" class="btn btn-rust">Send Message</button>
+        <button type="submit" class="btn btn-rust" disabled={!formId}>Send Message</button>
       </form>
     </div>
   </section>
@@ -76,5 +84,20 @@ import PageHero from "../../components/PageHero.astro";
   .inquiry-form button {
     align-self: flex-start;
     margin-top: var(--space-2);
+  }
+
+  .inquiry-form button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .form-unconfigured-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    background: var(--card);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-5);
   }
 </style>

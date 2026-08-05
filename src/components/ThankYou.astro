@@ -7,10 +7,13 @@ interface Props {
 const { title, heading, body } = Astro.props;
 ---
 
-<script>
-  // GA4 conversion signal — per ticket 12, conversions fire on thank-you-page
-  // load, not via cross-iframe events. Uncomment once GA4 is wired in BaseLayout.
-  // gtag('event', 'conversion');
+<script is:inline>
+  // Conversions fire on thank-you-page load, not via cross-iframe events.
+  // No-ops until PUBLIC_GA4_MEASUREMENT_ID is set (see BaseLayout), since
+  // gtag is only defined when GA4's script tag is actually injected.
+  if (typeof gtag === "function") {
+    gtag("event", "conversion");
+  }
 </script>
 
 <section class="on-dark thank-you-section">
