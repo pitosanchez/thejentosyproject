@@ -1,6 +1,53 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import StatTile from "../../components/StatTile.astro";
+
+// Categorical hues: fixed order by identity, validated CVD-safe
+// (dataviz skill default palette, checked against --card #F7F5EF).
+// Text never carries these colors — only fills/swatches do.
+const raceColor: Record<string, string> = {
+  Hispanic: "#2a78d6",
+  "Non-Hispanic Black": "#eb6834",
+  "Non-Hispanic White": "#1baf7a",
+  "Asian/Pacific Islander": "#eda100",
+  "Non-Hispanic Asian": "#eda100",
+  "American Indian/Alaska Native": "#e87ba4",
+  "Other/Multiracial or unlisted": "#4a3aa7",
+};
+
+const population = [
+  { label: "Hispanic", value: 55.4 },
+  { label: "Non-Hispanic Black", value: 29.6 },
+  { label: "Non-Hispanic White", value: 8.9 },
+  { label: "Asian/Pacific Islander", value: 4.7 },
+  { label: "American Indian/Alaska Native", value: 0.3 },
+  { label: "Other/Multiracial or unlisted", value: 1.1 },
+];
+let cum = 0;
+const populationStops = population
+  .map((d) => {
+    const start = cum;
+    cum += d.value;
+    return `${raceColor[d.label]} ${start}% ${cum}%`;
+  })
+  .join(", ");
+
+const diabetes = [
+  { label: "Hispanic", value: 348.9 },
+  { label: "Non-Hispanic Black", value: 336.0 },
+  { label: "Asian/Pacific Islander", value: 184.2 },
+  { label: "Non-Hispanic White", value: 170.6 },
+];
+const diabetesMax = Math.max(...diabetes.map((d) => d.value));
+
+const ckd = [
+  { label: "Non-Hispanic Black", value: 22.0 },
+  { label: "Non-Hispanic Asian", value: 16.4 },
+  { label: "Non-Hispanic White", value: 13.1 },
+  { label: "Hispanic", value: 12.1 },
+];
+const ckdMax = 25;
 
 const diseases = [
   {
@@ -57,6 +104,98 @@ const diseases = [
       </div>
     </div>
   </section>
+
+  <section class="on-light section-tight viz-root" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Local &amp; National Context</p>
+      <h2 class="h2">The Bronx, by the numbers.</h2>
+      <p class="section-dek">
+        Bronx-specific data where it exists; clearly labeled national estimates where it
+        doesn't — because the size of that gap is itself part of the health-equity story.
+      </p>
+
+      <div class="viz-grid">
+        <div class="card viz-card">
+          <h3 class="viz-title">Who lives in the Bronx?</h3>
+          <div class="donut-row">
+            <div class="donut" style={`background: conic-gradient(${populationStops})`}>
+              <div class="donut-hole"></div>
+            </div>
+            <ul class="legend">
+              {population.map((d) => (
+                <li>
+                  <span class="swatch" style={`background:${raceColor[d.label]}`}></span>
+                  <span class="legend-label">{d.label}</span>
+                  <span class="legend-value">{d.value}%</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p class="viz-source">New York State Department of Health, Bronx County Health Indicators by Race and Ethnicity (2024 population).</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">A major kidney-risk disparity in the Bronx</h3>
+          <p class="viz-note">Diabetes hospitalizations, age-adjusted rate per 10,000 — a leading cause of chronic kidney disease.</p>
+          <div class="bar-row">
+            {diabetes.map((d) => (
+              <div class="bar-col">
+                <span class="bar-value">{d.value}</span>
+                <div class="bar-track">
+                  <div
+                    class="bar-fill"
+                    style={`height:${(d.value / diabetesMax) * 100}%; background:${raceColor[d.label]}`}
+                  ></div>
+                </div>
+                <span class="bar-label">{d.label}</span>
+              </div>
+            ))}
+          </div>
+          <p class="viz-source">New York State Department of Health, Bronx County Health Indicators by Race and Ethnicity (2022–2024 any-diagnosis diabetes hospitalizations).</p>
+        </div>
+      </div>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">Chronic kidney disease is not distributed equally</h3>
+          <p class="viz-note">National CKD prevalence estimates — comparable Bronx-specific data by race isn't publicly available.</p>
+          <div class="dot-plot">
+            {ckd.map((d) => (
+              <div class="dot-row">
+                <span class="dot-label">{d.label}</span>
+                <div class="dot-track">
+                  <div class="dot-marker" style={`left:${(d.value / ckdMax) * 100}%; background:${raceColor[d.label]}`}></div>
+                </div>
+                <span class="dot-value">{d.value}%</span>
+              </div>
+            ))}
+          </div>
+          <p class="viz-source">NIDDK Kidney Disease Statistics for the United States, citing CDC/NHANES estimates (Aug 2021–Aug 2023).</p>
+        </div>
+
+        <StatTile
+          value="87%"
+          label="of U.S. adults with chronic kidney disease may be unaware they have it — the clearest argument for why education can't wait."
+          source="NIDDK Kidney Disease Statistics for the United States, citing CDC."
+          accent="#2a78d6"
+        />
+      </div>
+
+      <div class="card card-rust gap-card">
+        <p class="eyebrow" style="margin-bottom:8px;">An honest gap, not a finding</p>
+        <h3 class="viz-title">What about Hispanic communities, APOL1, and FSGS?</h3>
+        <p>
+          There is no reliable Bronx-specific prevalence estimate for APOL1-mediated kidney
+          disease or FSGS among Hispanic residents. APOL1 risk is tied to recent African
+          ancestry, which means it can also be relevant for some Hispanic and Afro-Latino
+          communities, especially those with Caribbean ancestry — but the local data needed to
+          show that clearly doesn't exist yet. That absence is itself part of the health-equity
+          problem The Jentosy Project exists to address.
+        </p>
+        <p class="viz-source">Evidence-gap note based on NIDDK APOL1 educational materials and the absence of a verified Bronx-specific public estimate.</p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -100,5 +239,206 @@ const diseases = [
     font-size: 13px;
     font-weight: 700;
     color: var(--steel);
+  }
+
+  /* ---------- Data section ---------- */
+
+  .section-dek {
+    font-size: 15px;
+    color: var(--fg-muted);
+    max-width: 62ch;
+    margin-top: var(--space-2);
+  }
+
+  .viz-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-5);
+    margin-top: var(--space-6);
+    align-items: stretch;
+  }
+
+  @media (max-width: 780px) {
+    .viz-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .viz-card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .viz-title {
+    font-size: 15px;
+    font-weight: 800;
+    margin: 0 0 var(--space-2);
+    color: var(--fg);
+  }
+
+  .viz-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0 0 var(--space-4);
+  }
+
+  .viz-source {
+    font-size: 11.5px;
+    color: var(--fg-muted);
+    margin: var(--space-4) 0 0;
+  }
+
+  /* Donut */
+  .donut-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+
+  .donut {
+    flex: 0 0 140px;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .donut-hole {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--card);
+  }
+
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    flex: 1 1 180px;
+  }
+
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: 12.5px;
+  }
+
+  .swatch {
+    flex: 0 0 10px;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+  }
+
+  .legend-label {
+    color: var(--fg-soft);
+    flex: 1;
+  }
+
+  .legend-value {
+    color: var(--fg);
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Bar chart */
+  .bar-row {
+    display: flex;
+    align-items: flex-end;
+    gap: var(--space-4);
+    flex: 1;
+    min-height: 160px;
+  }
+
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    height: 100%;
+    justify-content: flex-end;
+  }
+
+  .bar-value {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .bar-track {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: flex-end;
+  }
+
+  .bar-fill {
+    width: 100%;
+    border-radius: 2px 2px 0 0;
+    min-height: 4px;
+  }
+
+  .bar-label {
+    font-size: 11px;
+    color: var(--fg-muted);
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* Dot plot */
+  .dot-plot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .dot-row {
+    display: grid;
+    grid-template-columns: 140px 1fr 44px;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .dot-label {
+    font-size: 12.5px;
+    color: var(--fg-soft);
+  }
+
+  .dot-track {
+    position: relative;
+    height: 2px;
+    background: var(--line);
+    border-radius: 2px;
+  }
+
+  .dot-marker {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid var(--card);
+  }
+
+  .dot-value {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--fg);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .gap-card {
+    margin-top: var(--space-5);
   }
 </style>

@@ -1,5 +1,6 @@
 ---
 import DiseasePage from "../../../components/DiseasePage.astro";
+import StatTile from "../../../components/StatTile.astro";
 ---
 
 <DiseasePage
@@ -9,4 +10,13 @@ import DiseasePage from "../../../components/DiseasePage.astro";
   whatItIs="Certain variants in the APOL1 gene significantly increase the risk of developing chronic kidney disease, including a faster path to kidney failure. Carrying two high-risk APOL1 variants doesn't guarantee kidney disease, but it substantially raises the odds, especially in combination with conditions like hypertension or FSGS."
   whoItAffects="APOL1 high-risk variants are concentrated in people of recent West African ancestry, which means they disproportionately affect Black Americans. Most people who carry these variants are never told about their risk, because APOL1 testing is not yet part of routine care."
   whyItMatters="APOL1-related risk is a clear example of a genetic factor intersecting with structural inequity — awareness and testing access remain low precisely in the communities most affected. Educating people about APOL1 is central to reaching people before kidney disease progresses."
-/>
+>
+  <Fragment slot="stats">
+    <StatTile
+      value="~13%"
+      label="of Black Americans are estimated to carry two high-risk APOL1 variants. Carrying the genotype doesn't guarantee kidney disease — but it raises the odds significantly, and most carriers are never told."
+      source="Peer-reviewed APOL1 literature and KDIGO summaries; commonly cited estimate is about 13% of Black Americans."
+      accent="#e87ba4"
+    />
+  </Fragment>
+</DiseasePage>

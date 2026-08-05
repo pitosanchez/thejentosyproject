@@ -1,0 +1,58 @@
+---
+interface Props {
+  value: string;
+  label: string;
+  source: string;
+  accent?: string;
+}
+const { value, label, source, accent = "#2a78d6" } = Astro.props;
+---
+
+<div class="stat-tile">
+  <span class="tile-accent" style={`background:${accent}`} aria-hidden="true"></span>
+  <div class="tile-body">
+    <div class="tile-value">{value}</div>
+    <p class="tile-label">{label}</p>
+    <p class="tile-source">{source}</p>
+  </div>
+</div>
+
+<style>
+  .stat-tile {
+    display: flex;
+    gap: var(--space-3);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5);
+  }
+
+  .tile-accent {
+    flex: 0 0 4px;
+    border-radius: 2px;
+  }
+
+  .tile-value {
+    /* Text wears text tokens, never the series color — the accent lives only
+       in the bar to the left, per the dataviz skill's non-negotiable rule. */
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(30px, 4vw, 40px);
+    color: var(--fg);
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .tile-label {
+    font-size: 14px;
+    color: var(--fg-soft);
+    margin: var(--space-2) 0 var(--space-3);
+    line-height: 1.5;
+  }
+
+  .tile-source {
+    font-size: 11.5px;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+</style>
