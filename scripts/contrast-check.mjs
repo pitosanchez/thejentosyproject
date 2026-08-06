@@ -25,16 +25,16 @@ function contrast(hex1, hex2) {
 
 // Current tokens (keep in sync with src/styles/global.css)
 const tokens = {
-  ink: "#10161C",
-  paper: "#EFEDE6",
-  card: "#F7F5EF",
-  rust: "#A34F2C",
-  "rust-ink": "#FBF6F0",
-  steel: "#456F87",
-  "steel-ink": "#F4F8FA",
-  "eyebrow-accent": "#E8A87C",
-  fg: "#10161C",
-  "ink-fg": "#F0EEE8",
+  ink: "#14213B",
+  paper: "#F5F1E8",
+  card: "#FBF8F1",
+  rust: "#B03D1E",
+  "rust-ink": "#FBF6EF",
+  steel: "#1E7A72",
+  "steel-ink": "#FBF6EF",
+  "eyebrow-accent": "#E3B23C",
+  fg: "#14213B",
+  "ink-fg": "#F2EFE3",
 };
 
 const pairs = [

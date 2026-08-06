@@ -1,42 +1,48 @@
 /* ============================================================
    The Jentosy Project — Design Tokens
-   Source of truth: brand visual system (ticket 08), pushed to
-   claude.ai/design as "The Jentosy Project — Website Design System"
+   "Bronx Civic" — civic-poster energy: bold, saturated, optimistic,
+   nodding to NYC public-health/transit signage. Chosen 2026-08-05
+   from three concept directions (see redesign-directions artifact).
+   Token names (rust/steel/ink/paper) are kept as-is on purpose —
+   only the values changed — so no component markup had to be
+   touched; every page inherits the new look through the same
+   variables it already used.
    ============================================================ */
 
 :root {
   /* Dark — nav, hero, CTA bands, footer (the bold opening) */
-  --ink: #10161c;
-  --ink-soft: #2a333b;
-  --ink-line: #263039;
-  --ink-line-strong: #37444f;
-  --ink-fg: #f0eee8;
-  --ink-fg-muted: rgba(240, 238, 232, 0.72);
+  --ink: #14213b;
+  --ink-soft: #1c2d4d;
+  --ink-line: #2b3a5c;
+  --ink-line-strong: #3a4a70;
+  --ink-fg: #f2efe3;
+  --ink-fg-muted: rgba(242, 239, 227, 0.72);
 
-  /* Light — informative reading sections (deliberately not cream) */
-  --paper: #efede6;
-  --card: #f7f5ef;
-  --line: #dedace;
-  --line-strong: #c7c0ae;
-  --fg: #10161c;
-  --fg-soft: #2a333b;
-  --fg-muted: rgba(42, 51, 59, 0.72);
+  /* Light — informative reading sections */
+  --paper: #f5f1e8;
+  --card: #fbf8f1;
+  --line: #e3dcc9;
+  --line-strong: #cabf9d;
+  --fg: #14213b;
+  --fg-soft: #1c2d4d;
+  --fg-muted: rgba(20, 33, 59, 0.72);
 
   /* Accents — two distinct jobs, not one accent doing everything.
-     Darkened from the original mood-board values (#b15a34 / #4c7a93) to
-     clear WCAG 2.2 AA (4.5:1 text, 3:1 UI components) — verified via
-     contrast-check.mjs, not just asserted. See ticket 08 for the record. */
-  --rust: #a34f2c;
-  --rust-hover: #8f4526;
-  --rust-ink: #fbf6f0;
-  --steel: #456f87;
-  --steel-hover: #3f6a80;
-  --steel-ink: #f4f8fa;
-  --eyebrow-accent: #e8a87c;
+     Verified against WCAG 2.2 AA (4.5:1 text, 3:1 UI components) via
+     contrast-check.mjs before shipping, same discipline as the
+     original palette. */
+  --rust: #b03d1e;
+  --rust-hover: #8f3117;
+  --rust-ink: #fbf6ef;
+  --steel: #1e7a72;
+  --steel-hover: #186259;
+  --steel-ink: #fbf6ef;
+  --eyebrow-accent: #e3b23c;
 
-  /* Type */
-  --font-display: -apple-system, "Segoe UI", system-ui, sans-serif;
-  --font-body: -apple-system, "Segoe UI", system-ui, sans-serif;
+  /* Type — Anton for the one big poster headline per page (.h1 only),
+     Archivo for every other heading and all body copy. */
+  --font-display: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --font-body: "Archivo", -apple-system, "Segoe UI", system-ui, sans-serif;
   --font-mono: ui-monospace, Menlo, monospace;
 
   /* Spacing scale — used for every section/gap, nothing ad hoc */
@@ -50,8 +56,9 @@
   --space-8: 64px;
   --space-9: 96px;
 
-  --radius-sm: 3px;
-  --radius-md: 6px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-pill: 999px;
 
   --content-max: 1160px;
   --reading-max: 68ch;
@@ -152,16 +159,27 @@ h3,
 .h1,
 .h2,
 .h3 {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-weight: 800;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.01em;
   line-height: 1.1;
   text-wrap: balance;
   margin: 0;
 }
 
+/* The one poster headline per page — Anton is a single-weight display
+   face, so it gets its own rule rather than inheriting weight 800
+   (synthetic-bolding an already-black face looks blurry). */
+h1,
 .h1 {
-  font-size: clamp(32px, 5vw, 54px);
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.h1 {
+  font-size: clamp(34px, 4vw + 14px, 76px);
 }
 
 .h2 {
@@ -207,11 +225,11 @@ p:last-child {
   align-items: center;
   gap: var(--space-2);
   font: inherit;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 14px;
-  padding: 13px 22px;
-  border-radius: var(--radius-sm);
-  border: 1.5px solid transparent;
+  padding: 13px 26px;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
   text-decoration: none;
   cursor: pointer;
   transition: transform var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);

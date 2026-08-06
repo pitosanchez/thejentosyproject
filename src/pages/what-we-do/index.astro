@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import PhotoSlot from "../../components/PhotoSlot.astro";
 ---
 
 <BaseLayout
@@ -47,6 +48,11 @@ import PageHero from "../../components/PageHero.astro";
         </div>
       </div>
     </div>
+
+    <div class="container outreach-photo-row">
+      <PhotoSlot src="/images/community-education.png" alt="A Jentosy Project community education session on kidney health" />
+      <p class="linkline">A community education session on kidney health.</p>
+    </div>
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
@@ -86,5 +92,14 @@ import PageHero from "../../components/PageHero.astro";
     .focus-grid {
       grid-template-columns: 1fr;
     }
+  }
+
+  .outreach-photo-row {
+    max-width: 460px;
+    margin-top: var(--space-7);
+  }
+
+  .outreach-photo-row .linkline {
+    margin-top: var(--space-3);
   }
 </style>

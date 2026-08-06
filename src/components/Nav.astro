@@ -1,7 +1,15 @@
 ---
 const navLinks = [
   { href: "/about/", label: "About" },
-  { href: "/the-need/", label: "The Need" },
+  {
+    href: "/the-need/",
+    label: "The Need",
+    children: [
+      { href: "/the-need/fsgs/", label: "FSGS" },
+      { href: "/the-need/apol1/", label: "APOL1-Mediated Kidney Disease" },
+      { href: "/the-need/iga-nephropathy/", label: "IgA Nephropathy" },
+    ],
+  },
   { href: "/what-we-do/", label: "What We Do" },
 ];
 const currentPath = Astro.url.pathname;
@@ -21,14 +29,46 @@ const currentPath = Astro.url.pathname;
     <nav id="nav-menu" class="nav-menu">
       <ul class="nav-links">
         {navLinks.map((link) => (
-          <li>
-            <a
-              href={link.href}
-              class="nav-link"
-              aria-current={currentPath.startsWith(link.href) ? "page" : undefined}
-            >
-              {link.label}
-            </a>
+          <li class={link.children ? "nav-item has-dropdown" : "nav-item"}>
+            {link.children ? (
+              <>
+                <button
+                  class="nav-link nav-dropdown-trigger"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-current={currentPath.startsWith(link.href) ? "page" : undefined}
+                >
+                  {link.label}
+                  <span class="nav-caret" aria-hidden="true"></span>
+                </button>
+                <ul class="nav-dropdown">
+                  <li>
+                    <a href={link.href} class="nav-dropdown-link nav-dropdown-link-all">
+                      All of The Need
+                    </a>
+                  </li>
+                  {link.children.map((child) => (
+                    <li>
+                      <a
+                        href={child.href}
+                        class="nav-dropdown-link"
+                        aria-current={currentPath.startsWith(child.href) ? "page" : undefined}
+                      >
+                        {child.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : (
+              <a
+                href={link.href}
+                class="nav-link"
+                aria-current={currentPath.startsWith(link.href) ? "page" : undefined}
+              >
+                {link.label}
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -84,6 +124,84 @@ const currentPath = Astro.url.pathname;
 
   .nav-link[aria-current="page"]::after {
     width: 100%;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-dropdown-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font: inherit;
+    background: none;
+    border: none;
+    padding: 4px 0;
+    cursor: pointer;
+  }
+
+  .nav-caret {
+    width: 7px;
+    height: 7px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    transition: transform var(--dur-fast) var(--ease);
+  }
+
+  .has-dropdown[data-open="true"] .nav-caret {
+    transform: rotate(-135deg) translateY(1px);
+  }
+
+  .nav-dropdown {
+    list-style: none;
+    margin: 0;
+    padding: var(--space-2);
+    position: absolute;
+    top: calc(100% + 14px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 240px;
+    background: var(--ink-soft);
+    border: 1px solid var(--ink-line-strong);
+    border-radius: var(--radius-md);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-6px);
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), visibility var(--dur-fast);
+  }
+
+  .has-dropdown[data-open="true"] .nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .nav-dropdown-link {
+    display: block;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--ink-fg-muted);
+    white-space: nowrap;
+  }
+
+  .nav-dropdown-link:hover,
+  .nav-dropdown-link[aria-current="page"] {
+    background: var(--ink);
+    color: var(--ink-fg);
+  }
+
+  .nav-dropdown-link-all {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--eyebrow-accent);
   }
 
   .nav-cta {
@@ -147,6 +265,31 @@ const currentPath = Astro.url.pathname;
       flex: 1;
       justify-content: center;
     }
+
+    .nav-dropdown {
+      position: static;
+      transform: none;
+      left: auto;
+      top: auto;
+      opacity: 1;
+      visibility: visible;
+      box-shadow: none;
+      background: none;
+      border: none;
+      padding: var(--space-2) 0 0 var(--space-4);
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--dur-med) var(--ease);
+    }
+
+    .has-dropdown[data-open="true"] .nav-dropdown {
+      max-height: 240px;
+      transform: none;
+    }
+
+    .nav-dropdown-link {
+      color: var(--ink-fg-muted);
+    }
   }
 </style>
 
@@ -156,5 +299,32 @@ const currentPath = Astro.url.pathname;
   toggle?.addEventListener("click", () => {
     const isOpen = menu?.classList.toggle("is-open");
     toggle.setAttribute("aria-expanded", String(Boolean(isOpen)));
+  });
+
+  const dropdowns = document.querySelectorAll<HTMLElement>(".has-dropdown");
+
+  function closeAllDropdowns() {
+    dropdowns.forEach((item) => {
+      item.removeAttribute("data-open");
+      item.querySelector(".nav-dropdown-trigger")?.setAttribute("aria-expanded", "false");
+    });
+  }
+
+  dropdowns.forEach((item) => {
+    const trigger = item.querySelector<HTMLButtonElement>(".nav-dropdown-trigger");
+    trigger?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = item.getAttribute("data-open") === "true";
+      closeAllDropdowns();
+      if (!isOpen) {
+        item.setAttribute("data-open", "true");
+        trigger.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  document.addEventListener("click", closeAllDropdowns);
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAllDropdowns();
   });
 </script>

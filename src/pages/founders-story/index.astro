@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import PhotoSlot from "../../components/PhotoSlot.astro";
 
 const timeline = [
   { year: "2009", label: "First transplant, from a friend" },
@@ -18,6 +19,13 @@ const timeline = [
     eyebrow="Founder's Story"
     heading="Two transplants. Two women who wouldn't give up. One organization named for both of them."
   />
+
+  <section class="on-light section-tight">
+    <div class="container narrow portrait-block">
+      <PhotoSlot src="/images/founder-portrait.jpg" alt="Robert Sanchez, founder of The Jentosy Project" ratio="1 / 1" />
+      <p class="linkline">Robert Sanchez, founder of The Jentosy Project.</p>
+    </div>
+  </section>
 
   <section class="on-dark section-tight divider-dark">
     <div class="container">
@@ -117,6 +125,14 @@ const timeline = [
 <style>
   .narrow {
     max-width: 700px;
+  }
+
+  .portrait-block {
+    max-width: 240px;
+  }
+
+  .portrait-block .linkline {
+    margin-top: var(--space-3);
   }
 
   .cta-inner {

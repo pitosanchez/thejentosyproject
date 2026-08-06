@@ -1,5 +1,48 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const audiences = [
+  {
+    name: "Funders & Foundations",
+    pitch: "Support an organization led by lived experience, with a clear, credibility-first approach to closing the kidney-care gap.",
+  },
+  {
+    name: "Researchers & Institutions",
+    pitch: "Partner on education, awareness, and community engagement around FSGS, APOL1-mediated kidney disease, and IgA Nephropathy.",
+  },
+  {
+    name: "Healthcare Organizations",
+    pitch: "Collaborate on reaching underserved patients earlier — before diseases like FSGS progress to dialysis or transplant.",
+  },
+  {
+    name: "Policymakers",
+    pitch: "Work with us on the systemic, upstream drivers of kidney disease disparities — from healthcare access to housing and education.",
+  },
+];
+
+const howItWorks = [
+  {
+    step: "1",
+    name: "Educate",
+    body: "Plain-language education on FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — reaching people before they reach the transplant list.",
+    href: "/the-need/",
+    linkLabel: "See the need",
+  },
+  {
+    step: "2",
+    name: "Partner",
+    body: "Connecting researchers, healthcare organizations, and policymakers around the shared goal of closing the kidney-care gap.",
+    href: "/partner-with-us/",
+    linkLabel: "Partner with us",
+  },
+  {
+    step: "3",
+    name: "Fund the Work",
+    body: "Donations directly fund education and outreach that reaches underserved communities — starting in the Bronx.",
+    href: "/donate/",
+    linkLabel: "Donate",
+  },
+];
 ---
 
 <BaseLayout
@@ -10,13 +53,11 @@ import BaseLayout from "../layouts/BaseLayout.astro";
   <section class="on-dark hero-section">
     <div class="container hero-inner">
       <p class="eyebrow reveal">Health Equity &middot; Rare Kidney Disease</p>
-      <h1 class="h1 reveal" style="--reveal-delay:0.08s">
-        Kidney disease disparities don't exist in isolation.
-      </h1>
+      <h1 class="h1 reveal" style="--reveal-delay:0.08s">The Jentosy Project, Inc.</h1>
       <p class="lede reveal" style="--reveal-delay:0.16s">
-        We educate underserved communities about FSGS, APOL1-mediated kidney disease, and IgA
-        Nephropathy — building the partnerships needed to close the gap in kidney care, starting
-        in the Bronx.
+        Kidney disease disparities don't exist in isolation. We educate underserved communities
+        about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — building the partnerships
+        needed to close the gap in kidney care, starting in the Bronx.
       </p>
       <div class="cluster gap-3 reveal" style="--reveal-delay:0.24s">
         <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
@@ -30,15 +71,15 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
     <div class="container stats-row">
       <div class="stat reveal">
-        <div class="stat-num" data-count="8">0</div>
+        <span class="stat-badge badge-signal"><span class="stat-num" data-count="8">0</span></span>
         <p class="stat-label">Lives changed by one donor's decision to join a kidney exchange chain</p>
       </div>
       <div class="stat reveal" style="--reveal-delay:0.1s">
-        <div class="stat-num" data-count="3">0</div>
+        <span class="stat-badge badge-steel"><span class="stat-num" data-count="3">0</span></span>
         <p class="stat-label">Rare kidney diseases at the center of our education work</p>
       </div>
       <div class="stat reveal" style="--reveal-delay:0.2s">
-        <div class="stat-num" data-count="2">0</div>
+        <span class="stat-badge badge-outline"><span class="stat-num" data-count="2">0</span></span>
         <p class="stat-label">Kidney transplants — the founder's own story, start to now</p>
       </div>
     </div>
@@ -66,27 +107,48 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <!-- THE NEED — light, informative -->
-  <section class="on-light section">
+  <!-- WHO THIS IS FOR -->
+  <section class="on-light section-tight">
     <div class="container">
-      <p class="eyebrow">The Need</p>
-      <h2 class="h2">Rare kidney disease, plainly explained.</h2>
-      <p class="lede" style="max-width:62ch;">
-        Kidney disease disparities are downstream of poverty, unequal access to education,
-        incarceration, broken homes, and the chronic stress those conditions produce. The Jentosy
-        Project treats health equity as inseparable from these upstream social conditions.
-      </p>
+      <p class="eyebrow">Who This Is For</p>
+      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Four audiences, one shared goal.</h2>
+      <div class="grid audience-grid">
+        {audiences.map((a, i) => (
+          <a href="/partner-with-us/" class="card card-steel reveal audience-card" style={`--reveal-delay:${i * 0.08}s`}>
+            <h3 class="h3">{a.name}</h3>
+            <p>{a.pitch}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-      <div class="grid disease-grid">
-        <a href="/the-need/fsgs/" class="card card-steel reveal disease-card">
+  <!-- THE NEED — light, informative. Pinned scroll: the heading holds in
+       place while the three disease cards stack into view, GSAP
+       ScrollTrigger-driven (desktop/motion-safe only — see script below). -->
+  <section class="on-light need-stack" data-need-stack>
+    <div class="container need-stack-inner">
+      <div class="need-stack-text">
+        <p class="eyebrow">The Need</p>
+        <h2 class="h2">Rare kidney disease, plainly explained.</h2>
+        <p class="lede" style="max-width:52ch;">
+          Kidney disease disparities are downstream of poverty, unequal access to education,
+          incarceration, broken homes, and the chronic stress those conditions produce. The
+          Jentosy Project treats health equity as inseparable from these upstream social
+          conditions.
+        </p>
+      </div>
+
+      <div class="disease-grid" data-need-cards>
+        <a href="/the-need/fsgs/" class="card card-steel disease-card">
           <h3 class="h3">FSGS</h3>
           <p>Focal segmental glomerulosclerosis — how it presents, and why early awareness matters.</p>
         </a>
-        <a href="/the-need/apol1/" class="card card-steel reveal disease-card" style="--reveal-delay:0.1s">
+        <a href="/the-need/apol1/" class="card card-steel disease-card">
           <h3 class="h3">APOL1-Mediated Kidney Disease</h3>
           <p>A genetic risk factor concentrated in Black and Brown communities.</p>
         </a>
-        <a href="/the-need/iga-nephropathy/" class="card card-steel reveal disease-card" style="--reveal-delay:0.2s">
+        <a href="/the-need/iga-nephropathy/" class="card card-steel disease-card">
           <h3 class="h3">IgA Nephropathy</h3>
           <p>One of the most common forms of kidney disease worldwide — and one of the least discussed.</p>
         </a>
@@ -94,20 +156,30 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
-  <!-- WHAT WE DO teaser -->
+  <!-- HOW IT WORKS -->
   <section class="on-light section-tight teaser-band">
-    <div class="container teaser-grid">
-      <div>
-        <p class="eyebrow">What We Do</p>
-        <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">
-          Education and outreach in the Bronx — expanding over time.
-        </h2>
-        <p>
-          Our current focus is education and health equity: reaching people before they reach the
-          transplant list. Transplantation equity remains part of our long-term mission.
-        </p>
-        <a href="/what-we-do/" class="btn btn-steel" style="margin-top:var(--space-3);">Learn what we do</a>
+    <div class="container">
+      <p class="eyebrow">How It Works</p>
+      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">
+        Education and outreach in the Bronx — expanding over time.
+      </h2>
+      <p class="lede" style="max-width:56ch;">
+        Our current focus is education and health equity: reaching people before they reach the
+        transplant list. Transplantation equity remains part of our long-term mission.
+      </p>
+
+      <div class="grid how-it-works-grid">
+        {howItWorks.map((item, i) => (
+          <div class="how-it-works-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <span class="how-it-works-step">{item.step}</span>
+            <h3 class="h3">{item.name}</h3>
+            <p>{item.body}</p>
+            <a href={item.href} class="linkline how-it-works-link">{item.linkLabel} &rarr;</a>
+          </div>
+        ))}
       </div>
+
+      <a href="/what-we-do/" class="btn btn-steel" style="margin-top:var(--space-6);">Learn what we do</a>
     </div>
   </section>
 
@@ -148,15 +220,37 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .stat {
     flex: 1 1 220px;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
     padding: var(--space-6) var(--space-3) var(--space-6) 0;
+  }
+
+  .stat-badge {
+    flex-shrink: 0;
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--eyebrow-accent);
+  }
+
+  .badge-signal { background: var(--rust); }
+  .badge-steel { background: var(--steel); }
+  .badge-outline { background: var(--ink); border-color: var(--rust); }
+
+  .stat-badge .stat-num {
+    font-size: 30px;
+    color: var(--ink-fg);
   }
 
   .stat-label {
     font-size: 13.5px;
     color: var(--ink-fg-muted);
-    margin-top: var(--space-2);
     line-height: 1.4;
-    max-width: 30ch;
+    max-width: 26ch;
   }
 
   .timeline-wrap {
@@ -190,13 +284,28 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     text-decoration: underline;
   }
 
-  .disease-grid {
-    grid-template-columns: repeat(3, 1fr);
-    margin-top: var(--space-6);
+  .need-stack {
+    overflow: clip;
   }
 
-  @media (max-width: 780px) {
-    .disease-grid {
+  .need-stack-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .need-stack-text {
+    max-width: 46ch;
+  }
+
+  .disease-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 900px) {
+    .need-stack-inner {
       grid-template-columns: 1fr;
     }
   }
@@ -209,11 +318,99 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
   .disease-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(16, 22, 28, 0.08);
+    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
+  }
+
+  /* Applied by the GSAP script only on wide, motion-safe viewports — the
+     three cards occupy the same box and cross-fade/slide as one "active"
+     card at a time, so the pin never leaves dead space behind it. Without
+     JS (or on mobile / prefers-reduced-motion) the cards stay in normal
+     grid flow above, all visible at once — the safe default. */
+  .need-stack.is-pinned .disease-grid {
+    position: relative;
+    min-height: 230px;
+  }
+
+  .need-stack.is-pinned .disease-card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    will-change: transform, opacity;
+  }
+
+  .audience-grid {
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 900px) {
+    .audience-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .audience-card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .audience-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
+  }
+
+  .audience-card .h3 {
+    font-size: 16px;
+  }
+
+  .audience-card p {
+    font-size: 13.5px;
   }
 
   .teaser-band {
     border-top: 1px solid var(--line);
+  }
+
+  .how-it-works-grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 780px) {
+    .how-it-works-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .how-it-works-item {
+    border-top: 3px solid var(--steel);
+    padding-top: var(--space-4);
+  }
+
+  .how-it-works-step {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 34px;
+    color: var(--eyebrow-accent);
+    line-height: 1;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .how-it-works-link {
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-weight: 700;
+    color: var(--steel);
   }
 
   .cta-inner {
@@ -228,3 +425,47 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     max-width: 52ch;
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wideEnough = window.matchMedia("(min-width: 900px)").matches;
+
+  const stackSection = document.querySelector<HTMLElement>("[data-need-stack]");
+  const cards = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-need-cards] .disease-card")
+  );
+
+  if (stackSection && cards.length > 1 && !prefersReducedMotion && wideEnough) {
+    stackSection.classList.add("is-pinned");
+
+    gsap.set(cards[0], { autoAlpha: 1, y: 0 });
+    gsap.set(cards.slice(1), { autoAlpha: 0, y: 50 });
+
+    // Each card fully clears out (fade + slide) before the next one starts
+    // fading in — a simultaneous crossfade of stacked paragraph text reads
+    // as double-exposed noise, so the two phases never overlap in time.
+    const tl = gsap.timeline();
+    cards.forEach((card, i) => {
+      if (i === 0) return;
+      const label = `step${i}`;
+      tl.addLabel(label)
+        .to(cards[i - 1], { autoAlpha: 0, y: -40, duration: 0.5, ease: "power1.in" }, label)
+        .to(card, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power1.out" }, `${label}+=0.5`);
+    });
+
+    ScrollTrigger.create({
+      trigger: stackSection,
+      start: "top top",
+      end: `+=${(cards.length - 1) * 70}%`,
+      pin: true,
+      pinSpacing: true,
+      scrub: 0.6,
+      animation: tl,
+    });
+  }
+</script>

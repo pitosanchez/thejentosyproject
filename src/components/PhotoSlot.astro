@@ -1,0 +1,55 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+interface Props {
+  src: string;
+  alt: string;
+  ratio?: string;
+}
+const { src, alt, ratio = "4 / 3" } = Astro.props;
+const exists = fs.existsSync(path.join(process.cwd(), "public", src));
+---
+
+{exists ? (
+  <img src={src} alt={alt} class="photo-slot" style={`aspect-ratio:${ratio};`} />
+) : (
+  <div class="photo-slot photo-slot-placeholder" style={`aspect-ratio:${ratio};`}>
+    <p class="eyebrow" style="color:var(--steel); margin-bottom:var(--space-2);">Photo placeholder</p>
+    <p>
+      Drop the real photo at <code>public{src}</code> and it'll appear here automatically —
+      no code changes needed.
+    </p>
+  </div>
+)}
+
+<style>
+  .photo-slot {
+    width: 100%;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    display: block;
+  }
+
+  .photo-slot-placeholder {
+    border: 1.5px dashed var(--line-strong);
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-6);
+  }
+
+  .photo-slot-placeholder p:last-child {
+    font-size: 13.5px;
+    color: var(--fg-muted);
+  }
+
+  .photo-slot-placeholder code {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: var(--paper);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+</style>

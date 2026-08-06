@@ -28,6 +28,13 @@ const ga4Id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID;
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
     {ga4Id && (
       <>
         <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`}></script>
