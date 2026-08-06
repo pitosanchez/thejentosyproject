@@ -25,16 +25,16 @@ function contrast(hex1, hex2) {
 
 // Current tokens (keep in sync with src/styles/global.css)
 const tokens = {
-  ink: "#14213B",
-  paper: "#F5F1E8",
-  card: "#FBF8F1",
-  rust: "#B03D1E",
-  "rust-ink": "#FBF6EF",
-  steel: "#1E7A72",
-  "steel-ink": "#FBF6EF",
-  "eyebrow-accent": "#E3B23C",
-  fg: "#14213B",
-  "ink-fg": "#F2EFE3",
+  ink: "#1D2A1E",
+  paper: "#F6F2E8",
+  card: "#EEE7D6",
+  rust: "#83592B",
+  "rust-ink": "#FBF6EC",
+  steel: "#446040",
+  "steel-ink": "#F3EEDD",
+  "eyebrow-accent": "#E7DFC8",
+  fg: "#262A21",
+  "ink-fg": "#F3EEDD",
 };
 
 const pairs = [
@@ -45,9 +45,14 @@ const pairs = [
   ["ink-fg on ink (headline/body dark)", tokens["ink-fg"], tokens.ink, 4.5],
   ["eyebrow-accent on ink", tokens["eyebrow-accent"], tokens.ink, 4.5],
   ["fg on paper (headline/body light)", tokens.fg, tokens.paper, 4.5],
-  ["steel as outline-button border on ink (UI component)", tokens.steel, tokens.ink, 3.0],
+  // Neither accent is asked to double as a UI element directly on the dark
+  // --ink background (see the token comment in global.css) — dark-bg
+  // outline buttons use --ink-fg instead, so that's the pair that matters.
+  ["ink-fg as outline-button border on ink (UI component)", tokens["ink-fg"], tokens.ink, 3.0],
   ["rust text on card", tokens.rust, tokens.card, 4.5],
   ["steel text on card", tokens.steel, tokens.card, 4.5],
+  ["rust as left-border accent on card (UI component)", tokens.rust, tokens.card, 3.0],
+  ["steel as left-border accent on card (UI component)", tokens.steel, tokens.card, 3.0],
 ];
 
 console.log("label".padEnd(52), "ratio".padEnd(8), "required", "pass?");

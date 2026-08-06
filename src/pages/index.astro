@@ -49,8 +49,10 @@ const howItWorks = [
   title="Home"
   description="The Jentosy Project advances health equity for underserved communities by educating people about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — starting in the Bronx."
 >
-  <!-- HERO — dark, bold opening -->
-  <section class="on-dark hero-section">
+  <!-- HERO — full-bleed photo, elegant serif overlay -->
+  <section class="on-dark hero-photo">
+    <img class="hero-bg" src="/images/community-education.png" alt="" aria-hidden="true" />
+    <div class="hero-scrim"></div>
     <div class="container hero-inner">
       <p class="eyebrow reveal">Health Equity &middot; Rare Kidney Disease</p>
       <h1 class="h1 reveal" style="--reveal-delay:0.08s">The Jentosy Project, Inc.</h1>
@@ -64,22 +66,20 @@ const howItWorks = [
         <a href="/donate/" class="btn btn-rust">Donate</a>
       </div>
     </div>
+  </section>
 
-    <div class="container credibility divider-dark">
-      <span class="ink-fg-muted">Independently reported by</span>&nbsp;<strong>CBS News New York</strong>
-    </div>
-
+  <section class="on-dark">
     <div class="container stats-row">
       <div class="stat reveal">
-        <span class="stat-badge badge-signal"><span class="stat-num" data-count="8">0</span></span>
+        <span class="stat-num" data-count="8">0</span>
         <p class="stat-label">Lives changed by one donor's decision to join a kidney exchange chain</p>
       </div>
       <div class="stat reveal" style="--reveal-delay:0.1s">
-        <span class="stat-badge badge-steel"><span class="stat-num" data-count="3">0</span></span>
+        <span class="stat-num" data-count="3">0</span>
         <p class="stat-label">Rare kidney diseases at the center of our education work</p>
       </div>
       <div class="stat reveal" style="--reveal-delay:0.2s">
-        <span class="stat-badge badge-outline"><span class="stat-num" data-count="2">0</span></span>
+        <span class="stat-num" data-count="2">0</span>
         <p class="stat-label">Kidney transplants — the founder's own story, start to now</p>
       </div>
     </div>
@@ -202,15 +202,34 @@ const howItWorks = [
 </BaseLayout>
 
 <style>
-  .hero-inner {
-    padding-top: clamp(var(--space-8), 8vw, var(--space-9));
-    padding-bottom: clamp(var(--space-6), 6vw, var(--space-7));
-    max-width: 760px;
+  .hero-photo {
+    position: relative;
+    min-height: 88vh;
+    display: flex;
+    align-items: center;
+    overflow: clip;
   }
 
-  .credibility {
-    padding-block: var(--space-4);
-    font-size: 14px;
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(29,42,30,0.6) 0%, rgba(29,42,30,0.46) 45%, rgba(29,42,30,0.78) 100%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(var(--space-7), 8vw, var(--space-9));
+    max-width: 760px;
   }
 
   .stats-row {
@@ -220,30 +239,13 @@ const howItWorks = [
 
   .stat {
     flex: 1 1 220px;
-    display: flex;
-    align-items: center;
-    gap: var(--space-4);
     padding: var(--space-6) var(--space-3) var(--space-6) 0;
+    border-top: 1px solid var(--ink-line);
   }
 
-  .stat-badge {
-    flex-shrink: 0;
-    width: 76px;
-    height: 76px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid var(--eyebrow-accent);
-  }
-
-  .badge-signal { background: var(--rust); }
-  .badge-steel { background: var(--steel); }
-  .badge-outline { background: var(--ink); border-color: var(--rust); }
-
-  .stat-badge .stat-num {
-    font-size: 30px;
-    color: var(--ink-fg);
+  .stat-num {
+    display: block;
+    margin-bottom: var(--space-2);
   }
 
   .stat-label {
@@ -260,7 +262,10 @@ const howItWorks = [
   .timeline-year {
     font-size: 12px;
     font-weight: 800;
-    color: var(--rust);
+    /* --eyebrow-accent, not --rust: this label sits on the dark --ink
+       hero background, and --rust is only verified for light-background
+       use — see the token comment in global.css. */
+    color: var(--eyebrow-accent);
     letter-spacing: 0.02em;
   }
 
@@ -398,9 +403,13 @@ const howItWorks = [
 
   .how-it-works-step {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 600;
+    font-style: italic;
     font-size: 34px;
-    color: var(--eyebrow-accent);
+    /* --steel, not --eyebrow-accent: this sits on the light --paper
+       background (the "How It Works" section is on-light) —
+       eyebrow-accent is only verified for dark-background use. */
+    color: var(--steel);
     line-height: 1;
     display: block;
     margin-bottom: var(--space-2);
