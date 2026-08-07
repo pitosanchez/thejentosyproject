@@ -17,7 +17,12 @@
       "WebFetch(domain:support.google.com)",
       "WebFetch(domain:bloomerang.com)",
       "Bash(git init *)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "WebFetch(domain:pmc.ncbi.nlm.nih.gov)",
+      "WebFetch(domain:consultqd.clevelandclinic.org)",
+      "Bash(mkdir -p bronx-history)",
+      "Bash(curl -sIL \"https://images.nypl.org/index.php?id=701179&t=w\")",
+      "Bash(curl -sIL \"https://images.nypl.org/index.php?id=809099&t=w\")"
     ]
   }
 }
