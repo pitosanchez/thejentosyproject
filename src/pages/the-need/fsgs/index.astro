@@ -1,22 +1,546 @@
 ---
-import DiseasePage from "../../../components/DiseasePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
 import StatTile from "../../../components/StatTile.astro";
+import Donut from "../../../components/charts/Donut.astro";
+import StackedBar from "../../../components/charts/StackedBar.astro";
+import NumberedSteps from "../../../components/NumberedSteps.astro";
+import { viz } from "../../../lib/palette";
+
+const heroStats = [
+  { value: "~5,400", label: "new FSGS diagnoses per year in the US.", source: "USRDS 2023." },
+  { value: "3–4×", label: "higher rate in Black vs. white adults.", source: "NephCure FSGS Report." },
+  { value: "50K+", label: "Americans living with FSGS today.", source: "JASN 2021 Epidemiology Review." },
+];
+
+const types = [
+  {
+    label: "Primary (idiopathic)",
+    value: 40,
+    color: viz.orange,
+    tag: "Idiopathic · ~40% · Most common type in clinical practice",
+    body: "No identifiable cause. The immune system appears to attack the kidney's filtering units for reasons that remain unclear. Usually responds to immunosuppressive therapy — but relapse is common.",
+  },
+  {
+    label: "Secondary",
+    value: 35,
+    color: viz.blue,
+    tag: "Caused by another condition · ~35% · Treatment targets the cause, not just the kidney",
+    body: "Driven by a known underlying factor: diabetes, obesity, HIV infection, sickle cell disease, or medication toxicity. Treating the root cause is the primary strategy — not immunosuppression.",
+  },
+  {
+    label: "Genetic / Familial",
+    value: 15,
+    color: viz.pink,
+    tag: "Familial / Inherited · ~15% · APOL1 is the most common genetic driver in Black patients",
+    body: "Gene mutations — including APOL1 — damage the kidney's podocytes directly. Can appear in multiple family members. Often resistant to steroids. Genetic testing can confirm.",
+  },
+  {
+    label: "Unknown",
+    value: 10,
+    color: viz.neutral,
+    tag: "Undetermined · ~10% · Diagnosis requires kidney biopsy to confirm",
+    body: "Extensive testing cannot identify the cause. Treatment is empirical — often trials of immunosuppression, with close monitoring of kidney function and protein levels.",
+  },
+];
+
+const riskFactors = [
+  { name: "African American descent", tag: "Highest risk", body: "Structural, historical, and genetic factors converge. Not reducible to any single cause." },
+  { name: "APOL1 high-risk genotype", tag: "Genetic driver", body: "Two APOL1 risk copies substantially raise FSGS risk and accelerate progression." },
+  { name: "HIV infection", tag: "Secondary FSGS trigger", body: "HIV-associated nephropathy (HIVAN) is a form of secondary FSGS. Antiretroviral therapy is protective." },
+  { name: "Obesity", tag: "Mechanical stress", body: "Excess weight puts chronic mechanical strain on glomeruli, accelerating adaptive FSGS." },
+  { name: "Male sex", tag: "Moderate risk factor", body: "Males develop FSGS at slightly higher rates than females, particularly primary FSGS." },
+  { name: "Prior kidney disease", tag: "Compounding risk", body: "Existing CKD or congenital anomalies raise adaptive FSGS risk." },
+];
+
+const symptomsList = [
+  { glyph: "◎", name: "Foamy urine", body: "Protein spilling into urine (proteinuria) — often the first noticeable sign." },
+  { glyph: "▽", name: "Swelling (edema)", body: "Especially in legs, ankles, around the eyes — from low protein in blood." },
+  { glyph: "⊕", name: "Weight gain from fluid", body: "Rapid unexplained gain from retained water." },
+  { glyph: "◑", name: "Fatigue and weakness", body: "Toxin buildup as kidney function declines." },
+  { glyph: "▲", name: "High blood pressure", body: "Both a symptom and an accelerator of damage." },
+  { glyph: "—", name: "Loss of appetite", body: "Uremia (waste buildup) suppresses appetite." },
+  { glyph: "~", name: "Muscle cramps", body: "Electrolyte imbalances from impaired filtration." },
+];
+
+const diagnosisSteps = [
+  { title: "Urine protein test", body: "Routine dipstick or quantitative urine test detects protein — the earliest marker. Persistent proteinuria above 3.5g/day suggests nephrotic syndrome." },
+  { title: "Blood tests (eGFR, creatinine, albumin)", body: "Kidney function tests reveal how much filtering capacity remains. Low serum albumin alongside high proteinuria points toward nephrotic-range disease." },
+  { title: "Imaging (ultrasound)", body: "Rules out structural kidney problems, cysts, or obstruction. Cannot diagnose FSGS — but confirms kidney size and rules out other causes." },
+  { title: "Kidney biopsy", tag: "Required for diagnosis", body: "A small needle extracts kidney tissue. Pathologists examine it under microscope for the distinctive \"focal, segmental\" scarring pattern. This is the definitive test — and determines the FSGS type." },
+  { title: "APOL1 genetic testing", tag: "For eligible patients", body: "Blood or saliva sample. Recommended for Black patients with FSGS of unclear cause — identifies the genetic FSGS subtype and informs treatment decisions." },
+];
+
+const medications = [
+  { name: "ACE Inhibitors / ARBs", tag: "First line", body: "Reduce blood pressure and protein leakage. Slow progression in all FSGS types." },
+  { name: "Corticosteroids", tag: "Primary FSGS", body: "Reduce immune attack on glomeruli. Can induce remission but require monitoring for side effects." },
+  { name: "Immunosuppressants", tag: "Steroid-resistant", body: "Tacrolimus, cyclosporine, mycophenolate — used when steroids fail or when tapering." },
+  { name: "Diuretics", tag: "Symptom management", body: "Reduce fluid retention and edema. Do not slow disease but improve quality of life." },
+];
+
+const lifestyle = ["Low sodium diet", "Low protein intake", "Regular exercise", "No smoking", "Healthy weight", "Avoid NSAIDs", "Vitamin D"];
+
+const outcomes = [
+  { label: "Reached ESKD by 10 years", value: 50, color: viz.orange },
+  { label: "Partial / complete remission", value: 30, color: viz.green },
+  { label: "Stable CKD without remission", value: 20, color: viz.amber },
+];
+
+const questions = [
+  { ask: "Ask your doctor", q: "Which type of FSGS do I have? Does the type change which treatment is right for me?" },
+  { ask: "Ask about testing", q: "Should I be tested for APOL1 variants? How would that change my treatment plan?" },
+  { ask: "Ask about monitoring", q: "How often should I check my urine protein and eGFR? What trend should I watch for?" },
+  { ask: "Ask about remission", q: "What does remission look like for my type of FSGS? What is my probability of achieving it?" },
+  { ask: "Ask about clinical trials", q: "Am I eligible for any FSGS clinical trials? What is being studied right now?" },
+  { ask: "Ask about structure", q: "How does where I live affect my access to nephrology care? Are there telehealth options?" },
+];
 ---
 
-<DiseasePage
+<BaseLayout
   title="FSGS"
-  description="FSGS (Focal Segmental Glomerulosclerosis) is the rare kidney disease at the center of our founder's own story."
-  fullName="Focal Segmental Glomerulosclerosis"
-  whatItIs="FSGS causes scarring in the glomeruli — the tiny filtering units inside the kidneys. As scar tissue builds up, the kidneys lose their ability to filter waste and excess fluid from the blood, which can progress to kidney failure requiring dialysis or a transplant. It can also recur after a transplant, attacking a new kidney the way it did the original ones."
-  whoItAffects="FSGS can affect anyone, but it disproportionately affects Black Americans, partly linked to genetic risk factors like APOL1 gene variants. It is often diagnosed later in underserved communities, where access to nephrology care and early screening is limited."
-  whyItMatters="FSGS is the disease our founder, Robert Sanchez, has lived with since 2009 — through one transplant, its recurrence, dialysis, and a second transplant in 2021. It's the reason The Jentosy Project exists."
+  description="FSGS (Focal Segmental Glomerulosclerosis) is the rare kidney disease at the center of our founder's own story — scarring in the kidney's filtering units."
 >
-  <Fragment slot="stats">
-    <StatTile
-      value="40–60%"
-      label="of Black patients with primary FSGS carry two APOL1 kidney-risk variants — a major reason FSGS and APOL1 are treated as connected priorities here."
-      source="KDIGO/APOL1 peer-reviewed literature; estimate applies to Black patients with primary FSGS in research settings, not the Bronx specifically."
-      accent="#eb6834"
-    />
-  </Fragment>
-</DiseasePage>
+  <PageHero eyebrow="The Need · Understanding FSGS" heading="50% reach kidney failure." lede="Within 10 years of FSGS diagnosis, without adequate treatment. It is the leading cause of nephrotic syndrome in adults and one of the most common reasons Black patients reach end-stage kidney disease." />
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <div class="grid stat-grid-3">
+        {heroStats.map((s, i) => (
+          <div class="reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <StatTile value={s.value} label={s.label} source={s.source} accent={viz.orange} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT'S HAPPENING IN YOUR KIDNEY ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">What Is Happening in Your Kidney</p>
+      <h2 class="h2">Scarring where blood is filtered.</h2>
+      <p>
+        Each kidney contains about one million tiny filters called glomeruli. Their job: clean
+        waste and excess fluid from your blood, hour by hour, for your entire life. In FSGS —
+        Focal Segmental Glomerulosclerosis — scar tissue forms directly on some of those filters.
+      </p>
+      <p>
+        <strong>Focal</strong> means only some glomeruli are affected. <strong>Segmental</strong>{" "}
+        means only part of each affected glomerulus scars. But as scarring spreads, kidney
+        function steadily declines.
+      </p>
+      <p>
+        The key cell being damaged is the <strong>podocyte</strong> — a specialized cell that
+        wraps around the glomerular capillaries and acts as the final filter barrier. When
+        podocytes are lost, they cannot regenerate. The resulting leak allows protein — which
+        should stay in the blood — to spill into the urine.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-6);">
+      <div class="card filtration-diagram" data-filtration>
+        <p class="viz-title">The Filtration Process</p>
+        <div class="filtration-track">
+          <div class="filtration-line"></div>
+          <div class="filtration-dot" data-filtration-dot aria-hidden="true"></div>
+          <div class="filtration-node">
+            <span class="node-label">Blood In</span>
+          </div>
+          <div class="filtration-node">
+            <span class="node-label">Glomerulus</span>
+            <span class="node-sub">Normal filter</span>
+          </div>
+          <div class="filtration-node node-scar" data-filtration-scar>
+            <span class="node-label">Scar Tissue</span>
+          </div>
+          <div class="filtration-node">
+            <span class="node-label">Blood Out</span>
+          </div>
+        </div>
+        <div class="filtration-result" data-filtration-result>
+          <strong>Protein leak</strong> &rarr; foamy urine
+        </div>
+        <p class="viz-note" style="margin-top:var(--space-4);">
+          Foamy urine is often the first sign — protein in urine creates bubbles. If you notice
+          persistent foaminess, ask your doctor for a urine protein test.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOUR TYPES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">The Four Types of FSGS</p>
+      <h2 class="h2">Same disease. Very different causes.</h2>
+      <p class="section-dek">
+        FSGS is not one disease — it is a pattern of kidney injury with multiple causes. The type
+        determines treatment. Getting the type wrong means treating the wrong target.
+      </p>
+
+      <div class="card viz-card" style="margin-top:var(--space-5);">
+        <Donut data={types.map((t) => ({ label: t.label, value: t.value, color: t.color }))} />
+        <p class="viz-source">Approximate distribution &middot; NephCure FSGS State of Disease Report 2021.</p>
+      </div>
+
+      <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:var(--space-4); margin-top:var(--space-5);">
+        {types.map((t, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.06}s; border-left:2px solid ${t.color};`}>
+            <p class="mini-tag">{t.tag}</p>
+            <h3 class="h3" style="font-size:19px;">{t.label}</h3>
+            <p>{t.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHO IS MOST AFFECTED ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Who Is Most Affected</p>
+      <h2 class="h2">This is not distributed equally.</h2>
+      <p>
+        Black adults are 3&ndash;4 times more likely to develop FSGS than white adults. Among
+        Black FSGS patients, approximately 25% carry the high-risk APOL1 genotype — which drives
+        faster progression and greater dialysis risk.
+      </p>
+      <p>
+        But genetics alone does not explain this disparity. Research consistently shows that
+        later diagnosis, less access to nephrology care, higher rates of uninsured status, and
+        neighborhood-level structural factors all contribute to worse outcomes.
+      </p>
+    </div>
+    <div class="container">
+      <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
+        <StatTile value="40%" label="of primary FSGS cases in large US registries are among Black adults." source="FSGS Clinical Trial Registry." accent={viz.orange} />
+        <StatTile value="50%" label="of Black FSGS patients reach ESKD within 10 years without remission." source="Kopp et al. JASN 2011." accent={viz.orange} />
+        <StatTile value="25%" label="of Black FSGS patients carry the high-risk APOL1 genotype." source="USRDS 2023." accent={viz.orange} />
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ KEY RISK FACTORS ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Key Risk Factors</p>
+      <h2 class="h3">Structural, historical, and genetic factors converge.</h2>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-top:var(--space-5);">
+        {riskFactors.map((r, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <p class="mini-tag">{r.tag}</p>
+            <h3 class="h3" style="font-size:17px;">{r.name}</h3>
+            <p>{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RECOGNIZING FSGS ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Recognizing FSGS</p>
+      <h2 class="h2">Many people have no symptoms at all until damage is significant.</h2>
+      <p>
+        This is what makes FSGS dangerous: the kidneys lose function silently. By the time edema
+        or fatigue appears, substantial scarring may have already occurred. Routine
+        protein-in-urine tests are the earliest and most reliable warning sign.
+      </p>
+    </div>
+    <div class="container">
+      <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:var(--space-3); margin-top:var(--space-5);">
+        {symptomsList.map((s) => (
+          <div class="symptom-row">
+            <span class="symptom-glyph" aria-hidden="true">{s.glyph}</span>
+            <div>
+              <p class="symptom-name">{s.name}</p>
+              <p class="symptom-body">{s.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="card card-steel" style="margin-top:var(--space-6);">
+        <p class="eyebrow" style="margin-bottom:8px;">When to See a Doctor</p>
+        <p style="margin:0;">
+          If you notice persistent foamy urine, unexplained leg or ankle swelling, or rapid
+          weight gain without a change in eating — ask for a urine protein test. A simple
+          dipstick test in a doctor's office can detect proteinuria in minutes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PATH TO DIAGNOSIS ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">The Path to Diagnosis</p>
+      <h2 class="h3">Only a kidney biopsy can confirm FSGS.</h2>
+      <NumberedSteps steps={diagnosisSteps} />
+    </div>
+  </section>
+
+  <!-- ============ TREATMENT ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Treatment</p>
+      <h2 class="h2">Treatment depends on which type you have.</h2>
+      <p class="section-dek">
+        The same medications that help primary FSGS can be harmful in genetic FSGS. This is why
+        biopsy type matters before any treatment begins.
+      </p>
+
+      <div class="grid" style="grid-template-columns:repeat(4,1fr); gap:var(--space-4); margin-top:var(--space-5);">
+        {medications.map((m, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.06}s`}>
+            <p class="mini-tag">{m.tag}</p>
+            <h3 class="h3" style="font-size:16px;">{m.name}</h3>
+            <p style="font-size:13.5px;">{m.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="viz-grid" style="margin-top:var(--space-6);">
+        <div class="card viz-card">
+          <h3 class="viz-title">Lifestyle modifications</h3>
+          <ul class="check-list">
+            {lifestyle.map((l) => <li>{l}</li>)}
+          </ul>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">10-year outcomes after diagnosis</h3>
+          <StackedBar data={outcomes} suffix="%" />
+          <p class="viz-source">Braun et al. CJASN 2021 &middot; NephCure Foundation.</p>
+        </div>
+      </div>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">Short-term goals</h3>
+          <p style="margin:0;">Reduce protein in urine &middot; control blood pressure &middot; manage swelling.</p>
+        </div>
+        <div class="card viz-card">
+          <h3 class="viz-title">Long-term goals</h3>
+          <p style="margin:0;">Preserve remaining kidney function &middot; delay or prevent dialysis &middot; maintain quality of life.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHERE YOU LIVE ============ -->
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">FSGS and Where You Live</p>
+      <p class="stat-num" style="display:block; font-size:clamp(40px,5vw,56px);">~40%</p>
+      <p class="lede" style="max-width:60ch;">
+        Despite representing ~13% of the US population, Black adults account for ~40% of primary
+        FSGS cases in large registry studies.
+      </p>
+      <h2 class="h3" style="margin-top:var(--space-6); color:var(--ink-fg);">Genetics explains part of this. Place explains the rest.</h2>
+      <p class="lede" style="max-width:64ch;">
+        APOL1 variants increase biological risk. But the gap in outcomes between Black and white
+        FSGS patients cannot be attributed to genetics alone. Studies show that insurance
+        coverage, proximity to a nephrologist, neighborhood food access, and systemic barriers to
+        early care all predict who progresses to dialysis — and who doesn't. This is why mapping
+        where patients live matters: the zip code someone receives care in shapes their FSGS
+        outcome as much as the variant they carry.
+      </p>
+      <p class="disclaimer-dark">FSGS Clinical Trial Registry 2021.</p>
+    </div>
+  </section>
+
+  <!-- ============ YOUR FSGS JOURNEY ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Your FSGS Journey</p>
+      <h2 class="h2">No two cases are the same.</h2>
+      <p class="section-dek">
+        FSGS is a condition that requires close, ongoing partnership with your care team. Close
+        monitoring changes outcomes. These questions can help you start that conversation.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:var(--space-4); margin-top:var(--space-5);">
+        {questions.map((item, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <p class="mini-tag">{item.ask}</p>
+            <p class="question-text">&ldquo;{item.q}&rdquo;</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="lede"><a href="/the-need/apol1/" class="linkline">Learn About APOL1 &rarr;</a></p>
+      <div class="disclaimer">
+        <p>
+          This page provides general, credibility-level information — not medical advice.
+          Content pending clinical-accuracy review before publication.
+        </p>
+      </div>
+      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to The Need</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  /* ---------- Filtration diagram ---------- */
+
+  .filtration-diagram {
+    position: relative;
+  }
+
+  .filtration-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+  }
+
+  .filtration-line {
+    position: absolute;
+    top: 0;
+    left: 6%;
+    right: 6%;
+    height: 2px;
+    background: var(--line-strong);
+  }
+
+  .filtration-dot {
+    position: absolute;
+    top: -5px;
+    left: 6%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--rust);
+    display: none;
+  }
+
+  .filtration-diagram.is-animated .filtration-dot {
+    display: block;
+  }
+
+  .filtration-node {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .node-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .node-sub {
+    font-size: 11px;
+    color: var(--fg-muted);
+  }
+
+  .node-scar .node-label {
+    color: var(--rust);
+  }
+
+  /* Scale/shadow only — never opacity. Both nodes carry real content
+     (the scar label, the protein-leak result), so a scrub timeline that
+     doesn't land exactly right must never leave them dim or unreadable;
+     it can only make them "pop" a little once the dot arrives. */
+  .filtration-diagram.is-animated .node-scar {
+    transform: scale(0.92);
+    transition: transform var(--dur-med) var(--ease);
+  }
+
+  .filtration-diagram.is-animated .node-scar.is-visible {
+    transform: scale(1.08);
+  }
+
+  .filtration-result {
+    margin-top: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--rust);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+  }
+
+  .filtration-diagram.is-animated .filtration-result {
+    transform: translateY(6px);
+    transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
+  }
+
+  .filtration-diagram.is-animated .filtration-result.is-visible {
+    transform: translateY(0);
+    box-shadow: 0 4px 14px rgba(131, 89, 43, 0.18);
+  }
+
+  @media (max-width: 700px) {
+    .filtration-track {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    .filtration-line,
+    .filtration-dot {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wideEnough = window.matchMedia("(min-width: 700px)").matches;
+
+  const diagram = document.querySelector<HTMLElement>("[data-filtration]");
+  const dot = document.querySelector<HTMLElement>("[data-filtration-dot]");
+  const scarNode = document.querySelector<HTMLElement>("[data-filtration-scar]");
+  const resultPanel = document.querySelector<HTMLElement>("[data-filtration-result]");
+
+  // Blood flows through the diagram as the reader scrolls: a dot travels
+  // left-to-right along the filter's timeline, and the scar-tissue node
+  // plus the "protein leak" result only light up once the dot reaches
+  // them — visually tying cause (scarring) to effect (the leak). Without
+  // JS, reduced motion, or a narrow viewport, everything just renders
+  // fully visible and static (see .is-animated gate in the CSS).
+  if (diagram && dot && scarNode && resultPanel && !prefersReducedMotion && wideEnough) {
+    diagram.classList.add("is-animated");
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: diagram,
+        start: "top 70%",
+        end: "bottom 50%",
+        scrub: 0.6,
+      },
+    });
+
+    tl.to(dot, { left: "48%", duration: 1, ease: "none" })
+      .to(dot, { left: "72%", duration: 1, ease: "none" })
+      .add(() => scarNode.classList.add("is-visible"))
+      .to(dot, { left: "94%", duration: 1, ease: "none" })
+      .add(() => resultPanel.classList.add("is-visible"));
+  }
+</script>

@@ -1,0 +1,23 @@
+---
+const stages = [
+  { name: "Stage 1", egfr: "90+", desc: "Normal or high", color: "#1baf7a" },
+  { name: "Stage 2", egfr: "60–89", desc: "Mildly decreased", color: "#1baf7a" },
+  { name: "Stage 3a", egfr: "45–59", desc: "Mild–moderate", color: "#eda100" },
+  { name: "Stage 3b", egfr: "30–44", desc: "Moderate–severe", color: "#eda100" },
+  { name: "Stage 4", egfr: "15–29", desc: "Severely decreased", color: "#eb6834" },
+  { name: "Stage 5", egfr: "<15", desc: "Kidney failure", color: "#eb6834", failure: true },
+];
+---
+
+<div class="stage-stepper">
+  {stages.map((s) => (
+    <div class={`stage reveal${s.failure ? " is-failure" : ""}`} style={`--stage-color:${s.color}`}>
+      <p class="stage-name">{s.name}</p>
+      <p class="stage-egfr">{s.egfr}</p>
+      <p class="stage-desc">{s.desc}</p>
+    </div>
+  ))}
+</div>
+<p class="viz-source" style="margin-top:var(--space-3);">
+  eGFR = estimated glomerular filtration rate, mL/min/1.73m² — measured by a routine blood test. Stage 5 (eGFR under 15) is end-stage kidney disease (ESKD), requiring dialysis or transplant.
+</p>

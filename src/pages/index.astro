@@ -291,9 +291,13 @@ const howItWorks = [
 
   .need-stack {
     overflow: clip;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
   }
 
   .need-stack-inner {
+    width: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 5vw, 72px);

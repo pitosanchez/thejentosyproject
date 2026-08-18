@@ -2,6 +2,11 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import StatTile from "../../components/StatTile.astro";
+import StackedBar from "../../components/charts/StackedBar.astro";
+import HBarList from "../../components/charts/HBarList.astro";
+import StageStepper from "../../components/StageStepper.astro";
+import NumberedSteps from "../../components/NumberedSteps.astro";
+import { viz } from "../../lib/palette";
 
 // Categorical hues: fixed order by identity, validated CVD-safe
 // (dataviz skill default palette, checked against --card #F7F5EF).
@@ -69,6 +74,75 @@ const diseases = [
     blurb: "One of the most common forms of kidney disease worldwide.",
   },
 ];
+
+// ---------- National "Understanding Kidney Disease" content ----------
+
+const nationalOverview = [
+  { value: "37M", label: "Americans are living with chronic kidney disease.", source: "CDC Chronic Kidney Disease Fact Sheet, March 2026." },
+  { value: "87%", label: "of those with CKD don't know they have it yet.", source: "CDC Chronic Kidney Disease Fact Sheet, March 2026." },
+  { value: "14%", label: "of all US adults are estimated to have CKD.", source: "CDC Chronic Kidney Disease Fact Sheet, March 2026." },
+  { value: "131K", label: "new kidney-failure (ESKD) cases were diagnosed in 2023.", source: "CDC / USRDS Annual Data Report 2023." },
+];
+
+const disparity = [
+  { label: "Non-Hispanic Black", value: 22, color: viz.orange, display: "22%" },
+  { label: "Adults 65 and older", value: 34, color: viz.purple, display: "34%" },
+  { label: "Non-Hispanic White", value: 13, color: viz.green, display: "13%" },
+  { label: "Hispanic", value: 12, color: viz.blue, display: "12%" },
+];
+
+const eskdCauses = [
+  { label: "Diabetes", value: 37, color: viz.orange },
+  { label: "High blood pressure", value: 27, color: viz.blue },
+  { label: "Glomerulonephritis", value: 14, color: viz.purple },
+  { label: "Unknown", value: 7, color: viz.neutral },
+  { label: "Other", value: 10, color: "#c3b696" },
+  { label: "Cystic kidney disease", value: 5, color: viz.pink },
+];
+
+const eskdTreatment = [
+  { label: "Dialysis", value: 67, color: viz.orange, note: "≈557,000 people, sessions 3×/week" },
+  { label: "Transplant", value: 33, color: viz.green, note: "≈274,000 transplant recipients" },
+];
+
+const kidneyFunctions = [
+  "Help control blood pressure",
+  "Balance salt and minerals in your blood",
+  "Help your body make red blood cells",
+  "Keep your bones strong",
+];
+
+const diagnosisSteps = [
+  { title: "High levels of waste in the blood", body: "A basic blood test (creatinine, eGFR) reveals how well your kidneys are filtering." },
+  { title: "Protein in the urine", body: "Protein shouldn't normally pass into urine — its presence (proteinuria) is often the earliest sign." },
+  { title: "Tiny amounts of blood in the urine", body: "Hematuria, sometimes invisible without a lab test, can point to kidney damage." },
+];
+
+const symptoms = [
+  "Nausea and vomiting",
+  "Loss of appetite",
+  "Fatigue and weakness",
+  "Sleep problems",
+  "Decreased mental sharpness",
+  "High blood pressure that's hard to manage",
+  "Shortness of breath (if fluid builds up in the lungs)",
+];
+
+const treatmentHabits = [
+  "Take your medications as prescribed",
+  "Monitor your blood pressure regularly",
+  "Get regular kidney function tests",
+  "Follow dietary recommendations",
+  "Work closely with your healthcare team",
+];
+
+const riskFactors = [
+  "Long-standing high blood pressure",
+  "Diabetes",
+  "Autoimmune diseases such as lupus",
+  "Family history of kidney disease",
+  "APOL1 genetic variations",
+];
 ---
 
 <BaseLayout
@@ -105,6 +179,262 @@ const diseases = [
     </div>
   </section>
 
+  <!-- ============ UNDERSTANDING KIDNEY DISEASE — national primer ============ -->
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container">
+      <p class="eyebrow">Understanding Kidney Disease</p>
+      <h2 class="h2 reveal">37 million Americans.</h2>
+      <p class="lede reveal" style="--reveal-delay:0.08s; max-width:60ch;">
+        Chronic kidney disease affects roughly 1 in 7 US adults — and most of them don't know it
+        yet. That gap between how common CKD is and how invisible it feels is exactly why this
+        page exists.
+      </p>
+
+      <div class="grid stat-grid-4" style="margin-top:var(--space-6);">
+        {nationalOverview.map((s, i) => (
+          <div class="reveal" style={`--reveal-delay:${0.12 + i * 0.06}s`}>
+            <StatTile value={s.value} label={s.label} source={s.source} accent="#e7dfc8" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">CKD Prevalence by Race &amp; Ethnicity</p>
+      <h2 class="h2">This disease does not strike equally.</h2>
+      <p class="section-dek">
+        These are not random numbers. They reflect decades of unequal access to care, housing,
+        food, and economic stability — not genetic destiny.
+      </p>
+
+      <div class="viz-grid" style="align-items:start;">
+        <div class="card viz-card card-rust">
+          <p class="stat-value-inline">4&times;</p>
+          <h3 class="viz-title">Higher rate of kidney failure</h3>
+          <p>
+            Non-Hispanic Black adults develop end-stage kidney disease at 4&times; the rate of
+            non-Hispanic White adults. Hispanic adults develop ESKD at 2&times; the rate.
+          </p>
+          <p class="viz-source">CDC, March 2026 &middot; USRDS Annual Data Report 2023.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">CKD prevalence among US adults</h3>
+          <p class="viz-note">By race/ethnicity and age group — bar length proportional to prevalence rate.</p>
+          <HBarList data={disparity} max={40} suffix="%" />
+          <p class="viz-source">CDC Chronic Kidney Disease Fact Sheet, March 2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">End-Stage Kidney Disease &middot; 2023</p>
+      <h2 class="h2">831,000 Americans are living with kidney failure.</h2>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">What causes kidney failure</h3>
+          <p class="viz-note">Among 131,564 new ESKD cases in 2023.</p>
+          <StackedBar data={eskdCauses} suffix="%" />
+          <p class="viz-source">USRDS / CDC 2026.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">How patients are treated</h3>
+          <p class="viz-note">67% depend on dialysis to survive — of the total prevalent ESKD population.</p>
+          <StackedBar data={eskdTreatment} suffix="%" />
+          <p class="viz-source">Total prevalent ESKD population, 2023 &middot; USRDS / CDC 2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT IS KIDNEY DISEASE ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">What Is Kidney Disease?</p>
+      <h2 class="h3">A filtration system, damaged over time.</h2>
+      <p>
+        Chronic kidney disease (CKD) happens when the kidneys are damaged for more than a few
+        months. Think of your kidneys as your body's filtration system — they clean the blood by
+        removing waste and extra fluid, which then leaves the body as urine.
+      </p>
+      <p>But kidneys do much more than just filter waste. They also:</p>
+      <ul class="check-list">
+        {kidneyFunctions.map((f) => <li>{f}</li>)}
+      </ul>
+      <p>
+        When kidneys are damaged, they can't do these jobs properly. Waste and fluid build up in
+        your body, which can cause serious health problems.
+      </p>
+
+      <div class="card card-steel" style="margin-top:var(--space-5);">
+        <p class="eyebrow" style="margin-bottom:8px;">Important</p>
+        <p style="margin:0;">
+          In the early stages of kidney disease, you might not feel sick or have any symptoms.
+          You might not know that you have kidney disease until the condition is advanced. This
+          is why regular check-ups matter, especially if you have risk factors like high blood
+          pressure or diabetes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIVE STAGES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);" data-stage-section>
+    <div class="container">
+      <p class="eyebrow">The Five Stages of Kidney Disease</p>
+      <h2 class="h2">From normal function to failure.</h2>
+      <p class="section-dek">
+        Your healthcare team determines your stage using a blood test called the estimated
+        glomerular filtration rate (eGFR) — it measures how much blood your kidneys filter each
+        minute. A low eGFR number means your kidneys are working less well.
+      </p>
+
+      <StageStepper />
+
+      <p style="margin-top:var(--space-5); max-width:var(--reading-max);">
+        When the kidneys no longer work at the level needed to keep a person alive, it's called
+        end-stage kidney disease (ESKD) — an eGFR under 15. At this point, a person needs either a
+        kidney transplant or dialysis, a treatment that does the job of the kidneys.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ DIAGNOSIS ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">How Do Doctors Find Kidney Disease?</p>
+      <h2 class="h3">Blood and urine tests, first.</h2>
+      <p>Healthcare professionals can find kidney disease through blood and urine tests. These tests look for:</p>
+      <NumberedSteps steps={diagnosisSteps} />
+      <p style="margin-top:var(--space-5);">Doctors might also use imaging tests like:</p>
+      <ul class="check-list">
+        <li><strong>Ultrasound</strong> — creates pictures of your kidneys using sound waves.</li>
+        <li><strong>CT scans</strong> — take detailed X-ray images to look at the kidneys in detail.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ SYMPTOMS ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Symptoms of Kidney Disease</p>
+      <h2 class="h3">Symptoms develop slowly — often too slowly to notice.</h2>
+      <p>
+        Chronic kidney disease symptoms tend to develop slowly over time. In the early stages,
+        you might not notice anything at all. This is why many people don't realize they have
+        kidney disease until it's advanced.
+      </p>
+      <p>
+        <strong>Why symptoms develop:</strong> loss of kidney function causes a buildup of fluid
+        or waste in your body. It also can cause acids, potassium, and phosphate to build up in
+        the blood — all of which can cause symptoms.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(2,1fr); gap:var(--space-2) var(--space-5); margin-top:var(--space-5);">
+        {symptoms.map((s) => <p class="symptom-item">{s}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TREATMENT ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Treatment for Kidney Disease</p>
+      <h2 class="h3">Slowing the damage, not just managing symptoms.</h2>
+      <p>
+        The goal of treatment is to slow down damage to the kidneys. This is often done by
+        managing the underlying cause of the damage — for example, controlling blood pressure or
+        managing diabetes.
+      </p>
+      <p>
+        However, even after a cause has been found and treated, kidney damage could still get
+        worse. This is why it's important to:
+      </p>
+      <ul class="check-list">
+        {treatmentHabits.map((t) => <li>{t}</li>)}
+      </ul>
+
+      <div class="card card-rust" style="margin-top:var(--space-6);">
+        <p class="eyebrow" style="margin-bottom:8px;">If kidney disease progresses to end-stage</p>
+        <p style="margin:0;">
+          Chronic kidney disease can progress to end-stage kidney failure. This is fatal unless a
+          person gets a kidney transplant or starts dialysis — a treatment that does the job of
+          the kidneys. Of the 831,000 Americans currently living with ESKD, 67% are on dialysis
+          and 33% have a transplant.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHEN TO SEE A DOCTOR ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">When to See a Doctor</p>
+      <h2 class="h3">Risk factors your doctor should know about.</h2>
+      <p>
+        If you have an ongoing health condition that raises your risk of kidney disease, your
+        main healthcare professional may want to monitor the health of your kidneys. Risk factors
+        include:
+      </p>
+      <ul class="check-list">
+        {riskFactors.map((r) => <li>{r}</li>)}
+      </ul>
+      <p>
+        You may see your main healthcare professional every 6 to 12 months for these tests. If
+        test results show possible kidney problems, you may be referred to a nephrologist — a
+        doctor who specializes in kidney diseases.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ TYPES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Different Types of Kidney Disease</p>
+      <h2 class="h3">The type you have shapes how it's treated.</h2>
+      <p>
+        Chronic kidney disease can result from many different causes. Two are the focus of our
+        education work — read more on their dedicated pages above. Other types include diabetic
+        kidney disease, lupus nephritis, polycystic kidney disease, and kidney disease caused by
+        high blood pressure. Your doctor can explain which type you have and what it means for
+        your treatment.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ BOTTOM LINE ============ -->
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">The Bottom Line</p>
+      <p class="lede reveal" style="max-width:64ch;">
+        Kidney disease often has no symptoms in early stages, making regular check-ups essential
+        if you have risk factors. The good news is that treatment can slow disease progression,
+        especially when started early. Work with your healthcare team to monitor your kidney
+        health and manage any underlying conditions.
+      </p>
+      <p class="disclaimer-dark">
+        This page provides general, credibility-level education — not medical advice. Talk to
+        your doctor about your own risk and testing schedule.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ LOCAL & NATIONAL CONTEXT (Bronx) ============ -->
+
   <section class="on-light section-tight viz-root" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">Local &amp; National Context</p>
@@ -138,13 +468,13 @@ const diseases = [
           <h3 class="viz-title">A major kidney-risk disparity in the Bronx</h3>
           <p class="viz-note">Diabetes hospitalizations, age-adjusted rate per 10,000 — a leading cause of chronic kidney disease.</p>
           <div class="bar-row">
-            {diabetes.map((d) => (
+            {diabetes.map((d, i) => (
               <div class="bar-col">
                 <span class="bar-value">{d.value}</span>
                 <div class="bar-track">
                   <div
                     class="bar-fill"
-                    style={`height:${(d.value / diabetesMax) * 100}%; background:${raceColor[d.label]}`}
+                    style={`height:${(d.value / diabetesMax) * 100}%; background:${raceColor[d.label]}; --reveal-delay:${i * 0.08}s`}
                   ></div>
                 </div>
                 <span class="bar-label">{d.label}</span>
@@ -241,204 +571,57 @@ const diseases = [
     color: var(--steel);
   }
 
-  /* ---------- Data section ---------- */
-
-  .section-dek {
-    font-size: 15px;
-    color: var(--fg-muted);
-    max-width: 62ch;
-    margin-top: var(--space-2);
-  }
-
-  .viz-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-5);
-    margin-top: var(--space-6);
-    align-items: stretch;
-  }
-
-  @media (max-width: 780px) {
-    .viz-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .viz-card {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .viz-title {
-    font-size: 15px;
-    font-weight: 800;
+  .stat-value-inline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(40px, 5vw, 56px);
+    color: var(--rust);
+    line-height: 1;
     margin: 0 0 var(--space-2);
-    color: var(--fg);
   }
 
-  .viz-note {
-    font-size: 13px;
-    color: var(--fg-muted);
-    margin: 0 0 var(--space-4);
-  }
-
-  .viz-source {
-    font-size: 11.5px;
-    color: var(--fg-muted);
-    margin: var(--space-4) 0 0;
-  }
-
-  /* Donut */
-  .donut-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-5);
-    flex-wrap: wrap;
-  }
-
-  .donut {
-    flex: 0 0 140px;
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .donut-hole {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: var(--card);
-  }
-
-  .legend {
-    list-style: none;
+  .symptom-item {
     margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    flex: 1 1 180px;
-  }
-
-  .legend li {
-    display: flex;
-    align-items: center;
-    gap: var(--space-2);
-    font-size: 12.5px;
-  }
-
-  .swatch {
-    flex: 0 0 10px;
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-  }
-
-  .legend-label {
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14.5px;
     color: var(--fg-soft);
-    flex: 1;
+    max-width: none;
   }
 
-  .legend-value {
-    color: var(--fg);
-    font-weight: 700;
-    font-variant-numeric: tabular-nums;
-  }
-
-  /* Bar chart */
-  .bar-row {
-    display: flex;
-    align-items: flex-end;
-    gap: var(--space-4);
-    flex: 1;
-    min-height: 160px;
-  }
-
-  .bar-col {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--space-2);
-    height: 100%;
-    justify-content: flex-end;
-  }
-
-  .bar-value {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--fg);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .bar-track {
-    width: 100%;
-    height: 120px;
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .bar-fill {
-    width: 100%;
-    border-radius: 2px 2px 0 0;
-    min-height: 4px;
-  }
-
-  .bar-label {
-    font-size: 11px;
-    color: var(--fg-muted);
-    text-align: center;
-    line-height: 1.3;
-  }
-
-  /* Dot plot */
-  .dot-plot {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-  }
-
-  .dot-row {
-    display: grid;
-    grid-template-columns: 140px 1fr 44px;
-    align-items: center;
-    gap: var(--space-3);
-  }
-
-  .dot-label {
-    font-size: 12.5px;
-    color: var(--fg-soft);
-  }
-
-  .dot-track {
-    position: relative;
-    height: 2px;
-    background: var(--line);
-    border-radius: 2px;
-  }
-
-  .dot-marker {
-    position: absolute;
-    top: 50%;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    border: 2px solid var(--card);
-  }
-
-  .dot-value {
-    font-size: 12.5px;
-    font-weight: 700;
-    color: var(--fg);
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .gap-card {
-    margin-top: var(--space-5);
-  }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stageSection = document.querySelector<HTMLElement>("[data-stage-section]");
+  const stages = Array.from(document.querySelectorAll<HTMLElement>(".stage-stepper .stage"));
+
+  // The five CKD stages animate in sequence as the reader scrolls past the
+  // stepper — each stage "lights up" in turn, so the progression from
+  // normal function to kidney failure is felt, not just read. Purely a
+  // scroll-scrubbed opacity/scale ramp; layout never depends on it.
+  if (stageSection && stages.length && !prefersReducedMotion) {
+    // Scale only — never opacity. If ScrollTrigger's scrub math doesn't
+    // land exactly right (a stitched full-page screenshot capture, a
+    // rare browser edge case), the stages must still read as fully
+    // visible text, never stuck dim or blank.
+    gsap.set(stages, { scale: 0.94 });
+    const tl = gsap.timeline();
+    stages.forEach((stage) => {
+      tl.to(stage, { scale: 1, duration: 0.3, ease: "power1.out" }, "+=0.05");
+    });
+
+    ScrollTrigger.create({
+      trigger: stageSection,
+      start: "top 75%",
+      end: "bottom 60%",
+      scrub: 0.6,
+      animation: tl,
+    });
+  }
+</script>

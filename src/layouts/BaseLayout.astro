@@ -66,7 +66,7 @@ const ga4Id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID;
       // screenshot where content below the fold never revealed). A short
       // timeout force-reveals everything regardless of scroll state, so
       // the animation is strictly a bonus, never a gate.
-      const revealables = document.querySelectorAll(".reveal, .timeline-item");
+      const revealables = document.querySelectorAll(".reveal, .timeline-item, .bar-fill, .hbar-fill");
       const revealAll = () => revealables.forEach((el) => el.classList.add("is-visible"));
 
       if ("IntersectionObserver" in window) {

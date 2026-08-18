@@ -1,0 +1,32 @@
+---
+interface Segment {
+  label: string;
+  value: number;
+  color: string;
+  note?: string;
+}
+
+interface Props {
+  data: Segment[];
+  suffix?: string;
+}
+
+const { data, suffix = "%" } = Astro.props;
+---
+
+<div>
+  <div class="stacked-bar">
+    {data.map((d) => (
+      <div class="stacked-bar-segment" style={`width:${d.value}%; background:${d.color}`} title={`${d.label}: ${d.value}${suffix}`}></div>
+    ))}
+  </div>
+  <ul class="stacked-legend">
+    {data.map((d) => (
+      <li>
+        <span class="swatch" style={`background:${d.color}`}></span>
+        <span class="legend-label">{d.label}{d.note && <> — {d.note}</>}</span>
+        <span class="legend-value">{d.value}{suffix}</span>
+      </li>
+    ))}
+  </ul>
+</div>

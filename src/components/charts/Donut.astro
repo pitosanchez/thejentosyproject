@@ -1,0 +1,38 @@
+---
+interface Slice {
+  label: string;
+  value: number;
+  color: string;
+}
+
+interface Props {
+  data: Slice[];
+  suffix?: string;
+}
+
+const { data, suffix = "%" } = Astro.props;
+
+let cum = 0;
+const stops = data
+  .map((d) => {
+    const start = cum;
+    cum += d.value;
+    return `${d.color} ${start}% ${cum}%`;
+  })
+  .join(", ");
+---
+
+<div class="donut-row">
+  <div class="donut" style={`background: conic-gradient(${stops})`}>
+    <div class="donut-hole"></div>
+  </div>
+  <ul class="legend">
+    {data.map((d) => (
+      <li>
+        <span class="swatch" style={`background:${d.color}`}></span>
+        <span class="legend-label">{d.label}</span>
+        <span class="legend-value">{d.value}{suffix}</span>
+      </li>
+    ))}
+  </ul>
+</div>

@@ -1,22 +1,487 @@
 ---
-import DiseasePage from "../../../components/DiseasePage.astro";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
 import StatTile from "../../../components/StatTile.astro";
+import Donut from "../../../components/charts/Donut.astro";
+import HBarList from "../../../components/charts/HBarList.astro";
+import NumberedSteps from "../../../components/NumberedSteps.astro";
+import { viz } from "../../../lib/palette";
+
+const heroStats = [
+  { value: "3–4×", label: "higher lifetime risk of ESKD with two copies.", source: "NEJM 2010." },
+  { value: "5–10", label: "years earlier onset than average.", source: "Lancet 2017." },
+  { value: "25%", label: "of Black FSGS patients carry two copies.", source: "NIH APOLLO." },
+];
+
+const inheritance = [
+  { name: "Zero copies", tag: "Typical risk", body: "No inherited G1/G2 variant. APOL1 does not meaningfully raise kidney risk." },
+  { name: "One copy", tag: "Low added risk", body: "A single risk variant from one parent is almost always harmless on its own." },
+  { name: "Two copies", tag: "High risk", body: "One risk variant inherited from each parent — the genotype associated with significantly elevated kidney risk." },
+];
+
+const copyDistribution = [
+  { label: "No risk copies (0)", value: 60, color: viz.green },
+  { label: "One risk copy (carrier)", value: 28, color: viz.amber },
+  { label: "Two risk copies (high)", value: 12, color: viz.orange },
+];
+
+const carrierRates = [
+  { label: "G1 variant (one or two copies)", value: 22, color: viz.blue, display: "22%" },
+  { label: "G2 variant (one or two copies)", value: 14, color: viz.purple, display: "14%" },
+  { label: "Two high-risk copies total", value: 12, color: viz.orange, display: "12%" },
+];
+
+const conditions = [
+  { name: "FSGS", tag: "5–10× elevated", body: "Focal Segmental Glomerulosclerosis — scarring of the kidney's filtering units. APOL1 is the strongest genetic driver of FSGS in Black patients." },
+  { name: "HIVAN", tag: "Very high with HIV", body: "HIV-Associated Nephropathy. Black patients with HIV and 2 APOL1 copies have dramatically elevated risk of rapid kidney failure." },
+  { name: "CKD / Hypertension", tag: "2–3× elevated", body: "APOL1 variants make high blood pressure more damaging to kidney tissue — accelerating CKD progression significantly." },
+  { name: "Lupus Nephritis", tag: "Worse outcomes", body: "Black patients with lupus who carry 2 APOL1 copies are more likely to develop severe kidney complications." },
+  { name: "Sickle Cell Nephropathy", tag: "Compounding risk", body: "Sickle cell disease combined with APOL1 high-risk genotype compounds kidney damage faster than either condition alone." },
+  { name: "Transplant Outcomes", tag: "Donor risk factor", body: "Living kidney donors with 2 APOL1 copies face higher post-donation CKD risk. Testing is recommended before Black donors donate." },
+];
+
+const progression = [
+  { label: "No risk variants", value: 28, color: viz.green, display: "~28 yrs" },
+  { label: "One risk copy", value: 24, color: viz.amber, display: "~24 yrs" },
+  { label: "Two risk copies", value: 18, color: viz.orange, display: "~18 yrs" },
+];
+
+const actions = [
+  {
+    title: "Control blood pressure",
+    body: "The single most impactful thing you can do. Target the levels your doctor sets — not just \"normal.\" APOL1 makes hypertension more damaging to kidney tissue.",
+  },
+  {
+    title: "Get a kidney health baseline",
+    body: "eGFR and urine protein tests once a year if you have two risk copies. Problems caught early can be slowed. Caught late, options narrow fast.",
+  },
+  {
+    title: "Avoid NSAID painkillers",
+    body: "Common over-the-counter NSAIDs — ibuprofen (Advil, Motrin), naproxen (Aleve), and aspirin above 325mg/day — reduce blood flow to the kidneys and are harder on kidneys under stress, per National Kidney Foundation guidance. Acetaminophen (Tylenol) is generally the safer choice for occasional pain if you have kidney disease — but ask your doctor before using any pain medication regularly, especially if your eGFR is under 60.",
+  },
+  {
+    title: "Manage diabetes and HIV",
+    body: "Both conditions interact with APOL1 variants to accelerate kidney damage. Tight control of blood sugar or viral load is protective.",
+  },
+  {
+    title: "Ask about inaxaplin",
+    body: "A new drug specifically targeting APOL1-mediated kidney disease is in clinical trials. Ask your nephrologist whether you qualify.",
+  },
+];
+
+const testingCriteria = [
+  "Have African ancestry and kidney disease with unclear cause",
+  "Are considering living kidney donation",
+  "Have HIV and African ancestry",
+  "Have a family history of kidney failure",
+];
+
+const recap = [
+  { title: "Two copies, both parents", body: "You need TWO high-risk copies — one from each parent — for risk to rise significantly. One copy alone is usually harmless." },
+  { title: "Genotype is not destiny", body: "Having two copies does not mean you will get kidney disease. Lifestyle and access to care matter enormously." },
+  { title: "Blood pressure control", body: "Your most powerful protection. This single factor has strong evidence behind it." },
+  { title: "An evolutionary advantage, not a deficiency", body: "These variants are the result of surviving sleeping sickness, not a biological flaw. Context matters." },
+  { title: "The treatment landscape is changing", body: "Inaxaplin and other targeted therapies are in late-stage trials." },
+  { title: "Ask about testing", body: "If you have African ancestry and unexplained kidney disease, ask your doctor about APOL1 testing." },
+];
 ---
 
-<DiseasePage
-  title="APOL1-Mediated Kidney Disease"
-  description="APOL1 gene variants are a major genetic risk factor for kidney disease, concentrated in people of recent West African ancestry."
-  fullName="APOL1 Gene Variants and Kidney Disease Risk"
-  whatItIs="Certain variants in the APOL1 gene significantly increase the risk of developing chronic kidney disease, including a faster path to kidney failure. Carrying two high-risk APOL1 variants doesn't guarantee kidney disease, but it substantially raises the odds, especially in combination with conditions like hypertension or FSGS."
-  whoItAffects="APOL1 high-risk variants are concentrated in people of recent West African ancestry, which means they disproportionately affect Black Americans. Most people who carry these variants are never told about their risk, because APOL1 testing is not yet part of routine care."
-  whyItMatters="APOL1-related risk is a clear example of a genetic factor intersecting with structural inequity — awareness and testing access remain low precisely in the communities most affected. Educating people about APOL1 is central to reaching people before kidney disease progresses."
+<BaseLayout
+  title="APOL1"
+  description="APOL1-mediated kidney disease: a genetic risk factor concentrated in people with African ancestry, rooted in evolutionary protection against sleeping sickness."
 >
-  <Fragment slot="stats">
-    <StatTile
-      value="~13%"
-      label="of Black Americans are estimated to carry two high-risk APOL1 variants. Carrying the genotype doesn't guarantee kidney disease — but it raises the odds significantly, and most carriers are never told."
-      source="Peer-reviewed APOL1 literature and KDIGO summaries; commonly cited estimate is about 13% of Black Americans."
-      accent="#e87ba4"
-    />
-  </Fragment>
-</DiseasePage>
+  <PageHero eyebrow="The Need · Understanding APOL1" heading="1 in 10 Black Americans." lede="Carry two copies of APOL1 gene variants that significantly raise their lifetime risk of kidney disease — years before any symptoms appear." />
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <div class="grid stat-grid-3">
+        {heroStats.map((s, i) => (
+          <div class="reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <StatTile value={s.value} label={s.label} source={s.source} accent={viz.orange} />
+          </div>
+        ))}
+      </div>
+      <p class="viz-source" style="margin-top:var(--space-4);">
+        Sources: NEJM 2010 &middot; Lancet 2017 &middot; NIH APOL1 Long-term Kidney Transplantation Outcomes Network (APOLLO).
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ WHAT IS APOL1 ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">What Is the APOL1 Gene?</p>
+      <h2 class="h2">A gene that once saved lives.</h2>
+      <p>
+        APOL1 is a protein your body makes to fight infections. Thousands of years ago in West
+        Africa, two variations of this gene — called G1 and G2 — offered powerful protection
+        against sleeping sickness, a deadly parasitic disease. People who carried them were more
+        likely to survive. More likely to have children. The variants spread.
+      </p>
+      <p>
+        The same variants that protected those ancestors now carry a tradeoff: when someone
+        inherits two copies — one from each parent — the elevated APOL1 activity that fights
+        parasites becomes harmful to kidney tissue over time.
+      </p>
+      <p>
+        This is not a flaw. It is evolution — the same mechanism found in sickle cell trait,
+        where the variant that protects against malaria with one copy can cause disease with two.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ HOW MANY COPIES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">How Many Copies You Inherit</p>
+      <h2 class="h3">APOL1 risk variant inheritance — autosomal recessive pattern.</h2>
+      <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
+        {inheritance.map((c, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <p class="mini-tag">{c.tag}</p>
+            <h3 class="h3" style="font-size:18px;">{c.name}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="card card-steel" style="margin-top:var(--space-5);">
+        <p style="margin:0;">
+          <strong>The key:</strong> one copy from one parent is almost always harmless. You need
+          to inherit a risk variant from both parents for kidney risk to rise significantly.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHO CARRIES IT ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Who Carries APOL1 Risk Variants</p>
+      <h2 class="h2">Most people with risk variants will never get kidney disease.</h2>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">APOL1 copy distribution &middot; African Americans</h3>
+          <Donut data={copyDistribution} />
+          <p class="viz-source">~12% carry two copies — the genotype associated with significantly elevated risk. Prevalence estimates based on population genetics studies &middot; APOL1 JASN 2016.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">Individual variant carrier rate &middot; African Americans</h3>
+          <HBarList data={carrierRates} max={25} suffix="%" />
+          <p class="viz-note" style="margin-top:var(--space-4);">
+            G1+G1, G1+G2, or G2+G2 make up the high-risk genotype. G1 and G2 variants are rare in
+            populations without recent African ancestry — making this a condition that
+            disproportionately shapes kidney outcomes in Black communities.
+          </p>
+          <p class="viz-source">Genovese et al., Science 2010 &middot; Kopp et al., NEJM 2011.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ EVOLUTIONARY CONTEXT ============ -->
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">Evolutionary Context</p>
+      <h2 class="h2">Sleeping sickness then. Kidney disease now.</h2>
+      <p class="lede">
+        African trypanosomiasis — sleeping sickness — was lethal across sub-Saharan Africa for
+        millennia. The G1 and G2 APOL1 variants gave their carriers immunity. Communities that
+        carried them survived the disease. Those that didn't were wiped out.
+      </p>
+      <p class="lede">
+        Those variants arrived in the Americas through the forced migration of enslaved Africans.
+        They remain common today — a biological legacy of both evolution and history.
+      </p>
+      <p class="lede">
+        Understanding this context is not a footnote. It is the reason APOL1 kidney disease is
+        concentrated in Black communities — and why structural inequity, not just genetics,
+        shapes who gets diagnosed, who gets treated, and who gets care.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-6);" data-outcomes>
+      <p class="eyebrow" style="text-align:center;">The Same Gene — Two Outcomes</p>
+      <div class="outcomes-row">
+        <div class="outcome-card outcome-left" data-outcome-left>
+          <p class="outcome-era">West Africa &middot; Centuries ago</p>
+          <p class="outcome-headline">Protected from sleeping sickness</p>
+          <p class="outcome-body">APOL1 variants &rarr; survived sleeping sickness</p>
+        </div>
+        <div class="outcome-connector" data-outcome-connector>APOL1</div>
+        <div class="outcome-card outcome-right" data-outcome-right>
+          <p class="outcome-era">United States &middot; Today</p>
+          <p class="outcome-headline">Elevated kidney risk</p>
+          <p class="outcome-body">2 copies &rarr; 3–4× higher kidney disease risk</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHAT APOL1 CAN CAUSE ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">What APOL1 Can Cause</p>
+      <h2 class="h2">Two copies raise risk across multiple conditions.</h2>
+      <p class="section-dek">
+        The same high-risk genotype interacts differently depending on what else is happening in
+        your body. Each condition below carries a distinct elevated risk.
+      </p>
+      <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-top:var(--space-5);">
+        {conditions.map((c, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <p class="mini-tag">{c.tag}</p>
+            <h3 class="h3" style="font-size:17px;">{c.name}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="viz-source" style="margin-top:var(--space-4);">Risk estimates from Kopp et al. NEJM 2011 &middot; Parsa et al. NEJM 2013 &middot; Friedman et al. JASN 2017.</p>
+    </div>
+  </section>
+
+  <!-- ============ HOW FAST IT PROGRESSES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">How Fast It Progresses</p>
+      <h2 class="h2">Years earlier. Not decades.</h2>
+      <p>
+        APOL1 kidney disease doesn't change whether you might eventually develop kidney failure —
+        it changes when. On average, 5 to 10 years earlier than peers without the high-risk
+        genotype.
+      </p>
+      <p>
+        That gap is the entire window for prevention. Early blood pressure control, regular
+        monitoring, and avoiding kidney-damaging medications can delay — sometimes indefinitely —
+        the progression to dialysis or transplant.
+      </p>
+    </div>
+    <div class="container">
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <StatTile
+          value="5–10"
+          label="years earlier onset of ESKD, compared to matched patients without high-risk APOL1 genotype — even after adjusting for blood pressure, diabetes, and other factors."
+          source="Cohort studies, APOL1 literature."
+          accent={viz.orange}
+        />
+        <div class="card viz-card">
+          <h3 class="viz-title">Median time to dialysis need (CKD Stage 1 start)</h3>
+          <HBarList data={progression} max={30} />
+          <p class="viz-note" style="margin-top:var(--space-4);">
+            Illustrative ranges based on cohort studies. Individual progression varies
+            substantially with comorbidities, blood pressure control, and access to care.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ IF YOU HAVE TWO COPIES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">If You Have Two Copies</p>
+      <h2 class="h2">You have more agency than the diagnosis suggests.</h2>
+      <p>
+        Carrying two APOL1 risk copies is not a sentence. The majority of people with the
+        genotype never develop kidney failure. These actions make a measurable difference.
+      </p>
+      <NumberedSteps steps={actions} />
+      <p class="viz-source">
+        NSAID guidance: National Kidney Foundation, "Pain Medicines and Your Kidneys." This is
+        general education, not medical advice — talk to your doctor before starting, stopping, or
+        changing any medication.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SHOULD YOU GET TESTED ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Should You Get Tested?</p>
+      <h2 class="h3">Not yet standard of care — but recommended for some.</h2>
+      <p>Routine APOL1 screening is not yet standard of care — but it is recommended if you:</p>
+      <ul class="check-list">
+        {testingCriteria.map((t) => <li>{t}</li>)}
+      </ul>
+      <p>Testing is a simple blood or saliva sample. Ask your nephrologist or primary care doctor.</p>
+      <p class="viz-source">NephCure Kidney International &middot; ASN APOL1 Position Statement &middot; NIH APOLLO Study 2023.</p>
+    </div>
+  </section>
+
+  <!-- ============ KEY THINGS TO REMEMBER ============ -->
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">Key Things to Remember</p>
+      <ol class="recap-list">
+        {recap.map((r, i) => (
+          <li class="recap-item reveal" style={`--reveal-delay:${i * 0.06}s`}>
+            <span class="recap-num">{i + 1}</span>
+            <p><strong>{r.title}.</strong> {r.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="lede"><a href="/the-need/fsgs/" class="linkline">Learn About FSGS &rarr;</a></p>
+      <div class="disclaimer">
+        <p>
+          This page provides general, credibility-level information — not medical advice.
+          Content pending clinical-accuracy review before publication.
+        </p>
+      </div>
+      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to The Need</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .recap-list {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .recap-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+
+  .recap-item p {
+    margin: 0;
+    color: var(--ink-fg-muted);
+    font-size: 14.5px;
+  }
+
+  .recap-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--eyebrow-accent);
+  }
+
+  /* ---------- Two outcomes panel ---------- */
+
+  .outcomes-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-5);
+    align-items: center;
+    margin-top: var(--space-5);
+  }
+
+  @media (max-width: 780px) {
+    .outcomes-row {
+      grid-template-columns: 1fr;
+    }
+    .outcome-connector {
+      justify-self: center;
+    }
+  }
+
+  .outcome-card {
+    background: var(--ink-soft);
+    border: 1px solid var(--ink-line);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5);
+  }
+
+  .outcome-era {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--eyebrow-accent);
+    margin: 0 0 var(--space-2);
+  }
+
+  .outcome-headline {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink-fg);
+    margin: 0 0 var(--space-2);
+  }
+
+  .outcome-body {
+    font-size: 13.5px;
+    color: var(--ink-fg-muted);
+    margin: 0;
+  }
+
+  .outcome-connector {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-fg);
+    border: 1px solid var(--ink-line-strong);
+    border-radius: var(--radius-pill);
+    padding: var(--space-2) var(--space-4);
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wideEnough = window.matchMedia("(min-width: 780px)").matches;
+
+  const outcomesSection = document.querySelector<HTMLElement>("[data-outcomes]");
+  const left = document.querySelector<HTMLElement>("[data-outcome-left]");
+  const right = document.querySelector<HTMLElement>("[data-outcome-right]");
+  const connector = document.querySelector<HTMLElement>("[data-outcome-connector]");
+
+  // One gene, two eras: the two outcome cards arrive from the center and
+  // settle into place as the reader scrolls, so the "same gene, two
+  // outcomes" idea is felt as a literal divergence, not just read.
+  //
+  // Position/scale only — never opacity. Both cards carry real content
+  // (the actual "protected then / elevated risk now" text), so if the
+  // scrub timeline never completes — no real scroll event fires, a
+  // ScrollTrigger recalculation lands wrong — the text must still be
+  // fully readable, just not yet in its final resting position.
+  if (outcomesSection && left && right && connector && !prefersReducedMotion && wideEnough) {
+    gsap.set(left, { xPercent: 35 });
+    gsap.set(right, { xPercent: -35 });
+    gsap.set(connector, { scale: 0.7 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: outcomesSection,
+        start: "top 75%",
+        end: "bottom 60%",
+        scrub: 0.6,
+      },
+    });
+
+    tl.to(left, { xPercent: 0, duration: 1, ease: "none" })
+      .to(right, { xPercent: 0, duration: 1, ease: "none" }, "<")
+      .to(connector, { scale: 1, duration: 0.5, ease: "none" }, ">-0.3");
+  }
+</script>

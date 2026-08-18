@@ -1,0 +1,31 @@
+---
+interface Bar {
+  label: string;
+  value: number;
+  color: string;
+}
+
+interface Props {
+  data: Bar[];
+  max?: number;
+  suffix?: string;
+}
+
+const { data, max, suffix = "" } = Astro.props;
+const scaleMax = max ?? Math.max(...data.map((d) => d.value));
+---
+
+<div class="bar-row">
+  {data.map((d, i) => (
+    <div class="bar-col">
+      <span class="bar-value">{d.value}{suffix}</span>
+      <div class="bar-track">
+        <div
+          class="bar-fill"
+          style={`height:${(d.value / scaleMax) * 100}%; background:${d.color}; --reveal-delay:${i * 0.08}s`}
+        ></div>
+      </div>
+      <span class="bar-label">{d.label}</span>
+    </div>
+  ))}
+</div>

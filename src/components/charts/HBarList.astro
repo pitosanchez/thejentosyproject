@@ -1,0 +1,32 @@
+---
+interface Row {
+  label: string;
+  value: number;
+  color: string;
+  display?: string;
+}
+
+interface Props {
+  data: Row[];
+  max?: number;
+  suffix?: string;
+}
+
+const { data, max, suffix = "" } = Astro.props;
+const scaleMax = max ?? Math.max(...data.map((d) => d.value));
+---
+
+<div class="hbar-list">
+  {data.map((d, i) => (
+    <div class="hbar-row">
+      <span class="hbar-label">{d.label}</span>
+      <div class="hbar-track">
+        <div
+          class="hbar-fill"
+          style={`width:${(d.value / scaleMax) * 100}%; background:${d.color}; --reveal-delay:${i * 0.08}s`}
+        ></div>
+      </div>
+      <span class="hbar-value">{d.display ?? `${d.value}${suffix}`}</span>
+    </div>
+  ))}
+</div>
