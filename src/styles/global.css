@@ -445,6 +445,23 @@ p:last-child {
   display: none;
 }
 
+.timeline-year {
+  font-size: 12px;
+  font-weight: 800;
+  /* --eyebrow-accent, not --rust: timelines sit on the dark --ink
+     background — see the token comment above on why the accents aren't
+     asked to double as dark-background UI colors. */
+  color: var(--eyebrow-accent);
+  letter-spacing: 0.02em;
+}
+
+.timeline-label {
+  font-size: 12.5px;
+  color: var(--ink-fg-muted);
+  margin-top: var(--space-1);
+  line-height: 1.4;
+}
+
 /* ---------- Utility spacing helpers (keeps gaps consistent, no ad hoc margins) ---------- */
 
 .linkline {

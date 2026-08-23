@@ -12,7 +12,6 @@ const year = new Date().getFullYear();
     <nav class="footer-col" aria-label="Site">
       <p class="footer-heading">Site</p>
       <a href="/about/">About</a>
-      <a href="/founders-story/">Founder's Story</a>
       <a href="/leadership/">Leadership</a>
       <a href="/the-need/">The Need</a>
       <a href="/what-we-do/">What We Do</a>
@@ -38,14 +37,15 @@ const year = new Date().getFullYear();
 
 <style>
   .site-footer {
-    padding-block: var(--space-8) var(--space-6);
+    padding-block: var(--space-6) var(--space-4);
+    border-top: 1px solid var(--ink-line);
   }
 
   .footer-grid {
     display: grid;
     grid-template-columns: 1.4fr 1fr 1fr 1fr;
-    gap: var(--space-6);
-    padding-bottom: var(--space-7);
+    gap: var(--space-5);
+    padding-bottom: var(--space-5);
   }
 
   @media (max-width: 720px) {
@@ -98,7 +98,7 @@ const year = new Date().getFullYear();
 
   .footer-bottom {
     border-top: 1px solid var(--ink-line);
-    padding-top: var(--space-5);
+    padding-top: var(--space-4);
   }
 
   .footer-bottom p {

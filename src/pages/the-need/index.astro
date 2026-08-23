@@ -67,12 +67,6 @@ const diseases = [
     full: "APOL1 Gene Variants",
     blurb: "A genetic risk factor concentrated in Black and Brown communities.",
   },
-  {
-    slug: "iga-nephropathy",
-    name: "IgA Nephropathy",
-    full: "IgA Nephropathy (Berger's Disease)",
-    blurb: "One of the most common forms of kidney disease worldwide.",
-  },
 ];
 
 // ---------- National "Understanding Kidney Disease" content ----------
@@ -147,7 +141,7 @@ const riskFactors = [
 
 <BaseLayout
   title="The Need"
-  description="Kidney disease disparities are downstream of poverty, education access, incarceration, and chronic stress. Learn about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy."
+  description="Kidney disease disparities are downstream of poverty, education access, incarceration, and chronic stress. Learn about FSGS and APOL1-mediated kidney disease."
 >
   <PageHero
     eyebrow="The Need"
@@ -160,7 +154,7 @@ const riskFactors = [
       <p>
         These conditions take a measurable toll on the body, including the kidneys. The Jentosy
         Project treats health equity as inseparable from these upstream social conditions, not
-        just a matter of medical access — which is why our education work starts with three
+        just a matter of medical access — which is why our education work starts with two
         specific, under-discussed diseases.
       </p>
     </div>
@@ -534,11 +528,12 @@ const riskFactors = [
   }
 
   .disease-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     margin-top: var(--space-4);
+    max-width: 700px;
   }
 
-  @media (max-width: 780px) {
+  @media (max-width: 640px) {
     .disease-grid {
       grid-template-columns: 1fr;
     }

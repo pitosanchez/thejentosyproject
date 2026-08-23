@@ -3,20 +3,34 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
 const audiences = [
   {
+    name: "Patients & Families",
+    pitch: "A diagnosis shouldn't mean navigating this alone. We equip patients and families with the knowledge, language, and community to advocate for their own care — and help the public recognize the warning signs early enough to get ahead of kidney disease.",
+    href: "/the-need/",
+    linkLabel: "Start with the need",
+  },
+  {
     name: "Funders & Foundations",
     pitch: "Support an organization led by lived experience, with a clear, credibility-first approach to closing the kidney-care gap.",
+    href: "/partner-with-us/",
+    linkLabel: "Partner with us",
   },
   {
     name: "Researchers & Institutions",
-    pitch: "Partner on education, awareness, and community engagement around FSGS, APOL1-mediated kidney disease, and IgA Nephropathy.",
+    pitch: "Partner on education, awareness, and community engagement around FSGS and APOL1-mediated kidney disease.",
+    href: "/partner-with-us/",
+    linkLabel: "Partner with us",
   },
   {
     name: "Healthcare Organizations",
     pitch: "Collaborate on reaching underserved patients earlier — before diseases like FSGS progress to dialysis or transplant.",
+    href: "/partner-with-us/",
+    linkLabel: "Partner with us",
   },
   {
     name: "Policymakers",
     pitch: "Work with us on the systemic, upstream drivers of kidney disease disparities — from healthcare access to housing and education.",
+    href: "/partner-with-us/",
+    linkLabel: "Partner with us",
   },
 ];
 
@@ -24,7 +38,7 @@ const howItWorks = [
   {
     step: "1",
     name: "Educate",
-    body: "Plain-language education on FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — reaching people before they reach the transplant list.",
+    body: "Plain-language education on FSGS and APOL1-mediated kidney disease — reaching people before they reach the transplant list.",
     href: "/the-need/",
     linkLabel: "See the need",
   },
@@ -47,7 +61,7 @@ const howItWorks = [
 
 <BaseLayout
   title="Home"
-  description="The Jentosy Project advances health equity for underserved communities by educating people about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — starting in the Bronx."
+  description="The Jentosy Project advances health equity for underserved communities by educating people about FSGS and APOL1-mediated kidney disease — starting in the Bronx."
 >
   <!-- HERO — full-bleed photo, elegant serif overlay -->
   <section class="on-dark hero-photo">
@@ -58,8 +72,8 @@ const howItWorks = [
       <h1 class="h1 reveal" style="--reveal-delay:0.08s">The Jentosy Project, Inc.</h1>
       <p class="lede reveal" style="--reveal-delay:0.16s">
         Kidney disease disparities don't exist in isolation. We educate underserved communities
-        about FSGS, APOL1-mediated kidney disease, and IgA Nephropathy — building the partnerships
-        needed to close the gap in kidney care, starting in the Bronx.
+        about FSGS and APOL1-mediated kidney disease — building the partnerships needed to close
+        the gap in kidney care, starting in the Bronx.
       </p>
       <div class="cluster gap-3 reveal" style="--reveal-delay:0.24s">
         <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
@@ -68,42 +82,53 @@ const howItWorks = [
     </div>
   </section>
 
-  <section class="on-dark">
-    <div class="container stats-row">
-      <div class="stat reveal">
-        <span class="stat-num" data-count="8">0</span>
-        <p class="stat-label">Lives changed by one donor's decision to join a kidney exchange chain</p>
-      </div>
-      <div class="stat reveal" style="--reveal-delay:0.1s">
-        <span class="stat-num" data-count="3">0</span>
-        <p class="stat-label">Rare kidney diseases at the center of our education work</p>
-      </div>
-      <div class="stat reveal" style="--reveal-delay:0.2s">
-        <span class="stat-num" data-count="2">0</span>
-        <p class="stat-label">Kidney transplants — the founder's own story, start to now</p>
-      </div>
-    </div>
+  <!-- THE NEED, BY THE NUMBERS — replaces the old founder-story stat
+       tiles with sourced Bronx/national disparity figures. Numbers
+       animate on scroll via the existing [data-count] count-up in
+       BaseLayout — no new script needed here. -->
+  <section class="on-dark bronx-stats">
+    <div class="container">
+      <p class="eyebrow reveal">The Need, By The Numbers</p>
+      <h2 class="h2 reveal" style="--reveal-delay:0.06s; font-size:clamp(22px,2.6vw,28px);">
+        Kidney disease doesn't fall on every community equally.
+      </h2>
+      <p class="lede reveal" style="--reveal-delay:0.12s; max-width:58ch;">
+        Black and Brown communities carry a disproportionate share of kidney failure and
+        dialysis dependence — a gap this organization exists to close, starting in the Bronx.
+      </p>
 
-    <div class="container timeline-wrap divider-dark">
-      <div class="timeline">
-        <div class="timeline-item">
-          <div class="timeline-year">2009</div>
-          <div class="timeline-label">First transplant, from a friend</div>
+      <div class="stats-row">
+        <div class="stat reveal">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="4">0</span><span class="stat-suffix">&times;</span>
+          </div>
+          <p class="stat-label">Higher rate of kidney failure for Black Americans vs. White Americans</p>
+          <p class="stat-source">CDC Chronic Kidney Disease Fact Sheet, 2026 &middot; USRDS 2023</p>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-year">2014</div>
-          <div class="timeline-label">FSGS recurs; dialysis begins</div>
+        <div class="stat reveal" style="--reveal-delay:0.1s">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="35">0</span><span class="stat-suffix">%</span>
+          </div>
+          <p class="stat-label">of U.S. dialysis patients are Black, despite being just 13.5% of the population</p>
+          <p class="stat-source">National Kidney Foundation</p>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-year">2019</div>
-          <div class="timeline-label">Matched, then cancer cancels surgery</div>
+        <div class="stat reveal" style="--reveal-delay:0.2s">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="1">0</span><span class="stat-suffix">YR+</span>
+          </div>
+          <p class="stat-label">Longer average wait for a kidney transplant if you're Black vs. White</p>
+          <p class="stat-source">National Kidney Foundation</p>
         </div>
-        <div class="timeline-item">
-          <div class="timeline-year">2021</div>
-          <div class="timeline-label">Transplanted via the donor chain</div>
+        <div class="stat reveal" style="--reveal-delay:0.3s">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="336">0</span><span class="stat-suffix">/10K</span>
+          </div>
+          <p class="stat-label">Diabetes hospitalizations per 10,000 Black Bronx residents each year — the leading driver of kidney failure</p>
+          <p class="stat-source">NY State Dept. of Health, Bronx County Health Indicators</p>
         </div>
       </div>
-      <a href="/founders-story/" class="timeline-link">Read the founder's full story &rarr;</a>
+
+      <a href="/the-need/" class="btn btn-steel-outline" style="margin-top:var(--space-6);">See the full picture &rarr;</a>
     </div>
   </section>
 
@@ -111,14 +136,42 @@ const howItWorks = [
   <section class="on-light section-tight">
     <div class="container">
       <p class="eyebrow">Who This Is For</p>
-      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Four audiences, one shared goal.</h2>
+      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Five audiences, one shared goal.</h2>
       <div class="grid audience-grid">
         {audiences.map((a, i) => (
-          <a href="/partner-with-us/" class="card card-steel reveal audience-card" style={`--reveal-delay:${i * 0.08}s`}>
+          <a href={a.href} class="card card-steel reveal audience-card" style={`--reveal-delay:${i * 0.06}s`}>
             <h3 class="h3">{a.name}</h3>
             <p>{a.pitch}</p>
+            <span class="linkline audience-card-link">{a.linkLabel} &rarr;</span>
           </a>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STORY BRIDGE — the founder narrative used to live on this page before
+       Founder's Story merged into About; without it, "Who This Is For" fell
+       straight into a stats-only "The Need" section with nothing human in
+       between. This restores the storytelling thread at the exact seam
+       where it was cut, and gives "Patients & Families" above somewhere to
+       land emotionally before the disease facts start. -->
+  <section class="on-dark story-bridge">
+    <div class="container story-bridge-inner">
+      <img
+        class="story-bridge-photo"
+        src="/images/founder-portrait.webp"
+        alt="Robert Sanchez, founder of The Jentosy Project"
+      />
+      <div class="story-bridge-text reveal">
+        <p class="eyebrow">Why This Exists</p>
+        <p class="story-bridge-quote">
+          &ldquo;Two transplants. Two women who wouldn&rsquo;t give up. I started this
+          organization so no one has to navigate this alone.&rdquo;
+        </p>
+        <div class="story-bridge-footer">
+          <p class="story-bridge-byline">Robert Sanchez, Founder</p>
+          <a href="/about/" class="linkline story-bridge-link">Read his full story &rarr;</a>
+        </div>
       </div>
     </div>
   </section>
@@ -147,10 +200,6 @@ const howItWorks = [
         <a href="/the-need/apol1/" class="card card-steel disease-card">
           <h3 class="h3">APOL1-Mediated Kidney Disease</h3>
           <p>A genetic risk factor concentrated in Black and Brown communities.</p>
-        </a>
-        <a href="/the-need/iga-nephropathy/" class="card card-steel disease-card">
-          <h3 class="h3">IgA Nephropathy</h3>
-          <p>One of the most common forms of kidney disease worldwide — and one of the least discussed.</p>
         </a>
       </div>
     </div>
@@ -204,7 +253,7 @@ const howItWorks = [
 <style>
   .hero-photo {
     position: relative;
-    min-height: 88vh;
+    min-height: 72vh;
     display: flex;
     align-items: center;
     overflow: clip;
@@ -232,20 +281,38 @@ const howItWorks = [
     max-width: 760px;
   }
 
+  .bronx-stats {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
+  }
+
   .stats-row {
     display: flex;
     flex-wrap: wrap;
+    margin-top: var(--space-6);
   }
 
   .stat {
     flex: 1 1 220px;
-    padding: var(--space-6) var(--space-3) var(--space-6) 0;
+    padding: var(--space-6) var(--space-4) 0 0;
     border-top: 1px solid var(--ink-line);
+  }
+
+  .stat-num-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: var(--space-3);
   }
 
   .stat-num {
     display: block;
-    margin-bottom: var(--space-2);
+  }
+
+  .stat-suffix {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--eyebrow-accent);
   }
 
   .stat-label {
@@ -255,45 +322,32 @@ const howItWorks = [
     max-width: 26ch;
   }
 
-  .timeline-wrap {
-    padding-block: var(--space-6);
-  }
-
-  .timeline-year {
-    font-size: 12px;
-    font-weight: 800;
-    /* --eyebrow-accent, not --rust: this label sits on the dark --ink
-       hero background, and --rust is only verified for light-background
-       use — see the token comment in global.css. */
-    color: var(--eyebrow-accent);
-    letter-spacing: 0.02em;
-  }
-
-  .timeline-label {
-    font-size: 12.5px;
+  .stat-source {
+    margin-top: var(--space-3);
+    font-size: 11px;
     color: var(--ink-fg-muted);
-    margin-top: var(--space-1);
-    line-height: 1.4;
-  }
-
-  .timeline-link {
-    display: inline-block;
-    margin-top: var(--space-5);
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--eyebrow-accent);
-    text-decoration: none;
-  }
-
-  .timeline-link:hover {
-    text-decoration: underline;
+    opacity: 0.75;
   }
 
   .need-stack {
     overflow: clip;
-    min-height: 100vh;
+    padding-block: clamp(var(--space-7), 7vw, var(--space-9));
+  }
+
+  /* Full-viewport height + centering is only needed while the section is
+     actually pinned for the GSAP crossfade (see script below). Forcing
+     100vh unconditionally left a wall of empty space around two short
+     cards on mobile, reduced-motion, and no-JS fallbacks. 66vh (not 100vh)
+     because the pin now only has to hold one FSGS/APOL1 crossfade — since
+     IgA Nephropathy was cut, a full screen of height around a single
+     230px-tall card read as dead air, and GSAP's pinSpacing scroll
+     distance below is a percentage of this height too, so shrinking it
+     tightens the whole pinned scroll, not just the static view. */
+  .need-stack.is-pinned {
+    min-height: 66vh;
     display: flex;
     align-items: center;
+    padding-block: 0;
   }
 
   .need-stack-inner {
@@ -350,23 +404,31 @@ const howItWorks = [
   }
 
   .audience-grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     margin-top: var(--space-6);
   }
 
-  @media (max-width: 900px) {
+  @media (min-width: 1100px) {
+    .audience-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
     .audience-grid {
       grid-template-columns: repeat(2, 1fr);
     }
   }
 
-  @media (max-width: 560px) {
+  @media (max-width: 480px) {
     .audience-grid {
       grid-template-columns: 1fr;
     }
   }
 
   .audience-card {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     color: inherit;
     transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
@@ -383,6 +445,76 @@ const howItWorks = [
 
   .audience-card p {
     font-size: 13.5px;
+    flex-grow: 1;
+  }
+
+  .audience-card-link {
+    margin-top: var(--space-3);
+    font-weight: 700;
+    color: var(--steel);
+  }
+
+  .story-bridge {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .story-bridge-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+  }
+
+  @media (max-width: 640px) {
+    .story-bridge-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .story-bridge-photo {
+      margin: 0 auto;
+    }
+
+    .story-bridge-footer {
+      justify-content: center;
+    }
+  }
+
+  .story-bridge-photo {
+    width: clamp(96px, 12vw, 148px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    filter: grayscale(1) contrast(1.08) brightness(0.96);
+  }
+
+  .story-bridge-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(20px, 2.4vw, 28px);
+    line-height: 1.35;
+    color: var(--ink-fg);
+    margin: var(--space-2) 0 var(--space-4);
+    max-width: 46ch;
+  }
+
+  .story-bridge-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .story-bridge-byline {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-fg-muted);
+  }
+
+  .story-bridge-link {
+    color: var(--eyebrow-accent);
   }
 
   .teaser-band {
@@ -453,7 +585,14 @@ const howItWorks = [
     document.querySelectorAll<HTMLElement>("[data-need-cards] .disease-card")
   );
 
-  if (stackSection && cards.length > 1 && !prefersReducedMotion && wideEnough) {
+  // Pinning is only worth the scroll-hijack cost with enough cards to
+  // stack — it was built for 3 diseases. Now that IgA Nephropathy is cut
+  // and only FSGS/APOL1 remain, pinning for a single crossfade left a
+  // scroll-pin spacer with nothing to fill it (see the CSS comment on
+  // .need-stack.is-pinned) no matter how the timing was tuned. Below 3
+  // cards, this falls through to the plain static grid — already built,
+  // already the safe default for mobile/reduced-motion/no-JS.
+  if (stackSection && cards.length > 2 && !prefersReducedMotion && wideEnough) {
     stackSection.classList.add("is-pinned");
 
     gsap.set(cards[0], { autoAlpha: 1, y: 0 });
@@ -474,7 +613,13 @@ const howItWorks = [
     ScrollTrigger.create({
       trigger: stackSection,
       start: "top top",
-      end: `+=${(cards.length - 1) * 70}%`,
+      // 70% per transition was tuned for the original 3-card version (2
+      // transitions). Now that IgA Nephropathy is cut, there's only 1
+      // transition left, and 70% (a % of the viewport, not this section)
+      // reserved a scroll-pin spacer taller than the section itself —
+      // a large blank gap on any screen shorter than that reserve. 40%
+      // keeps the crossfade legible without the dead scroll distance.
+      end: `+=${(cards.length - 1) * 40}%`,
       pin: true,
       pinSpacing: true,
       scrub: 0.6,
