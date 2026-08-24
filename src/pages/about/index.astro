@@ -137,8 +137,8 @@ const answers = [
     </div>
   </section>
 
-  <figure class="wide-image wide-image-light reveal">
-    <PhotoSlot src="/images/treeoflife.webp" alt="Cupped hands cradling a tree that grows from a pair of kidneys" ratio="21 / 9" />
+  <figure class="wide-image wide-image-light wide-image-small reveal">
+    <PhotoSlot src="/images/treeoflife.webp" alt="Cupped hands cradling a tree that grows from a pair of kidneys" ratio="5 / 4" />
     <figcaption>Rooted in care, growing toward equity.</figcaption>
   </figure>
 
@@ -320,6 +320,19 @@ const answers = [
   .wide-image-light {
     margin-top: clamp(var(--space-7), 6vw, var(--space-8));
     margin-bottom: 0;
+  }
+
+  /* treeoflife.webp's source file is only 462x368 — stretched to a full
+     21:9 banner it was being upscaled well past its real resolution,
+     which is what read as pixelated. Capped near its native size
+     instead, so the browser is barely scaling it at all. */
+  .wide-image-small {
+    max-width: 420px;
+    padding-inline: 0;
+  }
+
+  .wide-image-small figcaption {
+    padding-inline: 0;
   }
 
   /* ---------- The Name ---------- */
