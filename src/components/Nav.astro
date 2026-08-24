@@ -1,7 +1,14 @@
 ---
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about/", label: "About" },
+  {
+    href: "/about/",
+    label: "About",
+    children: [
+      { href: "/about/team/", label: "Meet The Team" },
+      { href: "/about/what-we-do/", label: "What We Do" },
+    ],
+  },
   {
     href: "/the-need/",
     label: "The Need",
@@ -10,7 +17,8 @@ const navLinks = [
       { href: "/the-need/apol1/", label: "APOL1-Mediated Kidney Disease" },
     ],
   },
-  { href: "/what-we-do/", label: "What We Do" },
+  { href: "/storytelling/", label: "Storytelling" },
+  { href: "/contact/", label: "Contact" },
 ];
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) => (href === "/" ? currentPath === "/" : currentPath.startsWith(href));

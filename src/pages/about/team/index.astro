@@ -1,0 +1,333 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import VideoSlot from "../../../components/VideoSlot.astro";
+
+const timeline = [
+  { year: "2009", label: "First transplant, from a friend" },
+  { year: "2014", label: "FSGS recurs; dialysis begins" },
+  { year: "2019", label: "Matched, then cancer cancels surgery" },
+  { year: "2021", label: "Transplanted via the donor chain" },
+];
+---
+
+<BaseLayout
+  title="Meet The Team"
+  description="Meet the people behind The Jentosy Project: founder and CEO Robert Sanchez, and the board and staff joining him as the organization grows."
+>
+  <!-- FOUNDER + CEO — the org's one team member today, told in full. Board
+       and future staff get their own section below, built to extend. -->
+  <section class="on-dark founder-hero">
+    <span class="side-label" aria-hidden="true">Meet The Team</span>
+    <div class="container founder-hero-inner">
+      <div class="founder-hero-media reveal">
+        <img
+          class="founder-hero-photo"
+          src="/images/founder-portrait.webp"
+          alt="Robert Sanchez, founder of The Jentosy Project"
+        />
+        <img
+          class="founder-hero-photo-inset"
+          src="/images/founder-podium.webp"
+          alt="Robert Sanchez speaking at a podium about kidney disease and health equity"
+        />
+      </div>
+
+      <div class="founder-hero-text">
+        <p class="eyebrow reveal">Meet The Team</p>
+        <h1 class="founder-hero-heading reveal" style="--reveal-delay:0.06s">
+          One founder's story became an organization's mission.
+        </h1>
+
+        <p class="reveal" style="--reveal-delay:0.14s">
+          In 2009, Robert Sanchez received his first kidney transplant — a living-donor kidney
+          from a close friend. But FSGS, the rare disease that had already destroyed his own
+          kidneys, recurred in the transplanted one, and by 2014 he was back on dialysis, three
+          times a week. In 2019, out of options, he posted on Facebook asking if anyone knew
+          someone willing to donate a kidney. Within about a week, organ matchmaker Chaya
+          Lipschutz had found a potential match: Elizabeth Antosy. Then, the night before
+          surgery, his transplant surgeon called with news that changed everything — Robert had
+          kidney cancer, and the transplant could not go forward.
+        </p>
+
+        <div class="founder-hero-statement reveal" style="--reveal-delay:0.2s">
+          <p class="founder-hero-statement-text">
+            Two transplants. Two women who wouldn't give up.
+          </p>
+        </div>
+
+        <p class="reveal" style="--reveal-delay:0.26s">
+          Elizabeth was heartbroken — but instead of walking away, she joined a kidney exchange
+          chain. Through it, Robert was matched with a new donor, Jen Keller, and after he
+          cleared cancer, the two were transplanted on October 20, 2021. Elizabeth's decision to
+          stay in the chain ultimately gave <strong>8 people</strong> new kidneys — and gave the
+          organization her name and Jen's: <strong>The Jentosy Project</strong>.
+        </p>
+
+        <div class="founder-hero-footer reveal" style="--reveal-delay:0.32s">
+          <div class="founder-hero-name">
+            <p class="founder-hero-name-text">Robert Sanchez</p>
+            <p class="founder-hero-name-title">Founder &amp; CEO</p>
+          </div>
+          <a href="#extended-story" class="linkline founder-hero-link">Read the extended story &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight divider-dark" id="extended-story">
+    <div class="container">
+      <div class="timeline">
+        {timeline.map((item, i) => (
+          <div class="timeline-item" style={`--reveal-delay:${i * 0.1}s`}>
+            <div class="timeline-year">{item.year}</div>
+            <div class="timeline-label">{item.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2 reveal">Where the name comes from.</h2>
+
+      <figure class="story-video-figure reveal" style="--reveal-delay:0.06s">
+        <VideoSlot
+          src="/videos/where-the-name-comes-from.mp4"
+          youtubeId="nsQ35ZgiWOk"
+          ratio="16 / 9"
+          title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
+        />
+        <figcaption>Robert on Jen, Elizabeth, and the chain that connected them.</figcaption>
+      </figure>
+
+      <p class="reveal" style="--reveal-delay:0.1s">
+        <strong>Jen</strong> Keller and Elizabeth An<strong>tosy</strong> — the two donors from
+        the story above gave the organization its name, along with a debt Robert has spent his
+        career trying to repay.
+      </p>
+      <p class="linkline reveal" style="--reveal-delay:0.16s">
+        Independently covered by
+        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow essay-teaser">
+      <p class="pull reveal">
+        &ldquo;At The Jentosy Project, we believe that storytelling is medicine.&rdquo;
+      </p>
+      <p class="reveal" style="--reveal-delay:0.06s">
+        Robert wrote the full case for why storytelling is the organization's method, not just its
+        origin — why lived experience belongs alongside clinical data.
+      </p>
+      <a href="/storytelling/" class="btn btn-steel reveal" style="--reveal-delay:0.12s">Read the Essay &rarr;</a>
+    </div>
+  </section>
+
+  <!-- THE BOARD — built to extend: as the founder adds board, advisory,
+       and staff members, each becomes another .person-card in this grid. -->
+  <section class="on-light section" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">The Board</p>
+      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Growing alongside the organization.</h2>
+      <p class="board-note">
+        The Jentosy Project is in the process of formalizing its board and advisory team. Board,
+        advisory, and staff members will appear here as they join.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight cta-band">
+    <div class="container cta-inner reveal">
+      <h2 class="h2">Help extend what Jen and Elizabeth started.</h2>
+      <div class="cluster gap-3" style="margin-top:var(--space-5);">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  /* ---------- Founder hero ---------- */
+
+  .founder-hero {
+    position: relative;
+    overflow: clip;
+  }
+
+  .side-label {
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-fg-muted);
+    white-space: nowrap;
+    display: none;
+  }
+
+  @media (min-width: 1100px) {
+    .side-label {
+      display: block;
+    }
+  }
+
+  .founder-hero-inner {
+    display: grid;
+    grid-template-columns: minmax(280px, 42%) 1fr;
+    gap: clamp(32px, 6vw, 80px);
+    align-items: start;
+    padding-block: clamp(var(--space-8), 9vw, var(--space-9));
+  }
+
+  @media (min-width: 1100px) {
+    .founder-hero-inner {
+      padding-left: var(--space-7);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .founder-hero-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .founder-hero-media {
+    position: relative;
+  }
+
+  .founder-hero-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    filter: grayscale(1) contrast(1.08) brightness(0.96);
+    transition: filter 0.6s var(--ease);
+  }
+
+  .founder-hero-media:hover .founder-hero-photo {
+    filter: grayscale(0) contrast(1) brightness(1);
+  }
+
+  .founder-hero-photo-inset {
+    position: absolute;
+    right: -8%;
+    bottom: -10%;
+    width: 46%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 4px solid var(--ink);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+    filter: grayscale(1) contrast(1.08);
+  }
+
+  .founder-hero-text p {
+    color: var(--ink-fg-muted);
+  }
+
+  .founder-hero-heading {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--ink-fg);
+    max-width: 15ch;
+    margin: 0 0 var(--space-5);
+  }
+
+  .founder-hero-statement {
+    margin: var(--space-5) 0;
+    padding-left: var(--space-5);
+    border-left: 1px solid var(--rust);
+  }
+
+  .founder-hero-statement-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(22px, 2.6vw, 30px);
+    line-height: 1.3;
+    color: var(--ink-fg);
+    margin: 0;
+  }
+
+  .founder-hero-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-7);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .founder-hero-name-text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink-fg);
+    margin: 0;
+  }
+
+  .founder-hero-name-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-fg-muted);
+    margin: var(--space-1) 0 0;
+  }
+
+  .founder-hero-link {
+    color: var(--eyebrow-accent);
+    font-weight: 700;
+  }
+
+  /* ---------- Where the name comes from (video figure) ---------- */
+
+  .story-video-figure {
+    margin: var(--space-5) 0 var(--space-6);
+  }
+
+  .story-video-figure figcaption {
+    margin-top: var(--space-2);
+    font-size: 12.5px;
+    color: var(--fg-muted);
+  }
+
+  /* ---------- Essay teaser ---------- */
+
+  .essay-teaser .pull {
+    margin-bottom: var(--space-4);
+  }
+
+  /* ---------- The Board ---------- */
+
+  .board-note {
+    margin-top: var(--space-4);
+    font-size: 14.5px;
+    color: var(--fg-muted);
+    max-width: 56ch;
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+</style>
