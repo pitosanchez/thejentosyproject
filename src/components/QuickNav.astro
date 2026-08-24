@@ -18,10 +18,21 @@ const { items } = Astro.props;
   .quick-nav {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: var(--space-3);
     padding-block: var(--space-4);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+  }
+
+  /* Centered once there's room for the full row to fit without
+     overflowing — below this it stays left-aligned and scrollable, since
+     centering a row that overflows its container hides its start behind
+     a scroll position instead of showing it. */
+  @media (min-width: 700px) {
+    .quick-nav {
+      justify-content: center;
+    }
   }
 
   .quick-nav-label {
