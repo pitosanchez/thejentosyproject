@@ -43,6 +43,14 @@
   --steel-ink: #f3eedd;
   --eyebrow-accent: #e7dfc8;
 
+  /* --rust itself is 2.45:1 on --ink — fails even the 3:1 large-text
+     minimum, which is exactly why nothing above uses it directly on the
+     dark background. This is --rust mixed 30% toward white until it
+     clears 4.5:1 (4.69:1, verified in contrast-check.mjs), for the one
+     spot (the full-screen nav menu) that wants a rust-family hover on
+     dark without failing AA. */
+  --rust-on-dark: #a88b6b;
+
   /* Type — Cormorant Garamond for every heading (elegant serif,
      mixed case for h1/h3, tracked uppercase for h2), Work Sans for
      nav/body/labels. */
