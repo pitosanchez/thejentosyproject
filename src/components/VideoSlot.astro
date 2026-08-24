@@ -1,0 +1,57 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+
+interface Props {
+  src: string;
+  poster?: string;
+  ratio?: string;
+}
+const { src, poster, ratio = "16 / 9" } = Astro.props;
+const exists = fs.existsSync(path.join(process.cwd(), "public", src));
+---
+
+{exists ? (
+  <video class="video-slot" style={`aspect-ratio:${ratio};`} controls preload="metadata" poster={poster}>
+    <source src={src} type="video/mp4" />
+  </video>
+) : (
+  <div class="video-slot video-slot-placeholder" style={`aspect-ratio:${ratio};`}>
+    <p class="eyebrow" style="color:var(--steel); margin-bottom:var(--space-2);">Video placeholder</p>
+    <p>
+      Drop the real video at <code>public{src}</code> and it'll appear here automatically — no
+      code changes needed.
+    </p>
+  </div>
+)}
+
+<style>
+  .video-slot {
+    width: 100%;
+    display: block;
+    border-radius: var(--radius-sm);
+    background: #000;
+  }
+
+  .video-slot-placeholder {
+    border: 1.5px dashed var(--line-strong);
+    background: var(--card);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--space-6);
+  }
+
+  .video-slot-placeholder p:last-child {
+    font-size: 13.5px;
+    color: var(--fg-muted);
+  }
+
+  .video-slot-placeholder code {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    background: var(--paper);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+</style>

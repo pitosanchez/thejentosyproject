@@ -63,7 +63,11 @@ const howItWorks = [
   title="Home"
   description="The Jentosy Project advances health equity for underserved communities by educating people about FSGS and APOL1-mediated kidney disease — starting in the Bronx."
 >
-  <!-- HERO — full-bleed photo, elegant serif overlay -->
+  <!-- HERO — full-bleed photo, elegant serif overlay. Same photo, same
+       palette, same copy — just not frozen: a slow, continuous Ken Burns
+       zoom on the bg photo (see .hero-bg) and a slightly lighter scrim
+       (see .hero-scrim) so it reads less flat, without changing the
+       actual look of the section. -->
   <section class="on-dark hero-photo">
     <img class="hero-bg" src="/images/archival/third-ave-el-cross-bronx-expwy-1973-cropped.jpg" alt="" aria-hidden="true" />
     <div class="hero-scrim"></div>
@@ -273,12 +277,30 @@ const howItWorks = [
     height: 100%;
     object-fit: cover;
     object-position: center 30%;
+    animation: hero-ken-burns 26s ease-in-out infinite alternate;
   }
 
+  @keyframes hero-ken-burns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.09);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg {
+      animation: none;
+    }
+  }
+
+  /* Slightly lighter than the original (0.6/0.46/0.78) at every stop —
+     same hue, same gradient shape, just less of a wall over the photo. */
   .hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(29,42,30,0.6) 0%, rgba(29,42,30,0.46) 45%, rgba(29,42,30,0.78) 100%);
+    background: linear-gradient(180deg, rgba(29,42,30,0.5) 0%, rgba(29,42,30,0.36) 45%, rgba(29,42,30,0.7) 100%);
   }
 
   .hero-inner {
