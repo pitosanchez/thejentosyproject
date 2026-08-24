@@ -4,6 +4,8 @@ Label: wayfinder:map
 
 A build-ready spec for The Jentosy Project website: site architecture, page list, per-page purpose, key messaging, calls to action, donation flow, audience priorities, content requirements, brand direction, and technical requirements — someone (the founder, using AI coding tools) can build from it without reinterpreting the organization's purpose. MVP-first: the spec defines a realistic v1 launch point, not a fully-complete future site.
 
+**Status:** this destination was reached — the spec closed 2026-08-04 (12/12 tickets resolved) and the site has been built from it since. This map is kept alive past that point to track what build-phase work has *amended* the locked spec (two items below do), and to surface what's still open before a real launch. Treat "Decisions so far" as spec decisions unless marked "Build phase."
+
 ## Notes
 
 - Domain glossary: see [CONTEXT.md](../../CONTEXT.md) — Jentosy Project Inc. as parent org, "Where We Live" as one initiative (not the site's centerpiece), current focus = kidney disease education & health equity (FSGS, APOL1-mediated kidney disease, IgA Nephropathy), transplantation equity as future/secondary, Bronx-first with planned expansion.
@@ -34,13 +36,49 @@ A build-ready spec for The Jentosy Project website: site architecture, page list
 - [Tech stack decision](issues/07-tech-stack-decision.md) — Astro (Markdown/MDX, no CMS at v1) on Cloudflare Pages; Zeffy embed for donations, Formspree for forms; security baseline locked in (static output, CSP, Dependabot, no PII on TJP's own infra).
 - [SEO & acquisition strategy](issues/11-seo-acquisition-strategy.md) — 3 Ad Grants campaigns mapped to disease sub-pages, The Need hub, and Partner/Donate; national geo-targeting; conversions = donation, partnership inquiry, contact form.
 - [Analytics & conversion tracking](issues/12-analytics-conversion-tracking.md) — GA4 + Search Console; conversions fire on thank-you-page redirects (not cross-iframe events); 4 tracked conversions feed Google Ads Smart Bidding directly.
-- [Brand visual system](issues/08-brand-visual-system.md) — merged B+C: dark charcoal-navy opens every page, non-cream light paper informs; rust=Donate/steel=Partner; pushed to a new, separate claude.ai/design project (REP untouched). WCAG AA contrast verified and corrected at build time (rust/steel darkened, outline-button border fixed) — see ticket for before/after ratios.
+- [Brand visual system](issues/08-brand-visual-system.md) — merged B+C: dark charcoal-navy opens every page, non-cream light paper informs; rust=Donate/steel=Partner; pushed to a new, separate claude.ai/design project (REP untouched). WCAG AA contrast verified and corrected at build time (rust/steel darkened, outline-button border fixed) — see ticket for before/after ratios. **Superseded** by the Editorial palette below — kept here as history, not current state.
+
+### Build phase (since spec closed, no formal tickets — one line per shipped decision)
+
+- Real Bronx/national kidney-disease data visualizations (population donut, diabetes bar chart, national CKD dot plot, stat tiles) added to The Need hub and disease pages, sourced from NY State DOH/NIDDK/KDIGO-CDC-NHANES.
+- GA4/Formspree/Zeffy moved from hardcoded placeholder strings to env vars; each degrades gracefully when unset (no script tag, "not connected yet" note, or placeholder embed instead of breaking).
+- Three visual-redesign directions were prototyped (Chain, Clinical Warmth, Bronx Civic); Bronx Civic shipped first, then was itself replaced by a fourth direction, **Editorial** (cream/forest/gold palette, serif type), which the founder confirmed 2026-08-06 as "the design from here out."
+- Home hero background swapped to a real archival photo (Third Avenue Elevated over the Cross Bronx Expwy, 1973–74, Jack E. Boucher/HAER, public domain via Wikimedia Commons).
+- Nav rebuilt twice: first as a REP-modeled dropdown, then as the current full-screen menu overlay.
+- Homepage "Who This Is For" gained a fifth audience card, **Patients & Families**, shown first — see the flag under Not yet specified; this sits against the standing v1 audience-priority note above, which ranks patients/community last.
+- "Who This Is For" cards redesigned as fixed-height floating cards (shadow, rounded corners, numeral index) rather than the flat left-border editorial card used elsewhere on the site.
+- Home hero: slow continuous Ken Burns zoom on the bg photo + a slightly lightened scrim, no palette/copy change.
+- About's "Where the name comes from" section gained a video, embedded via YouTube (`youtube-nocookie.com`) rather than a locally-hosted file, since the CBS-produced segment isn't ours to redistribute; `VideoSlot` still supports a local-file fallback for a future self-hosted cut.
+- Nav menu-item hover color: added `--rust-on-dark` (rust mixed 30% toward white, 4.69:1 on the dark menu bg) so hover reads as the Donate button's rust family without failing WCAG AA — literal `--rust` on that background is 2.45:1, below even the 3:1 large-text floor.
+- **Amends [ticket 03](issues/03-site-architecture-page-list.md) and [ticket 11](issues/11-seo-acquisition-strategy.md):** IgA Nephropathy's sub-page was removed from nav and The Need hub — the hub now covers FSGS and APOL1 only, not the 3 diseases the page architecture locked in. Ticket 11's "Disease Education" Ad Grants campaign was structured around exactly 3 ad groups, one per disease sub-page; that campaign plan is now stale and needs revisiting before any live Ad Grants launch.
+- **Amends [ticket 03](issues/03-site-architecture-page-list.md) and [ticket 11](issues/11-seo-acquisition-strategy.md):** Founder's Story is no longer a standalone page — its content was merged into About's opening section. Ticket 11 names "Founder's Story" as one of 4 fixed Ad Grants sitelinks; that target needs to become `/about/` (or an anchor within it) before Ad Grants launch, not its own URL.
+- Repo housekeeping: the `design` branch's work was fast-forward-merged into `main` (no divergence, no merge commit needed); `design` was then deleted; `backend` was branched off the updated `main` for the next phase of work.
 
 ## Not yet specified
 
 - Post-MVP roadmap detail (v2+ features, expanded patient/community education, transplantation-equity content) — deliberately fuzzy until v1 scope and early traction exist.
 - Governance/board content specifics beyond "gather board and advisory info" — depends on what the org formalizes as it grows.
 - Any future multi-initiative site structure (e.g., if "Where We Live" or other initiatives eventually need their own site sections) — out of scope for v1 architecture, may resurface later.
+- Whether cutting IgA Nephropathy and merging Founder's Story into About are accepted as permanent — if so, ticket 03's page list, ticket 11's Ad Grants campaign/sitelink structure, and ticket 04's content map all need a matching update before Ad Grants goes live with stale assumptions baked in.
+- Whether "Patients & Families" as a headline v1 homepage audience is an intentional change to the standing audience-priority order (institutional funders were meant to lead), or just this session's framing — worth a conscious yes/no rather than standing as silent drift.
+- Zeffy donation embed, Formspree form IDs, GA4 measurement ID — still placeholders, blocked on real account credentials, not on code.
+- Board bios beyond the founder; legal review of Privacy/Terms; clinical-accuracy review of the FSGS/APOL1 disease pages.
+- Three photos from an early batch (a clinical provider/patient photo, an APOL1 infographic with its own visual identity, a Bronx food-assistance resource-listing screenshot) — still unplaced, purpose/placement unconfirmed.
+- The trauma/poverty/biology storytelling direction (making the social-determinants thesis more visceral and embodied) — research notes exist at `research/trauma-poverty-kidney-disease-evidence.md`, but haven't been turned into shipped copy; physiological claims need that sourcing checked before writing.
+- **The `backend` branch's entire scope** — no destination, no decisions, no tickets exist yet for whatever "backend" means here (a real donation/CRM backend, auth, a CMS, server-side rendering, something else). This is exactly the kind of foggy-route effort this skill is for; it deserves its own map before implementation starts, rather than accreting ad hoc like several items above did.
 
 ## Out of scope
 
+Deferred from [ticket 01](issues/01-mvp-scope.md), not reopened since:
+
+- Full patient/community disease-education library (v1 is credibility-level education, not a full library).
+- Blog / news / press section.
+- Events calendar.
+- Volunteer signup / community-programs portal.
+- Newsletter automation beyond basic capture.
+- Multi-language support.
+- Dedicated transplantation-equity section (future-work mention only in v1).
+- Video/testimonial library (beyond the single "Where the name comes from" video).
+- Dedicated subsites for Where We Live or other initiatives.
+- Impact dashboard / detailed metrics.
+- Active Google Ad Grants campaign management (tracking hooks ship in v1; campaigns run post-launch — and per the amendments above, the campaign plan itself needs revisiting first).
