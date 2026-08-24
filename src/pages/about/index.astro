@@ -1,16 +1,21 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/PageHero.astro";
 import NumberedSteps from "../../components/NumberedSteps.astro";
+import PhotoSlot from "../../components/PhotoSlot.astro";
+import VideoSlot from "../../components/VideoSlot.astro";
+
+const heroExists = fs.existsSync(path.join(process.cwd(), "public", "images/safe.webp"));
 
 const steps = [
   {
     title: "Why education, not just transplantation.",
-    body: "The Jentosy Project's work began with transplantation — but the deeper problem is upstream: too many people from underserved communities are diagnosed too late, or never learn they're at risk, for diseases like FSGS and APOL1-mediated kidney disease. That's why our current focus is education and health equity — reaching people before they reach the transplant list. Transplantation equity remains part of our long-term mission, and it's where we're headed next.",
+    body: "This organization began with transplantation. But the deeper problem is upstream — too many people in underserved communities are diagnosed too late, or never learn they're at risk, for diseases like FSGS and APOL1-mediated kidney disease. Education comes first: reaching people before they reach the transplant list. Transplantation equity remains part of the long-term mission — it's where we're headed next.",
   },
   {
     title: "Kidney disease doesn't happen in isolation.",
-    body: "Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce — all of which take a measurable toll on the body, including the kidneys. We start in the Bronx, where these conditions are concentrated, and we intend to expand as the organization grows.",
+    body: "Kidney disease disparities trace back to poverty, unequal access to education, incarceration, and the chronic stress those conditions produce. All of it takes a measurable toll on the body, including the kidneys. We start where these conditions are concentrated — the Bronx — and expand from there.",
   },
 ];
 
@@ -32,26 +37,86 @@ const teasers = [
   title="About"
   description="The Jentosy Project is a 501(c)(3) nonprofit advancing kidney health equity for underserved communities, starting in the Bronx."
 >
-  <PageHero
-    eyebrow="About"
-    heading="Advancing kidney health equity, starting in the Bronx."
-    lede="The Jentosy Project is a 501(c)(3) public charity educating underserved communities about rare kidney disease and building the partnerships needed to close the gap in kidney care."
-  />
+  <!-- BIG EDITORIAL HERO — a large-format opener in the spirit of a NYT
+       feature: a full-bleed photo with a slow GSAP parallax drift (see
+       script below), and "ABOUT" set huge along the left edge instead of
+       a small eyebrow. Falls back to a plain dark hero with no broken
+       image if safe.webp hasn't been dropped in yet. -->
+  <section class="on-dark about-hero" data-parallax-section>
+    {heroExists ? (
+      <img class="about-hero-bg" src="/images/safe.webp" alt="" aria-hidden="true" data-parallax-bg />
+    ) : null}
+    <div class="about-hero-scrim"></div>
+    <span class="about-hero-kicker" aria-hidden="true">About</span>
+    <div class="container about-hero-inner">
+      <p class="eyebrow reveal about-hero-eyebrow">About The Jentosy Project</p>
+      <h1 class="h1 reveal" style="--reveal-delay:0.08s">
+        Advancing kidney health equity — starting in the Bronx.
+      </h1>
+      <p class="lede reveal" style="--reveal-delay:0.16s">
+        The Jentosy Project is a 501(c)(3) nonprofit closing the kidney-care gap for underserved
+        communities through education and partnership.
+      </p>
+      {!heroExists && (
+        <p class="about-hero-placeholder-note reveal" style="--reveal-delay:0.22s">
+          Hero photo placeholder — drop <code>safe.webp</code> into <code>public/images/</code>{" "}
+          and it'll appear here automatically.
+        </p>
+      )}
+    </div>
+  </section>
 
   <section class="on-light section-tight">
     <div class="container narrow">
       <h2 class="h2 reveal">What The Jentosy Project is.</h2>
       <p class="reveal" style="--reveal-delay:0.06s">
-        The Jentosy Project, Inc. is a 501(c)(3) public charity advancing health equity for
-        underserved communities through kidney disease education and partnership. We focus on
-        FSGS and APOL1-mediated kidney disease — two conditions that disproportionately affect
-        Black and Brown communities and are too often diagnosed late, if at all.
+        The Jentosy Project focuses on two conditions that disproportionately affect Black and
+        Brown communities and are too often diagnosed late, if at all: FSGS and APOL1-mediated
+        kidney disease.
       </p>
       <p class="reveal" style="--reveal-delay:0.12s">
-        Our work starts in the Bronx, where the social conditions driving these disparities are
-        concentrated, and is built to expand to underserved communities nationwide as the
-        organization grows.
+        The work starts in the Bronx, where the social conditions driving these disparities are
+        concentrated — and is built to expand nationwide as the organization grows.
       </p>
+    </div>
+  </section>
+
+  <!-- WHERE THE NAME COMES FROM -->
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2 reveal">Where the name comes from.</h2>
+
+      <figure class="story-video-figure reveal" style="--reveal-delay:0.06s">
+        <VideoSlot
+          src="/videos/where-the-name-comes-from.mp4"
+          youtubeId="nsQ35ZgiWOk"
+          ratio="16 / 9"
+          title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
+        />
+        <figcaption>Robert on Jen, Elizabeth, and the chain that connected them.</figcaption>
+      </figure>
+
+      <p class="reveal" style="--reveal-delay:0.1s">
+        <strong>Jen</strong> Keller and Elizabeth An<strong>tosy</strong> — two donors whose
+        decision to stay in a kidney exchange chain gave the organization its name, along with a
+        debt Robert has spent his career trying to repay.
+      </p>
+      <p class="linkline reveal" style="--reveal-delay:0.16s">
+        Independently covered by
+        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
+        Read the founder's full story on the
+        <a href="/about/team/">Meet The Team</a> page.
+      </p>
+    </div>
+  </section>
+
+  <!-- IMAGE BREAK — a full-width editorial pause between the org's origin
+       and its reasoning, the way a big magazine feature lets a photo
+       breathe before the next section. -->
+  <section class="on-light image-break">
+    <div class="container">
+      <PhotoSlot src="/images/treeoflife.webp" alt="Hands cradling a tree growing from a pair of kidneys, rooted in care" ratio="21 / 9" />
+      <p class="image-break-caption">Rooted in care, growing toward equity.</p>
     </div>
   </section>
 
@@ -114,6 +179,115 @@ const teasers = [
 <style>
   .narrow {
     max-width: 700px;
+  }
+
+  /* ---------- Big editorial hero ---------- */
+
+  .about-hero {
+    position: relative;
+    min-height: 76vh;
+    display: flex;
+    align-items: center;
+    overflow: clip;
+  }
+
+  .about-hero-bg {
+    position: absolute;
+    inset: -16% 0;
+    width: 100%;
+    height: 132%;
+    object-fit: cover;
+    object-position: center 30%;
+    will-change: transform;
+  }
+
+  .about-hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(29,42,30,0.62) 0%, rgba(29,42,30,0.5) 45%, rgba(29,42,30,0.82) 100%);
+  }
+
+  /* The big "About" — off to the left, huge, in the display serif. Only
+     at widths with room for it; below that it would crowd the headline,
+     so it steps down to a normal eyebrow instead (see .about-hero-eyebrow). */
+  .about-hero-kicker {
+    display: none;
+  }
+
+  @media (min-width: 1100px) {
+    .about-hero-kicker {
+      display: block;
+      position: absolute;
+      left: clamp(24px, 3vw, 56px);
+      top: 50%;
+      transform: translateY(-50%) rotate(-90deg);
+      transform-origin: left center;
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(64px, 9vw, 140px);
+      line-height: 1;
+      color: var(--eyebrow-accent);
+      opacity: 0.9;
+      white-space: nowrap;
+      z-index: 2;
+    }
+
+    .about-hero-eyebrow {
+      display: none;
+    }
+
+    .about-hero-inner {
+      padding-left: clamp(140px, 14vw, 220px);
+    }
+  }
+
+  .about-hero-inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(var(--space-7), 8vw, var(--space-9));
+    max-width: 760px;
+  }
+
+  .about-hero-placeholder-note {
+    margin-top: var(--space-4);
+    font-size: 12.5px;
+    color: var(--ink-fg-muted);
+  }
+
+  .about-hero-placeholder-note code {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Where the name comes from (video figure) ---------- */
+
+  .story-video-figure {
+    margin: var(--space-5) 0 var(--space-6);
+  }
+
+  .story-video-figure figcaption {
+    margin-top: var(--space-2);
+    font-size: 12.5px;
+    color: var(--fg-muted);
+  }
+
+  /* ---------- Image break ---------- */
+
+  .image-break {
+    padding-block: clamp(var(--space-6), 5vw, var(--space-7));
+  }
+
+  .image-break-caption {
+    margin-top: var(--space-3);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--fg-muted);
+    text-align: center;
   }
 
   /* ---------- Mission / Vision ---------- */
@@ -201,3 +375,30 @@ const teasers = [
     margin-inline: auto;
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const section = document.querySelector<HTMLElement>("[data-parallax-section]");
+  const bg = document.querySelector<HTMLElement>("[data-parallax-bg]");
+
+  // Classic big-story parallax: the photo drifts slower than the page
+  // scrolls past it. The image is sized/inset larger than its box (see
+  // .about-hero-bg) so the drift never reveals empty space at the edges.
+  if (section && bg && !prefersReducedMotion) {
+    gsap.to(bg, {
+      yPercent: 14,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+  }
+</script>

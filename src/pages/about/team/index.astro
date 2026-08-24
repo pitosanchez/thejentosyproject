@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import VideoSlot from "../../../components/VideoSlot.astro";
 
 const timeline = [
   { year: "2009", label: "First transplant, from a friend" },
@@ -84,32 +83,6 @@ const timeline = [
           </div>
         ))}
       </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
-      <h2 class="h2 reveal">Where the name comes from.</h2>
-
-      <figure class="story-video-figure reveal" style="--reveal-delay:0.06s">
-        <VideoSlot
-          src="/videos/where-the-name-comes-from.mp4"
-          youtubeId="nsQ35ZgiWOk"
-          ratio="16 / 9"
-          title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
-        />
-        <figcaption>Robert on Jen, Elizabeth, and the chain that connected them.</figcaption>
-      </figure>
-
-      <p class="reveal" style="--reveal-delay:0.1s">
-        <strong>Jen</strong> Keller and Elizabeth An<strong>tosy</strong> — the two donors from
-        the story above gave the organization its name, along with a debt Robert has spent his
-        career trying to repay.
-      </p>
-      <p class="linkline reveal" style="--reveal-delay:0.16s">
-        Independently covered by
-        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
-      </p>
     </div>
   </section>
 
@@ -296,18 +269,6 @@ const timeline = [
   .founder-hero-link {
     color: var(--eyebrow-accent);
     font-weight: 700;
-  }
-
-  /* ---------- Where the name comes from (video figure) ---------- */
-
-  .story-video-figure {
-    margin: var(--space-5) 0 var(--space-6);
-  }
-
-  .story-video-figure figcaption {
-    margin-top: var(--space-2);
-    font-size: 12.5px;
-    color: var(--fg-muted);
   }
 
   /* ---------- Essay teaser ---------- */
