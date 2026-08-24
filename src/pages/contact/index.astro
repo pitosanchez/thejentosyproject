@@ -1,8 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import SupportResources from "../../components/SupportResources.astro";
 
 const formId = import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID;
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
 ---
 
 <BaseLayout title="Contact" description="Get in touch with The Jentosy Project.">
@@ -12,7 +14,14 @@ const formId = import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID;
     <div class="container narrow">
       {!formId && (
         <p class="form-unconfigured-note">
-          This form isn't connected yet — set <code>PUBLIC_FORMSPREE_CONTACT_ID</code> to enable it.
+          This form isn't connected yet — set <code>PUBLIC_FORMSPREE_CONTACT_ID</code> to enable
+          it.
+          {contactEmail && (
+            <>
+              {" "}In the meantime, email us directly at{" "}
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+            </>
+          )}
         </p>
       )}
 
@@ -38,6 +47,8 @@ const formId = import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID;
         </label>
         <button type="submit" class="btn btn-rust" disabled={!formId}>Send Message</button>
       </form>
+
+      <SupportResources heading="Need to talk to someone before we get back to you?" />
     </div>
   </section>
 </BaseLayout>

@@ -5,7 +5,17 @@ import StatTile from "../../../components/StatTile.astro";
 import Donut from "../../../components/charts/Donut.astro";
 import HBarList from "../../../components/charts/HBarList.astro";
 import NumberedSteps from "../../../components/NumberedSteps.astro";
+import QuickNav from "../../../components/QuickNav.astro";
+import SupportResources from "../../../components/SupportResources.astro";
 import { viz } from "../../../lib/palette";
+
+const quickNavItems = [
+  { label: "What Is APOL1", href: "#basics" },
+  { label: "What It Can Cause", href: "#causes" },
+  { label: "If You Have It", href: "#if-you-have-it" },
+  { label: "Get Tested", href: "#testing" },
+  { label: "Get Support", href: "#get-support" },
+];
 
 const heroStats = [
   { value: "3–4×", label: "higher lifetime risk of ESKD with two copies.", source: "NEJM 2010." },
@@ -90,7 +100,17 @@ const recap = [
   title="APOL1"
   description="APOL1-mediated kidney disease: a genetic risk factor concentrated in people with African ancestry, rooted in evolutionary protection against sleeping sickness."
 >
-  <PageHero eyebrow="The Need · Understanding APOL1" heading="1 in 10 Black Americans." lede="Carry two copies of APOL1 gene variants that significantly raise their lifetime risk of kidney disease — years before any symptoms appear." />
+  <PageHero
+    eyebrow="The Need · Understanding APOL1"
+    heading="1 in 10 Black Americans."
+    lede="Carry two copies of APOL1 gene variants that raise lifetime kidney-disease risk — years before any symptoms appear. Carrying the variant isn't a diagnosis: most people who carry it never develop kidney disease."
+  />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
@@ -109,7 +129,7 @@ const recap = [
 
   <!-- ============ WHAT IS APOL1 ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">What Is the APOL1 Gene?</p>
       <h2 class="h2">A gene that once saved lives.</h2>
@@ -225,7 +245,7 @@ const recap = [
 
   <!-- ============ WHAT APOL1 CAN CAUSE ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="causes" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">What APOL1 Can Cause</p>
       <h2 class="h2">Two copies raise risk across multiple conditions.</h2>
@@ -285,7 +305,7 @@ const recap = [
 
   <!-- ============ IF YOU HAVE TWO COPIES ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="if-you-have-it" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">If You Have Two Copies</p>
       <h2 class="h2">You have more agency than the diagnosis suggests.</h2>
@@ -304,7 +324,7 @@ const recap = [
 
   <!-- ============ SHOULD YOU GET TESTED ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="testing" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">Should You Get Tested?</p>
       <h2 class="h3">Not yet standard of care — but recommended for some.</h2>
@@ -333,6 +353,14 @@ const recap = [
     </div>
   </section>
 
+  <!-- ============ GET SUPPORT ============ -->
+
+  <section id="get-support" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <SupportResources />
+    </div>
+  </section>
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="lede"><a href="/the-need/fsgs/" class="linkline">Learn About FSGS &rarr;</a></p>
@@ -350,6 +378,18 @@ const recap = [
 <style>
   .narrow {
     max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #basics,
+  #causes,
+  #if-you-have-it,
+  #testing,
+  #get-support {
+    scroll-margin-top: 88px;
   }
 
   .recap-list {

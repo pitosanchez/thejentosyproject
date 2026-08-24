@@ -1,0 +1,59 @@
+---
+interface Props {
+  heading?: string;
+}
+const { heading = "Need to talk to someone now?" } = Astro.props;
+---
+
+<div class="card card-steel support-resources">
+  <p class="eyebrow" style="color:var(--steel); margin-bottom:var(--space-2);">{heading}</p>
+  <p>
+    The Jentosy Project's own contact line is still coming online — in the meantime, the National
+    Kidney Foundation runs a real, free patient helpline staffed by people who can talk through a
+    new diagnosis with you.
+  </p>
+  <div class="support-resources-row">
+    <a href="tel:+18556532273" class="support-resources-phone">855.653.2273</a>
+    <span class="support-resources-hours">NKF Cares &middot; M&ndash;F, 9am&ndash;7pm</span>
+  </div>
+  <a href="https://www.kidney.org/support" target="_blank" rel="noopener noreferrer" class="linkline support-resources-link">
+    More support resources at kidney.org/support &rarr;
+  </a>
+</div>
+
+<style>
+  .support-resources {
+    margin: var(--space-6) 0;
+  }
+
+  .support-resources-row {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin: var(--space-4) 0 var(--space-3);
+  }
+
+  .support-resources-phone {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(22px, 3vw, 28px);
+    color: var(--rust);
+    text-decoration: none;
+  }
+
+  .support-resources-phone:hover {
+    text-decoration: underline;
+  }
+
+  .support-resources-hours {
+    font-size: 12.5px;
+    color: var(--fg-muted);
+  }
+
+  .support-resources-link {
+    display: inline-block;
+    color: var(--steel);
+    font-weight: 700;
+  }
+</style>

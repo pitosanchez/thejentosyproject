@@ -1,0 +1,68 @@
+---
+interface Props {
+  items: { label: string; href: string }[];
+}
+const { items } = Astro.props;
+---
+
+<nav class="quick-nav" aria-label="Jump to a section on this page">
+  <span class="quick-nav-label">Jump to</span>
+  <ul>
+    {items.map((item) => (
+      <li><a href={item.href}>{item.label}</a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .quick-nav {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-block: var(--space-4);
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .quick-nav-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--fg-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .quick-nav ul {
+    display: flex;
+    gap: var(--space-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .quick-nav li {
+    flex-shrink: 0;
+  }
+
+  .quick-nav a {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--steel);
+    text-decoration: none;
+    padding: 6px 14px;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+  }
+
+  .quick-nav a:hover {
+    background: var(--steel);
+    color: var(--steel-ink);
+    border-color: var(--steel);
+  }
+</style>

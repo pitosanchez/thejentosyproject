@@ -6,6 +6,8 @@ import StackedBar from "../../components/charts/StackedBar.astro";
 import HBarList from "../../components/charts/HBarList.astro";
 import StageStepper from "../../components/StageStepper.astro";
 import NumberedSteps from "../../components/NumberedSteps.astro";
+import QuickNav from "../../components/QuickNav.astro";
+import SupportResources from "../../components/SupportResources.astro";
 import { viz } from "../../lib/palette";
 
 // Categorical hues: fixed order by identity, validated CVD-safe
@@ -67,6 +69,15 @@ const diseases = [
     full: "APOL1 Gene Variants",
     blurb: "A genetic risk factor concentrated in Black and Brown communities.",
   },
+];
+
+const quickNavItems = [
+  { label: "The Basics", href: "#basics" },
+  { label: "Symptoms", href: "#symptoms" },
+  { label: "Diagnosis", href: "#diagnosis" },
+  { label: "Treatment", href: "#treatment" },
+  { label: "Get Support", href: "#get-support" },
+  { label: "The Data", href: "#the-data" },
 ];
 
 // ---------- National "Understanding Kidney Disease" content ----------
@@ -149,6 +160,14 @@ const riskFactors = [
     lede="Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce."
   />
 
+  <!-- Lets someone who already knows what they're looking for skip the
+       ~15-screen scroll instead of paging past everything to find it. -->
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
+
   <section class="on-light section">
     <div class="container narrow">
       <p>
@@ -173,84 +192,15 @@ const riskFactors = [
     </div>
   </section>
 
-  <!-- ============ UNDERSTANDING KIDNEY DISEASE — national primer ============ -->
+  <!-- ============ WHAT IS KIDNEY DISEASE ============
+       Orientation comes before statistics: someone landing here to
+       understand their own diagnosis shouldn't have to read the
+       population-level equity case first. The "Understanding Kidney
+       Disease" / disparity / cause-treatment sections that used to open
+       the page now come after "The Bottom Line," as the evidence behind
+       the mission — not as the first thing a scared reader hits. -->
 
-  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
-    <div class="container">
-      <p class="eyebrow">Understanding Kidney Disease</p>
-      <h2 class="h2 reveal">37 million Americans.</h2>
-      <p class="lede reveal" style="--reveal-delay:0.08s; max-width:60ch;">
-        Chronic kidney disease affects roughly 1 in 7 US adults — and most of them don't know it
-        yet. That gap between how common CKD is and how invisible it feels is exactly why this
-        page exists.
-      </p>
-
-      <div class="grid stat-grid-4" style="margin-top:var(--space-6);">
-        {nationalOverview.map((s, i) => (
-          <div class="reveal" style={`--reveal-delay:${0.12 + i * 0.06}s`}>
-            <StatTile value={s.value} label={s.label} source={s.source} accent="#e7dfc8" />
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <p class="eyebrow">CKD Prevalence by Race &amp; Ethnicity</p>
-      <h2 class="h2">This disease does not strike equally.</h2>
-      <p class="section-dek">
-        These are not random numbers. They reflect decades of unequal access to care, housing,
-        food, and economic stability — not genetic destiny.
-      </p>
-
-      <div class="viz-grid" style="align-items:start;">
-        <div class="card viz-card card-rust">
-          <p class="stat-value-inline">4&times;</p>
-          <h3 class="viz-title">Higher rate of kidney failure</h3>
-          <p>
-            Non-Hispanic Black adults develop end-stage kidney disease at 4&times; the rate of
-            non-Hispanic White adults. Hispanic adults develop ESKD at 2&times; the rate.
-          </p>
-          <p class="viz-source">CDC, March 2026 &middot; USRDS Annual Data Report 2023.</p>
-        </div>
-
-        <div class="card viz-card">
-          <h3 class="viz-title">CKD prevalence among US adults</h3>
-          <p class="viz-note">By race/ethnicity and age group — bar length proportional to prevalence rate.</p>
-          <HBarList data={disparity} max={40} suffix="%" />
-          <p class="viz-source">CDC Chronic Kidney Disease Fact Sheet, March 2026.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <p class="eyebrow">End-Stage Kidney Disease &middot; 2023</p>
-      <h2 class="h2">831,000 Americans are living with kidney failure.</h2>
-
-      <div class="viz-grid" style="margin-top:var(--space-5);">
-        <div class="card viz-card">
-          <h3 class="viz-title">What causes kidney failure</h3>
-          <p class="viz-note">Among 131,564 new ESKD cases in 2023.</p>
-          <StackedBar data={eskdCauses} suffix="%" />
-          <p class="viz-source">USRDS / CDC 2026.</p>
-        </div>
-
-        <div class="card viz-card">
-          <h3 class="viz-title">How patients are treated</h3>
-          <p class="viz-note">67% depend on dialysis to survive — of the total prevalent ESKD population.</p>
-          <StackedBar data={eskdTreatment} suffix="%" />
-          <p class="viz-source">Total prevalent ESKD population, 2023 &middot; USRDS / CDC 2026.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ WHAT IS KIDNEY DISEASE ============ -->
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">What Is Kidney Disease?</p>
       <h2 class="h3">A filtration system, damaged over time.</h2>
@@ -282,7 +232,7 @@ const riskFactors = [
 
   <!-- ============ FIVE STAGES ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);" data-stage-section>
+  <section id="stages" class="on-light section-tight" style="border-top:1px solid var(--line);" data-stage-section>
     <div class="container">
       <p class="eyebrow">The Five Stages of Kidney Disease</p>
       <h2 class="h2">From normal function to failure.</h2>
@@ -304,7 +254,7 @@ const riskFactors = [
 
   <!-- ============ DIAGNOSIS ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">How Do Doctors Find Kidney Disease?</p>
       <h2 class="h3">Blood and urine tests, first.</h2>
@@ -320,7 +270,7 @@ const riskFactors = [
 
   <!-- ============ SYMPTOMS ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">Symptoms of Kidney Disease</p>
       <h2 class="h3">Symptoms develop slowly — often too slowly to notice.</h2>
@@ -342,7 +292,7 @@ const riskFactors = [
 
   <!-- ============ TREATMENT ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="treatment" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">Treatment for Kidney Disease</p>
       <h2 class="h3">Slowing the damage, not just managing symptoms.</h2>
@@ -409,7 +359,9 @@ const riskFactors = [
     </div>
   </section>
 
-  <!-- ============ BOTTOM LINE ============ -->
+  <!-- ============ BOTTOM LINE ============
+       Closes the "what does this mean for me" arc before the page turns
+       to the population-level evidence below. -->
 
   <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
     <div class="container narrow">
@@ -424,6 +376,92 @@ const riskFactors = [
         This page provides general, credibility-level education — not medical advice. Talk to
         your doctor about your own risk and testing schedule.
       </p>
+    </div>
+  </section>
+
+  <!-- ============ GET SUPPORT ============ -->
+
+  <section id="get-support" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <SupportResources />
+    </div>
+  </section>
+
+  <!-- ============ UNDERSTANDING KIDNEY DISEASE — national primer ============
+       The evidence behind the mission: who this affects, and how unequally
+       — the case for why The Jentosy Project exists, for a reader who's
+       past the "what does this mean for me" question above. -->
+
+  <section id="the-data" class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container">
+      <p class="eyebrow">Understanding Kidney Disease</p>
+      <h2 class="h2 reveal">37 million Americans.</h2>
+      <p class="lede reveal" style="--reveal-delay:0.08s; max-width:60ch;">
+        Chronic kidney disease affects roughly 1 in 7 US adults — and most of them don't know it
+        yet. That gap between how common CKD is and how invisible it feels is exactly why this
+        organization exists.
+      </p>
+
+      <div class="grid stat-grid-4" style="margin-top:var(--space-6);">
+        {nationalOverview.map((s, i) => (
+          <div class="reveal" style={`--reveal-delay:${0.12 + i * 0.06}s`}>
+            <StatTile value={s.value} label={s.label} source={s.source} accent="#e7dfc8" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">CKD Prevalence by Race &amp; Ethnicity</p>
+      <h2 class="h2">This disease does not strike equally.</h2>
+      <p class="section-dek">
+        These are not random numbers. They reflect decades of unequal access to care, housing,
+        food, and economic stability — not genetic destiny.
+      </p>
+
+      <div class="viz-grid" style="align-items:start;">
+        <div class="card viz-card card-rust">
+          <p class="stat-value-inline">4&times;</p>
+          <h3 class="viz-title">Higher rate of kidney failure</h3>
+          <p>
+            Non-Hispanic Black adults develop end-stage kidney disease at 4&times; the rate of
+            non-Hispanic White adults. Hispanic adults develop ESKD at 2&times; the rate.
+          </p>
+          <p class="viz-source">CDC, March 2026 &middot; USRDS Annual Data Report 2023.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">CKD prevalence among US adults</h3>
+          <p class="viz-note">By race/ethnicity and age group — bar length proportional to prevalence rate.</p>
+          <HBarList data={disparity} max={40} suffix="%" />
+          <p class="viz-source">CDC Chronic Kidney Disease Fact Sheet, March 2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">End-Stage Kidney Disease &middot; 2023</p>
+      <h2 class="h2">831,000 Americans are living with kidney failure.</h2>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">What causes kidney failure</h3>
+          <p class="viz-note">Among 131,564 new ESKD cases in 2023.</p>
+          <StackedBar data={eskdCauses} suffix="%" />
+          <p class="viz-source">USRDS / CDC 2026.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">How patients are treated</h3>
+          <p class="viz-note">67% depend on dialysis to survive — of the total prevalent ESKD population.</p>
+          <StackedBar data={eskdTreatment} suffix="%" />
+          <p class="viz-source">Total prevalent ESKD population, 2023 &middot; USRDS / CDC 2026.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -525,6 +563,20 @@ const riskFactors = [
 <style>
   .narrow {
     max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #basics,
+  #stages,
+  #diagnosis,
+  #symptoms,
+  #treatment,
+  #get-support,
+  #the-data {
+    scroll-margin-top: 88px;
   }
 
   .disease-grid {
