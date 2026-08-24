@@ -32,14 +32,11 @@ const heroExists = exists("images/safe.webp");
   </section>
 
   <!-- THE ARTICLE — one continuous piece, not a stack of sections. ABOUT
-       sits immediately under the hero, then the headline and the story
-       begin right underneath it. -->
+       is the page's real h1 now — big, sitting right on the seam between
+       the photo and the page — and the story begins immediately under it. -->
   <article class="on-light about-article">
     <div class="container narrow">
-      <p class="article-kicker reveal" aria-hidden="true">About</p>
-      <h1 class="article-title reveal" style="--reveal-delay:0.06s">
-        Geography decides who knows in time.
-      </h1>
+      <h1 class="about-title reveal">About</h1>
 
       <p class="reveal" style="--reveal-delay:0.1s">
         Kidney disease rarely announces itself. It can move through the body for years, sometimes
@@ -110,7 +107,7 @@ const heroExists = exists("images/safe.webp");
     </div>
 
     <figure class="article-image reveal">
-      <PhotoSlot src="/images/movement.webp" alt="A community of people, rendered in warm earth tones, standing together" ratio="3 / 2" />
+      <PhotoSlot src="/images/NtX0s.webp" alt="A New York City subway sign reading Uptown & The Bronx Express, with the 4 and 5 line bullets" ratio="3 / 2" />
       <figcaption>A community, not a case study.</figcaption>
     </figure>
 
@@ -393,42 +390,37 @@ const heroExists = exists("images/safe.webp");
 
   .about-article .narrow p {
     color: var(--fg-soft);
-    font-size: 17px;
+    font-size: 18.5px;
     line-height: 1.75;
+    margin: 0 0 var(--space-3);
   }
 
-  /* ABOUT sits immediately under the hero, no gap, no gradient trick —
-     just a clean, deliberate line between the photo and the article. */
-  .article-kicker {
+  /* The page's real h1. Zero top gap/padding — it sits flush against the
+     hero above it, right on the seam between the photo and the page,
+     rather than floating with room around it. Bigger than a normal
+     eyebrow on purpose: with the old headline gone, this is the page's
+     one big title. */
+  .about-title {
+    margin: 0 0 var(--space-5);
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: clamp(72px, 13vw, 180px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+
+  /* Chapter labels (The Organization, Why the Bronx, etc.) — small,
+     tracked, unrelated to the big page title above. */
+  .article-kicker.chapter {
     font-family: var(--font-body);
     font-weight: 800;
     font-size: 13px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--rust);
-    margin: 0 0 var(--space-3);
-  }
-
-  .article-kicker:not(.chapter) {
-    padding-top: clamp(var(--space-6), 6vw, var(--space-8));
-  }
-
-  .article-kicker.chapter {
-    margin-top: clamp(var(--space-8), 8vw, var(--space-9));
-  }
-
-  /* The article's real headline — large, mixed case, literary, distinct
-     from the site's usual uppercase-tracked .h2 on purpose: this one page
-     reads as a feature, not a section list. */
-  .article-title {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(34px, 5.5vw, 64px);
-    line-height: 1.08;
-    letter-spacing: -0.01em;
-    color: var(--fg);
-    max-width: 16ch;
-    margin: 0 0 var(--space-6);
+    margin: clamp(var(--space-7), 7vw, var(--space-8)) 0 var(--space-3);
   }
 
   .article-heading {
