@@ -37,18 +37,32 @@ const teasers = [
   title="About"
   description="The Jentosy Project is a 501(c)(3) nonprofit advancing kidney health equity for underserved communities, starting in the Bronx."
 >
-  <!-- BIG EDITORIAL HERO — a large-format opener in the spirit of a NYT
-       feature: a full-bleed photo with a slow GSAP parallax drift (see
-       script below), and "ABOUT" set huge along the left edge instead of
-       a small eyebrow. Falls back to a plain dark hero with no broken
-       image if safe.webp hasn't been dropped in yet. -->
+  <!-- BIG EDITORIAL HERO — image-only, in the spirit of a NYT feature's
+       opening photo: no text overlaid on it. The scrim fades all the way
+       to --paper at the bottom so the photo blends into the page rather
+       than cutting off hard, which is what lets ABOUT below straddle the
+       seam and still read clearly (see script for the GSAP parallax). -->
   <section class="on-dark about-hero" data-parallax-section>
     {heroExists ? (
       <img class="about-hero-bg" src="/images/safe.webp" alt="" aria-hidden="true" data-parallax-bg />
-    ) : null}
+    ) : (
+      <div class="about-hero-placeholder">
+        <p class="about-hero-placeholder-note">
+          Hero photo placeholder — drop <code>safe.webp</code> into <code>public/images/</code>{" "}
+          and it'll appear here automatically.
+        </p>
+      </div>
+    )}
     <div class="about-hero-scrim"></div>
-    <div class="container about-hero-inner">
-      <p class="about-hero-kicker reveal" aria-hidden="true">About</p>
+  </section>
+
+  <!-- ABOUT pulls up with a negative margin so it sits right on the seam
+       between the photo and the page, then the headline/lede begin
+       underneath it as the start of the narrative — not overlaid on the
+       photo. -->
+  <section class="on-light about-intro">
+    <div class="container narrow">
+      <p class="about-intro-kicker reveal" aria-hidden="true">About</p>
       <h1 class="h1 reveal" style="--reveal-delay:0.08s">
         Advancing kidney health equity — starting in the Bronx.
       </h1>
@@ -56,12 +70,6 @@ const teasers = [
         The Jentosy Project is a 501(c)(3) nonprofit closing the kidney-care gap for underserved
         communities through education and partnership.
       </p>
-      {!heroExists && (
-        <p class="about-hero-placeholder-note reveal" style="--reveal-delay:0.22s">
-          Hero photo placeholder — drop <code>safe.webp</code> into <code>public/images/</code>{" "}
-          and it'll appear here automatically.
-        </p>
-      )}
     </div>
   </section>
 
@@ -184,13 +192,11 @@ const teasers = [
     max-width: 700px;
   }
 
-  /* ---------- Big editorial hero ---------- */
+  /* ---------- Big editorial hero (photo only) ---------- */
 
   .about-hero {
     position: relative;
-    min-height: 76vh;
-    display: flex;
-    align-items: center;
+    min-height: 62vh;
     overflow: clip;
   }
 
@@ -204,37 +210,35 @@ const teasers = [
     will-change: transform;
   }
 
+  /* Fades all the way to --paper (not just a darker tone of --ink) so the
+     photo blends into the page instead of ending on a hard line — that
+     blend is what lets .about-intro-kicker straddle the seam below and
+     still read clearly against both the photo and the page. */
   .about-hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(29,42,30,0.62) 0%, rgba(29,42,30,0.5) 45%, rgba(29,42,30,0.82) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(29, 42, 30, 0.4) 0%,
+      rgba(29, 42, 30, 0.18) 55%,
+      rgba(246, 242, 232, 0) 72%,
+      rgba(246, 242, 232, 1) 100%
+    );
   }
 
-  /* The big "About" — sits between the hero photo and the headline
-     line, not off to the side, so the read is: photo, then ABOUT, then
-     the headline underneath it. Bigger than the headline itself so it
-     reads as the section's title, the way a magazine feature names
-     itself before its subhead. */
-  .about-hero-kicker {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(52px, 9vw, 128px);
-    line-height: 1;
-    letter-spacing: -0.01em;
-    color: var(--ink-fg);
-    margin: 0 0 var(--space-3);
-  }
-
-  .about-hero-inner {
-    position: relative;
-    z-index: 2;
-    padding-block: clamp(var(--space-7), 8vw, var(--space-9));
-    max-width: 760px;
+  .about-hero-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
   }
 
   .about-hero-placeholder-note {
-    margin-top: var(--space-4);
-    font-size: 12.5px;
+    max-width: 46ch;
+    text-align: center;
+    font-size: 13px;
     color: var(--ink-fg-muted);
   }
 
@@ -244,6 +248,27 @@ const teasers = [
     background: rgba(255, 255, 255, 0.08);
     padding: 1px 5px;
     border-radius: 2px;
+  }
+
+  /* ---------- About intro (straddles the hero/page seam) ---------- */
+
+  .about-intro {
+    padding-bottom: clamp(var(--space-6), 5vw, var(--space-7));
+  }
+
+  /* Pulled up so it overlaps the tail end of the hero's fade — "sitting
+     on the line" between the photo and the page, not fully inside
+     either. Negative margin, not absolute positioning, so it still
+     pushes the headline/lede below it in normal document flow. */
+  .about-intro-kicker {
+    margin: clamp(-64px, -8vw, -112px) 0 var(--space-2);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 10vw, 140px);
+    line-height: 1;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
   }
 
   /* ---------- Where the name comes from (video figure) ---------- */
