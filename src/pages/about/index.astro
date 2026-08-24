@@ -77,8 +77,8 @@ const answers = [
     </div>
   </section>
 
-  <figure class="wide-image reveal">
-    <PhotoSlot src="/images/NtX0s.webp" alt="A New York City subway sign reading Uptown & The Bronx Express, with the 4 and 5 line bullets" ratio="3 / 1" />
+  <figure class="wide-image wide-image-small reveal">
+    <PhotoSlot src="/images/NtX0s.webp" alt="A New York City subway sign reading Uptown & The Bronx Express, with the 4 and 5 line bullets" ratio="3 / 2" />
     <figcaption>A community, not a case study.</figcaption>
   </figure>
 
@@ -164,8 +164,16 @@ const answers = [
 </BaseLayout>
 
 <style>
+  /* Left-flush, not centered — .container on its own centers itself with
+     margin-inline:auto, so a narrower box with the same rule shrinks
+     symmetrically and its left edge drifts right of the wider
+     grid/mission-vision sections below it. Overriding to margin-left:0
+     keeps every section's text starting at the same left edge, whether
+     it's this narrow single column or the full-width .container. */
   .narrow {
     max-width: 620px;
+    margin-left: 0;
+    margin-right: auto;
   }
 
   /* ---------- Hero (photo only) ---------- */
