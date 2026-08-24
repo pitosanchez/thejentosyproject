@@ -6,12 +6,24 @@ interface Props {
   src: string;
   poster?: string;
   ratio?: string;
+  youtubeId?: string;
+  title?: string;
 }
-const { src, poster, ratio = "16 / 9" } = Astro.props;
+const { src, poster, ratio = "16 / 9", youtubeId, title = "Video" } = Astro.props;
 const exists = fs.existsSync(path.join(process.cwd(), "public", src));
 ---
 
-{exists ? (
+{youtubeId ? (
+  <iframe
+    class="video-slot"
+    style={`aspect-ratio:${ratio}; border:0;`}
+    src={`https://www.youtube-nocookie.com/embed/${youtubeId}`}
+    title={title}
+    loading="lazy"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+  />
+) : exists ? (
   <video class="video-slot" style={`aspect-ratio:${ratio};`} controls preload="metadata" poster={poster}>
     <source src={src} type="video/mp4" />
   </video>
