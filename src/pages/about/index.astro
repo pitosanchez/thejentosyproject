@@ -2,46 +2,21 @@
 import fs from "node:fs";
 import path from "node:path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import NumberedSteps from "../../components/NumberedSteps.astro";
 import PhotoSlot from "../../components/PhotoSlot.astro";
 import VideoSlot from "../../components/VideoSlot.astro";
 
-const heroExists = fs.existsSync(path.join(process.cwd(), "public", "images/safe.webp"));
-
-const steps = [
-  {
-    title: "Why education, not just transplantation.",
-    body: "This organization began with transplantation. But the deeper problem is upstream — too many people in underserved communities are diagnosed too late, or never learn they're at risk, for diseases like FSGS and APOL1-mediated kidney disease. Education comes first: reaching people before they reach the transplant list. Transplantation equity remains part of the long-term mission — it's where we're headed next.",
-  },
-  {
-    title: "Kidney disease doesn't happen in isolation.",
-    body: "Kidney disease disparities trace back to poverty, unequal access to education, incarceration, and the chronic stress those conditions produce. All of it takes a measurable toll on the body, including the kidneys. We start where these conditions are concentrated — the Bronx — and expand from there.",
-  },
-];
-
-const teasers = [
-  {
-    name: "Meet The Team",
-    blurb: "Founder and CEO Robert Sanchez, and the board and staff joining him as the organization grows.",
-    href: "/about/team/",
-  },
-  {
-    name: "What We Do",
-    blurb: "Education and outreach in the Bronx today — and the transplantation-equity work we're building back toward.",
-    href: "/about/what-we-do/",
-  },
-];
+const exists = (p: string) => fs.existsSync(path.join(process.cwd(), "public", p));
+const heroExists = exists("images/safe.webp");
 ---
 
 <BaseLayout
   title="About"
   description="The Jentosy Project is a 501(c)(3) nonprofit advancing kidney health equity for underserved communities, starting in the Bronx."
 >
-  <!-- BIG EDITORIAL HERO — image-only, in the spirit of a NYT feature's
-       opening photo: no text overlaid on it. The scrim fades all the way
-       to --paper at the bottom so the photo blends into the page rather
-       than cutting off hard, which is what lets ABOUT below straddle the
-       seam and still read clearly (see script for the GSAP parallax). -->
+  <!-- HERO — image only, no text on the photo. A light, flat tint (not a
+       fading gradient) keeps it feeling of a piece with the site without
+       the photo washing out at the bottom. Crisp, deliberate cut into
+       the article below — no blend. -->
   <section class="on-dark about-hero" data-parallax-section>
     {heroExists ? (
       <img class="about-hero-bg" src="/images/safe.webp" alt="" aria-hidden="true" data-parallax-bg />
@@ -53,128 +28,295 @@ const teasers = [
         </p>
       </div>
     )}
-    <div class="about-hero-scrim"></div>
+    <div class="about-hero-tint"></div>
   </section>
 
-  <!-- ABOUT pulls up with a negative margin so it sits right on the seam
-       between the photo and the page, then the headline/lede begin
-       underneath it as the start of the narrative — not overlaid on the
-       photo. -->
-  <section class="on-light about-intro">
+  <!-- THE ARTICLE — one continuous piece, not a stack of sections. ABOUT
+       sits immediately under the hero, then the headline and the story
+       begin right underneath it. -->
+  <article class="on-light about-article">
     <div class="container narrow">
-      <p class="about-intro-kicker reveal" aria-hidden="true">About</p>
-      <h1 class="h1 reveal" style="--reveal-delay:0.08s">
-        Advancing kidney health equity — starting in the Bronx.
+      <p class="article-kicker reveal" aria-hidden="true">About</p>
+      <h1 class="article-title reveal" style="--reveal-delay:0.06s">
+        Geography decides who knows in time.
       </h1>
-      <p class="lede reveal" style="--reveal-delay:0.16s">
-        The Jentosy Project is a 501(c)(3) nonprofit closing the kidney-care gap for underserved
-        communities through education and partnership.
+
+      <p class="reveal" style="--reveal-delay:0.1s">
+        Kidney disease rarely announces itself. It can move through the body for years, sometimes
+        decades, without a single symptom worth mentioning to a doctor. By the time most people
+        feel that something is wrong, a third of their kidney function may already be gone.
+      </p>
+      <p class="reveal" style="--reveal-delay:0.14s">
+        What determines whether someone catches it in time has less to do with biology than with
+        geography. Where a person lives shapes what they know about their own risk long before it
+        shapes what care they can get. A zip code can predict, with unsettling accuracy, whether
+        someone grows up hearing the words <em>family history of kidney disease</em> at all.
+      </p>
+
+      <p class="pull reveal">
+        This isn't an accident of nature. It's the compounded result of poverty, of schools that
+        never taught the basics of kidney health, of neighborhoods without a nephrologist within
+        reach, of generations who learned, reasonably, not to trust a medical system that hadn't
+        earned it.
+      </p>
+
+      <p class="reveal">
+        Kidney disease doesn't discriminate on its own. The systems around it do.
+      </p>
+
+      <!-- THE ORGANIZATION -->
+      <p class="article-kicker chapter reveal">The Organization</p>
+      <h2 class="article-heading reveal">Built to close that gap.</h2>
+
+      <p class="reveal">
+        The Jentosy Project exists to change what people know before it's too late to act on it.
+      </p>
+      <p class="reveal">
+        It is an education-focused nonprofit — not a research lab, not a treatment center, not a
+        fundraising engine for someone else's cure. Its job is narrower, and, its founder would
+        argue, more urgent: making sure people in underserved communities understand kidney
+        disease early enough for that understanding to matter.
+      </p>
+      <p class="reveal">
+        Education sounds modest next to words like <em>cure</em> or <em>transplant</em>. It isn't.
+        Chronic kidney disease is usually treatable, sometimes even reversible, if it's caught
+        early. The failure, more often than not, isn't medical. It's informational. People don't
+        get the test because no one told them they were at risk. They don't ask the question
+        because no one gave them the words for it. That is the gap this organization was built to
+        close — the specifics of how live on the
+        <a href="/about/what-we-do/">What We Do</a> page.
+      </p>
+
+      <!-- WHY THE BRONX -->
+      <p class="article-kicker chapter reveal">Why the Bronx</p>
+      <h2 class="article-heading reveal">A starting point, not an endpoint.</h2>
+
+      <p class="reveal">
+        The work begins in the Bronx — not because the Bronx is exceptional, but because it is
+        representative.
+      </p>
+      <p class="reveal">
+        The borough carries some of the starkest health disparities in the country: elevated rates
+        of diabetes and hypertension, the two leading drivers of kidney failure; a population
+        disproportionately affected by APOL1 gene variants; neighborhoods where the nearest
+        nephrologist might as well be in another state. Almost every one of those facts has a twin
+        in dozens of other communities — Detroit, rural Mississippi, South Los Angeles.
+      </p>
+      <p class="reveal">
+        Starting in the Bronx is a decision about where to prove the model works, not where the
+        problem ends. What's built here — the language, the trust, the relationships with clinics
+        and community groups — is meant to travel.
       </p>
     </div>
-  </section>
 
-  <section class="on-light section-tight">
+    <figure class="article-image reveal">
+      <PhotoSlot src="/images/movement.webp" alt="A community of people, rendered in warm earth tones, standing together" ratio="3 / 2" />
+      <figcaption>A community, not a case study.</figcaption>
+    </figure>
+
     <div class="container narrow">
-      <h2 class="h2 reveal">What The Jentosy Project is.</h2>
-      <p class="reveal" style="--reveal-delay:0.06s">
-        The Jentosy Project focuses on two conditions that disproportionately affect Black and
-        Brown communities and are too often diagnosed late, if at all: FSGS and APOL1-mediated
-        kidney disease.
-      </p>
-      <p class="reveal" style="--reveal-delay:0.12s">
-        The work starts in the Bronx, where the social conditions driving these disparities are
-        concentrated — and is built to expand nationwide as the organization grows.
-      </p>
-    </div>
-  </section>
+      <!-- THE NAME -->
+      <p class="article-kicker chapter reveal">The Name</p>
+      <h2 class="article-heading reveal">Two women. One chain. A debt worth a lifetime.</h2>
 
-  <!-- WHERE THE NAME COMES FROM -->
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
-      <h2 class="h2 reveal">Where the name comes from.</h2>
+      <p class="reveal">
+        The organization's name is not an acronym, and it isn't a place. It's two people.
+      </p>
+      <p class="reveal">
+        In 2009, Robert Sanchez — the man who would eventually found The Jentosy Project —
+        received his first kidney transplant, a living donation from a close friend. FSGS, the
+        rare disease that had already destroyed his own kidneys, found its way into the new one.
+        By 2014 he was back on dialysis, three times a week, watching a machine do what his body
+        no longer could.
+      </p>
+      <p class="reveal">
+        In 2019, out of options, he did something simple and a little desperate: he posted on
+        Facebook and asked if anyone knew someone willing to donate a kidney. Within about a week,
+        an organ matchmaker named Chaya Lipschutz had found someone. Her name was Elizabeth
+        Antosy.
+      </p>
+      <p class="reveal">
+        Then, the night before surgery, everything changed again. Robert's transplant surgeon
+        called with the kind of news no one is prepared for — a diagnosis of kidney cancer, found
+        too late to operate. The transplant was off.
+      </p>
+      <p class="reveal">
+        Most people, reasonably, would have walked away. Elizabeth didn't. She joined a kidney
+        exchange chain instead — a system where a willing but incompatible donor is matched,
+        through a series of linked transplants, with a stranger elsewhere in the chain, so that
+        stranger's own donor can help someone new in turn. Once Robert had cleared cancer, that
+        chain matched him with another donor: Jen Keller. On October 20, 2021, the two of them
+        were transplanted. Elizabeth's decision to stay in the chain rather than walk away
+        ultimately gave <strong>eight people</strong> new kidneys.
+      </p>
 
-      <figure class="story-video-figure reveal" style="--reveal-delay:0.06s">
+      <p class="pull reveal">The organization is named for both of them — Jen, and An-tosy.</p>
+
+      <figure class="story-video-figure reveal">
         <VideoSlot
           src="/videos/where-the-name-comes-from.mp4"
           youtubeId="nsQ35ZgiWOk"
           ratio="16 / 9"
           title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
         />
-        <figcaption>Robert on Jen, Elizabeth, and the chain that connected them.</figcaption>
+        <figcaption>
+          Robert on Jen, Elizabeth, and the chain that connected them. Independently covered by{" "}
+          <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
+        </figcaption>
       </figure>
 
-      <p class="reveal" style="--reveal-delay:0.1s">
-        <strong>Jen</strong> Keller and Elizabeth An<strong>tosy</strong> — two donors whose
-        decision to stay in a kidney exchange chain gave the organization its name, along with a
-        debt Robert has spent his career trying to repay.
+      <p class="reveal">
+        Robert tells this story often, in more detail than fits here, because he believes the
+        specifics matter — not just that two women helped him, but who they were, what it cost
+        them, and what it means to build an organization in the shape of their generosity. Read
+        the extended version on the <a href="/about/team/">Meet The Team</a> page.
       </p>
-      <p class="linkline reveal" style="--reveal-delay:0.16s">
-        Independently covered by
-        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
-        Read the founder's full story on the
-        <a href="/about/team/">Meet The Team</a> page.
+
+      <!-- STORYTELLING AS MEDICINE -->
+      <p class="article-kicker chapter reveal">Storytelling as Medicine</p>
+      <h2 class="article-heading reveal">Data tells you where. Stories tell you why.</h2>
+
+      <p class="reveal">
+        Ask Robert why the organization leads with stories instead of statistics, and he'll tell
+        you: the statistics never explained anything to him. Not really.
+      </p>
+      <p class="reveal">
+        Data tells you where a problem exists. It rarely tells you why. A chart showing that Black
+        Americans develop kidney failure at four times the rate of white Americans is true, and
+        important, and almost useless to a person trying to understand what that means for their
+        own body, their own family, their own next doctor's visit. What changed things for
+        Robert — what turned a diagnosis into something he could act on — wasn't a statistic. It
+        was hearing from someone who had already lived through it.
+      </p>
+      <p class="reveal">
+        That's the premise the organization is built on: storytelling isn't an add-on to the work
+        of health education. It is the work.
+      </p>
+      <p class="reveal">
+        Stories do things data cannot. They reduce fear by replacing the unknown with the
+        specific — this is what it felt like, this is what happened next, this is how I got
+        through it. They build trust in a medical system that has, for many communities, not yet
+        earned it, because a shared story carries a kind of credibility a pamphlet never will.
+        They turn a diagnosis into something survivable, because someone else already survived it.
+        And they remind the person hearing them that they are, whatever the moment feels like,
+        more than a diagnosis.
       </p>
     </div>
-  </section>
 
-  <!-- IMAGE BREAK — a full-width editorial pause between the org's origin
-       and its reasoning, the way a big magazine feature lets a photo
-       breathe before the next section. -->
-  <section class="on-light image-break">
-    <div class="container">
-      <div class="image-break-frame">
-        <div class="image-break-photo">
-          <PhotoSlot src="/images/treeoflife.webp" alt="Hands cradling a tree growing from a pair of kidneys, rooted in care" ratio="21 / 9" />
-          <p class="image-break-caption">Rooted in care, growing toward equity.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    <figure class="article-image article-image-inset reveal">
+      <PhotoSlot src="/images/healingheart.webp" alt="A heart formed from interlocking human silhouettes, in warm earth tones" ratio="1 / 1" />
+      <figcaption>Lived experience, treated as evidence.</figcaption>
+    </figure>
 
-  <section class="on-light section">
-    <div class="container">
-      <div class="mission-vision-grid">
-        <div class="mv-col reveal">
-          <p class="mv-label">Mission</p>
-          <p class="mv-statement">
-            The Jentosy Project advances health equity for underserved communities by educating
-            people about rare kidney diseases — including FSGS and APOL1-mediated kidney disease
-            — and building the partnerships needed to close the gap in kidney care.
-          </p>
-        </div>
-        <div class="mv-col mv-col-divided reveal" style="--reveal-delay:0.08s">
-          <p class="mv-label">Vision</p>
-          <p class="mv-statement">
-            A future where no one's zip code determines their access to kidney health
-            education, early detection, or life-saving care — starting in the Bronx and
-            expanding to underserved communities nationwide.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
-      <NumberedSteps steps={steps} />
-    </div>
-  </section>
+      <p class="reveal">
+        Patients who hear from peers with similar diagnoses report lower anxiety, more confidence
+        in their treatment decisions, and stronger relationships with their care teams. For
+        communities carrying generations of reasonable mistrust toward healthcare institutions, a
+        story can do what an outreach campaign can't — because it isn't asking to be believed. It
+        just is.
+      </p>
+      <p class="reveal">
+        The Jentosy Project treats lived experience as a form of evidence — not instead of
+        clinical data, but alongside it. Robert's story, and the stories of the people who will
+        eventually join him in telling theirs, aren't testimonials bolted onto the mission. They
+        are the mission, in practice: proof that this disease can be understood, survived, and
+        outrun, told by someone who has done it.
+      </p>
 
-  <!-- MORE ABOUT THE ORGANIZATION — teasers into the pages that used to be
-       folded into this one: who's behind it, and what it does day to day. -->
-  <section class="on-light section" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <div class="grid teaser-grid">
-        {teasers.map((t, i) => (
-          <a href={t.href} class="card card-steel reveal teaser-card" style={`--reveal-delay:${i * 0.1}s`}>
-            <h3 class="h3">{t.name}</h3>
-            <p>{t.blurb}</p>
-            <span class="read-more">Read more &rarr;</span>
-          </a>
-        ))}
-      </div>
+      <!-- MISSION + VISION, woven in -->
+      <p class="reveal">
+        All of this adds up to something the organization states plainly, without embellishment:
+        The Jentosy Project advances health equity for underserved communities by educating people
+        about rare kidney diseases — including FSGS and APOL1-mediated kidney disease — and
+        building the partnerships needed to close the gap in kidney care. It isn't a complicated
+        mission. It doesn't need to be.
+      </p>
+
+      <p class="pull reveal">
+        The vision behind it is just as direct: a future where no one's zip code determines their
+        access to kidney health education, early detection, or life-saving care.
+      </p>
+
+      <p class="reveal">
+        Getting there starts, again, with education — because knowledge is the one part of this
+        equation that doesn't require insurance, or a referral, or proximity to a research
+        hospital. It just requires someone willing to explain it, and someone willing to listen.
+      </p>
     </div>
-  </section>
+
+    <figure class="article-image article-image-inset reveal">
+      <PhotoSlot src="/images/treeoflife.webp" alt="Cupped hands cradling a tree that grows from a pair of kidneys" ratio="5 / 4" />
+      <figcaption>Rooted in care, growing toward equity.</figcaption>
+    </figure>
+
+    <div class="container narrow">
+      <!-- WHY EDUCATION COMES FIRST -->
+      <p class="article-kicker chapter reveal">Why Education Comes First</p>
+      <h2 class="article-heading reveal">Prevention only works before the crisis.</h2>
+
+      <p class="reveal">
+        It would be easier, in some ways, to build an organization around transplantation. It's
+        the part of Robert's story with the clearest emotional arc — the crisis, the donor, the
+        surgery, the recovery. But by the time someone needs a transplant, the moment where
+        education could have changed the outcome has usually already passed.
+      </p>
+      <p class="reveal">
+        Most kidney disease doesn't announce a deadline. It gives warnings, if anyone is paying
+        attention: protein in the urine, blood pressure that won't come down, family members who
+        died young of something no one ever named precisely. Catching those warnings takes two
+        things that sound simple and rarely are — knowing what to look for, and having somewhere
+        to bring the question.
+      </p>
+      <p class="reveal">
+        Health literacy is the first. A person who understands what FSGS is, or what it means to
+        carry two copies of a high-risk APOL1 variant, is a person who can ask their doctor the
+        right question at the right appointment — instead of learning the term for the first time
+        in a hospital bed. Community education, delivered in plain language by people the
+        community already trusts, is how that understanding actually spreads: faster and further
+        than any pamphlet in a waiting room.
+      </p>
+      <p class="reveal">
+        Trust is the second, and the harder one to build. Decades of documented harm have given
+        many communities good reasons to be cautious around medical institutions. That caution
+        doesn't dissolve because a nonprofit shows up with good intentions. It dissolves, slowly,
+        through consistency — showing up in the same neighborhoods more than once, partnering with
+        the community organizations already trusted there, and telling the truth even when the
+        truth is complicated.
+      </p>
+      <p class="reveal">
+        None of this replaces the need for better access to nephrologists, fairer transplant
+        waitlists, or the research that will one day make diseases like FSGS more treatable.
+        Transplantation equity remains part of where this organization is headed. But prevention
+        is only possible before a crisis, not during one — which is why education has to come
+        first, not instead.
+      </p>
+
+      <!-- LOOKING FORWARD -->
+      <p class="article-kicker chapter reveal">Looking Forward</p>
+      <h2 class="article-heading reveal">A future geography can't predict.</h2>
+
+      <p class="reveal">
+        Picture a version of this country where a diagnosis of kidney disease doesn't depend on
+        which zip code delivered it.
+      </p>
+      <p class="reveal">
+        Where a teenager in the Bronx and a teenager in rural Georgia have the same chance of
+        learning, early, what their family history means for their own kidneys. Where the first
+        time someone hears the word <em>nephrologist</em> isn't in an emergency room. Where every
+        patient's story — not just Robert's — becomes part of how the next person understands
+        their own diagnosis, and maybe survives it a little more easily because of what came
+        before them.
+      </p>
+      <p class="reveal">
+        That future doesn't require a miracle. It requires the same thing that changed Robert's
+        life: someone willing to explain, someone willing to listen, and the belief that where you
+        live should never be the reason you didn't know in time.
+      </p>
+
+      <p class="pull reveal article-closer">It starts here. It doesn't end here.</p>
+    </div>
+  </article>
 
   <section class="on-dark section-tight cta-band">
     <div class="container cta-inner reveal">
@@ -192,11 +334,11 @@ const teasers = [
     max-width: 700px;
   }
 
-  /* ---------- Big editorial hero (photo only) ---------- */
+  /* ---------- Hero (photo only) ---------- */
 
   .about-hero {
     position: relative;
-    min-height: 62vh;
+    min-height: 58vh;
     overflow: clip;
   }
 
@@ -210,20 +352,12 @@ const teasers = [
     will-change: transform;
   }
 
-  /* Fades all the way to --paper (not just a darker tone of --ink) so the
-     photo blends into the page instead of ending on a hard line — that
-     blend is what lets .about-intro-kicker straddle the seam below and
-     still read clearly against both the photo and the page. */
-  .about-hero-scrim {
+  /* Flat tint, not a fade — the photo reads clearly right to its bottom
+     edge, and the cut into the article below is deliberate, not hazy. */
+  .about-hero-tint {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      180deg,
-      rgba(29, 42, 30, 0.4) 0%,
-      rgba(29, 42, 30, 0.18) 55%,
-      rgba(246, 242, 232, 0) 72%,
-      rgba(246, 242, 232, 1) 100%
-    );
+    background: rgba(29, 42, 30, 0.22);
   }
 
   .about-hero-placeholder {
@@ -250,155 +384,103 @@ const teasers = [
     border-radius: 2px;
   }
 
-  /* ---------- About intro (straddles the hero/page seam) ---------- */
+  /* ---------- The article ---------- */
 
-  .about-intro {
-    padding-bottom: clamp(var(--space-6), 5vw, var(--space-7));
+  .about-article {
+    padding-top: 0;
+    padding-bottom: clamp(var(--space-8), 8vw, var(--space-9));
   }
 
-  /* Pulled up so it overlaps the tail end of the hero's fade — "sitting
-     on the line" between the photo and the page, not fully inside
-     either. Negative margin, not absolute positioning, so it still
-     pushes the headline/lede below it in normal document flow. */
-  .about-intro-kicker {
-    margin: clamp(-64px, -8vw, -112px) 0 var(--space-2);
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(56px, 10vw, 140px);
-    line-height: 1;
-    letter-spacing: 0.02em;
+  .about-article .narrow p {
+    color: var(--fg-soft);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ABOUT sits immediately under the hero, no gap, no gradient trick —
+     just a clean, deliberate line between the photo and the article. */
+  .article-kicker {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--ink);
+    color: var(--rust);
+    margin: 0 0 var(--space-3);
+  }
+
+  .article-kicker:not(.chapter) {
+    padding-top: clamp(var(--space-6), 6vw, var(--space-8));
+  }
+
+  .article-kicker.chapter {
+    margin-top: clamp(var(--space-8), 8vw, var(--space-9));
+  }
+
+  /* The article's real headline — large, mixed case, literary, distinct
+     from the site's usual uppercase-tracked .h2 on purpose: this one page
+     reads as a feature, not a section list. */
+  .article-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(34px, 5.5vw, 64px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--fg);
+    max-width: 16ch;
+    margin: 0 0 var(--space-6);
+  }
+
+  .article-heading {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: clamp(28px, 4.2vw, 44px);
+    line-height: 1.18;
+    color: var(--fg);
+    max-width: 18ch;
+    margin: 0 0 var(--space-5);
+  }
+
+  .about-article .pull {
+    margin: var(--space-6) 0;
+  }
+
+  .article-closer {
+    font-size: clamp(22px, 2.6vw, 28px);
+    border-left-color: var(--steel);
+  }
+
+  /* ---------- Article images ---------- */
+
+  .article-image {
+    margin: clamp(var(--space-7), 6vw, var(--space-8)) auto;
+    max-width: var(--content-max);
+    padding-inline: clamp(20px, 5vw, 56px);
+  }
+
+  .article-image-inset {
+    max-width: 460px;
+  }
+
+  .article-image figcaption {
+    margin-top: var(--space-3);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 15px;
+    color: var(--fg-muted);
   }
 
   /* ---------- Where the name comes from (video figure) ---------- */
 
   .story-video-figure {
-    margin: var(--space-5) 0 var(--space-6);
+    margin: var(--space-6) 0;
   }
 
   .story-video-figure figcaption {
     margin-top: var(--space-2);
     font-size: 12.5px;
     color: var(--fg-muted);
-  }
-
-  /* ---------- Image break ---------- */
-
-  .image-break {
-    padding-block: clamp(var(--space-6), 5vw, var(--space-7));
-  }
-
-  /* A picture-frame treatment: a mat of --card around the photo, plus a
-     hairline border and a soft shadow for a bit of lift off the page. */
-  .image-break-frame {
-    background: var(--card);
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-md);
-    padding: clamp(10px, 1.6vw, 20px);
-    box-shadow: 0 12px 30px rgba(16, 22, 28, 0.1);
-  }
-
-  .image-break-photo {
-    position: relative;
-  }
-
-  .image-break-photo :global(.photo-slot) {
-    display: block;
-  }
-
-  .image-break-caption {
-    position: absolute;
-    left: var(--space-4);
-    bottom: var(--space-4);
-    max-width: 60%;
-    font-family: var(--font-display);
-    font-style: italic;
-    font-weight: 500;
-    font-size: clamp(17px, 2vw, 22px);
-    line-height: 1.3;
-    color: #fff;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55), 0 1px 3px rgba(0, 0, 0, 0.5);
-    margin: 0;
-  }
-
-  /* ---------- Mission / Vision ---------- */
-
-  .mission-vision-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(32px, 6vw, 80px);
-  }
-
-  @media (max-width: 780px) {
-    .mission-vision-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-7);
-    }
-  }
-
-  .mv-col-divided {
-    border-left: 1px solid var(--line);
-    padding-left: clamp(32px, 6vw, 80px);
-  }
-
-  @media (max-width: 780px) {
-    .mv-col-divided {
-      border-left: none;
-      padding-left: 0;
-      border-top: 1px solid var(--line);
-      padding-top: var(--space-7);
-    }
-  }
-
-  .mv-label {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--rust);
-    margin: 0 0 var(--space-4);
-  }
-
-  .mv-statement {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 22px);
-    line-height: 1.5;
-    color: var(--fg);
-    max-width: 34ch;
-    margin: 0;
-  }
-
-  /* ---------- Teasers ---------- */
-
-  .teaser-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  @media (max-width: 640px) {
-    .teaser-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .teaser-card {
-    text-decoration: none;
-    color: inherit;
-    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
-  }
-
-  .teaser-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(16, 22, 28, 0.08);
-  }
-
-  .read-more {
-    display: inline-block;
-    margin-top: var(--space-3);
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--steel);
   }
 
   .cta-inner {
@@ -418,12 +500,12 @@ const teasers = [
   const section = document.querySelector<HTMLElement>("[data-parallax-section]");
   const bg = document.querySelector<HTMLElement>("[data-parallax-bg]");
 
-  // Classic big-story parallax: the photo drifts slower than the page
-  // scrolls past it. The image is sized/inset larger than its box (see
-  // .about-hero-bg) so the drift never reveals empty space at the edges.
+  // Gentle big-story parallax on the hero photo only — the image is sized
+  // larger than its box (see .about-hero-bg) so the drift never reveals
+  // empty space at the edges.
   if (section && bg && !prefersReducedMotion) {
     gsap.to(bg, {
-      yPercent: 14,
+      yPercent: 12,
       ease: "none",
       scrollTrigger: {
         trigger: section,
