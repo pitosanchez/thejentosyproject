@@ -4,28 +4,36 @@ import PageHero from "../../components/PageHero.astro";
 
 const audiences = [
   {
+    slug: "funder",
     name: "Funders & Foundations",
     pitch:
       "Support an organization led by lived experience, with a clear, credibility-first approach to closing the kidney-care gap in underserved communities.",
+    option: "Funder / Foundation",
   },
   {
+    slug: "researcher",
     name: "Researchers & Research Institutions",
     pitch:
       "Partner on education, awareness, and community engagement around FSGS and APOL1-mediated kidney disease.",
+    option: "Researcher / Research Institution",
   },
   {
+    slug: "healthcare",
     name: "Healthcare Organizations",
     pitch:
       "Collaborate on reaching underserved patients earlier — before diseases like FSGS progress to dialysis or transplant.",
+    option: "Healthcare Organization",
   },
   {
+    slug: "policymaker",
     name: "Policymakers",
     pitch:
       "Work with us on the systemic, upstream drivers of kidney disease disparities — from healthcare access to housing and education.",
+    option: "Policymaker",
   },
 ];
 
-const formId = import.meta.env.PUBLIC_FORMSPREE_PARTNER_ID;
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 ---
 
 <BaseLayout
@@ -41,33 +49,39 @@ const formId = import.meta.env.PUBLIC_FORMSPREE_PARTNER_ID;
     <div class="container">
       <div class="grid audience-grid">
         {audiences.map((a, i) => (
-          <div class="card card-steel reveal" style={`--reveal-delay:${i * 0.08}s`}>
+          <div class="card card-steel reveal audience-card" id={a.slug} style={`--reveal-delay:${i * 0.08}s`}>
             <h3 class="h3">{a.name}</h3>
             <p>{a.pitch}</p>
+            <a href="#start" class="linkline audience-card-cta" data-audience={a.slug}>
+              Start the conversation &rarr;
+            </a>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Start the conversation</h2>
       <p>Tell us a bit about your organization and how you'd like to partner.</p>
 
-      {!formId && (
+      {!accessKey && (
         <p class="form-unconfigured-note">
-          This form isn't connected yet — set <code>PUBLIC_FORMSPREE_PARTNER_ID</code> to enable it.
+          This form isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable it.
         </p>
       )}
 
       <form
         class="inquiry-form"
-        action={formId ? `https://formspree.io/f/${formId}` : "#"}
+        action="https://api.web3forms.com/submit"
         method="POST"
       >
-        <input type="hidden" name="_next" value="/partner-with-us/thank-you/" />
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input type="hidden" name="subject" value="New partnership inquiry from thejentosyproject.org" />
         <input type="hidden" name="form_type" value="Partnership Inquiry" />
+        <input type="hidden" name="redirect" value="https://thejentosyproject.org/partner-with-us/thank-you/" />
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         <label>
           Name
@@ -83,23 +97,44 @@ const formId = import.meta.env.PUBLIC_FORMSPREE_PARTNER_ID;
         </label>
         <label>
           I'm interested as a
-          <select name="audience">
-            <option>Funder / Foundation</option>
-            <option>Researcher / Research Institution</option>
-            <option>Healthcare Organization</option>
-            <option>Policymaker</option>
-            <option>Other</option>
+          <select name="audience" id="audience-select">
+            {audiences.map((a) => <option value={a.slug}>{a.option}</option>)}
+            <option value="other">Other</option>
           </select>
         </label>
         <label>
           Message
           <textarea name="message" rows="4" required></textarea>
         </label>
-        <button type="submit" class="btn btn-rust" disabled={!formId}>Send Inquiry</button>
+        <button type="submit" class="btn btn-rust" disabled={!accessKey}>
+          {accessKey ? "Send Inquiry" : "Form not yet connected"}
+        </button>
       </form>
     </div>
   </section>
 </BaseLayout>
+
+<script>
+  // Pre-select "I'm interested as a" from either a ?audience= query param
+  // (linked from Home's audience cards) or from clicking one of this
+  // page's own "Start the conversation" links, so a visitor never has to
+  // re-state the audience they already told us they were.
+  const select = document.getElementById("audience-select") as HTMLSelectElement | null;
+
+  const applyAudience = (slug: string | null) => {
+    if (!select || !slug) return;
+    const match = Array.from(select.options).find((o) => o.value === slug);
+    if (match) select.value = slug;
+  };
+
+  applyAudience(new URLSearchParams(window.location.search).get("audience"));
+
+  document.querySelectorAll<HTMLAnchorElement>(".audience-card-cta").forEach((link) => {
+    link.addEventListener("click", () => {
+      applyAudience(link.dataset.audience ?? null);
+    });
+  });
+</script>
 
 <style>
   .audience-grid {
@@ -159,8 +194,26 @@ const formId = import.meta.env.PUBLIC_FORMSPREE_PARTNER_ID;
   }
 
   .inquiry-form button:disabled {
-    opacity: 0.5;
+    background: transparent;
+    color: var(--fg-muted);
+    border: 1.5px dashed var(--line-strong);
     cursor: not-allowed;
+  }
+
+  .inquiry-form button:disabled:hover {
+    opacity: 1;
+  }
+
+  .audience-card {
+    display: flex;
+    flex-direction: column;
+    scroll-margin-top: 88px;
+  }
+
+  .audience-card-cta {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-weight: 700;
   }
 
   .form-unconfigured-note {
@@ -171,5 +224,16 @@ const formId = import.meta.env.PUBLIC_FORMSPREE_PARTNER_ID;
     border-radius: var(--radius-sm);
     padding: var(--space-3) var(--space-4);
     margin-bottom: var(--space-5);
+  }
+
+  /* Web3Forms honeypot — invisible to people, catches bots that fill every
+     field. Positioned off-screen rather than display:none, which some spam
+     bots are smart enough to skip. */
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
   }
 </style>

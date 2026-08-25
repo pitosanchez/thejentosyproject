@@ -77,14 +77,14 @@ const answers = [
     </div>
   </section>
 
-  <figure class="wide-image wide-image-small reveal">
+  <figure class="wide-image wide-image-small subway-image reveal">
     <PhotoSlot src="/images/NtX0s.webp" alt="A New York City subway sign reading Uptown & The Bronx Express, with the 4 and 5 line bullets" ratio="3 / 2" />
     <figcaption>A community, not a case study.</figcaption>
   </figure>
 
   <!-- THE NAME — the one story worth slowing down for, kept short; video
        carries the emotional weight instead of more paragraphs. -->
-  <section class="on-light section">
+  <section class="on-light section name-section">
     <div class="container narrow">
       <p class="eyebrow reveal">The Name</p>
       <p class="reveal" style="--reveal-delay:0.06s">
@@ -341,7 +341,15 @@ const answers = [
     padding-inline: 0;
   }
 
+  .subway-image {
+    max-width: 520px;
+  }
+
   /* ---------- The Name ---------- */
+
+  .name-section {
+    margin-top: -7.5px;
+  }
 
   .story-video-figure {
     margin: var(--space-5) 0;

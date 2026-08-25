@@ -3,7 +3,7 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import SupportResources from "../../components/SupportResources.astro";
 
-const formId = import.meta.env.PUBLIC_FORMSPREE_CONTACT_ID;
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
 ---
 
@@ -12,9 +12,9 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
 
   <section class="on-light section">
     <div class="container narrow">
-      {!formId && (
+      {!accessKey && (
         <p class="form-unconfigured-note">
-          This form isn't connected yet — set <code>PUBLIC_FORMSPREE_CONTACT_ID</code> to enable
+          This form isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable
           it.
           {contactEmail && (
             <>
@@ -27,11 +27,14 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
 
       <form
         class="inquiry-form"
-        action={formId ? `https://formspree.io/f/${formId}` : "#"}
+        action="https://api.web3forms.com/submit"
         method="POST"
       >
-        <input type="hidden" name="_next" value="/contact/thank-you/" />
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input type="hidden" name="subject" value="New message from thejentosyproject.org" />
         <input type="hidden" name="form_type" value="General Contact" />
+        <input type="hidden" name="redirect" value="https://thejentosyproject.org/contact/thank-you/" />
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
         <label>
           Name
@@ -45,7 +48,9 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
           Message
           <textarea name="message" rows="5" required></textarea>
         </label>
-        <button type="submit" class="btn btn-rust" disabled={!formId}>Send Message</button>
+        <button type="submit" class="btn btn-rust" disabled={!accessKey}>
+          {accessKey ? "Send Message" : "Form not yet connected"}
+        </button>
       </form>
 
       <SupportResources heading="Need to talk to someone before we get back to you?" />
@@ -98,8 +103,25 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
   }
 
   .inquiry-form button:disabled {
-    opacity: 0.5;
+    background: transparent;
+    color: var(--fg-muted);
+    border: 1.5px dashed var(--line-strong);
     cursor: not-allowed;
+  }
+
+  .inquiry-form button:disabled:hover {
+    opacity: 1;
+  }
+
+  /* Web3Forms honeypot — invisible to people, catches bots that fill every
+     field. Positioned off-screen rather than display:none, which some spam
+     bots are smart enough to skip. */
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
   }
 
   .form-unconfigured-note {

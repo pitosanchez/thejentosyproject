@@ -1,6 +1,5 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import PageHero from "../../components/PageHero.astro";
 import PhotoSlot from "../../components/PhotoSlot.astro";
 ---
 
@@ -8,11 +7,13 @@ import PhotoSlot from "../../components/PhotoSlot.astro";
   title="Storytelling as Medicine"
   description="An essay by Robert Sanchez, founder of The Jentosy Project, on why storytelling is central to how the organization approaches kidney health equity."
 >
-  <PageHero
-    eyebrow="An Essay by Robert Sanchez"
-    heading="Storytelling as Medicine"
-    lede="Why lived experience belongs alongside clinical data — and why every story has the power to save a life."
-  />
+  <section class="on-dark story-hero">
+    <img
+      class="story-hero-img"
+      src="/images/stomed.png"
+      alt="Storytelling as Medicine — Stories heal. Stories connect. Stories change lives. An illustration of an open book with a plant and kidneys growing from its pages, surrounded by themes of empathy, understanding, hope, connection, awareness, and healing."
+    />
+  </section>
 
   <section class="on-light section">
     <div class="container narrow essay">
@@ -166,6 +167,21 @@ import PhotoSlot from "../../components/PhotoSlot.astro";
 </BaseLayout>
 
 <style>
+  .story-hero {
+    padding-top: clamp(var(--space-5), 4vw, var(--space-6));
+    padding-bottom: 2px;
+  }
+
+  .story-hero-img {
+    display: block;
+    width: 100%;
+    max-width: 820px;
+    margin-inline: auto;
+    aspect-ratio: 1.75 / 1;
+    object-fit: cover;
+    object-position: top center;
+  }
+
   .narrow {
     max-width: 700px;
   }
