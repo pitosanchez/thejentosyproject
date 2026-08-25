@@ -5,7 +5,17 @@ import StatTile from "../../../components/StatTile.astro";
 import Donut from "../../../components/charts/Donut.astro";
 import StackedBar from "../../../components/charts/StackedBar.astro";
 import NumberedSteps from "../../../components/NumberedSteps.astro";
+import QuickNav from "../../../components/QuickNav.astro";
+import SupportResources from "../../../components/SupportResources.astro";
 import { viz } from "../../../lib/palette";
+
+const quickNavItems = [
+  { label: "What Is FSGS", href: "#basics" },
+  { label: "Symptoms", href: "#symptoms" },
+  { label: "Diagnosis", href: "#diagnosis" },
+  { label: "Treatment", href: "#treatment" },
+  { label: "Get Support", href: "#get-support" },
+];
 
 const heroStats = [
   { value: "~5,400", label: "new FSGS diagnoses per year in the US.", source: "USRDS 2023." },
@@ -100,7 +110,17 @@ const questions = [
   title="FSGS"
   description="FSGS (Focal Segmental Glomerulosclerosis) is the rare kidney disease at the center of our founder's own story — scarring in the kidney's filtering units."
 >
-  <PageHero eyebrow="The Need · Understanding FSGS" heading="50% reach kidney failure." lede="Within 10 years of FSGS diagnosis, without adequate treatment. It is the leading cause of nephrotic syndrome in adults and one of the most common reasons Black patients reach end-stage kidney disease." />
+  <PageHero
+    eyebrow="The Need · Understanding FSGS"
+    heading="FSGS scars the kidney's filtering units."
+    lede="Focal segmental glomerulosclerosis is rare, but it's treatable — especially when it's caught early. It looks different from person to person, and no two cases follow the same path. Here's what's actually known, plainly explained."
+  />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
@@ -116,7 +136,7 @@ const questions = [
 
   <!-- ============ WHAT'S HAPPENING IN YOUR KIDNEY ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">What Is Happening in Your Kidney</p>
       <h2 class="h2">Scarring where blood is filtered.</h2>
@@ -243,7 +263,7 @@ const questions = [
 
   <!-- ============ RECOGNIZING FSGS ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">Recognizing FSGS</p>
       <h2 class="h2">Many people have no symptoms at all until damage is significant.</h2>
@@ -279,7 +299,7 @@ const questions = [
 
   <!-- ============ PATH TO DIAGNOSIS ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">The Path to Diagnosis</p>
       <h2 class="h3">Only a kidney biopsy can confirm FSGS.</h2>
@@ -289,7 +309,7 @@ const questions = [
 
   <!-- ============ TREATMENT ============ -->
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <section id="treatment" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">Treatment</p>
       <h2 class="h2">Treatment depends on which type you have.</h2>
@@ -380,6 +400,14 @@ const questions = [
     </div>
   </section>
 
+  <!-- ============ GET SUPPORT ============ -->
+
+  <section id="get-support" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <SupportResources />
+    </div>
+  </section>
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="lede"><a href="/the-need/apol1/" class="linkline">Learn About APOL1 &rarr;</a></p>
@@ -397,6 +425,18 @@ const questions = [
 <style>
   .narrow {
     max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #basics,
+  #symptoms,
+  #diagnosis,
+  #treatment,
+  #get-support {
+    scroll-margin-top: 88px;
   }
 
   /* ---------- Filtration diagram ---------- */

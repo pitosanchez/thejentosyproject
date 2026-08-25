@@ -4,32 +4,32 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 const audiences = [
   {
     name: "Patients & Families",
-    pitch: "A diagnosis shouldn't mean navigating this alone. We equip patients and families with the knowledge, language, and community to advocate for their own care — and help the public recognize the warning signs early enough to get ahead of kidney disease.",
+    pitch: "Real knowledge and community to advocate for your own care — and catch kidney disease before it takes hold.",
     href: "/the-need/",
     linkLabel: "Start with the need",
   },
   {
     name: "Funders & Foundations",
-    pitch: "Support an organization led by lived experience, with a clear, credibility-first approach to closing the kidney-care gap.",
-    href: "/partner-with-us/",
+    pitch: "Back an organization led by lived experience, closing the kidney-care gap for good.",
+    href: "/partner-with-us/?audience=funder#funder",
     linkLabel: "Partner with us",
   },
   {
     name: "Researchers & Institutions",
-    pitch: "Partner on education, awareness, and community engagement around FSGS and APOL1-mediated kidney disease.",
-    href: "/partner-with-us/",
+    pitch: "Partner with us on education and community engagement around FSGS and APOL1.",
+    href: "/partner-with-us/?audience=researcher#researcher",
     linkLabel: "Partner with us",
   },
   {
     name: "Healthcare Organizations",
-    pitch: "Collaborate on reaching underserved patients earlier — before diseases like FSGS progress to dialysis or transplant.",
-    href: "/partner-with-us/",
+    pitch: "Help us reach underserved patients earlier — before FSGS reaches dialysis or transplant.",
+    href: "/partner-with-us/?audience=healthcare#healthcare",
     linkLabel: "Partner with us",
   },
   {
     name: "Policymakers",
-    pitch: "Work with us on the systemic, upstream drivers of kidney disease disparities — from healthcare access to housing and education.",
-    href: "/partner-with-us/",
+    pitch: "Tackle the upstream drivers of kidney disease — from healthcare access to housing and education.",
+    href: "/partner-with-us/?audience=policymaker#policymaker",
     linkLabel: "Partner with us",
   },
 ];
@@ -63,7 +63,11 @@ const howItWorks = [
   title="Home"
   description="The Jentosy Project advances health equity for underserved communities by educating people about FSGS and APOL1-mediated kidney disease — starting in the Bronx."
 >
-  <!-- HERO — full-bleed photo, elegant serif overlay -->
+  <!-- HERO — full-bleed photo, elegant serif overlay. Same photo, same
+       palette, same copy — just not frozen: a slow, continuous Ken Burns
+       zoom on the bg photo (see .hero-bg) and a slightly lighter scrim
+       (see .hero-scrim) so it reads less flat, without changing the
+       actual look of the section. -->
   <section class="on-dark hero-photo">
     <img class="hero-bg" src="/images/archival/third-ave-el-cross-bronx-expwy-1973-cropped.jpg" alt="" aria-hidden="true" />
     <div class="hero-scrim"></div>
@@ -139,9 +143,14 @@ const howItWorks = [
       <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Five audiences, one shared goal.</h2>
       <div class="grid audience-grid">
         {audiences.map((a, i) => (
-          <a href={a.href} class="card card-steel reveal audience-card" style={`--reveal-delay:${i * 0.06}s`}>
-            <h3 class="h3">{a.name}</h3>
-            <p>{a.pitch}</p>
+          <a
+            href={a.href}
+            class="audience-card reveal"
+            style={`--reveal-delay:${i * 0.06}s; --card-accent: var(${i % 2 === 0 ? "--steel" : "--rust"})`}
+          >
+            <span class="audience-card-index">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="audience-card-title">{a.name}</h3>
+            <p class="audience-card-pitch">{a.pitch}</p>
             <span class="linkline audience-card-link">{a.linkLabel} &rarr;</span>
           </a>
         ))}
@@ -165,12 +174,14 @@ const howItWorks = [
       <div class="story-bridge-text reveal">
         <p class="eyebrow">Why This Exists</p>
         <p class="story-bridge-quote">
-          &ldquo;Two transplants. Two women who wouldn&rsquo;t give up. I started this
-          organization so no one has to navigate this alone.&rdquo;
+          &ldquo;Our goal is to give everyone navigating kidney disease the social capital to
+          make informed decisions, ask the right questions, and advocate for themselves —
+          because where you live should never determine what you know, the care you get, or
+          your chance to survive.&rdquo;
         </p>
         <div class="story-bridge-footer">
           <p class="story-bridge-byline">Robert Sanchez, Founder</p>
-          <a href="/about/" class="linkline story-bridge-link">Read his full story &rarr;</a>
+          <a href="/about/team/" class="linkline story-bridge-link">Read his full story &rarr;</a>
         </div>
       </div>
     </div>
@@ -228,7 +239,7 @@ const howItWorks = [
         ))}
       </div>
 
-      <a href="/what-we-do/" class="btn btn-steel" style="margin-top:var(--space-6);">Learn what we do</a>
+      <a href="/about/what-we-do/" class="btn btn-steel" style="margin-top:var(--space-6);">Learn what we do</a>
     </div>
   </section>
 
@@ -266,12 +277,30 @@ const howItWorks = [
     height: 100%;
     object-fit: cover;
     object-position: center 30%;
+    animation: hero-ken-burns 26s ease-in-out infinite alternate;
   }
 
+  @keyframes hero-ken-burns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.09);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg {
+      animation: none;
+    }
+  }
+
+  /* Slightly lighter than the original (0.6/0.46/0.78) at every stop —
+     same hue, same gradient shape, just less of a wall over the photo. */
   .hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(29,42,30,0.6) 0%, rgba(29,42,30,0.46) 45%, rgba(29,42,30,0.78) 100%);
+    background: linear-gradient(180deg, rgba(29,42,30,0.5) 0%, rgba(29,42,30,0.36) 45%, rgba(29,42,30,0.7) 100%);
   }
 
   .hero-inner {
@@ -426,32 +455,65 @@ const howItWorks = [
     }
   }
 
+  /* Floating cards, not the flat left-border editorial card used
+     elsewhere on the site: a raised, shadowed face so this row reads as
+     five distinct objects sitting above the page rather than a bordered
+     list. Fixed min-height (not content-driven) is what keeps all five
+     the same size regardless of copy length — the copy itself was also
+     tightened to roughly one line's worth of difference between the
+     shortest and longest pitch. */
   .audience-card {
     display: flex;
     flex-direction: column;
+    min-height: 264px;
+    padding: var(--space-6) var(--space-5);
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(29, 42, 30, 0.05), 0 20px 32px -16px rgba(29, 42, 30, 0.22);
     text-decoration: none;
     color: inherit;
     transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
   }
 
   .audience-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 4px 10px rgba(29, 42, 30, 0.08), 0 30px 44px -16px rgba(29, 42, 30, 0.28);
   }
 
-  .audience-card .h3 {
-    font-size: 16px;
+  .audience-card-index {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--card-accent, var(--steel));
+    margin-bottom: var(--space-3);
   }
 
-  .audience-card p {
-    font-size: 13.5px;
+  /* The title is the thing each audience should recognize themselves in
+     at a glance — sized and weighted to lead the card, not share billing
+     with the body copy the way the site's default .h3 does. */
+  .audience-card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(19px, 1.7vw, 22px);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin: 0 0 var(--space-3);
+  }
+
+  .audience-card-pitch {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+    margin: 0;
     flex-grow: 1;
   }
 
   .audience-card-link {
-    margin-top: var(--space-3);
+    margin-top: var(--space-4);
     font-weight: 700;
-    color: var(--steel);
+    color: var(--card-accent, var(--steel));
   }
 
   .story-bridge {
@@ -493,11 +555,11 @@ const howItWorks = [
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(20px, 2.4vw, 28px);
-    line-height: 1.35;
+    font-size: clamp(17px, 1.9vw, 23px);
+    line-height: 1.45;
     color: var(--ink-fg);
     margin: var(--space-2) 0 var(--space-4);
-    max-width: 46ch;
+    max-width: 62ch;
   }
 
   .story-bridge-footer {

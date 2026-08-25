@@ -30,6 +30,7 @@ const tokens = {
   card: "#EEE7D6",
   rust: "#83592B",
   "rust-ink": "#FBF6EC",
+  "rust-on-dark": "#A88B6B",
   steel: "#446040",
   "steel-ink": "#F3EEDD",
   "eyebrow-accent": "#E7DFC8",
@@ -53,6 +54,7 @@ const pairs = [
   ["steel text on card", tokens.steel, tokens.card, 4.5],
   ["rust as left-border accent on card (UI component)", tokens.rust, tokens.card, 3.0],
   ["steel as left-border accent on card (UI component)", tokens.steel, tokens.card, 3.0],
+  ["rust-on-dark as nav menu link hover on ink", tokens["rust-on-dark"], tokens.ink, 4.5],
 ];
 
 console.log("label".padEnd(52), "ratio".padEnd(8), "required", "pass?");

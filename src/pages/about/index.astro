@@ -1,194 +1,160 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import NumberedSteps from "../../components/NumberedSteps.astro";
+import PhotoSlot from "../../components/PhotoSlot.astro";
+import VideoSlot from "../../components/VideoSlot.astro";
 
-const timeline = [
-  { year: "2009", label: "First transplant, from a friend" },
-  { year: "2014", label: "FSGS recurs; dialysis begins" },
-  { year: "2019", label: "Matched, then cancer cancels surgery" },
-  { year: "2021", label: "Transplanted via the donor chain" },
-];
+const exists = (p: string) => fs.existsSync(path.join(process.cwd(), "public", p));
+const heroExists = exists("images/safe.webp");
 
-const steps = [
+const answers = [
   {
-    title: "Why education, not just transplantation.",
-    body: "The Jentosy Project's work began with transplantation — but the deeper problem is upstream: too many people from underserved communities are diagnosed too late, or never learn they're at risk, for diseases like FSGS and APOL1-mediated kidney disease. That's why our current focus is education and health equity — reaching people before they reach the transplant list. Transplantation equity remains part of our long-term mission, and it's where we're headed next.",
+    q: "Why",
+    a: "Geography shouldn't decide who understands their own health risk. Education is the one thing that works before a diagnosis becomes an emergency.",
   },
   {
-    title: "Kidney disease doesn't happen in isolation.",
-    body: "Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce — all of which take a measurable toll on the body, including the kidneys. We start in the Bronx, where these conditions are concentrated and where our founder's own story began, and we intend to expand as the organization grows.",
+    q: "What",
+    a: "We teach underserved communities about FSGS and APOL1-mediated kidney disease — in plain language, before it's too late to act on it.",
+  },
+  {
+    q: "Where",
+    a: "The Bronx first — one of the country's starkest examples of this disparity. Built to expand nationwide from here.",
+  },
+  {
+    q: "How",
+    a: "Education first, storytelling as the method. Lived experience changes minds that statistics alone can't reach.",
   },
 ];
 ---
 
 <BaseLayout
   title="About"
-  description="The Jentosy Project's mission, vision, and the founder's story behind why our focus shifted from transplantation toward kidney disease education and health equity."
+  description="The Jentosy Project is a 501(c)(3) nonprofit advancing kidney health equity for underserved communities, starting in the Bronx."
 >
-  <!-- FOUNDER + MISSION, IN ONE OPENING — the founder's story isn't a
-       card bolted onto the About page, it's the reason the page exists.
-       Grayscale photography, a bold statement line, and a hairline
-       name/title bar (references: SpaceX leadership profile, b&w
-       "leadership requires a worldview" portrait spread). -->
-  <section class="on-dark founder-hero">
-    <span class="side-label" aria-hidden="true">The Founder's Story</span>
-    <div class="container founder-hero-inner">
-      <div class="founder-hero-media reveal">
-        <img
-          class="founder-hero-photo"
-          src="/images/founder-portrait.webp"
-          alt="Robert Sanchez, founder of The Jentosy Project"
-        />
-        <img
-          class="founder-hero-photo-inset"
-          src="/images/founder-podium.webp"
-          alt="Robert Sanchez speaking at a podium about kidney disease and health equity"
-        />
-      </div>
-
-      <div class="founder-hero-text">
-        <p class="eyebrow reveal">About The Jentosy Project</p>
-        <h1 class="founder-hero-heading reveal" style="--reveal-delay:0.06s">
-          One founder's story became an organization's mission.
-        </h1>
-
-        <p class="reveal" style="--reveal-delay:0.14s">
-          In 2009, Robert Sanchez received his first kidney transplant — a living-donor kidney
-          from a close friend. But FSGS, the rare disease that had already destroyed his own
-          kidneys, recurred in the transplanted one, and by 2014 he was back on dialysis, three
-          times a week. In 2019, out of options, he posted on Facebook asking if anyone knew
-          someone willing to donate a kidney. Within about a week, organ matchmaker Chaya
-          Lipschutz had found a potential match: Elizabeth Antosy. Then, the night before
-          surgery, his transplant surgeon called with news that changed everything — Robert had
-          kidney cancer, and the transplant could not go forward.
+  <!-- HERO — image only, no text on the photo. A light, flat tint keeps
+       it feeling of a piece with the site without washing the photo out. -->
+  <section class="on-dark about-hero" data-parallax-section>
+    {heroExists ? (
+      <img class="about-hero-bg" src="/images/safe.webp" alt="" aria-hidden="true" data-parallax-bg />
+    ) : (
+      <div class="about-hero-placeholder">
+        <p class="about-hero-placeholder-note">
+          Hero photo placeholder — drop <code>safe.webp</code> into <code>public/images/</code>{" "}
+          and it'll appear here automatically.
         </p>
-
-        <div class="founder-hero-statement reveal" style="--reveal-delay:0.2s">
-          <p class="founder-hero-statement-text">
-            Two transplants. Two women who wouldn't give up.
-          </p>
-        </div>
-
-        <p class="reveal" style="--reveal-delay:0.26s">
-          Elizabeth was heartbroken — but instead of walking away, she joined a kidney exchange
-          chain. Through it, Robert was matched with a new donor, Jen Keller, and after he
-          cleared cancer, the two were transplanted on October 20, 2021. Elizabeth's decision to
-          stay in the chain ultimately gave <strong>8 people</strong> new kidneys — and gave the
-          organization her name and Jen's: <strong>The Jentosy Project</strong>.
-        </p>
-
-        <div class="founder-hero-footer reveal" style="--reveal-delay:0.32s">
-          <div class="founder-hero-name">
-            <p class="founder-hero-name-text">Robert Sanchez</p>
-            <p class="founder-hero-name-title">Founder &amp; CEO</p>
-          </div>
-          <a href="#extended-story" class="linkline founder-hero-link">Read the extended story &rarr;</a>
-        </div>
       </div>
+    )}
+    <div class="about-hero-tint"></div>
+  </section>
+
+  <!-- A FUNDER OR PARTNER SHOULD BE ABLE TO GET WHAT THEY NEED FROM THIS
+       PAGE IN UNDER A MINUTE. One short hook, four short answers, one
+       short emotional anchor (the name), two short quotable statements
+       (mission/vision), done. Anyone who wants the long version has
+       Meet The Team, What We Do, and the Storytelling essay to go to. -->
+  <section class="on-light about-top">
+    <div class="container narrow">
+      <h1 class="about-title reveal">About</h1>
+
+      <p class="hook reveal" style="--reveal-delay:0.1s">
+        Kidney disease is often invisible until it isn't — and where you live can decide whether
+        you see it coming. The Jentosy Project exists to change that.
+      </p>
     </div>
   </section>
 
-  <section class="on-dark section-tight divider-dark" id="extended-story">
+  <section class="on-light answers-section">
     <div class="container">
-      <div class="timeline">
-        {timeline.map((item, i) => (
-          <div class="timeline-item" style={`--reveal-delay:${i * 0.1}s`}>
-            <div class="timeline-year">{item.year}</div>
-            <div class="timeline-label">{item.label}</div>
+      <div class="answers-grid">
+        {answers.map((item, i) => (
+          <div class="answer reveal" style={`--reveal-delay:${i * 0.06}s`}>
+            <p class="answer-q">{item.q}</p>
+            <p class="answer-a">{item.a}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
-      <h2 class="h2 reveal">Where the name comes from.</h2>
-      <p class="reveal" style="--reveal-delay:0.08s">
-        <strong>The Jentosy Project</strong> is named for the two women who made that second
-        transplant possible: <strong>Jen</strong> Keller, Robert's donor, and Elizabeth
-        An<strong>tosy</strong>, whose decision to join the exchange chain made the match happen
-        at all. The organization exists to pay their gift forward.
-      </p>
-      <p class="linkline reveal" style="--reveal-delay:0.14s">
-        Independently covered by
-        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
-      </p>
-    </div>
-  </section>
+  <figure class="wide-image wide-image-small subway-image reveal">
+    <PhotoSlot src="/images/NtX0s.webp" alt="A New York City subway sign reading Uptown & The Bronx Express, with the 4 and 5 line bullets" ratio="3 / 2" />
+    <figcaption>A community, not a case study.</figcaption>
+  </figure>
 
-  <!-- STORYTELLING — why this is the method, not just the origin. The
-       podium photo backs this up: Robert telling this story in person
-       is the method, not just an origin anecdote. -->
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <!-- THE NAME — the one story worth slowing down for, kept short; video
+       carries the emotional weight instead of more paragraphs. -->
+  <section class="on-light section name-section">
     <div class="container narrow">
-      <h2 class="h2 reveal">A story is how this started. It's also the method.</h2>
-      <p class="reveal" style="--reveal-delay:0.08s">
-        Robert didn't set out to build a nonprofit. In 2019 he was out of options, and he did the
-        only thing he could think to do: he told people, publicly and plainly, exactly what he
-        needed. That single, honest post is what put him in front of Elizabeth — and eventually
-        Jen. It worked because a real story, told without jargon, moves people in a way a
-        statistic rarely does.
+      <p class="eyebrow reveal">The Name</p>
+      <p class="reveal" style="--reveal-delay:0.06s">
+        The Jentosy Project is named for <strong>Jen Keller</strong> and{" "}
+        <strong>Elizabeth Antosy</strong> — two women whose decision to stay in a kidney exchange
+        chain gave founder Robert Sanchez a second transplant, and gave eight strangers new
+        kidneys.
       </p>
 
-      <figure class="podium-figure reveal" style="--reveal-delay:0.14s">
-        <img
-          class="podium-photo"
-          src="/images/founder-podium.webp"
-          alt="Robert Sanchez speaking at a podium about kidney disease and health equity"
+      <figure class="story-video-figure reveal" style="--reveal-delay:0.12s">
+        <VideoSlot
+          src="/videos/where-the-name-comes-from.mp4"
+          youtubeId="nsQ35ZgiWOk"
+          ratio="16 / 9"
+          title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
         />
-        <figcaption>Robert speaking publicly about kidney disease and health equity.</figcaption>
+        <figcaption>
+          Independently covered by{" "}
+          <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
+        </figcaption>
       </figure>
 
-      <p class="reveal" style="--reveal-delay:0.2s">
-        That's the idea The Jentosy Project is built on: storytelling as education. Rare kidney
-        diseases like FSGS and APOL1-mediated kidney disease are almost always described in
-        clinical language, if they're described at all — which means the people most at risk
-        often don't recognize the warning signs until they're already in crisis. Real stories,
-        told in plain language, teach what a pamphlet full of medical terms can't. The Jentosy
-        Project exists to close that gap: putting those stories in front of
-        <a href="/the-need/">the communities, clinicians, and partners who can act on them</a>,
-        before a diagnosis becomes an emergency.
-      </p>
-      <p class="pull reveal" style="--reveal-delay:0.28s">
-        Robert's story is the proof of concept. It's also the first of many this organization
-        intends to tell.
+      <p class="linkline reveal" style="--reveal-delay:0.18s">
+        Read the full story on <a href="/about/team/">Meet The Team</a> · Read the philosophy
+        behind it in <a href="/storytelling/">Storytelling as Medicine</a>
       </p>
     </div>
   </section>
 
-  <section class="on-light section">
+  <!-- MISSION + VISION — the two lines worth remembering. -->
+  <section class="on-dark section-tight mv-band">
     <div class="container">
-      <div class="mission-vision-grid">
+      <div class="mv-grid">
         <div class="mv-col reveal">
           <p class="mv-label">Mission</p>
           <p class="mv-statement">
-            The Jentosy Project advances health equity for underserved communities by educating
-            people about rare kidney diseases — including FSGS and APOL1-mediated kidney disease
-            — and building the partnerships needed to close the gap in kidney care.
+            Advance health equity for underserved communities by educating people about rare
+            kidney diseases — including FSGS and APOL1-mediated kidney disease — and building the
+            partnerships needed to close the gap in kidney care.
           </p>
         </div>
         <div class="mv-col mv-col-divided reveal" style="--reveal-delay:0.08s">
           <p class="mv-label">Vision</p>
           <p class="mv-statement">
-            A future where no one's zip code determines their access to kidney health
-            education, early detection, or life-saving care — starting in the Bronx and
-            expanding to underserved communities nationwide.
+            A future where no one's zip code determines their access to kidney health education,
+            early detection, or life-saving care.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+  <figure class="wide-image wide-image-light wide-image-small reveal">
+    <PhotoSlot src="/images/treeoflife.webp" alt="Cupped hands cradling a tree that grows from a pair of kidneys" ratio="5 / 4" />
+    <figcaption>Rooted in care, growing toward equity.</figcaption>
+  </figure>
+
+  <section class="on-light section-tight closer-section">
     <div class="container narrow">
-      <NumberedSteps steps={steps} />
+      <p class="pull reveal closer">Where you live should never decide what you know.</p>
+      <p class="linkline reveal" style="--reveal-delay:0.06s">
+        More on <a href="/about/team/">who's behind this</a> and{" "}
+        <a href="/about/what-we-do/">what we do day to day</a>.
+      </p>
     </div>
   </section>
 
   <section class="on-dark section-tight cta-band">
     <div class="container cta-inner reveal">
-      <h2 class="h2">Help extend what Jen and Elizabeth started.</h2>
+      <h2 class="h2">Help advance health equity in kidney care.</h2>
       <div class="cluster gap-3" style="margin-top:var(--space-5);">
         <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
         <a href="/donate/" class="btn btn-rust">Donate</a>
@@ -199,167 +165,197 @@ const steps = [
 
 <style>
   .narrow {
-    max-width: 700px;
+    max-width: 620px;
+    margin-inline: auto;
+    text-align: center;
   }
 
-  /* ---------- Founder hero ---------- */
+  /* ---------- Hero (photo only) ---------- */
 
-  .founder-hero {
+  .about-hero {
     position: relative;
+    min-height: 58vh;
     overflow: clip;
   }
 
-  .side-label {
+  .about-hero-bg {
     position: absolute;
-    left: 22px;
-    top: 50%;
-    transform: translateY(-50%) rotate(-90deg);
-    transform-origin: left center;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink-fg-muted);
-    white-space: nowrap;
-    display: none;
-  }
-
-  @media (min-width: 1100px) {
-    .side-label {
-      display: block;
-    }
-  }
-
-  .founder-hero-inner {
-    display: grid;
-    grid-template-columns: minmax(280px, 42%) 1fr;
-    gap: clamp(32px, 6vw, 80px);
-    align-items: start;
-    padding-block: clamp(var(--space-8), 9vw, var(--space-9));
-  }
-
-  @media (min-width: 1100px) {
-    .founder-hero-inner {
-      padding-left: var(--space-7);
-    }
-  }
-
-  @media (max-width: 860px) {
-    .founder-hero-inner {
-      grid-template-columns: 1fr;
-    }
-  }
-
-  .founder-hero-media {
-    position: relative;
-  }
-
-  .founder-hero-photo {
+    inset: -16% 0;
     width: 100%;
-    height: auto;
-    aspect-ratio: 4 / 5;
+    height: 132%;
     object-fit: cover;
-    border-radius: var(--radius-sm);
-    filter: grayscale(1) contrast(1.08) brightness(0.96);
-    transition: filter 0.6s var(--ease);
+    object-position: center 30%;
+    will-change: transform;
   }
 
-  .founder-hero-media:hover .founder-hero-photo {
-    filter: grayscale(0) contrast(1) brightness(1);
-  }
-
-  .founder-hero-photo-inset {
+  .about-hero-tint {
     position: absolute;
-    right: -8%;
-    bottom: -10%;
-    width: 46%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: var(--radius-sm);
-    border: 4px solid var(--ink);
-    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
-    filter: grayscale(1) contrast(1.08);
+    inset: 0;
+    background: rgba(29, 42, 30, 0.22);
   }
 
-  .founder-hero-text p {
+  .about-hero-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-6);
+  }
+
+  .about-hero-placeholder-note {
+    max-width: 46ch;
+    text-align: center;
+    font-size: 13px;
     color: var(--ink-fg-muted);
   }
 
-  .founder-hero-heading {
+  .about-hero-placeholder-note code {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 1px 5px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Top: ABOUT + one-line hook ---------- */
+
+  .about-top {
+    padding-top: 0;
+    padding-bottom: clamp(var(--space-6), 5vw, var(--space-7));
+  }
+
+  .about-title {
+    position: relative;
+    top: -4rem;
+    margin: 0 0 var(--space-4);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(72px, 13vw, 180px);
+    line-height: 1;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
+    -webkit-text-stroke: 2px #fff;
+    paint-order: stroke fill;
+  }
+
+  @media (max-width: 640px) {
+    .about-title {
+      top: -2rem;
+    }
+  }
+
+  .hook {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 2.6vw, 26px);
+    line-height: 1.4;
+    color: var(--fg);
+    max-width: 34ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- Why / What / Where / How ---------- */
+
+  .answers-section {
+    padding-block: 0 clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
+  .answers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(28px, 4vw, 48px) clamp(32px, 5vw, 64px);
+  }
+
+  @media (max-width: 700px) {
+    .answers-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+  }
+
+  .answer {
+    border-top: 2px solid var(--ink);
+    padding-top: var(--space-3);
+    text-align: center;
+  }
+
+  .answer-q {
     font-family: var(--font-body);
     font-weight: 800;
-    font-size: clamp(30px, 4vw, 48px);
-    line-height: 1.12;
-    letter-spacing: -0.01em;
-    color: var(--ink-fg);
-    max-width: 15ch;
-    margin: 0 0 var(--space-5);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 0 0 var(--space-2);
   }
 
-  .founder-hero-statement {
-    margin: var(--space-5) 0;
-    padding-left: var(--space-5);
-    border-left: 1px solid var(--rust);
+  .answer-a {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(18px, 2vw, 21px);
+    line-height: 1.4;
+    color: var(--fg);
+    max-width: 32ch;
+    margin-inline: auto;
   }
 
-  .founder-hero-statement-text {
+  /* ---------- Wide images ---------- */
+
+  .wide-image {
+    margin: 0 auto clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
+  .wide-image :global(.photo-slot),
+  .wide-image :global(.photo-slot-placeholder) {
+    display: block;
+  }
+
+  .wide-image figcaption {
+    margin-top: var(--space-3);
+    padding-inline: clamp(20px, 5vw, 56px);
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 500;
-    font-size: clamp(22px, 2.6vw, 30px);
-    line-height: 1.3;
-    color: var(--ink-fg);
-    margin: 0;
+    font-size: 15px;
+    color: var(--fg-muted);
+    text-align: center;
   }
 
-  .founder-hero-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    margin-top: var(--space-7);
-    padding-top: var(--space-5);
-    border-top: 1px solid var(--ink-line);
+  .wide-image-light {
+    margin-top: clamp(var(--space-7), 6vw, var(--space-8));
+    margin-bottom: 0;
   }
 
-  .founder-hero-name-text {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 17px;
-    color: var(--ink-fg);
-    margin: 0;
+  /* treeoflife.webp's source file is only 462x368 — stretched to a full
+     21:9 banner it was being upscaled well past its real resolution,
+     which is what read as pixelated. Capped near its native size
+     instead, so the browser is barely scaling it at all. */
+  .wide-image-small {
+    max-width: 420px;
+    padding-inline: 0;
   }
 
-  .founder-hero-name-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-fg-muted);
-    margin: var(--space-1) 0 0;
+  .wide-image-small figcaption {
+    padding-inline: 0;
   }
 
-  .founder-hero-link {
-    color: var(--eyebrow-accent);
-    font-weight: 700;
+  .subway-image {
+    max-width: 520px;
   }
 
-  /* ---------- Extended story (podium figure) ---------- */
+  /* ---------- The Name ---------- */
 
-  .podium-figure {
-    margin: var(--space-6) 0;
+  .name-section {
+    margin-top: -7.5px;
   }
 
-  .podium-photo {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    object-position: center 25%;
-    border-radius: var(--radius-sm);
+  .story-video-figure {
+    margin: var(--space-5) 0;
   }
 
-  .podium-figure figcaption {
+  .story-video-figure figcaption {
     margin-top: var(--space-2);
     font-size: 12.5px;
     color: var(--fg-muted);
@@ -367,30 +363,34 @@ const steps = [
 
   /* ---------- Mission / Vision ---------- */
 
-  .mission-vision-grid {
+  .mv-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: clamp(32px, 6vw, 80px);
   }
 
-  @media (max-width: 780px) {
-    .mission-vision-grid {
+  @media (max-width: 700px) {
+    .mv-grid {
       grid-template-columns: 1fr;
-      gap: var(--space-7);
+      gap: var(--space-6);
     }
   }
 
+  .mv-col {
+    text-align: center;
+  }
+
   .mv-col-divided {
-    border-left: 1px solid var(--line);
+    border-left: 1px solid var(--ink-line);
     padding-left: clamp(32px, 6vw, 80px);
   }
 
-  @media (max-width: 780px) {
+  @media (max-width: 700px) {
     .mv-col-divided {
       border-left: none;
       padding-left: 0;
-      border-top: 1px solid var(--line);
-      padding-top: var(--space-7);
+      border-top: 1px solid var(--ink-line);
+      padding-top: var(--space-6);
     }
   }
 
@@ -399,18 +399,35 @@ const steps = [
     font-weight: 800;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--rust);
-    margin: 0 0 var(--space-4);
+    color: var(--eyebrow-accent);
+    margin: 0 0 var(--space-3);
   }
 
   .mv-statement {
-    font-family: var(--font-body);
-    font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 22px);
-    line-height: 1.5;
-    color: var(--fg);
-    max-width: 34ch;
-    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(19px, 2vw, 23px);
+    line-height: 1.4;
+    color: var(--ink-fg);
+    max-width: 36ch;
+    margin-inline: auto;
+  }
+
+  /* ---------- Closer ---------- */
+
+  .closer-section {
+    text-align: center;
+  }
+
+  .closer {
+    display: inline-block;
+    border-left: none;
+    padding-left: 0;
+    font-size: clamp(24px, 3vw, 32px);
+  }
+
+  .closer-section .linkline {
+    margin-top: var(--space-3);
   }
 
   .cta-inner {
@@ -419,3 +436,30 @@ const steps = [
     margin-inline: auto;
   }
 </style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const section = document.querySelector<HTMLElement>("[data-parallax-section]");
+  const bg = document.querySelector<HTMLElement>("[data-parallax-bg]");
+
+  // Gentle big-story parallax on the hero photo only — the image is sized
+  // larger than its box (see .about-hero-bg) so the drift never reveals
+  // empty space at the edges.
+  if (section && bg && !prefersReducedMotion) {
+    gsap.to(bg, {
+      yPercent: 12,
+      ease: "none",
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+  }
+</script>

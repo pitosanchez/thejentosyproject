@@ -1,0 +1,526 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+
+const board = [
+  {
+    name: "Daryl Spivey",
+    role: "Writer / Executive Producer",
+    photo: "/images/daryl.jpeg",
+    bio: "Daryl Spivey is an award-winning writer and producer who began his career on Wall Street as a market segment analyst. Daryl has won 4 Telly Awards, including two Gold Tellys for directing/producing while spearheading development at Al Roker Entertainment, received an EMMY nomination in 2019, and garnered an AURORA Award for excellence in filmmaking for the Baltimore, MD documentary Thread. His feature film, Greenwood Avenue, is currently in production with Hill Harper directing. Other projects include creative partnerships with music icon Ludacris, Mary J. Blige, best-selling author Nelson DeMille, and NBA Entertainment. Daryl is also executive producing, with Academy Award nominee Edward James Olmos and the Harvard Institute for Race and Justice, a documentary series focusing on the history of race in America.",
+  },
+  {
+    name: "Junelle Speller, MBA",
+    role: "Chief Strategy Officer, GlomCon Foundation",
+    photo: "/images/junelle.webp",
+    bio: "Junelle Speller, MBA, is Chief Strategy Officer of the GlomCon Foundation, where she leads organizational strategy, research programs, community outreach, and global partnerships to advance care and outcomes for people with glomerular and rare kidney diseases. She has more than 25 years of experience spanning healthcare policy, business strategy, research infrastructure, and nonprofit leadership. Before joining GlomCon, Ms. Speller served as Senior Vice President of Health Care Strategy at NORC at the University of Chicago and Vice President of Research at the Pulmonary Fibrosis Foundation, where she led national rare disease registry initiatives. Her career also includes leadership roles in management consulting, health technology, and healthcare policy, including nearly 15 years at the American Academy of Pediatrics. A two-time kidney transplant recipient, Ms. Speller brings lived experience that informs her work in healthcare strategy, research, and evidence generation. She serves on the OPTN Patient Affairs Committee, is a co-patient investigator on a PCORI-funded study, and has presented at major international conferences, including KDIGO. Ms. Speller holds a bachelor's degree in biology from Yale University and an MBA from Northwestern University's Kellogg School of Management.",
+  },
+  {
+    name: "Dr. Josh Fessel",
+    role: "Physician-Scientist",
+    photo: "/images/Fessel.webp",
+    bio: "I am a physician, scientist, teacher, advisor, and grateful servant. My big goals are to develop more effective ways to turn discoveries into action to treat and prevent diseases of all types and to bring those discovery-driven actions to as many people as possible for the better health of all. I have expertise in all aspects of clinical and translational research activities including clinical trials, operational aspects of clinical research, human subjects protections, bioethics, research using big data/real-world data, artificial intelligence in biomedical and healthcare settings, and clinical research policy. My clinical specialty is pulmonary disease and critical care (ICU) medicine. My own research activities focused on investigation of the mechanisms that control metabolism at the molecular level, and how abnormal metabolism and mitochondrial function contributes to diseases such as pulmonary hypertension, heart failure, sepsis, critical illness delirium, cancer, pulmonary fibrosis, and a variety of other complex diseases.",
+  },
+].map((person) => ({
+  ...person,
+  photoExists: fs.existsSync(path.join(process.cwd(), "public", person.photo)),
+}));
+---
+
+<BaseLayout
+  title="Meet The Team"
+  description="Meet the people behind The Jentosy Project: founder and CEO Robert Sanchez, and the board and staff joining him as the organization grows."
+>
+  <!-- FOUNDER + CEO — the org's one team member today, told in full. Board
+       and future staff get their own section below, built to extend. -->
+  <section class="on-dark founder-hero">
+    <span class="side-label" aria-hidden="true">Meet The Team</span>
+    <div class="container founder-hero-inner">
+      <div class="founder-hero-media reveal">
+        <img
+          class="founder-hero-photo"
+          src="/images/founder-portrait.webp"
+          alt="Robert Sanchez, founder of The Jentosy Project"
+        />
+        <img
+          class="founder-hero-photo-inset"
+          src="/images/founder-podium.webp"
+          alt="Robert Sanchez speaking at a podium about kidney disease and health equity"
+        />
+      </div>
+
+      <div class="founder-hero-text">
+        <p class="eyebrow reveal">Meet The Team</p>
+
+        <p class="reveal" style="--reveal-delay:0.14s">
+          In 2009, Robert Sanchez received his first kidney transplant — a living-donor kidney
+          from a close friend. But FSGS, the rare disease that had already destroyed his own
+          kidneys, recurred in the transplanted one, and by 2014 he was back on dialysis, three
+          times a week. In 2019, out of options, he posted on Facebook asking if anyone knew
+          someone willing to donate a kidney. Within about a week, organ matchmaker Chaya
+          Lipschutz had found a potential match: Elizabeth Antosy. Then, the night before
+          surgery, his transplant surgeon called with news that changed everything — Robert had
+          kidney cancer, and the transplant could not go forward.
+        </p>
+
+        <div class="founder-hero-statement reveal" style="--reveal-delay:0.2s">
+          <p class="founder-hero-statement-text">
+            Two transplants. Two women who wouldn't give up.
+          </p>
+        </div>
+
+        <p class="reveal" style="--reveal-delay:0.26s">
+          Elizabeth was heartbroken — but instead of walking away, she joined a kidney exchange
+          chain. Through it, Robert was matched with a new donor, Jen Keller, and after he
+          cleared cancer, the two were transplanted on October 20, 2021. Elizabeth's decision to
+          stay in the chain ultimately gave <strong>8 people</strong> new kidneys — and gave the
+          organization her name and Jen's: <strong>The Jentosy Project</strong>.
+        </p>
+
+        <div class="founder-hero-footer reveal" style="--reveal-delay:0.32s">
+          <div class="founder-hero-name">
+            <p class="founder-hero-name-text">Robert Sanchez</p>
+            <p class="founder-hero-name-title">Founder &amp; CEO</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight board-divider" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <h2 class="board-divider-title reveal">Board of Directors</h2>
+      <p class="board-divider-note reveal" style="--reveal-delay:0.08s">
+        Clinical research, entertainment, and lived experience with kidney disease — brought
+        together around the same mission. Hover or focus a card to read each member's full bio.
+      </p>
+    </div>
+  </section>
+
+  <!-- THE BOARD — built to extend: as the founder adds board, advisory,
+       and staff members, each becomes another .person-card in this grid. -->
+  <section class="on-light section" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <div class="board-grid">
+        {board.map((person) => (
+          <div class="person-card" tabindex="0">
+            <div class="person-card-inner">
+              <div class="person-card-face person-card-front">
+                <div class="person-card-header">
+                  <p class="person-card-name">{person.name}</p>
+                  <p class="person-card-role">{person.role}</p>
+                </div>
+                <div class="person-card-photo-wrap">
+                  {person.photoExists ? (
+                    <img class="person-card-photo" src={person.photo} alt={`${person.name} headshot`} />
+                  ) : (
+                    <div class="person-card-photo person-card-photo-placeholder" aria-hidden="true"></div>
+                  )}
+                  <span class="person-card-flip-hint" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 12a9 9 0 0 1 15-6.7L21 8" />
+                      <path d="M21 3v5h-5" />
+                      <path d="M21 12a9 9 0 0 1-15 6.7L3 16" />
+                      <path d="M3 21v-5h5" />
+                    </svg>
+                  </span>
+                </div>
+              </div>
+
+              <div class="person-card-face person-card-back">
+                <span class="person-card-back-mark" aria-hidden="true">&ldquo;</span>
+                <p class="person-card-back-name">{person.name}</p>
+                <p class="person-card-back-role">{person.role}</p>
+                <p class="person-card-back-bio">{person.bio}</p>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight cta-band">
+    <div class="container cta-inner reveal">
+      <h2 class="h2">Help extend what Jen and Elizabeth started.</h2>
+      <div class="cluster gap-3" style="margin-top:var(--space-5);">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  /* ---------- Founder hero ---------- */
+
+  .founder-hero {
+    position: relative;
+    overflow: clip;
+  }
+
+  .side-label {
+    position: absolute;
+    left: 22px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: left center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-fg-muted);
+    white-space: nowrap;
+    display: none;
+  }
+
+  @media (min-width: 1100px) {
+    .side-label {
+      display: block;
+    }
+  }
+
+  .founder-hero-inner {
+    display: grid;
+    grid-template-columns: minmax(260px, 38%) 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: start;
+    padding-block: clamp(var(--space-5), 5vw, var(--space-6));
+  }
+
+  @media (min-width: 1100px) {
+    .founder-hero-inner {
+      padding-left: var(--space-7);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .founder-hero-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .founder-hero-media {
+    position: relative;
+    margin-bottom: var(--space-7);
+  }
+
+  .founder-hero-photo {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    filter: grayscale(1) contrast(1.08) brightness(0.96);
+    transition: filter 0.6s var(--ease);
+  }
+
+  .founder-hero-media:hover .founder-hero-photo {
+    filter: grayscale(0) contrast(1) brightness(1);
+  }
+
+  .founder-hero-photo-inset {
+    position: absolute;
+    right: -8%;
+    bottom: -10%;
+    width: 46%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 4px solid var(--ink);
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.45);
+    filter: grayscale(1) contrast(1.08);
+  }
+
+  .founder-hero-text p {
+    color: var(--ink-fg-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: var(--space-3);
+  }
+
+  .founder-hero-statement {
+    margin: var(--space-4) 0;
+    padding-left: var(--space-4);
+    border-left: 1px solid var(--rust);
+  }
+
+  .founder-hero-statement-text {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(18px, 2.1vw, 24px);
+    line-height: 1.3;
+    color: var(--ink-fg);
+    margin: 0;
+  }
+
+  .founder-hero-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .founder-hero-name-text {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink-fg);
+    margin: 0;
+  }
+
+  .founder-hero-name-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-fg-muted);
+    margin: var(--space-1) 0 0;
+  }
+
+  /* ---------- Board divider ---------- */
+
+  .board-divider {
+    text-align: center;
+  }
+
+  .board-divider-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(32px, 5vw, 56px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  /* ---------- The Board ---------- */
+
+  .board-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6) var(--space-7);
+  }
+
+  @media (max-width: 860px) {
+    .board-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .board-grid {
+      grid-template-columns: 1fr;
+      max-width: 340px;
+      margin-inline: auto;
+    }
+  }
+
+  .person-card {
+    position: relative;
+    height: 530px;
+    perspective: 1800px;
+    outline: none;
+  }
+
+  .person-card::after {
+    content: "";
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    bottom: -16px;
+    height: 24px;
+    background: radial-gradient(ellipse at center, rgba(29, 42, 30, 0.4), rgba(29, 42, 30, 0) 72%);
+    filter: blur(5px);
+    z-index: -1;
+    transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  }
+
+  .person-card:hover::after,
+  .person-card:focus-within::after,
+  .person-card:focus::after {
+    opacity: 0.75;
+    transform: translateY(8px) scale(1.08);
+  }
+
+  .person-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s var(--ease), box-shadow 0.7s var(--ease);
+    border-radius: var(--radius-md);
+    box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
+  }
+
+  .person-card:hover .person-card-inner,
+  .person-card:focus-within .person-card-inner,
+  .person-card:focus .person-card-inner {
+    transform: translateY(-10px) rotateY(180deg);
+    box-shadow: 0 26px 46px rgba(0, 0, 0, 0.3);
+  }
+
+  .person-card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: var(--radius-md);
+    border: 2px solid var(--rust);
+    overflow: hidden;
+  }
+
+  .person-card-front {
+    display: flex;
+    flex-direction: column;
+    background: var(--card);
+  }
+
+  .person-card-header {
+    flex: 0 0 auto;
+    padding: var(--space-3) var(--space-4) var(--space-2);
+    background: var(--ink);
+    border-bottom: 2px solid var(--rust);
+  }
+
+  .person-card-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 17px;
+    color: var(--ink-fg);
+    margin: 0;
+  }
+
+  .person-card-role {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--eyebrow-accent);
+    margin: var(--space-1) 0 0;
+  }
+
+  .person-card-photo-wrap {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .person-card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+    display: block;
+    filter: grayscale(0.25) contrast(1.04);
+    transition: filter 0.7s var(--ease);
+  }
+
+  .person-card:hover .person-card-photo,
+  .person-card:focus-within .person-card-photo,
+  .person-card:focus .person-card-photo {
+    filter: grayscale(0) contrast(1);
+  }
+
+  .person-card-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(160deg, var(--card), var(--line));
+  }
+
+  .person-card-flip-hint {
+    position: absolute;
+    right: var(--space-3);
+    bottom: var(--space-3);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--ink);
+    color: var(--eyebrow-accent);
+    border: 1.5px solid var(--rust);
+    border-radius: var(--radius-pill);
+    opacity: 0.85;
+    transition: opacity 0.4s var(--ease), transform 0.4s var(--ease);
+  }
+
+  .person-card:hover .person-card-flip-hint,
+  .person-card:focus-within .person-card-flip-hint,
+  .person-card:focus .person-card-flip-hint {
+    opacity: 1;
+    transform: rotate(180deg);
+  }
+
+  .person-card-back {
+    position: relative;
+    transform: rotateY(180deg);
+    background: var(--ink);
+    color: var(--ink-fg);
+    padding: var(--space-4) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .person-card-back-mark {
+    position: absolute;
+    top: -6px;
+    right: var(--space-4);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--ink-line-strong);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .person-card-back-name {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-fg);
+    margin: 0;
+    max-width: 80%;
+  }
+
+  .person-card-back-role {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--eyebrow-accent);
+    margin: var(--space-1) 0 var(--space-2);
+    padding-bottom: var(--space-2);
+    border-bottom: 1px solid var(--ink-line);
+  }
+
+  .person-card-back-bio {
+    position: relative;
+    font-size: 11px;
+    line-height: 1.55;
+    color: var(--ink-fg-muted);
+    margin: 0;
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+</style>

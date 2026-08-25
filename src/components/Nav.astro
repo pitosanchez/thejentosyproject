@@ -1,7 +1,14 @@
 ---
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/about/", label: "About" },
+  {
+    href: "/about/",
+    label: "About",
+    children: [
+      { href: "/about/team/", label: "Meet The Team" },
+      { href: "/about/what-we-do/", label: "What We Do" },
+    ],
+  },
   {
     href: "/the-need/",
     label: "The Need",
@@ -10,7 +17,9 @@ const navLinks = [
       { href: "/the-need/apol1/", label: "APOL1-Mediated Kidney Disease" },
     ],
   },
-  { href: "/what-we-do/", label: "What We Do" },
+  { href: "/storytelling/", label: "Storytelling" },
+  { href: "/partner-with-us/", label: "Partner With Us" },
+  { href: "/contact/", label: "Contact" },
 ];
 const currentPath = Astro.url.pathname;
 const isActive = (href: string) => (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
@@ -19,6 +28,30 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
 <header class="site-nav on-dark">
   <div class="container nav-row">
     <a href="/" class="wordmark">The Jentosy Project</a>
+
+    <nav class="desktop-nav" aria-label="Primary">
+      <ul>
+        {navLinks.map((link) => (
+          <li class={link.children ? "desktop-nav-parent" : undefined}>
+            <a href={link.href} class="nav-link" aria-current={isActive(link.href) ? "page" : undefined}>
+              {link.label}
+              {link.children && <span class="desktop-nav-caret" aria-hidden="true"></span>}
+            </a>
+            {link.children && (
+              <ul class="desktop-nav-dropdown">
+                {link.children.map((child) => (
+                  <li>
+                    <a href={child.href} aria-current={isActive(child.href) ? "page" : undefined}>
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
 
     <button
       class="menu-trigger"
@@ -109,6 +142,12 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     padding-inline: clamp(16px, 4vw, 40px);
   }
 
+  @media (min-width: 1000px) {
+    .nav-row {
+      grid-template-columns: auto 1fr auto;
+    }
+  }
+
   .wordmark {
     justify-self: start;
     font-family: var(--font-display);
@@ -118,11 +157,93 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     text-transform: uppercase;
     text-decoration: none;
     color: var(--ink-fg);
+    white-space: nowrap;
   }
 
   .nav-donate {
     justify-self: end;
     padding: 12px 24px;
+  }
+
+  /* ---------- Desktop nav (visible top-level links) ---------- */
+
+  .desktop-nav {
+    display: none;
+  }
+
+  @media (min-width: 1000px) {
+    .desktop-nav {
+      display: block;
+      justify-self: center;
+    }
+  }
+
+  .desktop-nav > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: clamp(20px, 2.6vw, 36px);
+  }
+
+  .desktop-nav > ul > li {
+    position: relative;
+  }
+
+  .desktop-nav-caret {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin-left: 5px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    opacity: 0.7;
+  }
+
+  .desktop-nav-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, 4px);
+    margin: 0;
+    padding: var(--space-2);
+    min-width: 220px;
+    list-style: none;
+    background: var(--ink);
+    border: 1px solid var(--ink-line);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.28);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), visibility var(--dur-fast);
+  }
+
+  .desktop-nav-parent:hover .desktop-nav-dropdown,
+  .desktop-nav-parent:focus-within .desktop-nav-dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, 0);
+  }
+
+  .desktop-nav-dropdown a {
+    display: block;
+    padding: 9px 12px;
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: none;
+    text-decoration: none;
+    color: var(--ink-fg-muted);
+    white-space: nowrap;
+    transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  }
+
+  .desktop-nav-dropdown a:hover,
+  .desktop-nav-dropdown a[aria-current="page"] {
+    color: var(--ink-fg);
+    background: var(--ink-soft);
   }
 
   .menu-trigger {
@@ -133,6 +254,12 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     color: var(--ink-fg);
     cursor: pointer;
     transition: color var(--dur-fast) var(--ease);
+  }
+
+  @media (min-width: 1000px) {
+    .menu-trigger {
+      display: none;
+    }
   }
 
   .menu-trigger:hover {
@@ -193,7 +320,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
 
   .site-menu-link:hover,
   .site-menu-link[aria-current="page"] {
-    color: var(--ink-fg);
+    color: var(--rust-on-dark);
     transform: translateX(10px);
   }
 
@@ -260,7 +387,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
 
   .site-menu-sublink:hover,
   .site-menu-sublink[aria-current="page"] {
-    color: var(--eyebrow-accent);
+    color: var(--rust-on-dark);
   }
 
   .site-menu-footer {
@@ -282,7 +409,8 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
 
   @media (max-width: 480px) {
     .wordmark {
-      font-size: 14px;
+      font-size: 12.5px;
+      letter-spacing: 0.05em;
     }
 
     .nav-donate {

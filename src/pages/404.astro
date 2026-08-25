@@ -10,9 +10,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         We couldn't find that page.
       </h1>
       <p class="lede reveal" style="--reveal-delay:0.16s;">
-        The page you're looking for may have moved. Head back to the homepage to find your way.
+        The page you're looking for may have moved. Here are a few places worth trying instead.
       </p>
-      <a href="/" class="btn btn-steel-outline reveal" style="--reveal-delay:0.24s;">Back to Home</a>
+      <div class="cluster gap-3 not-found-links reveal" style="--reveal-delay:0.24s;">
+        <a href="/" class="btn btn-steel-outline">Back to Home</a>
+        <a href="/the-need/" class="btn btn-steel-outline">The Need</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -35,7 +39,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     margin-inline: auto;
   }
 
-  .not-found-inner .btn {
+  .not-found-links {
+    justify-content: center;
     margin-top: var(--space-6);
   }
 </style>
