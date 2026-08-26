@@ -181,11 +181,16 @@ const riskFactors = [
     <div class="container">
       <div class="grid disease-grid">
         {diseases.map((d, i) => (
-          <a href={`/the-need/${d.slug}/`} class="card card-steel reveal disease-card" style={`--reveal-delay:${i * 0.1}s`}>
-            <p class="disease-full">{d.full}</p>
-            <h2 class="h3">{d.name}</h2>
-            <p>{d.blurb}</p>
-            <span class="read-more">Read more &rarr;</span>
+          <a href={`/the-need/${d.slug}/`} class="disease-card reveal" style={`--reveal-delay:${i * 0.1}s`} data-tilt-card>
+            <div class="disease-card-inner" data-tilt-inner>
+              <span class="disease-card-mark" aria-hidden="true">{d.name.slice(0, 1)}</span>
+              <div class="disease-card-content">
+                <p class="disease-full">{d.full}</p>
+                <h2 class="h3">{d.name}</h2>
+                <p>{d.blurb}</p>
+                <span class="read-more">Read more &rarr;</span>
+              </div>
+            </div>
           </a>
         ))}
       </div>
@@ -581,7 +586,8 @@ const riskFactors = [
 
   .disease-grid {
     grid-template-columns: repeat(2, 1fr);
-    margin-top: var(--space-4);
+    gap: var(--space-6);
+    margin: var(--space-4) auto 0;
     max-width: 700px;
   }
 
@@ -591,15 +597,77 @@ const riskFactors = [
     }
   }
 
+  /* ---------- 3D tilt cards ---------- */
+
   .disease-card {
+    position: relative;
+    display: block;
     text-decoration: none;
     color: inherit;
-    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+    perspective: 1200px;
+    outline: none;
   }
 
-  .disease-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(16, 22, 28, 0.08);
+  .disease-card::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -14px;
+    height: 22px;
+    background: radial-gradient(ellipse at center, rgba(38, 42, 33, 0.3), rgba(38, 42, 33, 0) 72%);
+    filter: blur(6px);
+    z-index: -1;
+    transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+  }
+
+  .disease-card:hover::after,
+  .disease-card:focus-visible::after {
+    opacity: 0.85;
+    transform: translateY(6px) scale(1.06);
+  }
+
+  .disease-card-inner {
+    position: relative;
+    height: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-top: 3px solid var(--steel);
+    border-radius: var(--radius-sm);
+    padding: var(--space-6) var(--space-5);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 22px rgba(38, 42, 33, 0.14);
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-med) var(--ease), border-top-color var(--dur-med) var(--ease);
+  }
+
+  .disease-card:hover .disease-card-inner,
+  .disease-card:focus-visible .disease-card-inner {
+    border-top-color: var(--rust);
+    box-shadow: 0 26px 44px rgba(38, 42, 33, 0.22);
+  }
+
+  .disease-card:focus-visible .disease-card-inner {
+    transform: translateY(-4px);
+  }
+
+  .disease-card-mark {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-4);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--line-strong);
+    opacity: 0.55;
+    transform: translateZ(14px);
+    pointer-events: none;
+  }
+
+  .disease-card-content {
+    position: relative;
+    transform: translateZ(34px);
   }
 
   .disease-full {
@@ -669,6 +737,34 @@ const riskFactors = [
       end: "bottom 60%",
       scrub: 0.6,
       animation: tl,
+    });
+  }
+
+  // FSGS/APOL1 cards tilt in 3D toward the pointer, with the disease-mark
+  // letter and the text content sitting at different translateZ depths so
+  // the tilt reads as real layered depth, not just a rotated flat card.
+  const tiltCards = document.querySelectorAll<HTMLElement>("[data-tilt-card]");
+  const maxTiltDeg = 9;
+
+  if (!prefersReducedMotion) {
+    tiltCards.forEach((card) => {
+      const inner = card.querySelector<HTMLElement>("[data-tilt-inner]");
+      if (!inner) return;
+
+      const applyTilt = (clientX: number, clientY: number) => {
+        const rect = card.getBoundingClientRect();
+        const px = (clientX - rect.left) / rect.width - 0.5;
+        const py = (clientY - rect.top) / rect.height - 0.5;
+        inner.style.transform = `rotateX(${(-py * maxTiltDeg * 2).toFixed(2)}deg) rotateY(${(px * maxTiltDeg * 2).toFixed(2)}deg)`;
+      };
+
+      const resetTilt = () => {
+        inner.style.transform = "rotateX(0deg) rotateY(0deg)";
+      };
+
+      card.addEventListener("pointermove", (e) => applyTilt(e.clientX, e.clientY));
+      card.addEventListener("pointerleave", resetTilt);
+      card.addEventListener("blur", resetTilt);
     });
   }
 </script>
