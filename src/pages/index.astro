@@ -277,6 +277,7 @@ const howItWorks = [
     height: 100%;
     object-fit: cover;
     object-position: center 30%;
+    filter: brightness(1.22) contrast(1.04);
     animation: hero-ken-burns 26s ease-in-out infinite alternate;
   }
 
@@ -295,12 +296,15 @@ const howItWorks = [
     }
   }
 
-  /* Slightly lighter than the original (0.6/0.46/0.78) at every stop —
-     same hue, same gradient shape, just less of a wall over the photo. */
+  /* The photo itself now runs brighter (see .hero-bg's filter), so the
+     scrim was rebalanced rather than just lightened across the board —
+     it used to be *weakest* right in the vertical middle (0.36), which
+     is exactly where the centered text sits. Deepened there specifically
+     so brightening the photo doesn't cost any text contrast. */
   .hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(29,42,30,0.5) 0%, rgba(29,42,30,0.36) 45%, rgba(29,42,30,0.7) 100%);
+    background: linear-gradient(180deg, rgba(20,29,21,0.56) 0%, rgba(20,29,21,0.58) 45%, rgba(20,29,21,0.78) 100%);
   }
 
   .hero-inner {
@@ -308,6 +312,15 @@ const howItWorks = [
     z-index: 2;
     padding-block: clamp(var(--space-7), 8vw, var(--space-9));
     max-width: 760px;
+  }
+
+  /* Belt-and-suspenders on top of the scrim: a soft shadow keeps the
+     text readable against the brighter photo even over its lightest
+     patches (the sky, sunlit brick). */
+  .hero-inner .h1,
+  .hero-inner .lede,
+  .hero-inner .eyebrow {
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
   }
 
   .bronx-stats {
