@@ -1,8 +1,25 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import StatTile from "../../components/StatTile.astro";
 
 const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
+const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+const supports = [
+  {
+    title: "Plain-language education",
+    body: "Materials on FSGS and APOL1-mediated kidney disease that reach people before a diagnosis becomes an emergency — not after.",
+  },
+  {
+    title: "Community outreach in the Bronx",
+    body: "In-person education where the disparity is starkest today, with a model built to expand beyond it.",
+  },
+  {
+    title: "Partnerships that close the gap",
+    body: "Connecting researchers, healthcare organizations, and policymakers around the same goal: care that doesn't depend on zip code.",
+  },
+];
 ---
 
 <BaseLayout
@@ -14,14 +31,62 @@ const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
     heading="Every gift funds education that reaches people before they reach the transplant list."
   />
 
-  <section class="on-light donate-section">
+  <section class="on-light donate-intro">
     <div class="container narrow">
       <p>
         The Jentosy Project is a 501(c)(3) public charity. Your donation directly funds education
         and outreach around FSGS and APOL1-mediated kidney disease — starting in the Bronx.
       </p>
     </div>
+  </section>
 
+  <!-- WHY THIS, WHY NOW — the founder-chain metaphor as the case for giving,
+       so the ask is preceded by the same human stakes the rest of the site
+       leads with, not a cold form. -->
+  <section class="on-dark donate-why">
+    <div class="container donate-why-inner">
+      <div class="donate-why-text reveal">
+        <p class="eyebrow">Why This, Why Now</p>
+        <p class="donate-why-quote">
+          &ldquo;Two women stayed in a kidney exchange chain when they didn't have to. That
+          decision gave me a second transplant — and gave eight strangers new kidneys. Every
+          gift here works the same way: it doesn't just fund one program, it starts a chain
+          reaction of who gets reached, who gets educated, and who gets the chance to advocate
+          for themselves in time.&rdquo;
+        </p>
+        <div class="donate-why-footer">
+          <p class="donate-why-byline">Robert Sanchez, Founder &amp; CEO</p>
+          <a href="/about/team/" class="linkline donate-why-link">Read his full story &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS CAN'T WAIT — real, already-sourced stats (same figures as
+       Home/The Need), not invented urgency, framed as the case education
+       specifically has to answer. -->
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Why This Can't Wait</p>
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">The gap your gift is closing.</h2>
+      <div class="grid donate-stats-grid">
+        <StatTile
+          value="4×"
+          label="Higher rate of kidney failure for Black Americans vs. White Americans."
+          source="CDC Chronic Kidney Disease Fact Sheet, 2026 · USRDS 2023"
+          accent="#83592b"
+        />
+        <StatTile
+          value="87%"
+          label="of U.S. adults with chronic kidney disease may not know they have it yet."
+          source="NIDDK Kidney Disease Statistics for the United States, citing CDC"
+          accent="#446040"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light donate-embed-section" style="border-top:1px solid var(--line);">
     <div class="container">
       <div class="donate-embed-wrap">
         {zeffyEmbedUrl ? (
@@ -46,32 +111,172 @@ const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container">
       <h2 class="h2" style="font-size:clamp(20px,2.4vw,24px);">What your gift supports</h2>
-      <ul class="supports-list">
-        <li>Plain-language education on FSGS and APOL1-mediated kidney disease</li>
-        <li>Community outreach in the Bronx, with plans to expand</li>
-        <li>Building partnerships with researchers, healthcare organizations, and policymakers</li>
-      </ul>
+      <ol class="donate-supports-list">
+        {supports.map((s, i) => (
+          <li class="donate-supports-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <span class="donate-supports-num">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h3 class="h3" style="font-size:18px;">{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
       <p class="disclaimer-note">
         One-time and recurring monthly donations are supported. You'll receive an automated,
         tax-compliant receipt for every gift.
       </p>
     </div>
   </section>
+
+  <!-- NOT READY TO GIVE — the low-commitment path the reference audit
+       flagged as missing site-wide: turns a "not yet" visitor into
+       someone we can reach again, instead of losing them entirely. -->
+  <section class="on-dark section-tight donate-updates">
+    <div class="container donate-updates-inner reveal">
+      <div class="donate-updates-text">
+        <p class="eyebrow">Not Ready to Give Today?</p>
+        <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Stay in the loop instead.</h2>
+        <p class="lede">
+          We'll send occasional updates on the work — no more than that. You can also{" "}
+          <a href="/about/team/" class="linkline-inline">meet the board and team</a>{" "}
+          leading it.
+        </p>
+      </div>
+
+      {web3formsKey ? (
+        <form class="donate-updates-form" id="updates-form">
+          <input type="hidden" name="access_key" value={web3formsKey} />
+          <input type="hidden" name="subject" value="New newsletter signup from jentosy.org" />
+          <input type="hidden" name="form_type" value="Newsletter Signup" />
+          <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+          <label class="visually-hidden" for="updates-email">Email address</label>
+          <input id="updates-email" type="email" name="email" placeholder="you@example.com" required />
+          <button type="submit" class="btn btn-steel-outline">Get Updates</button>
+        </form>
+      ) : (
+        <p class="donate-updates-note">
+          Sign-up isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable it.
+        </p>
+      )}
+    </div>
+  </section>
 </BaseLayout>
+
+<script>
+  // Inline success state, no page navigation — this is a low-commitment
+  // secondary action and shouldn't feel as heavy as an actual donation or
+  // route through the donation thank-you page's GA4 conversion event.
+  const form = document.getElementById("updates-form") as HTMLFormElement | null;
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const button = form.querySelector("button");
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Sending…";
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        form.innerHTML = '<p class="donate-updates-success">You\'re on the list — thank you.</p>';
+      } else if (button) {
+        button.disabled = false;
+        button.textContent = "Get Updates";
+      }
+    } catch {
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Get Updates";
+      }
+    }
+  });
+</script>
 
 <style>
   .narrow {
     max-width: 640px;
   }
 
-  .donate-section {
+  .donate-intro {
+    padding-block: var(--space-6) 0;
+  }
+
+  /* ---------- Why This, Why Now ---------- */
+
+  .donate-why {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .donate-why-inner {
+    max-width: 700px;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .donate-why-footer {
+    justify-content: center;
+  }
+
+  .donate-why-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(17px, 1.9vw, 23px);
+    line-height: 1.45;
+    color: var(--ink-fg);
+    margin: var(--space-2) 0 var(--space-4);
+    max-width: 62ch;
+  }
+
+  .donate-why-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .donate-why-byline {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-fg-muted);
+  }
+
+  .donate-why-link {
+    color: var(--eyebrow-accent);
+  }
+
+  /* ---------- Why This Can't Wait ---------- */
+
+  .donate-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 640px) {
+    .donate-stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- Embed ---------- */
+
+  .donate-embed-section {
     padding-block: var(--space-6) clamp(var(--space-7), 6vw, var(--space-8));
   }
 
   .donate-embed-wrap {
-    margin: var(--space-4) auto 0;
+    margin: 0 auto;
     max-width: 980px;
   }
 
@@ -89,13 +294,124 @@ const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
     border-radius: var(--radius-md);
   }
 
-  .supports-list li {
-    max-width: 60ch;
+  /* ---------- What your gift supports ---------- */
+
+  .donate-supports-list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 780px) {
+    .donate-supports-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .donate-supports-item {
+    border-top: 3px solid var(--rust);
+    padding-top: var(--space-4);
+  }
+
+  .donate-supports-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--rust);
+    line-height: 1;
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .donate-supports-item p {
+    color: var(--fg-soft);
+    font-size: 14.5px;
   }
 
   .disclaimer-note {
     font-size: 13px;
     color: var(--fg-muted);
-    margin-top: var(--space-5);
+    margin-top: var(--space-6);
+  }
+
+  /* ---------- Not ready to give ---------- */
+
+  .donate-updates-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .donate-updates-text {
+    max-width: 480px;
+  }
+
+  .donate-updates-text .lede {
+    margin-top: var(--space-2);
+  }
+
+  .linkline-inline {
+    color: var(--eyebrow-accent);
+    font-weight: 700;
+  }
+
+  .donate-updates-form {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    flex: 0 0 auto;
+  }
+
+  .donate-updates-form input[type="email"] {
+    font: inherit;
+    font-size: 14.5px;
+    padding: 12px 14px;
+    border: 1.5px solid var(--ink-line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--ink-soft);
+    color: var(--ink-fg);
+    min-width: 240px;
+  }
+
+  .donate-updates-form input[type="email"]::placeholder {
+    color: var(--ink-fg-muted);
+  }
+
+  .donate-updates-form input[type="email"]:focus {
+    outline: 2px solid var(--eyebrow-accent);
+    outline-offset: 1px;
+  }
+
+  .donate-updates-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .donate-updates-success {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink-fg);
+    margin: 0;
+  }
+
+  .donate-updates-note {
+    font-size: 13px;
+    color: var(--ink-fg-muted);
+    max-width: 360px;
+  }
+
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
   }
 </style>
