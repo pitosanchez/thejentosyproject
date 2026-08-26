@@ -14,7 +14,7 @@ const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
     heading="Every gift funds education that reaches people before they reach the transplant list."
   />
 
-  <section class="on-light section">
+  <section class="on-light donate-section">
     <div class="container narrow">
       <p>
         The Jentosy Project is a 501(c)(3) public charity. Your donation directly funds education
@@ -66,8 +66,12 @@ const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
     max-width: 640px;
   }
 
+  .donate-section {
+    padding-block: var(--space-6) clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
   .donate-embed-wrap {
-    margin: var(--space-6) auto 0;
+    margin: var(--space-4) auto 0;
     max-width: 980px;
   }
 
@@ -80,7 +84,7 @@ const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
 
   .donate-embed-frame {
     width: 100%;
-    min-height: 900px;
+    height: 760px;
     border: none;
     border-radius: var(--radius-md);
   }
