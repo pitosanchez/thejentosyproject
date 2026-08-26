@@ -11,13 +11,15 @@ const stages = [
 
 <div class="stage-stepper">
   {stages.map((s) => (
-    <div class={`stage reveal${s.failure ? " is-failure" : ""}`} style={`--stage-color:${s.color}`}>
-      <p class="stage-name">{s.name}</p>
-      <p class="stage-egfr">{s.egfr}</p>
-      <p class="stage-desc">{s.desc}</p>
+    <div class={`stage reveal${s.failure ? " is-failure" : ""}`} style={`--stage-color:${s.color}`} data-tilt-card>
+      <div class="stage-inner" data-tilt-inner>
+        <p class="stage-name">{s.name}</p>
+        <p class="stage-egfr">{s.egfr}</p>
+        <p class="stage-desc">{s.desc}</p>
+      </div>
     </div>
   ))}
 </div>
-<p class="viz-source" style="margin-top:var(--space-3);">
+<p class="viz-source" style="margin-top:var(--space-6);">
   eGFR = estimated glomerular filtration rate, mL/min/1.73m² — measured by a routine blood test. Stage 5 (eGFR under 15) is end-stage kidney disease (ESKD), requiring dialysis or transplant.
 </p>

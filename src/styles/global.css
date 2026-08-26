@@ -879,14 +879,49 @@ p:last-child {
 }
 
 .stage {
+  position: relative;
+  perspective: 700px;
+  outline: none;
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -10px;
+  height: 16px;
+  background: radial-gradient(ellipse at center, rgba(38, 42, 33, 0.28), rgba(38, 42, 33, 0) 72%);
+  filter: blur(5px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+}
+
+.stage:hover::after,
+.stage:focus-within::after {
+  opacity: 0.8;
+  transform: translateY(4px) scale(1.08);
+}
+
+.stage-inner {
+  height: 100%;
   background: var(--card);
   border: 1px solid var(--line);
   border-top: 3px solid var(--stage-color, var(--steel));
   border-radius: var(--radius-sm);
   padding: var(--space-4) var(--space-3);
+  transform-style: preserve-3d;
+  transition: transform 0.15s linear, box-shadow var(--dur-med) var(--ease), border-top-color var(--dur-med) var(--ease);
+  box-shadow: 0 6px 14px rgba(38, 42, 33, 0.1);
 }
 
-.stage.is-failure {
+.stage:hover .stage-inner,
+.stage:focus-within .stage-inner {
+  box-shadow: 0 16px 28px rgba(38, 42, 33, 0.2);
+}
+
+.stage.is-failure .stage-inner {
   background: var(--ink);
   color: var(--ink-fg);
   border-color: var(--ink-line);
