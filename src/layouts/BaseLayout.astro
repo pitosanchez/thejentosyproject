@@ -26,6 +26,16 @@ const reportHref = contactEmail
     ? "/es/contact/"
     : "/contact/";
 
+// Social share card (link previews in iMessage, Slack, WhatsApp, LinkedIn, X…).
+// A 1200×630 image derived from the home hero — one per locale.
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(lang === "es" ? "/og-image-es.jpg" : "/og-image.jpg", Astro.site).href;
+const ogImageAlt =
+  lang === "es"
+    ? "The Jentosy Project — equidad en salud para comunidades desatendidas, empezando por el Bronx."
+    : "The Jentosy Project — health equity for underserved communities, starting in the Bronx.";
+const ogLocale = lang === "es" ? "es_US" : "en_US";
+
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "NGO",
@@ -49,16 +59,31 @@ const orgSchema = {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonicalUrl} />
     <link rel="alternate" hreflang="en" href={alternates.en} />
     {hasEs && <link rel="alternate" hreflang="es" href={alternates.es} />}
     <link rel="alternate" hreflang="x-default" href={alternates.en} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <meta property="og:site_name" content="The Jentosy Project" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:locale" content={ogLocale} />
+    {hasEs && <meta property="og:locale:alternate" content={lang === "es" ? "en_US" : "es_US"} />}
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={ogImageAlt} />
+
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
 
     <script type="application/ld+json" is:inline set:html={JSON.stringify(orgSchema)} />
 
