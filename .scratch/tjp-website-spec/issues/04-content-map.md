@@ -31,3 +31,72 @@ For each page in the site architecture, what content already exists (founder sto
 - **Unsplash / Pexels** — general free stock as a fallback for non-people imagery (Bronx skyline, abstract health/community visuals); curate carefully since representation isn't guaranteed by default search.
 
 Note: this is a sourcing *recommendation* for the spec, not a claim that specific images have been selected or licensed — actually choosing, downloading, and clearing individual images is build-phase execution, out of scope for this planning map (see [map.md](../map.md) Notes on plan-vs-do).
+
+---
+
+## Build-phase amendment — 2026-08-27
+
+The site as built has moved off the table above in several ways. This section is
+the current authoritative content state; the table stays as the original
+decision record. Aligns with the 2026-08-27 amendments on
+[ticket 03](03-site-architecture-page-list.md) and
+[ticket 11](11-seo-acquisition-strategy.md).
+
+### Page list changed
+
+- **IgA Nephropathy sub-page: cut for v1** (founder decision, revisitable). "The
+  Need" / "Kidney Disease" is a 2-disease hub — FSGS and APOL1 only. The row
+  "FSGS / APOL1 / IgA Nephropathy sub-pages" now reads as FSGS / APOL1.
+- **A third "Kidney Disease" page now exists — but it is not a disease page.**
+  `/the-need/data/` ("Bronx Data You Should Know") is a population-health page
+  (Bronx CKD surveillance, diabetes/hypertension by neighborhood, poverty/
+  demographics, APOL1 in Hispanic/Latino and Puerto Rican communities via
+  HCHS/SOL, FSGS/HIV research gaps, a data-gaps section). It is the 3rd item in
+  the Kidney Disease nav dropdown.
+- **Founder's Story is not a standalone page.** Its content lives in the opening
+  of `/about/` and in full on `/about/team/`.
+- **"Leadership/Board" is `/about/team/` ("Meet The Team").** Built out for real:
+  four board members (Daryl Spivey, Junelle Speller, Dr. Josh Fessel, Glenda V.
+  Roberts), each with a photo and full bio, rendered from `src/lib/board.ts` (the
+  single source of truth — add a member there and every board surface updates).
+  **Still open:** each member's *board* role (chair / treasurer / clinical
+  advisor) — the `officerTitle` field is in `board.ts` and unset; the founder is
+  handling titles separately.
+- **New pages since the table:** `/storytelling/` (the storytelling-as-mechanism
+  essay), `/where-we-live/` (the Where We Live / REP initiative landing page),
+  `/about/what-we-do/` (moved under `/about/`).
+- **Press & Credibility page** was added in build phase, then removed 2026-08-27
+  (it sat against ticket 01's no-press-section boundary). CBS coverage stays
+  linked from `/about/`.
+
+### Content status vs. the "Needs (before launch)" column
+
+- **Disease-page clinical-accuracy review: DONE** (founder, 2026-08-27). The
+  table flagged this as recommended-before-publish for the FSGS/APOL1(/IgA)
+  pages; it has been completed for FSGS, APOL1, the hub, and Bronx Data.
+  **Follow-up:** those pages (and `/privacy-terms/`) still carry on-page
+  disclaimer text saying the content "has not yet completed a formal
+  clinical-accuracy review" — that language is now stale and needs a founder
+  decision on whether/how to soften it (EN + ES, ~8 pages).
+- **Legal review of Privacy/Terms: DONE** (founder, 2026-08-27). The table
+  flagged this as recommended-before-go-live.
+- **Forms:** Contact and Partner inquiry forms, and the newsletter capture, use
+  **Web3Forms** (not Formspree — see ticket 07 amendment). Still placeholder
+  until `PUBLIC_WEB3FORMS_ACCESS_KEY` is set.
+- **Contact:** an env-gated `PUBLIC_CONTACT_EMAIL` fallback line was added, plus
+  a `SupportResources` component (NKF Cares helpline) so the page never
+  dead-ends while the form is unconfigured.
+- **Donate:** page copy written; Zeffy embed is placeholder until
+  `PUBLIC_ZEFFY_EMBED_URL` is set.
+- **Impact metrics / partner logos / testimonials:** still deferred — still don't
+  exist (org is pre-launch). Unchanged.
+- **Photos:** the founder-supplied-only rule stands. Several supplied photos are
+  placed; a handful from an early batch remain unplaced (see the main map's "Not
+  yet specified").
+
+### Spanish
+
+Every page in this map now has a Spanish twin under `/es/` (machine-drafted; a
+bilingual review of the four clinical pages is still the founder's call — see
+`.scratch/tjp-i18n-spec/map.md`). Not a content-map ticket item originally;
+recorded here so the map stays honest.
