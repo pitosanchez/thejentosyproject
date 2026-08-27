@@ -22,6 +22,12 @@ const board = [
     photo: "/images/Fessel.webp",
     bio: "I am a physician, scientist, teacher, advisor, and grateful servant. My big goals are to develop more effective ways to turn discoveries into action to treat and prevent diseases of all types and to bring those discovery-driven actions to as many people as possible for the better health of all. I have expertise in all aspects of clinical and translational research activities including clinical trials, operational aspects of clinical research, human subjects protections, bioethics, research using big data/real-world data, artificial intelligence in biomedical and healthcare settings, and clinical research policy. My clinical specialty is pulmonary disease and critical care (ICU) medicine. My own research activities focused on investigation of the mechanisms that control metabolism at the molecular level, and how abnormal metabolism and mitochondrial function contributes to diseases such as pulmonary hypertension, heart failure, sepsis, critical illness delirium, cancer, pulmonary fibrosis, and a variety of other complex diseases.",
   },
+  {
+    name: "Glenda V. Roberts",
+    role: "Director of Communications & Patient Engagement, Mount Sinai Center for Kidney Disease Innovation, Icahn School of Medicine at Mount Sinai",
+    photo: "/images/glenda.webp",
+    bio: "Glenda V. Roberts was diagnosed with kidney disease at 21 and told to start dialysis immediately. She asked for another option; diet and exercise, her doctor said, though it rarely worked. For her, it worked for 40 years — she went vegetarian, then vegan, and exercised daily, while her brother, diagnosed at the same age, began dialysis at once. Raised in Fort Worth's segregated Stop Six, she finished a mathematics degree at the University of Houston in three years, then rose over 36 years from software developer to leading multimillion-dollar business units at Shell, Johnson & Johnson, General Electric, and Microsoft — never disclosing her illness after a manager warned her in 2005 that mentioning it again would end her chances of promotion. She retired in 2006 at her physicians' urging, crashed into dialysis in 2010, and received a transplant the same year. As a patient advocate, she is one of two patient co-authors of the KDIGO guideline, the global standard of care for chronic kidney disease, and has co-authored more than 50 peer-reviewed publications since 2018. She is the first patient to receive both the ASN President's Medal and the NKF Celeste Castillo Lee Patient Engagement Award, the highest honors each organization gives a non-nephrologist. As one of only two patients on the NKF-ASN task force that removed race from kidney function estimates, her work restored waiting time to more than 21,000 Black transplant candidates — a median of 1.7 years each.",
+  },
 ].map((person) => ({
   ...person,
   photoExists: fs.existsSync(path.join(process.cwd(), "public", person.photo)),
@@ -307,20 +313,14 @@ const board = [
   /* ---------- The Board ---------- */
 
   .board-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-6) var(--space-7);
-  }
-
-  @media (max-width: 860px) {
-    .board-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
   }
 
   @media (max-width: 560px) {
     .board-grid {
-      grid-template-columns: 1fr;
       max-width: 340px;
       margin-inline: auto;
     }
@@ -328,9 +328,22 @@ const board = [
 
   .person-card {
     position: relative;
+    flex: 0 1 calc((100% - 2 * var(--space-7)) / 3);
     height: 530px;
     perspective: 1800px;
     outline: none;
+  }
+
+  @media (max-width: 860px) {
+    .person-card {
+      flex-basis: calc((100% - var(--space-7)) / 2);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .person-card {
+      flex-basis: 100%;
+    }
   }
 
   .person-card::after {
@@ -463,7 +476,6 @@ const board = [
   }
 
   .person-card-back {
-    position: relative;
     transform: rotateY(180deg);
     background: var(--ink);
     color: var(--ink-fg);

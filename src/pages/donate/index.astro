@@ -2,9 +2,9 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import StatTile from "../../components/StatTile.astro";
+import NewsletterSignup from "../../components/NewsletterSignup.astro";
 
 const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
-const web3formsKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 
 const supports = [
   {
@@ -124,61 +124,10 @@ const supports = [
         </p>
       </div>
 
-      {web3formsKey ? (
-        <form class="donate-updates-form" id="updates-form">
-          <input type="hidden" name="access_key" value={web3formsKey} />
-          <input type="hidden" name="subject" value="New newsletter signup from jentosy.org" />
-          <input type="hidden" name="form_type" value="Newsletter Signup" />
-          <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
-          <label class="visually-hidden" for="updates-email">Email address</label>
-          <input id="updates-email" type="email" name="email" placeholder="you@example.com" required />
-          <button type="submit" class="btn btn-steel-outline">Get Updates</button>
-        </form>
-      ) : (
-        <p class="donate-updates-note">
-          Sign-up isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable it.
-        </p>
-      )}
+      <NewsletterSignup variant="dark" formId="donate-updates-form" boxed={false} />
     </div>
   </section>
 </BaseLayout>
-
-<script>
-  // Inline success state, no page navigation — this is a low-commitment
-  // secondary action and shouldn't feel as heavy as an actual donation or
-  // route through the donation thank-you page's GA4 conversion event.
-  const form = document.getElementById("updates-form") as HTMLFormElement | null;
-
-  form?.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const button = form.querySelector("button");
-    if (button) {
-      button.disabled = true;
-      button.textContent = "Sending…";
-    }
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
-      });
-      const result = await response.json();
-
-      if (result.success) {
-        form.innerHTML = '<p class="donate-updates-success">You\'re on the list — thank you.</p>';
-      } else if (button) {
-        button.disabled = false;
-        button.textContent = "Get Updates";
-      }
-    } catch {
-      if (button) {
-        button.disabled = false;
-        button.textContent = "Get Updates";
-      }
-    }
-  });
-</script>
 
 <style>
   .narrow {
@@ -292,72 +241,5 @@ const supports = [
   .linkline-inline {
     color: var(--eyebrow-accent);
     font-weight: 700;
-  }
-
-  .donate-updates-form {
-    display: flex;
-    gap: var(--space-3);
-    flex-wrap: wrap;
-    flex: 1 1 320px;
-    max-width: 420px;
-    width: 100%;
-  }
-
-  @media (max-width: 480px) {
-    .donate-updates-form {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  }
-
-  .donate-updates-form input[type="email"] {
-    font: inherit;
-    /* 16px, not smaller — iOS Safari auto-zooms the whole page on focus
-       for any input under 16px, a real mobile annoyance, not a style
-       preference. */
-    font-size: 16px;
-    padding: 12px 14px;
-    border: 1.5px solid var(--ink-line-strong);
-    border-radius: var(--radius-sm);
-    background: var(--ink-soft);
-    color: var(--ink-fg);
-    flex: 1 1 200px;
-    min-width: 0;
-  }
-
-  .donate-updates-form input[type="email"]::placeholder {
-    color: var(--ink-fg-muted);
-  }
-
-  .donate-updates-form input[type="email"]:focus {
-    outline: 2px solid var(--eyebrow-accent);
-    outline-offset: 1px;
-  }
-
-  .donate-updates-form button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
-  .donate-updates-success {
-    font-family: var(--font-display);
-    font-style: italic;
-    font-size: 19px;
-    color: var(--ink-fg);
-    margin: 0;
-  }
-
-  .donate-updates-note {
-    font-size: 13px;
-    color: var(--ink-fg-muted);
-    max-width: 360px;
-  }
-
-  .botcheck {
-    position: absolute;
-    left: -9999px;
-    width: 1px;
-    height: 1px;
-    opacity: 0;
   }
 </style>

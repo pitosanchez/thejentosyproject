@@ -3,11 +3,25 @@ interface Props {
   eyebrow: string;
   heading: string;
   lede?: string;
+  motif?: boolean;
 }
-const { eyebrow, heading, lede } = Astro.props;
+const { eyebrow, heading, lede, motif = false } = Astro.props;
 ---
 
-<section class="on-dark page-hero">
+<section class={`on-dark page-hero${motif ? " has-motif" : ""}`}>
+  {/* Decorative line-art motif — the same restrained, single-stroke
+      language as the flip-card hint icon elsewhere on the site — so
+      text-only heroes (The Need, FSGS, APOL1) get something for the
+      eye to land on without commissioning new illustration. */}
+  {motif && (
+    <svg class="page-hero-motif" viewBox="0 0 420 420" fill="none" aria-hidden="true">
+      <path d="M260 90c48 0 86 46 86 110s-38 130-86 130-86-66-86-130 38-110 86-110Z" stroke="currentColor" stroke-width="1.5" />
+      <path d="M260 140c26 0 46 28 46 62s-20 76-46 76-46-42-46-76 20-62 46-62Z" stroke="currentColor" stroke-width="1.5" />
+      <path d="M150 60c30 0 54 40 54 96s-24 112-54 112-54-56-54-112 24-96 54-96Z" stroke="currentColor" stroke-width="1.5" />
+      <path d="M84 96C64 130 64 200 84 250" stroke="currentColor" stroke-width="1.5" />
+      <path d="M336 116c22 32 22 100 4 148" stroke="currentColor" stroke-width="1.5" />
+    </svg>
+  )}
   <div class="container page-hero-inner">
     <p class="eyebrow reveal">{eyebrow}</p>
     <h1 class="h1 reveal" style="--reveal-delay:0.08s">{heading}</h1>
@@ -23,5 +37,28 @@ const { eyebrow, heading, lede } = Astro.props;
   .page-hero-inner {
     padding-block: clamp(var(--space-7), 7vw, var(--space-8));
     max-width: 720px;
+  }
+
+  .page-hero.has-motif {
+    position: relative;
+    overflow: clip;
+  }
+
+  .page-hero-motif {
+    position: absolute;
+    top: 50%;
+    right: clamp(-40px, 2vw, 20px);
+    transform: translateY(-50%);
+    width: clamp(220px, 26vw, 380px);
+    height: auto;
+    color: var(--rust-on-dark);
+    opacity: 0.28;
+    pointer-events: none;
+  }
+
+  @media (max-width: 780px) {
+    .page-hero-motif {
+      display: none;
+    }
   }
 </style>

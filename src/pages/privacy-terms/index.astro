@@ -11,33 +11,95 @@ import PageHero from "../../components/PageHero.astro";
 
   <section class="on-light section">
     <div class="container narrow">
-      <div class="flag-note">
-        <p>
-          <strong>Placeholder content.</strong> This page needs a legal review before launch —
-          see the content map (ticket 04). Replace with a finalized nonprofit-standard privacy
-          policy and terms of use, including donor disclosures, before go-live.
-        </p>
-      </div>
+      <p class="effective-date">Effective date: August 26, 2026</p>
 
       <h2 class="h3">Privacy Policy</h2>
       <p>
-        The Jentosy Project, Inc. collects only the information needed to process donations,
-        respond to inquiries, and understand how visitors use this site (via Google Analytics).
-        We do not sell or share your personal information. Donation payment data is processed and
-        held by Zeffy, our donation platform, not by The Jentosy Project directly.
+        The Jentosy Project, Inc. ("The Jentosy Project," "we," "us") collects only the
+        information needed to process donations, respond to inquiries and partnership requests,
+        and understand how visitors use this site.
+      </p>
+      <p><strong>Information we collect</strong></p>
+      <ul class="check-list">
+        <li>Contact details you submit through our Contact, Partner With Us, or newsletter forms — name, email address, organization, and message content.</li>
+        <li>Donation information processed on our behalf by Zeffy, our third-party donation platform — see below.</li>
+        <li>Aggregate, anonymized site-usage data collected via Google Analytics (pages visited, general location, device type) — never tied back to your name or email by us.</li>
+      </ul>
+      <p><strong>How we use it</strong></p>
+      <p>
+        We use the information you provide to respond to your message, process your donation and
+        send a receipt, send occasional updates if you've opted in, and understand which parts of
+        the site are useful to visitors. We do not sell, rent, or trade your personal information
+        to any third party for marketing purposes.
+      </p>
+      <p><strong>Donation processing</strong></p>
+      <p>
+        Donations made through this site are processed and held by <strong>Zeffy</strong>, an
+        independent donation platform — not by The Jentosy Project directly. Zeffy handles your
+        payment card details under its own privacy policy and security practices; we receive your
+        name, email, and donation amount so we can issue a receipt and keep you informed.
+      </p>
+      <p><strong>Cookies &amp; analytics</strong></p>
+      <p>
+        This site uses Google Analytics (GA4) to understand aggregate visitor behavior. Google
+        Analytics uses cookies and similar technologies; you can opt out using your browser
+        settings or a browser extension such as Google's Analytics Opt-out add-on. We do not use
+        advertising or cross-site tracking cookies.
+      </p>
+      <p><strong>Your choices</strong></p>
+      <p>
+        You can ask us to correct or delete the personal information we hold about you, and you
+        can unsubscribe from any email update at any time using the link in that email or by{" "}
+        <a href="/contact/">contacting us directly</a>. We will not use your information for any
+        purpose beyond what's described here without asking you first.
       </p>
 
       <h2 class="h3">Donor Disclosures</h2>
       <p>
         The Jentosy Project, Inc. is a 501(c)(3) public charity. Donations are tax-deductible to
-        the extent allowed by law. You will receive an automated receipt for every donation.
+        the extent allowed by law, and no goods or services were provided in exchange for your
+        gift unless stated otherwise at the time of donation. You will receive an automated,
+        tax-compliant receipt by email for every donation, one-time or recurring.
+      </p>
+      <p>
+        Recurring monthly donations can be modified or canceled at any time through the link in
+        your Zeffy receipt email, or by <a href="/contact/">contacting us</a> and we will process
+        the change promptly. Donations are non-refundable except where required by law; if you
+        believe a donation was made in error, contact us and we'll work with you directly.
       </p>
 
       <h2 class="h3">Terms of Use</h2>
       <p>
-        Content on this site, including information about FSGS and APOL1-mediated kidney disease,
-        is provided for general educational purposes only and is not medical advice. Consult a
-        qualified healthcare provider for medical guidance.
+        By using this site, you agree to the following terms. If you don't agree, please don't
+        use the site.
+      </p>
+      <p><strong>Medical content</strong></p>
+      <p>
+        Content on this site about FSGS, APOL1-mediated kidney disease, and chronic kidney
+        disease generally is provided for general educational purposes only and is{" "}
+        <strong>not medical advice</strong>. It does not create a doctor-patient relationship and
+        should never replace guidance from a qualified healthcare provider. Always consult your
+        doctor or a nephrologist about your own diagnosis, testing, or treatment. This educational
+        content has not yet completed a formal clinical-accuracy review — see the note on each
+        disease page for details.
+      </p>
+      <p><strong>Intellectual property</strong></p>
+      <p>
+        Text, illustrations, and data visualizations on this site are the property of The Jentosy
+        Project, Inc. unless otherwise credited, and may not be reproduced for commercial purposes
+        without permission. Cited statistics remain the property of their original sources (CDC,
+        USRDS, NIDDK, and the peer-reviewed studies linked throughout the site).
+      </p>
+      <p><strong>No warranty</strong></p>
+      <p>
+        This site is provided "as is." While we work to keep information accurate and sourced, The
+        Jentosy Project makes no warranty as to completeness or fitness for any particular purpose,
+        and is not liable for decisions made based on this site's content.
+      </p>
+      <p><strong>Contact</strong></p>
+      <p>
+        Questions about this policy or your information can be sent through our{" "}
+        <a href="/contact/">Contact page</a>.
       </p>
     </div>
   </section>
@@ -48,17 +110,13 @@ import PageHero from "../../components/PageHero.astro";
     max-width: 680px;
   }
 
-  .flag-note {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-left: 3px solid var(--rust);
-    border-radius: var(--radius-sm);
-    padding: var(--space-4) var(--space-5);
-    margin-bottom: var(--space-7);
+  .effective-date {
+    font-size: 12.5px;
+    color: var(--fg-muted);
+    margin-bottom: var(--space-6);
   }
 
-  .flag-note p {
-    font-size: 13.5px;
-    margin: 0;
+  .check-list li {
+    max-width: none;
   }
 </style>

@@ -39,13 +39,14 @@ import PhotoSlot from "../../../components/PhotoSlot.astro";
             goal of closing the kidney-care gap in underserved communities.
           </p>
         </div>
-        <div class="card card-rust reveal" style="--reveal-delay:0.2s">
+        <a href="/where-we-live/" class="card card-rust reveal" style="--reveal-delay:0.2s">
           <h3 class="h3">Where We Live</h3>
           <p>
             One initiative under The Jentosy Project focused on place-based health data. It's part
             of our broader work, not the whole of it.
           </p>
-        </div>
+          <span class="linkline" style="margin-top:var(--space-3); display:inline-block;">Learn more &rarr;</span>
+        </a>
       </div>
     </div>
 
@@ -101,5 +102,17 @@ import PhotoSlot from "../../../components/PhotoSlot.astro";
 
   .outreach-photo-row .linkline {
     margin-top: var(--space-3);
+  }
+
+  .focus-grid a.card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .focus-grid a.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
   }
 </style>

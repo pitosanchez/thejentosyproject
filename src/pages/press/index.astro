@@ -1,0 +1,167 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import VideoSlot from "../../components/VideoSlot.astro";
+
+const exists = (p: string) => fs.existsSync(path.join(process.cwd(), "public", p));
+
+const board = [
+  { name: "Daryl Spivey", role: "Writer / Executive Producer", photo: "/images/daryl.jpeg" },
+  { name: "Junelle Speller, MBA", role: "Chief Strategy Officer, GlomCon Foundation", photo: "/images/junelle.webp" },
+  { name: "Dr. Josh Fessel", role: "Physician-Scientist", photo: "/images/Fessel.webp" },
+].map((person) => ({ ...person, photoExists: exists(person.photo) }));
+---
+
+<BaseLayout
+  title="Press & Credibility"
+  description="Independent press coverage, board leadership, and organizational credentials for The Jentosy Project — a 501(c)(3) public charity advancing kidney health equity."
+>
+  <PageHero
+    eyebrow="Press & Credibility"
+    heading="The case for The Jentosy Project, gathered in one place."
+    lede="Independent coverage, the people governing this organization, and where it stands as a nonprofit — for anyone evaluating this work from outside our own copy."
+  />
+
+  <!-- INDEPENDENT COVERAGE — the strongest trust signal on the site,
+       previously buried mid-scroll on About; this is the one place it's
+       the whole point of the section, not a supporting detail. -->
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Independent Coverage</p>
+      <h2 class="h3">Verified outside our own words.</h2>
+      <p>
+        Founder Robert Sanchez's story — the kidney exchange chain that gave him a second
+        transplant and gave eight strangers new kidneys — was independently reported by CBS News
+        New York, not commissioned or written by The Jentosy Project.
+      </p>
+
+      <figure class="story-video-figure reveal">
+        <VideoSlot
+          src="/videos/where-the-name-comes-from.mp4"
+          youtubeId="nsQ35ZgiWOk"
+          ratio="16 / 9"
+          title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
+        />
+        <figcaption>
+          <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">
+            Watch on CBS News New York &rarr;
+          </a>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- GOVERNANCE — same three board members as Meet The Team, summarized
+       here for a reader who wants governance credentials without the full
+       bios. Deliberately no chair/advisor-style board titles beyond each
+       person's own professional role — we haven't published formal board
+       officer designations yet. -->
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Governance</p>
+      <h2 class="h3">Clinical research, entertainment, and lived experience.</h2>
+      <p style="max-width:var(--reading-max);">
+        The Jentosy Project's board brings together clinical research, media, and lived kidney
+        disease experience. Full biographies are on{" "}
+        <a href="/about/team/">Meet The Team</a>.
+      </p>
+
+      <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
+        {board.map((person) => (
+          <div class="card press-board-card">
+            {person.photoExists && (
+              <img class="press-board-photo" src={person.photo} alt={`${person.name} headshot`} />
+            )}
+            <p class="press-board-name">{person.name}</p>
+            <p class="press-board-role">{person.role}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ORGANIZATIONAL CREDENTIALS — real, verifiable status; no invented
+       financial figures or Form 990 link since neither exists publicly
+       yet. Honest about what's not published, rather than silent. -->
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Organizational Credentials</p>
+      <h2 class="h3">A registered 501(c)(3) public charity.</h2>
+      <p>
+        The Jentosy Project, Inc. is a 501(c)(3) public charity. Donations are tax-deductible to
+        the extent allowed by law, and every gift receives an automated, tax-compliant receipt —
+        see our <a href="/privacy-terms/">donor disclosures</a> for details.
+      </p>
+      <p>
+        Detailed financials and our Form 990 are not yet published on this site. If you're
+        evaluating a gift or partnership and need that documentation, <a href="/contact/">
+        contact us directly</a> and we'll provide it.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight cta-band">
+    <div class="container cta-inner reveal">
+      <h2 class="h2">Ready to fund or partner with this work?</h2>
+      <div class="cluster gap-3" style="margin-top:var(--space-5);">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 680px;
+  }
+
+  .story-video-figure {
+    margin: var(--space-5) 0 0;
+  }
+
+  .story-video-figure figcaption {
+    margin-top: var(--space-2);
+    font-size: 12.5px;
+  }
+
+  .story-video-figure figcaption a {
+    color: var(--steel);
+    font-weight: 700;
+  }
+
+  .press-board-card {
+    text-align: center;
+  }
+
+  .press-board-photo {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    margin: 0 auto var(--space-3);
+    filter: grayscale(0.25) contrast(1.04);
+  }
+
+  .press-board-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .press-board-role {
+    font-size: 11.5px;
+    color: var(--fg-muted);
+    margin: var(--space-1) 0 0;
+  }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+</style>

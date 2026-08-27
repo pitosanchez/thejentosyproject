@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
 import SupportResources from "../../components/SupportResources.astro";
+import NewsletterSignup from "../../components/NewsletterSignup.astro";
 
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
@@ -54,6 +55,11 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
       </form>
 
       <SupportResources heading="Need to talk to someone before we get back to you?" />
+
+      <NewsletterSignup
+        formId="contact-newsletter-form"
+        heading="Not ready to send a message yet? Stay in the loop instead."
+      />
     </div>
   </section>
 </BaseLayout>

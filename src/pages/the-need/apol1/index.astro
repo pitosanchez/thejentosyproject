@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHero from "../../../components/PageHero.astro";
+import Breadcrumb from "../../../components/Breadcrumb.astro";
 import StatTile from "../../../components/StatTile.astro";
 import Donut from "../../../components/charts/Donut.astro";
 import HBarList from "../../../components/charts/HBarList.astro";
@@ -86,6 +87,17 @@ const testingCriteria = [
   "Have a family history of kidney failure",
 ];
 
+const medicalWebPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  name: "APOL1-Mediated Kidney Disease",
+  url: "https://jentosy.org/the-need/apol1/",
+  about: { "@type": "MedicalCondition", name: "APOL1-Mediated Kidney Disease" },
+  audience: { "@type": "Patient" },
+  disclaimer:
+    "This page provides general, credibility-level education, not medical advice, and has not yet completed a formal clinical-accuracy review.",
+};
+
 const recap = [
   { title: "Two copies, both parents", body: "You need TWO high-risk copies — one from each parent — for risk to rise significantly. One copy alone is usually harmless." },
   { title: "Genotype is not destiny", body: "Having two copies does not mean you will get kidney disease. Lifestyle and access to care matter enormously." },
@@ -101,13 +113,17 @@ const recap = [
   description="APOL1-mediated kidney disease: a genetic risk factor concentrated in people with African ancestry, rooted in evolutionary protection against sleeping sickness."
 >
   <PageHero
-    eyebrow="The Need · Understanding APOL1"
+    eyebrow="Kidney Disease · Understanding APOL1"
     heading="1 in 10 Black Americans."
     lede="Carry two copies of APOL1 gene variants that raise lifetime kidney-disease risk — years before any symptoms appear. Carrying the variant isn't a diagnosis: most people who carry it never develop kidney disease."
+    motif
   />
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(medicalWebPageSchema)} />
 
   <section class="on-light quick-nav-section">
     <div class="container">
+      <Breadcrumb items={[{ label: "Kidney Disease", href: "/the-need/" }, { label: "APOL1" }]} />
       <QuickNav items={quickNavItems} />
     </div>
   </section>
@@ -366,11 +382,12 @@ const recap = [
       <p class="lede"><a href="/the-need/fsgs/" class="linkline">Learn About FSGS &rarr;</a></p>
       <div class="disclaimer">
         <p>
-          This page provides general, credibility-level information — not medical advice.
-          Content pending clinical-accuracy review before publication.
+          This page provides general, credibility-level education — not medical advice — and has
+          not yet completed a formal clinical-accuracy review. Talk to your doctor about your own
+          risk, testing, and treatment.
         </p>
       </div>
-      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to The Need</a>
+      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to Kidney Disease</a>
     </div>
   </section>
 </BaseLayout>

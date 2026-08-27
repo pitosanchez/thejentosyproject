@@ -363,6 +363,7 @@ p:last-child {
   text-transform: uppercase;
   color: var(--ink-fg-muted);
   padding-block: 4px;
+  white-space: nowrap;
 }
 
 .nav-link::after {

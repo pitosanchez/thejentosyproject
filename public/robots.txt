@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jentosy.org/sitemap-index.xml

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHero from "../../../components/PageHero.astro";
+import Breadcrumb from "../../../components/Breadcrumb.astro";
 import StatTile from "../../../components/StatTile.astro";
 import Donut from "../../../components/charts/Donut.astro";
 import StackedBar from "../../../components/charts/StackedBar.astro";
@@ -96,6 +97,17 @@ const outcomes = [
   { label: "Stable CKD without remission", value: 20, color: viz.amber },
 ];
 
+const medicalWebPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  name: "FSGS (Focal Segmental Glomerulosclerosis)",
+  url: "https://jentosy.org/the-need/fsgs/",
+  about: { "@type": "MedicalCondition", name: "Focal Segmental Glomerulosclerosis" },
+  audience: { "@type": "Patient" },
+  disclaimer:
+    "This page provides general, credibility-level education, not medical advice, and has not yet completed a formal clinical-accuracy review.",
+};
+
 const questions = [
   { ask: "Ask your doctor", q: "Which type of FSGS do I have? Does the type change which treatment is right for me?" },
   { ask: "Ask about testing", q: "Should I be tested for APOL1 variants? How would that change my treatment plan?" },
@@ -111,13 +123,17 @@ const questions = [
   description="FSGS (Focal Segmental Glomerulosclerosis) is the rare kidney disease at the center of our founder's own story — scarring in the kidney's filtering units."
 >
   <PageHero
-    eyebrow="The Need · Understanding FSGS"
+    eyebrow="Kidney Disease · Understanding FSGS"
     heading="FSGS scars the kidney's filtering units."
     lede="Focal segmental glomerulosclerosis is rare, but it's treatable — especially when it's caught early. It looks different from person to person, and no two cases follow the same path. Here's what's actually known, plainly explained."
+    motif
   />
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(medicalWebPageSchema)} />
 
   <section class="on-light quick-nav-section">
     <div class="container">
+      <Breadcrumb items={[{ label: "Kidney Disease", href: "/the-need/" }, { label: "FSGS" }]} />
       <QuickNav items={quickNavItems} />
     </div>
   </section>
@@ -413,11 +429,12 @@ const questions = [
       <p class="lede"><a href="/the-need/apol1/" class="linkline">Learn About APOL1 &rarr;</a></p>
       <div class="disclaimer">
         <p>
-          This page provides general, credibility-level information — not medical advice.
-          Content pending clinical-accuracy review before publication.
+          This page provides general, credibility-level education — not medical advice — and has
+          not yet completed a formal clinical-accuracy review. Talk to your doctor about your own
+          risk, testing, and treatment.
         </p>
       </div>
-      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to The Need</a>
+      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to Kidney Disease</a>
     </div>
   </section>
 </BaseLayout>

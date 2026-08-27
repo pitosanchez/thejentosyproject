@@ -1,0 +1,186 @@
+---
+interface Props {
+  variant?: "light" | "dark";
+  heading?: string;
+  formId?: string;
+  boxed?: boolean;
+}
+const {
+  variant = "light",
+  heading,
+  formId = "newsletter-signup-form",
+  boxed = true,
+} = Astro.props;
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+---
+
+<div class={`newsletter-signup newsletter-signup-${variant}${boxed ? " is-boxed" : ""}`}>
+  {heading && <p class="newsletter-signup-heading">{heading}</p>}
+  {accessKey ? (
+    <form class="newsletter-signup-form" id={formId}>
+      <input type="hidden" name="access_key" value={accessKey} />
+      <input type="hidden" name="subject" value="New newsletter signup from jentosy.org" />
+      <input type="hidden" name="form_type" value="Newsletter Signup" />
+      <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <label class="visually-hidden" for={`${formId}-email`}>Email address</label>
+      <input id={`${formId}-email`} type="email" name="email" placeholder="you@example.com" required />
+      <button type="submit" class="btn btn-steel-outline">Get Updates</button>
+    </form>
+  ) : (
+    <p class="newsletter-signup-note">
+      Sign-up isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable it.
+    </p>
+  )}
+</div>
+
+<script define:vars={{ formId }}>
+  // Inline success state, no page navigation — a low-commitment secondary
+  // action shouldn't feel as heavy as submitting the main form.
+  const form = document.getElementById(formId);
+
+  form?.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const button = form.querySelector("button");
+    if (button) {
+      button.disabled = true;
+      button.textContent = "Sending…";
+    }
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+      });
+      const result = await response.json();
+
+      if (result.success) {
+        form.innerHTML = '<p class="newsletter-signup-success">You\'re on the list — thank you.</p>';
+      } else if (button) {
+        button.disabled = false;
+        button.textContent = "Get Updates";
+      }
+    } catch {
+      if (button) {
+        button.disabled = false;
+        button.textContent = "Get Updates";
+      }
+    }
+  });
+</script>
+
+<style>
+  .newsletter-signup.is-boxed {
+    margin-top: var(--space-6);
+    padding: var(--space-5);
+    border-radius: var(--radius-sm);
+  }
+
+  .newsletter-signup-light.is-boxed {
+    background: var(--card);
+    border: 1px solid var(--line);
+  }
+
+  .newsletter-signup-dark.is-boxed {
+    background: var(--ink-soft);
+    border: 1px solid var(--ink-line);
+  }
+
+  .newsletter-signup-heading {
+    font-size: 14px;
+    font-weight: 700;
+    margin: 0 0 var(--space-4);
+  }
+
+  .newsletter-signup-light .newsletter-signup-heading {
+    color: var(--fg);
+  }
+
+  .newsletter-signup-dark .newsletter-signup-heading {
+    color: var(--ink-fg);
+  }
+
+  .newsletter-signup-form {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+    flex: 1 1 320px;
+    max-width: 420px;
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    .newsletter-signup-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+  }
+
+  .newsletter-signup-form input[type="email"] {
+    font: inherit;
+    /* 16px, not smaller — iOS Safari auto-zooms the whole page on focus
+       for any input under 16px. */
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    flex: 1 1 200px;
+    min-width: 0;
+  }
+
+  .newsletter-signup-light .newsletter-signup-form input[type="email"] {
+    border: 1.5px solid var(--line-strong);
+    background: var(--paper);
+    color: var(--fg);
+  }
+
+  .newsletter-signup-dark .newsletter-signup-form input[type="email"] {
+    border: 1.5px solid var(--ink-line-strong);
+    background: var(--ink);
+    color: var(--ink-fg);
+  }
+
+  .newsletter-signup-dark .newsletter-signup-form input[type="email"]::placeholder {
+    color: var(--ink-fg-muted);
+  }
+
+  .newsletter-signup-form input[type="email"]:focus {
+    outline: 2px solid var(--steel);
+    outline-offset: 1px;
+  }
+
+  .newsletter-signup-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .newsletter-signup-success {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .newsletter-signup-light .newsletter-signup-success {
+    color: var(--fg);
+  }
+
+  .newsletter-signup-dark .newsletter-signup-success {
+    color: var(--ink-fg);
+  }
+
+  .newsletter-signup-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    max-width: 360px;
+    margin: 0;
+  }
+
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+</style>

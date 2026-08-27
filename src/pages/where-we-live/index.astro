@@ -1,0 +1,81 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import PhotoSlot from "../../components/PhotoSlot.astro";
+---
+
+<BaseLayout
+  title="Where We Live"
+  description="Where We Live — The Rare Renal Equity Project (REP): The Jentosy Project's initiative connecting geography, social determinants of health, and lived patient experience to kidney disease disparities."
+>
+  <PageHero
+    eyebrow="Where We Live"
+    heading="The Rare Renal Equity Project (REP)."
+    lede="Place shapes kidney health as much as biology does. This initiative exists to make that visible — starting with the data we've already gathered on the Bronx."
+  />
+
+  <section class="on-light section-tight">
+    <div class="container narrow">
+      <p class="eyebrow">What It Is</p>
+      <h2 class="h3">Data, geography, and lived experience — together.</h2>
+      <p>
+        REP combines geographic data, social determinants of health, and patient storytelling to
+        illustrate how place influences kidney health. Maps can identify neighborhoods with higher
+        disease burden, fewer transplant referrals, or limited access to healthy food. Patient
+        stories reveal what those conditions feel like day to day, and why the structural
+        inequities behind them matter. Together, data and narrative build a fuller picture than
+        either could alone.
+      </p>
+    </div>
+
+    <figure class="wide-image reveal">
+      <PhotoSlot
+        src="/images/WhereWeLiveThumbNail.webp"
+        alt="A Where We Live — Rare Renal Equity Project community mapping session"
+        ratio="16 / 9"
+      />
+    </figure>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">What Exists Today</p>
+      <h2 class="h3">The Bronx data behind this initiative.</h2>
+      <p>
+        The place-based numbers this initiative is built on already live on{" "}
+        <a href="/the-need/data/">Bronx Data You Should Know</a> — Bronx population makeup, diabetes-hospitalization
+        rates by race, and national CKD prevalence, sourced from the NY State Department of
+        Health, CDC, and NIDDK. REP's job is to turn that data into geography a reader can
+        actually see, not just read as a bar chart.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight">
+    <div class="container narrow">
+      <p class="eyebrow">What's Next</p>
+      <h2 class="h3" style="color:var(--ink-fg);">An interactive Bronx map — not built yet.</h2>
+      <p class="lede">
+        The next stage of this initiative is a real, interactive map overlaying that
+        disease-burden data onto Bronx neighborhood geography, paired with the patient stories
+        that give the numbers context. It's an active initiative, not a finished product — support
+        through partnership or funding directly moves this forward.
+      </p>
+      <div class="cluster gap-3" style="margin-top:var(--space-5);">
+        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
+        <a href="/donate/" class="btn btn-rust">Donate</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 680px;
+  }
+
+  .wide-image {
+    max-width: 620px;
+    margin: var(--space-6) auto 0;
+  }
+</style>

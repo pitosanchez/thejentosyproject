@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
+import NewsletterSignup from "../../components/NewsletterSignup.astro";
 
 const audiences = [
   {
@@ -110,6 +111,11 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
           {accessKey ? "Send Inquiry" : "Form not yet connected"}
         </button>
       </form>
+
+      <NewsletterSignup
+        formId="partner-newsletter-form"
+        heading="Not ready to start a conversation yet? Stay in the loop instead."
+      />
     </div>
   </section>
 </BaseLayout>

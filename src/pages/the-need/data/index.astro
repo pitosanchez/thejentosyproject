@@ -1,0 +1,499 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import Breadcrumb from "../../../components/Breadcrumb.astro";
+import StatTile from "../../../components/StatTile.astro";
+import Donut from "../../../components/charts/Donut.astro";
+import HBarList from "../../../components/charts/HBarList.astro";
+import QuickNav from "../../../components/QuickNav.astro";
+import { viz } from "../../../lib/palette";
+
+const quickNavItems = [
+  { label: "Start Here", href: "#start" },
+  { label: "Related Conditions", href: "#conditions" },
+  { label: "By Neighborhood", href: "#neighborhood" },
+  { label: "Social Context", href: "#social-context" },
+  { label: "APOL1", href: "#apol1" },
+  { label: "FSGS", href: "#fsgs" },
+  { label: "Data Gaps", href: "#data-gaps" },
+];
+
+const diabetesCompare = [
+  { label: "Bronx adults", value: 15, color: viz.orange, display: "15%" },
+  { label: "NYC overall", value: 11, color: viz.neutral, display: "11%" },
+];
+
+const hypertensionNeighborhoods = [
+  { label: "Highbridge & Concourse", value: 42, color: viz.orange, display: "42%" },
+  { label: "Williamsbridge & Baychester", value: 39, color: viz.orange, display: "39%" },
+  { label: "Mott Haven & Melrose", value: 38, color: viz.orange, display: "38%" },
+  { label: "Hunts Point & Longwood", value: 38, color: viz.orange, display: "38%" },
+  { label: "Bronx borough-wide", value: 36, color: viz.neutral, display: "36%" },
+];
+
+// Same NYS DOH Bronx County population dataset already used elsewhere on
+// the site (The Need hub) — reused here, not re-derived, so the two
+// pages never drift from each other.
+const raceColor: Record<string, string> = {
+  Hispanic: "#2a78d6",
+  "Non-Hispanic Black": "#eb6834",
+  "Non-Hispanic White": "#1baf7a",
+  "Asian/Pacific Islander": "#eda100",
+  "American Indian/Alaska Native": "#e87ba4",
+  "Other/Multiracial or unlisted": "#4a3aa7",
+};
+const population = [
+  { label: "Hispanic", value: 55.4 },
+  { label: "Non-Hispanic Black", value: 29.6 },
+  { label: "Non-Hispanic White", value: 8.9 },
+  { label: "Asian/Pacific Islander", value: 4.7 },
+  { label: "American Indian/Alaska Native", value: 0.3 },
+  { label: "Other/Multiracial or unlisted", value: 1.1 },
+];
+
+const dataGapsKnown = [
+  "Diabetes prevalence",
+  "Hypertension prevalence",
+  "Poverty and household income",
+  "Population demographics",
+  "HIV surveillance",
+  "Hospital utilization",
+  "Several other chronic-disease indicators",
+];
+
+const dataGapsWeak = [
+  "CKD prevalence at the neighborhood level",
+  "CKD stage",
+  "Albuminuria",
+  "FSGS",
+  "APOL1-mediated kidney disease",
+  "Genetic testing rates",
+  "Progression from CKD to kidney failure",
+  "Dialysis modality",
+  "Transplant referral, evaluation, and waitlisting",
+];
+---
+
+<BaseLayout
+  title="Bronx Data You Should Know"
+  description="What the available data actually shows about kidney disease and the conditions connected to it in the Bronx — diabetes, high blood pressure, poverty, APOL1, FSGS, and the real gaps in what we know."
+>
+  <PageHero
+    eyebrow="Kidney Disease · Bronx Data You Should Know"
+    heading="Bronx Data You Should Know"
+    lede="Understanding kidney health means understanding the conditions that surround it. The Bronx carries a substantial burden of diabetes, high blood pressure, chronic disease, and economic hardship — all factors that can intersect with kidney health."
+    motif
+  />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <Breadcrumb items={[{ label: "Kidney Disease", href: "/the-need/" }, { label: "Bronx Data You Should Know" }]} />
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <div class="card card-rust">
+        <p style="margin:0; font-weight:600; color:var(--fg);">
+          These statistics describe populations, not individual risk. Having a particular
+          background, living in a particular neighborhood, or experiencing poverty does not mean
+          someone will develop kidney disease.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ START WITH KIDNEY DISEASE ============ -->
+
+  <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Start With Kidney Disease</p>
+      <h2 class="h2">One of the few direct Bronx measures we have.</h2>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-5);">
+      <StatTile
+        value="30.5%"
+        label="In CDC surveillance data, 30.5% of Bronx Medicare fee-for-service beneficiaries age 65 and older had diagnosed chronic kidney disease."
+        source="CDC Kidney Disease Surveillance System, using Centers for Medicare & Medicaid Services data · 2021 county display · Bronx County, NY · Diagnosed CKD among Medicare fee-for-service beneficiaries 65+."
+        accent={viz.orange}
+      />
+    </div>
+
+    <div class="container narrow" style="margin-top:var(--space-5);">
+      <p>
+        This is one of the few CKD measures available at the Bronx County level — but it describes
+        an older Medicare population, not all Bronx residents. It cannot be read as "30.5% of
+        Bronx residents have kidney disease."
+      </p>
+
+      <div class="card card-steel" style="margin-top:var(--space-5);">
+        <p class="eyebrow" style="margin-bottom:8px;">Why This Matters</p>
+        <p style="margin:0;">
+          CKD frequently progresses without obvious symptoms. Population-level surveillance can
+          help identify communities where prevention, testing, education, and early intervention
+          deserve greater attention.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONDITIONS CONNECTED TO KIDNEY HEALTH ============ -->
+
+  <section id="conditions" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Conditions Connected to Kidney Health</p>
+      <h2 class="h2">Kidney health is connected to more than the kidneys.</h2>
+      <p class="section-dek">
+        Two conditions carry an especially strong, well-documented relationship to chronic kidney
+        disease: diabetes and high blood pressure. Here's what's known about each in the Bronx.
+      </p>
+
+      <div class="viz-grid">
+        <div class="card viz-card">
+          <h3 class="viz-title">Diabetes</h3>
+          <HBarList data={diabetesCompare} max={20} />
+          <p style="margin-top:var(--space-4);">
+            Diabetes is one of the principal causes of chronic kidney disease. Persistently
+            elevated blood glucose can damage the kidney's filtering structures over time. Having
+            diabetes does not mean an individual will develop kidney disease — but it is the
+            single risk factor clinicians watch most closely.
+          </p>
+          <p class="viz-source">New York City Department of Health and Mental Hygiene, Community Health Survey 2022 / Diabetes Report · Bronx & NYC · Self-reported diagnosed diabetes among adults.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">High Blood Pressure</h3>
+          <p class="stat-value-inline">36%</p>
+          <p class="viz-note" style="margin-top:-8px;">
+            of Bronx adults reported being told by a healthcare professional that they had
+            hypertension.
+          </p>
+          <p>
+            High blood pressure can damage the blood vessels inside the kidneys, while kidney
+            disease can also make high blood pressure harder to control — the relationship runs
+            in both directions.
+          </p>
+          <p class="viz-source">
+            New York City Community Health Survey, 2015–2016 data, as presented in the NYC
+            Community Health Assessment. <strong>This is a 2015–2016 estimate</strong>, not a
+            current-year figure — the borough-wide number is shown here for context; neighborhood
+            detail is below.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BY NEIGHBORHOOD ============ -->
+
+  <section id="neighborhood" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">The Bronx Is Not One Health Experience</p>
+      <h2 class="h2">Health risk changes from neighborhood to neighborhood.</h2>
+      <p class="section-dek">
+        Where reliable neighborhood-level data exists, it shows real variation within the
+        borough — high blood pressure is a clear example.
+      </p>
+
+      <div class="card viz-card" style="margin-top:var(--space-5);">
+        <h3 class="viz-title">Adults told they have high blood pressure, by neighborhood</h3>
+        <p class="mini-tag" style="color:var(--rust);">2015–2016 estimates — not current-year data</p>
+        <div style="margin-top:var(--space-3);">
+          <HBarList data={hypertensionNeighborhoods} max={45} />
+        </div>
+        <p class="viz-source">New York City Community Health Survey, 2015–2016, as presented in the NYC Community Health Assessment · United Hospital Fund neighborhoods.</p>
+      </div>
+
+      <div class="card card-rust gap-card">
+        <p>
+          We have strong neighborhood-level data for several kidney-disease risk factors.
+          Publicly available neighborhood-level data for CKD, FSGS, and APOL1-mediated kidney
+          disease are much more limited. That gap is itself an important finding — not just an
+          absence of one.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL CONTEXT ============ -->
+
+  <section id="social-context" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Health Also Has a Social Context</p>
+      <h2 class="h2">Place can shape exposure and access.</h2>
+
+      <div class="grid stat-grid-4" style="margin-top:var(--space-5);">
+        <StatTile value="22.5%" label="of Bronx families were estimated to live below the federal poverty level." source="New York State Department of Health, Bronx County health-equity indicators · 2020–2024 estimates · Bronx County · Families below the federal poverty level." accent={viz.neutral} />
+        <StatTile value="35.9%" label="of Bronx children under 18 were estimated to live below poverty." source="New York State Department of Health, Bronx County health-equity indicators · 2020–2024 estimates · Bronx County · Children under 18 below the federal poverty level." accent={viz.neutral} />
+        <StatTile value="$48,676" label="estimated Bronx median household income." source="New York State Department of Health, Bronx County health-equity indicators · 2020–2024 estimate · Bronx County · Median household income." accent={viz.neutral} />
+        <StatTile value="1.385M" label="approximate Bronx population." source="New York State Department of Health, Bronx County health-equity indicators · 2024 · Bronx County · Total population." accent={viz.neutral} />
+      </div>
+
+      <div class="card viz-card" style="margin-top:var(--space-5);">
+        <h3 class="viz-title">Who lives in the Bronx?</h3>
+        <Donut data={population.map((d) => ({ label: d.label, value: d.value, color: raceColor[d.label] }))} />
+        <p class="viz-source">New York State Department of Health, Bronx County Health Indicators by Race and Ethnicity · 2024 population.</p>
+      </div>
+
+      <div class="container narrow" style="padding:0; margin-top:var(--space-6);">
+        <p>
+          These figures are demographic and structural context, not an explanation on their own.
+          Health outcomes can be influenced by intersecting conditions — healthcare access,
+          insurance coverage, housing quality, chronic stress, food access, environmental
+          exposures, transportation, employment, and the availability of preventive care. They are
+          not a story about any one group having kidney disease because of poverty.
+        </p>
+        <p class="pull" style="margin-top:var(--space-5);">
+          Place can shape exposure and access. It does not determine destiny.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ APOL1 ============ -->
+
+  <section id="apol1" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">APOL1: Genetics, Ancestry, and Kidney Health</p>
+      <h2 class="h2">A gene, not a group.</h2>
+      <p>
+        APOL1 is a gene. Certain APOL1 variants arose in populations with ancestry from regions of
+        sub-Saharan Africa because they provided protection against some forms of African
+        trypanosomiasis — sleeping sickness. Two APOL1 kidney-risk variants can substantially
+        increase the risk of developing certain kidney diseases in some individuals.
+      </p>
+      <div class="card card-steel">
+        <p style="margin:0; font-weight:600;">
+          APOL1 risk variants do not guarantee kidney disease. Most people who carry two risk
+          variants never develop kidney disease.
+        </p>
+      </div>
+      <p style="margin-top:var(--space-5);">
+        APOL1 is not "a Black gene," and not every person who identifies as Black or African
+        American carries it. APOL1 risk is tied to <strong>African genetic ancestry</strong> — a
+        biological lineage that can exist among people who identify as Black, African American,
+        Afro-Caribbean, Latino, Hispanic, or in other ways entirely. Ancestry and identity are
+        related, but they are not the same thing.
+      </p>
+      <p class="lede"><a href="/the-need/apol1/" class="linkline">Read the full APOL1 story &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ============ APOL1 AND HISPANIC/LATINO COMMUNITIES ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="mini-tag" style="color:var(--rust); font-size:11px;">Bronx-Involved Research — Not Bronx Prevalence Data</p>
+      <h2 class="h3">What research including a Bronx cohort has found.</h2>
+      <p>
+        The NIH-supported Hispanic Community Health Study/Study of Latinos (HCHS/SOL) enrolled
+        participants at four field centers — <strong>Bronx, New York</strong>; Chicago, Illinois;
+        Miami, Florida; and San Diego, California. Because it spans four cities, its findings are
+        not Bronx-only prevalence estimates — but the Bronx is one of the communities the research
+        actually studied.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-5);">
+      <div class="grid grid-2-col" style="gap:var(--space-4);">
+        <StatTile value="1.0%" label="of Caribbean Hispanic/Latino HCHS/SOL participants carried two APOL1 kidney-risk variants." source="Hispanic Community Health Study/Study of Latinos (HCHS/SOL) · published analysis · Bronx, Chicago, Miami, San Diego field centers · Two-variant APOL1 genotype frequency, Caribbean-heritage participants." accent={viz.orange} />
+        <StatTile value="0.1%" label="of mainland Hispanic/Latino HCHS/SOL participants carried two APOL1 kidney-risk variants." source="Hispanic Community Health Study/Study of Latinos (HCHS/SOL) · published analysis · Bronx, Chicago, Miami, San Diego field centers · Two-variant APOL1 genotype frequency, mainland-heritage participants." accent={viz.neutral} />
+      </div>
+    </div>
+
+    <div class="container narrow" style="margin-top:var(--space-5);">
+      <p>
+        Among Caribbean Hispanic/Latino participants, carrying two APOL1 risk variants was
+        associated with approximately <strong>3.2 times the odds of albuminuria</strong> — protein
+        in the urine, an early marker of kidney damage — in the published analysis. This matters
+        for a borough with substantial Puerto Rican, Dominican, Caribbean, Black, and Latino
+        populations, even though it is not a Bronx-specific prevalence figure.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ PUERTO RICAN KIDNEY-DISEASE RESEARCH ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="mini-tag" style="color:var(--rust); font-size:11px;">Multi-City Research Including a Bronx Cohort</p>
+      <h2 class="h3">Puerto Rican background and CKD incidence.</h2>
+      <p>
+        Following 8,774 Hispanic/Latino adults, HCHS/SOL researchers reported an overall incident
+        CKD rate of 10.6 cases per 1,000 person-years. The highest age- and sex-adjusted incidence
+        among heritage groups was observed among participants of Puerto Rican background.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-5);">
+      <div class="grid grid-2-col" style="gap:var(--space-4);">
+        <StatTile value="10.6" label="overall incident CKD cases per 1,000 person-years, across all HCHS/SOL heritage groups." source="Hispanic Community Health Study/Study of Latinos (HCHS/SOL) · published analysis · Bronx, Chicago, Miami, San Diego field centers · Incident CKD, 8,774 participants followed." accent={viz.neutral} />
+        <StatTile value="15.0" label="incident CKD cases per 1,000 person-years among participants of Puerto Rican background — the highest of any heritage group." source="Hispanic Community Health Study/Study of Latinos (HCHS/SOL) · published analysis · Bronx, Chicago, Miami, San Diego field centers · Age- and sex-adjusted incident CKD, Puerto Rican-background participants." accent={viz.orange} />
+      </div>
+    </div>
+
+    <div class="container narrow" style="margin-top:var(--space-5);">
+      <p>
+        Compared with participants of Mexican background, Puerto Rican background was initially
+        associated with a 79% higher incident CKD rate. That gap was <strong>substantially
+        attenuated</strong> after accounting for sociodemographic and clinical factors — meaning
+        most of the difference was explained by things like social circumstances, diabetes, blood
+        pressure, and other measured kidney-health factors, not by heritage group itself. That
+        attenuation is the important finding: it points toward what's driving the disparity, not
+        toward ethnicity as a biological cause.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ FSGS ============ -->
+
+  <section id="fsgs" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">FSGS: A Kidney Disease That Deserves Greater Attention</p>
+      <h2 class="h2">A pattern of scarring, with more than one cause.</h2>
+      <p>
+        Focal Segmental Glomerulosclerosis (FSGS) is a pattern of scarring in the kidney's
+        filtering units, called glomeruli. It can result from different biological pathways and
+        conditions — genetic, immune, or secondary to another disease. Some forms of FSGS are
+        associated with APOL1 high-risk genotypes in people with relevant African ancestry, but
+        not all FSGS is APOL1-mediated.
+      </p>
+
+      <div class="card card-rust gap-card">
+        <p style="margin:0;">
+          We currently do not have a reliable, publicly available estimate showing how many Bronx
+          residents live with FSGS. This is a research and surveillance gap, not a sign that FSGS
+          is rare here.
+        </p>
+      </div>
+
+      <p style="margin-top:var(--space-5);">
+        Researchers at Montefiore and Albert Einstein College of Medicine have contributed to FSGS
+        and kidney-disease research over the years. Findings from historical hospital cohorts are
+        valuable, but they describe the patients seen at those institutions — not a current,
+        population-wide Bronx prevalence, which is a different kind of measurement entirely.
+      </p>
+
+      <p class="lede"><a href="/the-need/fsgs/" class="linkline">Read the full FSGS story &rarr;</a></p>
+    </div>
+  </section>
+
+  <!-- ============ HIV AND KIDNEY HEALTH ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">HIV and Kidney Health</p>
+      <h2 class="h3">Why HIV belongs on a kidney-health page.</h2>
+      <p>
+        HIV can affect kidney health both directly and indirectly — through the virus itself,
+        through some medications used to treat it, and through related conditions. HIV-associated
+        nephropathy (HIVAN), one specific kidney condition linked to HIV, has a particularly
+        important relationship with APOL1 risk variants among people with relevant ancestry.
+      </p>
+      <p>
+        Most people living with HIV do not develop kidney disease, especially with modern
+        antiretroviral treatment. NYC's Department of Health and Mental Hygiene publishes regular
+        Bronx-specific HIV surveillance — we're not citing a specific current figure on this page
+        until it can be linked directly to that report, rather than repeating a number secondhand.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ DATA GAPS ============ -->
+
+  <section id="data-gaps" class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container">
+      <p class="eyebrow">What We Still Don't Know Well Enough</p>
+      <h2 class="h2" style="color:var(--ink-fg);">Missing data is also data.</h2>
+      <p class="lede" style="max-width:64ch;">
+        Publicly accessible health surveillance gives us strong Bronx information about several
+        conditions. For the questions at the center of this organization's work, that surveillance
+        is much weaker.
+      </p>
+
+      <div class="grid grid-2-col" style="gap:var(--space-4); margin-top:var(--space-6);">
+        <div class="card mini-card" style="background:var(--ink-soft); border-color:var(--ink-line);">
+          <p class="mini-tag" style="color:var(--ink-fg-muted);">What We Have Strong Data For</p>
+          <ul class="check-list" style="color:var(--ink-fg-muted);">
+            {dataGapsKnown.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="card mini-card" style="background:var(--ink-soft); border-color:var(--ink-line); border-left:2px solid var(--rust-on-dark);">
+          <p class="mini-tag" style="color:var(--rust-on-dark);">Where Public Data Is Much Weaker</p>
+          <ul class="check-list" style="color:var(--ink-fg-muted);">
+            {dataGapsWeak.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <p class="pull" style="margin-top:var(--space-6); border-color:var(--rust-on-dark); color:var(--ink-fg);">
+        Missing data are also data. They show us where research, surveillance, and investment are
+        needed.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ CONNECTION TO WHERE WE LIVE ============ -->
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">What Comes Next</p>
+      <h2 class="h2">The numbers tell part of the story. Place and people tell us more.</h2>
+      <p class="lede" style="max-width:60ch;">
+        The Jentosy Project's <strong>Where We Live</strong> initiative will examine how kidney
+        disease, related health conditions, structural factors, geography, and lived experience
+        intersect across Bronx communities.
+      </p>
+      <div class="cluster gap-3" style="margin-top:var(--space-6);">
+        <a href="/where-we-live/" class="btn btn-rust">Explore Where We Live</a>
+        <a href="/about/what-we-do/" class="btn btn-steel">Learn About Our Work</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <div class="disclaimer">
+        <p>
+          This page summarizes population-level surveillance and published research for general
+          education — not medical advice, and not an individual risk assessment. Every statistic
+          on this page is drawn from named sources with the year, geography, and population
+          measured stated alongside it; where reliable Bronx-specific data doesn't yet exist, this
+          page says so directly rather than estimating.
+        </p>
+      </div>
+      <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to Kidney Disease</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #start,
+  #conditions,
+  #neighborhood,
+  #social-context,
+  #apol1,
+  #fsgs,
+  #data-gaps {
+    scroll-margin-top: 88px;
+  }
+
+  .stat-value-inline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 4.5vw, 48px);
+    color: var(--rust);
+    line-height: 1;
+    margin: 0;
+  }
+</style>

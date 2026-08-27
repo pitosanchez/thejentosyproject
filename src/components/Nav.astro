@@ -4,17 +4,21 @@ const navLinks = [
   {
     href: "/about/",
     label: "About",
+    hubLabel: "About",
     children: [
       { href: "/about/team/", label: "Meet The Team" },
       { href: "/about/what-we-do/", label: "What We Do" },
+      { href: "/press/", label: "Press & Credibility" },
     ],
   },
   {
     href: "/the-need/",
-    label: "The Need",
+    label: "Kidney Disease",
+    hubLabel: "Kidney Disease",
     children: [
       { href: "/the-need/fsgs/", label: "FSGS" },
       { href: "/the-need/apol1/", label: "APOL1-Mediated Kidney Disease" },
+      { href: "/the-need/data/", label: "Bronx Data You Should Know" },
     ],
   },
   { href: "/storytelling/", label: "Storytelling" },
@@ -39,6 +43,15 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
             </a>
             {link.children && (
               <ul class="desktop-nav-dropdown">
+                <li>
+                  <a
+                    href={link.href}
+                    class="desktop-nav-dropdown-hub"
+                    aria-current={currentPath === link.href ? "page" : undefined}
+                  >
+                    {link.hubLabel}
+                  </a>
+                </li>
                 {link.children.map((child) => (
                   <li>
                     <a href={child.href} aria-current={isActive(child.href) ? "page" : undefined}>
@@ -85,7 +98,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
                   <ul class="site-menu-sublinks" id={`submenu-${slug}`}>
                     <li>
                       <a href={link.href} class="site-menu-sublink site-menu-sublink-all">
-                        All of {link.label}
+                        {link.hubLabel}
                       </a>
                     </li>
                     {link.children.map((child) => (
@@ -192,8 +205,16 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     margin: 0;
     padding: 0;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: clamp(20px, 2.6vw, 36px);
+    justify-content: center;
+    /* Nav labels never wrap mid-phrase (see .nav-link white-space:nowrap) —
+       if a longer label like "Kidney Disease" tips the row past the
+       available 1fr track width at a given viewport, the whole set of
+       links wraps onto a second centered line instead of breaking a
+       single item apart or overlapping the wordmark/Donate button. */
+    row-gap: var(--space-3);
+    column-gap: clamp(16px, 2vw, 28px);
   }
 
   .desktop-nav > ul > li {
@@ -253,6 +274,17 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
   .desktop-nav-dropdown a[aria-current="page"] {
     color: var(--ink-fg);
     background: var(--ink-soft);
+  }
+
+  .desktop-nav-dropdown a.desktop-nav-dropdown-hub {
+    font-weight: 800;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--eyebrow-accent);
+    border-bottom: 1px solid var(--ink-line);
+    margin-bottom: var(--space-1);
+    padding-bottom: 11px;
   }
 
   .menu-trigger {

@@ -92,7 +92,7 @@ const howItWorks = [
        BaseLayout — no new script needed here. -->
   <section class="on-dark bronx-stats">
     <div class="container">
-      <p class="eyebrow reveal">The Need, By The Numbers</p>
+      <p class="eyebrow reveal">Kidney Disease, By The Numbers</p>
       <h2 class="h2 reveal" style="--reveal-delay:0.06s; font-size:clamp(22px,2.6vw,28px);">
         Kidney disease doesn't fall on every community equally.
       </h2>
@@ -187,13 +187,15 @@ const howItWorks = [
     </div>
   </section>
 
-  <!-- THE NEED — light, informative. Pinned scroll: the heading holds in
-       place while the three disease cards stack into view, GSAP
-       ScrollTrigger-driven (desktop/motion-safe only — see script below). -->
-  <section class="on-light need-stack" data-need-stack>
+  <!-- THE NEED — light, informative. A plain two-column grid: this used to
+       be a GSAP ScrollTrigger pin/crossfade built for three stacked disease
+       cards, but with only FSGS and APOL1 remaining, a static grid
+       communicates the same thing without a scroll-hijack or an animation
+       library for this section. -->
+  <section class="on-light need-stack">
     <div class="container need-stack-inner">
       <div class="need-stack-text">
-        <p class="eyebrow">The Need</p>
+        <p class="eyebrow">Kidney Disease</p>
         <h2 class="h2">Rare kidney disease, plainly explained.</h2>
         <p class="lede" style="max-width:52ch;">
           Kidney disease disparities are downstream of poverty, unequal access to education,
@@ -203,7 +205,7 @@ const howItWorks = [
         </p>
       </div>
 
-      <div class="disease-grid" data-need-cards>
+      <div class="disease-grid">
         <a href="/the-need/fsgs/" class="card card-steel disease-card">
           <h3 class="h3">FSGS</h3>
           <p>Focal segmental glomerulosclerosis — how it presents, and why early awareness matters.</p>
@@ -376,22 +378,6 @@ const howItWorks = [
     padding-block: clamp(var(--space-7), 7vw, var(--space-9));
   }
 
-  /* Full-viewport height + centering is only needed while the section is
-     actually pinned for the GSAP crossfade (see script below). Forcing
-     100vh unconditionally left a wall of empty space around two short
-     cards on mobile, reduced-motion, and no-JS fallbacks. 66vh (not 100vh)
-     because the pin now only has to hold one FSGS/APOL1 crossfade — since
-     IgA Nephropathy was cut, a full screen of height around a single
-     230px-tall card read as dead air, and GSAP's pinSpacing scroll
-     distance below is a percentage of this height too, so shrinking it
-     tightens the whole pinned scroll, not just the static view. */
-  .need-stack.is-pinned {
-    min-height: 66vh;
-    display: flex;
-    align-items: center;
-    padding-block: 0;
-  }
-
   .need-stack-inner {
     width: 100%;
     display: grid;
@@ -424,25 +410,6 @@ const howItWorks = [
   .disease-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
-  }
-
-  /* Applied by the GSAP script only on wide, motion-safe viewports — the
-     three cards occupy the same box and cross-fade/slide as one "active"
-     card at a time, so the pin never leaves dead space behind it. Without
-     JS (or on mobile / prefers-reduced-motion) the cards stay in normal
-     grid flow above, all visible at once — the safe default. */
-  .need-stack.is-pinned .disease-grid {
-    position: relative;
-    min-height: 230px;
-  }
-
-  .need-stack.is-pinned .disease-card {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    will-change: transform, opacity;
   }
 
   .audience-grid {
@@ -645,60 +612,3 @@ const howItWorks = [
     max-width: 52ch;
   }
 </style>
-
-<script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
-
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const wideEnough = window.matchMedia("(min-width: 900px)").matches;
-
-  const stackSection = document.querySelector<HTMLElement>("[data-need-stack]");
-  const cards = Array.from(
-    document.querySelectorAll<HTMLElement>("[data-need-cards] .disease-card")
-  );
-
-  // Pinning is only worth the scroll-hijack cost with enough cards to
-  // stack — it was built for 3 diseases. Now that IgA Nephropathy is cut
-  // and only FSGS/APOL1 remain, pinning for a single crossfade left a
-  // scroll-pin spacer with nothing to fill it (see the CSS comment on
-  // .need-stack.is-pinned) no matter how the timing was tuned. Below 3
-  // cards, this falls through to the plain static grid — already built,
-  // already the safe default for mobile/reduced-motion/no-JS.
-  if (stackSection && cards.length > 2 && !prefersReducedMotion && wideEnough) {
-    stackSection.classList.add("is-pinned");
-
-    gsap.set(cards[0], { autoAlpha: 1, y: 0 });
-    gsap.set(cards.slice(1), { autoAlpha: 0, y: 50 });
-
-    // Each card fully clears out (fade + slide) before the next one starts
-    // fading in — a simultaneous crossfade of stacked paragraph text reads
-    // as double-exposed noise, so the two phases never overlap in time.
-    const tl = gsap.timeline();
-    cards.forEach((card, i) => {
-      if (i === 0) return;
-      const label = `step${i}`;
-      tl.addLabel(label)
-        .to(cards[i - 1], { autoAlpha: 0, y: -40, duration: 0.5, ease: "power1.in" }, label)
-        .to(card, { autoAlpha: 1, y: 0, duration: 0.5, ease: "power1.out" }, `${label}+=0.5`);
-    });
-
-    ScrollTrigger.create({
-      trigger: stackSection,
-      start: "top top",
-      // 70% per transition was tuned for the original 3-card version (2
-      // transitions). Now that IgA Nephropathy is cut, there's only 1
-      // transition left, and 70% (a % of the viewport, not this section)
-      // reserved a scroll-pin spacer taller than the section itself —
-      // a large blank gap on any screen shorter than that reserve. 40%
-      // keeps the crossfade legible without the dead scroll distance.
-      end: `+=${(cards.length - 1) * 40}%`,
-      pin: true,
-      pinSpacing: true,
-      scrub: 0.6,
-      animation: tl,
-    });
-  }
-</script>

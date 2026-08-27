@@ -1,60 +1,10 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import PageHero from "../../components/PageHero.astro";
-import StatTile from "../../components/StatTile.astro";
-import StackedBar from "../../components/charts/StackedBar.astro";
-import HBarList from "../../components/charts/HBarList.astro";
 import StageStepper from "../../components/StageStepper.astro";
 import NumberedSteps from "../../components/NumberedSteps.astro";
 import QuickNav from "../../components/QuickNav.astro";
 import SupportResources from "../../components/SupportResources.astro";
-import { viz } from "../../lib/palette";
-
-// Categorical hues: fixed order by identity, validated CVD-safe
-// (dataviz skill default palette, checked against --card #F7F5EF).
-// Text never carries these colors — only fills/swatches do.
-const raceColor: Record<string, string> = {
-  Hispanic: "#2a78d6",
-  "Non-Hispanic Black": "#eb6834",
-  "Non-Hispanic White": "#1baf7a",
-  "Asian/Pacific Islander": "#eda100",
-  "Non-Hispanic Asian": "#eda100",
-  "American Indian/Alaska Native": "#e87ba4",
-  "Other/Multiracial or unlisted": "#4a3aa7",
-};
-
-const population = [
-  { label: "Hispanic", value: 55.4 },
-  { label: "Non-Hispanic Black", value: 29.6 },
-  { label: "Non-Hispanic White", value: 8.9 },
-  { label: "Asian/Pacific Islander", value: 4.7 },
-  { label: "American Indian/Alaska Native", value: 0.3 },
-  { label: "Other/Multiracial or unlisted", value: 1.1 },
-];
-let cum = 0;
-const populationStops = population
-  .map((d) => {
-    const start = cum;
-    cum += d.value;
-    return `${raceColor[d.label]} ${start}% ${cum}%`;
-  })
-  .join(", ");
-
-const diabetes = [
-  { label: "Hispanic", value: 348.9 },
-  { label: "Non-Hispanic Black", value: 336.0 },
-  { label: "Asian/Pacific Islander", value: 184.2 },
-  { label: "Non-Hispanic White", value: 170.6 },
-];
-const diabetesMax = Math.max(...diabetes.map((d) => d.value));
-
-const ckd = [
-  { label: "Non-Hispanic Black", value: 22.0 },
-  { label: "Non-Hispanic Asian", value: 16.4 },
-  { label: "Non-Hispanic White", value: 13.1 },
-  { label: "Hispanic", value: 12.1 },
-];
-const ckdMax = 25;
 
 const diseases = [
   {
@@ -77,37 +27,7 @@ const quickNavItems = [
   { label: "Diagnosis", href: "#diagnosis" },
   { label: "Treatment", href: "#treatment" },
   { label: "Get Support", href: "#get-support" },
-  { label: "The Data", href: "#the-data" },
-];
-
-// ---------- National "Understanding Kidney Disease" content ----------
-
-const nationalOverview = [
-  { value: "37M", label: "Americans are living with chronic kidney disease.", source: "CDC Chronic Kidney Disease Fact Sheet, March 2026." },
-  { value: "87%", label: "of those with CKD don't know they have it yet.", source: "CDC Chronic Kidney Disease Fact Sheet, March 2026." },
-  { value: "14%", label: "of all US adults are estimated to have CKD.", source: "CDC Chronic Kidney Disease Fact Sheet, March 2026." },
-  { value: "131K", label: "new kidney-failure (ESKD) cases were diagnosed in 2023.", source: "CDC / USRDS Annual Data Report 2023." },
-];
-
-const disparity = [
-  { label: "Non-Hispanic Black", value: 22, color: viz.orange, display: "22%" },
-  { label: "Adults 65 and older", value: 34, color: viz.purple, display: "34%" },
-  { label: "Non-Hispanic White", value: 13, color: viz.green, display: "13%" },
-  { label: "Hispanic", value: 12, color: viz.blue, display: "12%" },
-];
-
-const eskdCauses = [
-  { label: "Diabetes", value: 37, color: viz.orange },
-  { label: "High blood pressure", value: 27, color: viz.blue },
-  { label: "Glomerulonephritis", value: 14, color: viz.purple },
-  { label: "Unknown", value: 7, color: viz.neutral },
-  { label: "Other", value: 10, color: "#c3b696" },
-  { label: "Cystic kidney disease", value: 5, color: viz.pink },
-];
-
-const eskdTreatment = [
-  { label: "Dialysis", value: 67, color: viz.orange, note: "≈557,000 people, sessions 3×/week" },
-  { label: "Transplant", value: 33, color: viz.green, note: "≈274,000 transplant recipients" },
+  { label: "Bronx Data", href: "/the-need/data/" },
 ];
 
 const kidneyFunctions = [
@@ -151,13 +71,14 @@ const riskFactors = [
 ---
 
 <BaseLayout
-  title="The Need"
+  title="Understanding Kidney Disease"
   description="Kidney disease disparities are downstream of poverty, education access, incarceration, and chronic stress. Learn about FSGS and APOL1-mediated kidney disease."
 >
   <PageHero
-    eyebrow="The Need"
+    eyebrow="Understanding Kidney Disease"
     heading="Rare kidney disease, plainly explained."
     lede="Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce."
+    motif
   />
 
   <!-- Lets someone who already knows what they're looking for skip the
@@ -378,8 +299,9 @@ const riskFactors = [
         health and manage any underlying conditions.
       </p>
       <p class="disclaimer-dark">
-        This page provides general, credibility-level education — not medical advice. Talk to
-        your doctor about your own risk and testing schedule.
+        This page provides general, credibility-level education — not medical advice — and has
+        not yet completed a formal clinical-accuracy review. Talk to your doctor about your own
+        risk, testing, and treatment.
       </p>
     </div>
   </section>
@@ -392,175 +314,24 @@ const riskFactors = [
     </div>
   </section>
 
-  <!-- ============ UNDERSTANDING KIDNEY DISEASE — national primer ============
-       The evidence behind the mission: who this affects, and how unequally
-       — the case for why The Jentosy Project exists, for a reader who's
-       past the "what does this mean for me" question above. -->
+  <!-- ============ DATA TEASER ============
+       The full national/Bronx equity-data case now lives on its own page
+       (/the-need/data/) rather than appended to the bottom of an already
+       long orientation page — this closes the loop with one headline
+       stat pair and a clear link, instead of appending three more
+       chart-heavy sections here. -->
 
-  <section id="the-data" class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
     <div class="container">
-      <p class="eyebrow">Understanding Kidney Disease</p>
-      <h2 class="h2 reveal">37 million Americans.</h2>
+      <p class="eyebrow">The Data Behind This</p>
+      <h2 class="h2 reveal">The gap, quantified — nationally and in the Bronx.</h2>
       <p class="lede reveal" style="--reveal-delay:0.08s; max-width:60ch;">
-        Chronic kidney disease affects roughly 1 in 7 US adults — and most of them don't know it
-        yet. That gap between how common CKD is and how invisible it feels is exactly why this
-        organization exists.
+        37 million Americans live with chronic kidney disease, and Black adults develop kidney
+        failure at four times the rate of white adults — with an even sharper gap in the Bronx
+        itself. The full national and Bronx-specific breakdown, including diabetes and CKD
+        prevalence by race, lives on its own page.
       </p>
-
-      <div class="grid stat-grid-4" style="margin-top:var(--space-6);">
-        {nationalOverview.map((s, i) => (
-          <div class="reveal" style={`--reveal-delay:${0.12 + i * 0.06}s`}>
-            <StatTile value={s.value} label={s.label} source={s.source} accent="#e7dfc8" />
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <p class="eyebrow">CKD Prevalence by Race &amp; Ethnicity</p>
-      <h2 class="h2">This disease does not strike equally.</h2>
-      <p class="section-dek">
-        These are not random numbers. They reflect decades of unequal access to care, housing,
-        food, and economic stability — not genetic destiny.
-      </p>
-
-      <div class="viz-grid" style="align-items:start;">
-        <div class="card viz-card card-rust">
-          <p class="stat-value-inline">4&times;</p>
-          <h3 class="viz-title">Higher rate of kidney failure</h3>
-          <p>
-            Non-Hispanic Black adults develop end-stage kidney disease at 4&times; the rate of
-            non-Hispanic White adults. Hispanic adults develop ESKD at 2&times; the rate.
-          </p>
-          <p class="viz-source">CDC, March 2026 &middot; USRDS Annual Data Report 2023.</p>
-        </div>
-
-        <div class="card viz-card">
-          <h3 class="viz-title">CKD prevalence among US adults</h3>
-          <p class="viz-note">By race/ethnicity and age group — bar length proportional to prevalence rate.</p>
-          <HBarList data={disparity} max={40} suffix="%" />
-          <p class="viz-source">CDC Chronic Kidney Disease Fact Sheet, March 2026.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <p class="eyebrow">End-Stage Kidney Disease &middot; 2023</p>
-      <h2 class="h2">831,000 Americans are living with kidney failure.</h2>
-
-      <div class="viz-grid" style="margin-top:var(--space-5);">
-        <div class="card viz-card">
-          <h3 class="viz-title">What causes kidney failure</h3>
-          <p class="viz-note">Among 131,564 new ESKD cases in 2023.</p>
-          <StackedBar data={eskdCauses} suffix="%" />
-          <p class="viz-source">USRDS / CDC 2026.</p>
-        </div>
-
-        <div class="card viz-card">
-          <h3 class="viz-title">How patients are treated</h3>
-          <p class="viz-note">67% depend on dialysis to survive — of the total prevalent ESKD population.</p>
-          <StackedBar data={eskdTreatment} suffix="%" />
-          <p class="viz-source">Total prevalent ESKD population, 2023 &middot; USRDS / CDC 2026.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ LOCAL & NATIONAL CONTEXT (Bronx) ============ -->
-
-  <section class="on-light section-tight viz-root" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <p class="eyebrow">Local &amp; National Context</p>
-      <h2 class="h2">The Bronx, by the numbers.</h2>
-      <p class="section-dek">
-        Bronx-specific data where it exists; clearly labeled national estimates where it
-        doesn't — because the size of that gap is itself part of the health-equity story.
-      </p>
-
-      <div class="viz-grid">
-        <div class="card viz-card">
-          <h3 class="viz-title">Who lives in the Bronx?</h3>
-          <div class="donut-row">
-            <div class="donut" style={`background: conic-gradient(${populationStops})`}>
-              <div class="donut-hole"></div>
-            </div>
-            <ul class="legend">
-              {population.map((d) => (
-                <li>
-                  <span class="swatch" style={`background:${raceColor[d.label]}`}></span>
-                  <span class="legend-label">{d.label}</span>
-                  <span class="legend-value">{d.value}%</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <p class="viz-source">New York State Department of Health, Bronx County Health Indicators by Race and Ethnicity (2024 population).</p>
-        </div>
-
-        <div class="card viz-card">
-          <h3 class="viz-title">A major kidney-risk disparity in the Bronx</h3>
-          <p class="viz-note">Diabetes hospitalizations, age-adjusted rate per 10,000 — a leading cause of chronic kidney disease.</p>
-          <div class="bar-row">
-            {diabetes.map((d, i) => (
-              <div class="bar-col">
-                <span class="bar-value">{d.value}</span>
-                <div class="bar-track">
-                  <div
-                    class="bar-fill"
-                    style={`height:${(d.value / diabetesMax) * 100}%; background:${raceColor[d.label]}; --reveal-delay:${i * 0.08}s`}
-                  ></div>
-                </div>
-                <span class="bar-label">{d.label}</span>
-              </div>
-            ))}
-          </div>
-          <p class="viz-source">New York State Department of Health, Bronx County Health Indicators by Race and Ethnicity (2022–2024 any-diagnosis diabetes hospitalizations).</p>
-        </div>
-      </div>
-
-      <div class="viz-grid" style="margin-top:var(--space-5);">
-        <div class="card viz-card">
-          <h3 class="viz-title">Chronic kidney disease is not distributed equally</h3>
-          <p class="viz-note">National CKD prevalence estimates — comparable Bronx-specific data by race isn't publicly available.</p>
-          <div class="dot-plot">
-            {ckd.map((d) => (
-              <div class="dot-row">
-                <span class="dot-label">{d.label}</span>
-                <div class="dot-track">
-                  <div class="dot-marker" style={`left:${(d.value / ckdMax) * 100}%; background:${raceColor[d.label]}`}></div>
-                </div>
-                <span class="dot-value">{d.value}%</span>
-              </div>
-            ))}
-          </div>
-          <p class="viz-source">NIDDK Kidney Disease Statistics for the United States, citing CDC/NHANES estimates (Aug 2021–Aug 2023).</p>
-        </div>
-
-        <StatTile
-          value="87%"
-          label="of U.S. adults with chronic kidney disease may be unaware they have it — the clearest argument for why education can't wait."
-          source="NIDDK Kidney Disease Statistics for the United States, citing CDC."
-          accent="#2a78d6"
-        />
-      </div>
-
-      <div class="card card-rust gap-card">
-        <p class="eyebrow" style="margin-bottom:8px;">An honest gap, not a finding</p>
-        <h3 class="viz-title">What about Hispanic communities, APOL1, and FSGS?</h3>
-        <p>
-          There is no reliable Bronx-specific prevalence estimate for APOL1-mediated kidney
-          disease or FSGS among Hispanic residents. APOL1 risk is tied to recent African
-          ancestry, which means it can also be relevant for some Hispanic and Afro-Latino
-          communities, especially those with Caribbean ancestry — but the local data needed to
-          show that clearly doesn't exist yet. That absence is itself part of the health-equity
-          problem The Jentosy Project exists to address.
-        </p>
-        <p class="viz-source">Evidence-gap note based on NIDDK APOL1 educational materials and the absence of a verified Bronx-specific public estimate.</p>
-      </div>
+      <a href="/the-need/data/" class="btn btn-steel-outline" style="margin-top:var(--space-6);">See Bronx Data You Should Know &rarr;</a>
     </div>
   </section>
 </BaseLayout>
@@ -684,15 +455,6 @@ const riskFactors = [
     font-size: 13px;
     font-weight: 700;
     color: var(--steel);
-  }
-
-  .stat-value-inline {
-    font-family: var(--font-display);
-    font-weight: 700;
-    font-size: clamp(40px, 5vw, 56px);
-    color: var(--rust);
-    line-height: 1;
-    margin: 0 0 var(--space-2);
   }
 
   .symptom-item {
