@@ -1,0 +1,132 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import { localeHref } from "../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+---
+
+<BaseLayout
+  title="Privacidad y términos"
+  description="La política de privacidad y los términos de uso de The Jentosy Project."
+>
+  <PageHero eyebrow="Legal" heading="Privacidad y términos" />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <p class="effective-date">Fecha de entrada en vigor: 26 de agosto de 2026</p>
+
+      <h2 class="h3">Política de privacidad</h2>
+      <p>
+        The Jentosy Project, Inc. (&ldquo;The Jentosy Project&rdquo;, &ldquo;nosotros&rdquo;)
+        recopila únicamente la información necesaria para procesar donaciones, responder a
+        consultas y solicitudes de colaboración, y entender cómo usan este sitio las personas que
+        lo visitan.
+      </p>
+      <p><strong>Información que recopilamos</strong></p>
+      <ul class="check-list">
+        <li>Los datos de contacto que envías a través de nuestros formularios de Contacto, Colabora con nosotros o el boletín — nombre, correo electrónico, organización y el contenido del mensaje.</li>
+        <li>La información de donación procesada en nuestro nombre por Zeffy, nuestra plataforma de donaciones de terceros — ver más abajo.</li>
+        <li>Datos agregados y anonimizados de uso del sitio recopilados mediante Google Analytics (páginas visitadas, ubicación general, tipo de dispositivo) — que nosotros nunca vinculamos con tu nombre o correo electrónico.</li>
+      </ul>
+      <p><strong>Cómo la usamos</strong></p>
+      <p>
+        Usamos la información que proporcionas para responder a tu mensaje, procesar tu donación y
+        enviar un recibo, enviar novedades ocasionales si así lo has aceptado, y entender qué
+        partes del sitio son útiles para quienes lo visitan. No vendemos, alquilamos ni
+        intercambiamos tu información personal con ningún tercero con fines de marketing.
+      </p>
+      <p><strong>Procesamiento de donaciones</strong></p>
+      <p>
+        Las donaciones realizadas a través de este sitio las procesa y retiene <strong>Zeffy</strong>,
+        una plataforma de donaciones independiente — no The Jentosy Project directamente. Zeffy
+        gestiona los datos de tu tarjeta de pago bajo su propia política de privacidad y sus
+        prácticas de seguridad; nosotros recibimos tu nombre, correo electrónico y el monto de la
+        donación para poder emitir un recibo y mantenerte informado.
+      </p>
+      <p><strong>Cookies y analítica</strong></p>
+      <p>
+        Este sitio usa Google Analytics (GA4) para entender el comportamiento agregado de las
+        visitas. Google Analytics usa cookies y tecnologías similares; puedes desactivarlas desde
+        la configuración de tu navegador o con una extensión como el complemento de inhabilitación
+        de Google Analytics. No usamos cookies de publicidad ni de seguimiento entre sitios.
+      </p>
+      <p><strong>Tus opciones</strong></p>
+      <p>
+        Puedes pedirnos que corrijamos o eliminemos la información personal que tenemos sobre ti, y
+        puedes darte de baja de cualquier novedad por correo electrónico en cualquier momento
+        mediante el enlace de ese correo o{" "}
+        <a href={L("/contact/")}>contactándonos directamente</a>. No usaremos tu información para
+        ningún fin más allá de lo descrito aquí sin consultarte primero.
+      </p>
+
+      <h2 class="h3">Divulgaciones para donantes</h2>
+      <p>
+        The Jentosy Project, Inc. es una organización benéfica pública 501(c)(3). Las donaciones
+        son deducibles de impuestos en la medida en que lo permita la ley, y no se proporcionaron
+        bienes ni servicios a cambio de tu donación salvo que se indique lo contrario en el
+        momento de donar. Recibirás por correo electrónico un recibo automático y válido a efectos
+        fiscales por cada donación, única o recurrente.
+      </p>
+      <p>
+        Las donaciones mensuales recurrentes se pueden modificar o cancelar en cualquier momento a
+        través del enlace en el correo de tu recibo de Zeffy, o <a href={L("/contact/")}>contactándonos</a>,
+        y procesaremos el cambio con prontitud. Las donaciones no son reembolsables salvo cuando
+        la ley lo exija; si crees que una donación se hizo por error, contáctanos y lo resolveremos
+        contigo directamente.
+      </p>
+
+      <h2 class="h3">Términos de uso</h2>
+      <p>
+        Al usar este sitio, aceptas los siguientes términos. Si no estás de acuerdo, por favor no
+        uses el sitio.
+      </p>
+      <p><strong>Contenido médico</strong></p>
+      <p>
+        El contenido de este sitio sobre la GEFS, la enfermedad renal mediada por APOL1 y la
+        enfermedad renal crónica en general se ofrece únicamente con fines educativos generales y{" "}
+        <strong>no es asesoramiento médico</strong>. No crea una relación médico-paciente y nunca
+        debe reemplazar la orientación de un profesional de salud calificado. Consulta siempre a tu
+        médico o a un nefrólogo sobre tu propio diagnóstico, pruebas o tratamiento. Este contenido
+        educativo aún no ha completado una revisión formal de exactitud clínica — consulta la nota
+        en cada página de enfermedad para más detalles.
+      </p>
+      <p><strong>Propiedad intelectual</strong></p>
+      <p>
+        Los textos, ilustraciones y visualizaciones de datos de este sitio son propiedad de The
+        Jentosy Project, Inc. salvo que se indique otra fuente, y no pueden reproducirse con fines
+        comerciales sin autorización. Las estadísticas citadas siguen siendo propiedad de sus
+        fuentes originales (CDC, USRDS, NIDDK y los estudios revisados por pares enlazados a lo
+        largo del sitio).
+      </p>
+      <p><strong>Sin garantía</strong></p>
+      <p>
+        Este sitio se ofrece &ldquo;tal cual&rdquo;. Aunque trabajamos para mantener la información
+        exacta y con fuentes, The Jentosy Project no ofrece ninguna garantía sobre su integridad o
+        idoneidad para un fin determinado, y no se hace responsable de las decisiones tomadas con
+        base en el contenido de este sitio.
+      </p>
+      <p><strong>Contacto</strong></p>
+      <p>
+        Las preguntas sobre esta política o sobre tu información pueden enviarse a través de
+        nuestra <a href={L("/contact/")}>página de Contacto</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 680px;
+  }
+
+  .effective-date {
+    font-size: 12.5px;
+    color: var(--fg-muted);
+    margin-bottom: var(--space-6);
+  }
+
+  .check-list li {
+    max-width: none;
+  }
+</style>

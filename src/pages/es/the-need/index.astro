@@ -1,0 +1,493 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import StageStepper from "../../../components/StageStepper.astro";
+import NumberedSteps from "../../../components/NumberedSteps.astro";
+import QuickNav from "../../../components/QuickNav.astro";
+import SupportResources from "../../../components/SupportResources.astro";
+import { localeHref } from "../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+
+const diseases = [
+  {
+    slug: "fsgs",
+    name: "GEFS",
+    full: "Glomeruloesclerosis focal y segmentaria",
+    blurb: "Cicatrización en las unidades de filtrado del riñón — la enfermedad con la que vive nuestro fundador.",
+  },
+  {
+    slug: "apol1",
+    name: "Enfermedad renal mediada por APOL1",
+    full: "Variantes del gen APOL1",
+    blurb: "Un factor de riesgo genético concentrado en las comunidades negras y latinas.",
+  },
+];
+
+const quickNavItems = [
+  { label: "Lo básico", href: "#basics" },
+  { label: "Síntomas", href: "#symptoms" },
+  { label: "Diagnóstico", href: "#diagnosis" },
+  { label: "Tratamiento", href: "#treatment" },
+  { label: "Buscar apoyo", href: "#get-support" },
+  { label: "Datos del Bronx", href: L("/the-need/data/") },
+];
+
+const kidneyFunctions = [
+  "Ayudan a controlar la presión arterial",
+  "Equilibran la sal y los minerales en la sangre",
+  "Ayudan al cuerpo a producir glóbulos rojos",
+  "Mantienen los huesos fuertes",
+];
+
+const diagnosisSteps = [
+  { title: "Niveles altos de desechos en la sangre", body: "Un análisis de sangre básico (creatinina, TFGe) revela qué tan bien están filtrando tus riñones." },
+  { title: "Proteína en la orina", body: "Normalmente la proteína no debería pasar a la orina — su presencia (proteinuria) suele ser el signo más temprano." },
+  { title: "Pequeñas cantidades de sangre en la orina", body: "La hematuria, a veces invisible sin un análisis de laboratorio, puede indicar daño renal." },
+];
+
+const symptoms = [
+  "Náuseas y vómitos",
+  "Pérdida del apetito",
+  "Fatiga y debilidad",
+  "Problemas de sueño",
+  "Menor agilidad mental",
+  "Presión arterial alta difícil de controlar",
+  "Dificultad para respirar (si se acumula líquido en los pulmones)",
+];
+
+const treatmentHabits = [
+  "Toma tus medicamentos según lo recetado",
+  "Controla tu presión arterial con regularidad",
+  "Hazte análisis de la función renal periódicos",
+  "Sigue las recomendaciones dietéticas",
+  "Trabaja de cerca con tu equipo de salud",
+];
+
+const riskFactors = [
+  "Presión arterial alta de larga data",
+  "Diabetes",
+  "Enfermedades autoinmunes como el lupus",
+  "Antecedentes familiares de enfermedad renal",
+  "Variaciones genéticas de APOL1",
+];
+---
+
+<BaseLayout
+  title="Entender la enfermedad renal"
+  description="Las desigualdades en la enfermedad renal son consecuencia de la pobreza, el acceso a la educación, el encarcelamiento y el estrés crónico. Conoce la GEFS y la enfermedad renal mediada por APOL1."
+>
+  <PageHero
+    eyebrow="Entender la enfermedad renal"
+    heading="La enfermedad renal poco frecuente, explicada con claridad."
+    lede="Las desigualdades en la enfermedad renal son consecuencia de la pobreza, el acceso desigual a la educación, el encarcelamiento, los hogares fracturados y el estrés crónico que esas condiciones producen."
+    motif
+  />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <p>
+        Estas condiciones cobran un precio medible en el cuerpo, incluidos los riñones. The
+        Jentosy Project entiende la equidad en salud como algo inseparable de estas condiciones
+        sociales de fondo, no solo como una cuestión de acceso médico — por eso nuestro trabajo
+        educativo empieza con dos enfermedades específicas de las que poco se habla.
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="grid disease-grid">
+        {diseases.map((d, i) => (
+          <a href={L(`/the-need/${d.slug}/`)} class="disease-card reveal" style={`--reveal-delay:${i * 0.1}s`} data-tilt-card>
+            <div class="disease-card-inner" data-tilt-inner>
+              <span class="disease-card-mark" aria-hidden="true">{d.name.slice(0, 1)}</span>
+              <div class="disease-card-content">
+                <p class="disease-full">{d.full}</p>
+                <h2 class="h3">{d.name}</h2>
+                <p>{d.blurb}</p>
+                <span class="read-more">Leer más &rarr;</span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">¿Qué es la enfermedad renal?</p>
+      <h2 class="h3">Un sistema de filtración que se daña con el tiempo.</h2>
+      <p>
+        La enfermedad renal crónica (ERC) ocurre cuando los riñones sufren daño durante más de
+        unos meses. Piensa en tus riñones como el sistema de filtración de tu cuerpo — limpian la
+        sangre eliminando los desechos y el exceso de líquido, que luego salen del cuerpo en forma
+        de orina.
+      </p>
+      <p>Pero los riñones hacen mucho más que filtrar desechos. También:</p>
+      <ul class="check-list">
+        {kidneyFunctions.map((f) => <li>{f}</li>)}
+      </ul>
+      <p>
+        Cuando los riñones están dañados, no pueden hacer bien estas tareas. Los desechos y el
+        líquido se acumulan en el cuerpo, lo que puede causar problemas de salud graves.
+      </p>
+
+      <div class="card card-steel" style="margin-top:var(--space-5);">
+        <p class="eyebrow" style="margin-bottom:8px;">Importante</p>
+        <p style="margin:0;">
+          En las primeras etapas de la enfermedad renal, podrías no sentirte enfermo ni tener
+          ningún síntoma. Es posible que no sepas que tienes enfermedad renal hasta que esté
+          avanzada. Por eso importan los chequeos regulares, sobre todo si tienes factores de
+          riesgo como presión arterial alta o diabetes.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="stages" class="on-light section-tight" style="border-top:1px solid var(--line);" data-stage-section>
+    <div class="container">
+      <p class="eyebrow">Las cinco etapas de la enfermedad renal</p>
+      <h2 class="h2">De la función normal a la insuficiencia.</h2>
+      <p class="section-dek">
+        Tu equipo de salud determina tu etapa con un análisis de sangre llamado tasa de filtración
+        glomerular estimada (TFGe) — mide cuánta sangre filtran tus riñones cada minuto. Un
+        número bajo de TFGe significa que tus riñones funcionan peor.
+      </p>
+
+      <StageStepper />
+
+      <p style="margin-top:var(--space-5); max-width:var(--reading-max);">
+        Cuando los riñones ya no funcionan al nivel necesario para mantener viva a una persona, se
+        llama enfermedad renal en etapa terminal (ERET) — una TFGe menor de 15. En este punto, la
+        persona necesita un trasplante de riñón o diálisis, un tratamiento que hace el trabajo de
+        los riñones.
+      </p>
+    </div>
+  </section>
+
+  <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">¿Cómo detectan los médicos la enfermedad renal?</p>
+      <h2 class="h3">Primero, análisis de sangre y de orina.</h2>
+      <p>Los profesionales de salud pueden detectar la enfermedad renal con análisis de sangre y de orina. Estos análisis buscan:</p>
+      <NumberedSteps steps={diagnosisSteps} />
+      <p style="margin-top:var(--space-5);">Los médicos también podrían usar pruebas de imagen como:</p>
+      <ul class="check-list">
+        <li><strong>Ecografía</strong> — crea imágenes de tus riñones usando ondas de sonido.</li>
+        <li><strong>Tomografías computarizadas (TC)</strong> — toman imágenes de rayos X detalladas para observar los riñones a fondo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Síntomas de la enfermedad renal</p>
+      <h2 class="h3">Los síntomas aparecen despacio — a menudo demasiado despacio para notarlos.</h2>
+      <p>
+        Los síntomas de la enfermedad renal crónica tienden a desarrollarse lentamente con el
+        tiempo. En las primeras etapas, podrías no notar nada en absoluto. Por eso muchas personas
+        no se dan cuenta de que tienen enfermedad renal hasta que está avanzada.
+      </p>
+      <p>
+        <strong>Por qué aparecen los síntomas:</strong> la pérdida de función renal provoca una
+        acumulación de líquido o desechos en el cuerpo. También puede hacer que se acumulen
+        ácidos, potasio y fosfato en la sangre — todo lo cual puede causar síntomas.
+      </p>
+      <div class="grid grid-2-col" style="gap:var(--space-2) var(--space-5); margin-top:var(--space-5);">
+        {symptoms.map((s) => <p class="symptom-item">{s}</p>)}
+      </div>
+    </div>
+  </section>
+
+  <section id="treatment" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Tratamiento de la enfermedad renal</p>
+      <h2 class="h3">Frenar el daño, no solo controlar los síntomas.</h2>
+      <p>
+        El objetivo del tratamiento es frenar el daño a los riñones. Esto suele hacerse
+        controlando la causa subyacente del daño — por ejemplo, controlando la presión arterial o
+        manejando la diabetes.
+      </p>
+      <p>
+        Sin embargo, incluso después de encontrar y tratar una causa, el daño renal podría seguir
+        empeorando. Por eso es importante:
+      </p>
+      <ul class="check-list">
+        {treatmentHabits.map((t) => <li>{t}</li>)}
+      </ul>
+
+      <div class="card card-rust" style="margin-top:var(--space-6);">
+        <p class="eyebrow" style="margin-bottom:8px;">Si la enfermedad renal progresa a etapa terminal</p>
+        <p style="margin:0;">
+          La enfermedad renal crónica puede progresar a insuficiencia renal en etapa terminal.
+          Esto es mortal a menos que la persona reciba un trasplante de riñón o comience diálisis —
+          un tratamiento que hace el trabajo de los riñones. De los 831,000 estadounidenses que
+          viven actualmente con ERET, el 67 % está en diálisis y el 33 % tiene un trasplante.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Cuándo consultar a un médico</p>
+      <h2 class="h3">Factores de riesgo que tu médico debería conocer.</h2>
+      <p>
+        Si tienes una afección de salud continua que aumenta tu riesgo de enfermedad renal, tu
+        profesional de salud principal podría querer vigilar la salud de tus riñones. Los factores
+        de riesgo incluyen:
+      </p>
+      <ul class="check-list">
+        {riskFactors.map((r) => <li>{r}</li>)}
+      </ul>
+      <p>
+        Es posible que consultes a tu profesional de salud principal cada 6 a 12 meses para estos
+        análisis. Si los resultados muestran posibles problemas renales, podrían derivarte a un
+        nefrólogo — un médico especializado en enfermedades de los riñones.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Distintos tipos de enfermedad renal</p>
+      <h2 class="h3">El tipo que tienes determina cómo se trata.</h2>
+      <p>
+        La enfermedad renal crónica puede deberse a muchas causas distintas. Dos son el centro de
+        nuestro trabajo educativo — lee más en sus páginas dedicadas más arriba. Otros tipos
+        incluyen la enfermedad renal diabética, la nefritis lúpica, la enfermedad renal
+        poliquística y la enfermedad renal causada por la presión arterial alta. Tu médico puede
+        explicarte qué tipo tienes y qué significa para tu tratamiento.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">En resumen</p>
+      <p class="lede reveal" style="max-width:64ch;">
+        La enfermedad renal a menudo no tiene síntomas en las primeras etapas, lo que hace que los
+        chequeos regulares sean esenciales si tienes factores de riesgo. La buena noticia es que
+        el tratamiento puede frenar la progresión de la enfermedad, sobre todo cuando se empieza a
+        tiempo. Trabaja con tu equipo de salud para vigilar la salud de tus riñones y controlar
+        cualquier afección subyacente.
+      </p>
+      <p class="disclaimer-dark">
+        Esta página ofrece educación general de nivel introductorio — no asesoramiento médico — y
+        todavía no ha completado una revisión formal de exactitud clínica. Habla con tu médico
+        sobre tu propio riesgo, tus pruebas y tu tratamiento.
+      </p>
+    </div>
+  </section>
+
+  <section id="get-support" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <SupportResources />
+    </div>
+  </section>
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container">
+      <p class="eyebrow">Los datos detrás de esto</p>
+      <h2 class="h2 reveal">La brecha, cuantificada — a nivel nacional y en el Bronx.</h2>
+      <p class="lede reveal" style="--reveal-delay:0.08s; max-width:60ch;">
+        37 millones de estadounidenses viven con enfermedad renal crónica, y los adultos negros
+        desarrollan insuficiencia renal a una tasa cuatro veces mayor que los adultos blancos —
+        con una brecha aún más marcada en el Bronx mismo. El desglose completo, nacional y
+        específico del Bronx, incluida la prevalencia de diabetes y ERC según la raza, está en su
+        propia página.
+      </p>
+      <a href={L("/the-need/data/")} class="btn btn-steel-outline" style="margin-top:var(--space-6);">Ver Datos del Bronx que debes conocer &rarr;</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #basics,
+  #stages,
+  #diagnosis,
+  #symptoms,
+  #treatment,
+  #get-support,
+  #the-data {
+    scroll-margin-top: 88px;
+  }
+
+  .disease-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6);
+    margin: var(--space-4) auto 0;
+    max-width: 700px;
+  }
+
+  @media (max-width: 640px) {
+    .disease-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* ---------- 3D tilt cards ---------- */
+
+  .disease-card {
+    position: relative;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    perspective: 1200px;
+    outline: none;
+  }
+
+  .disease-card::after {
+    content: "";
+    position: absolute;
+    left: 12%;
+    right: 12%;
+    bottom: -14px;
+    height: 22px;
+    background: radial-gradient(ellipse at center, rgba(38, 42, 33, 0.3), rgba(38, 42, 33, 0) 72%);
+    filter: blur(6px);
+    z-index: -1;
+    transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+  }
+
+  .disease-card:hover::after,
+  .disease-card:focus-visible::after {
+    opacity: 0.85;
+    transform: translateY(6px) scale(1.06);
+  }
+
+  .disease-card-inner {
+    position: relative;
+    height: 100%;
+    background: var(--card);
+    border: 1.5px solid var(--line);
+    border-top: 3px solid var(--steel);
+    border-radius: var(--radius-sm);
+    padding: var(--space-6) var(--space-5);
+    overflow: hidden;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 22px rgba(38, 42, 33, 0.14);
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-med) var(--ease), border-top-color var(--dur-med) var(--ease);
+  }
+
+  .disease-card:hover .disease-card-inner,
+  .disease-card:focus-visible .disease-card-inner {
+    border-top-color: var(--rust);
+    box-shadow: 0 26px 44px rgba(38, 42, 33, 0.22);
+  }
+
+  .disease-card:focus-visible .disease-card-inner {
+    transform: translateY(-4px);
+  }
+
+  .disease-card-mark {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-4);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--line-strong);
+    opacity: 0.55;
+    transform: translateZ(14px);
+    pointer-events: none;
+  }
+
+  .disease-card-content {
+    position: relative;
+    transform: translateZ(34px);
+  }
+
+  .disease-full {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--fg-muted);
+    margin: 0 0 var(--space-2);
+  }
+
+  .read-more {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--steel);
+  }
+
+  .symptom-item {
+    margin: 0;
+    padding: var(--space-2) 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 14.5px;
+    color: var(--fg-soft);
+    max-width: none;
+  }
+
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const stageSection = document.querySelector<HTMLElement>("[data-stage-section]");
+  const stages = Array.from(document.querySelectorAll<HTMLElement>(".stage-stepper .stage"));
+
+  if (stageSection && stages.length && !prefersReducedMotion) {
+    gsap.set(stages, { scale: 0.94, filter: "grayscale(1) saturate(0)" });
+    const tl = gsap.timeline();
+    stages.forEach((stage) => {
+      tl.to(stage, { scale: 1, filter: "grayscale(0) saturate(1)", duration: 0.35, ease: "power1.out" }, "+=0.05");
+    });
+
+    ScrollTrigger.create({
+      trigger: stageSection,
+      start: "top 75%",
+      end: "bottom 60%",
+      scrub: 0.6,
+      animation: tl,
+    });
+  }
+
+  const tiltCards = document.querySelectorAll<HTMLElement>("[data-tilt-card]");
+  const maxTiltDeg = 9;
+
+  if (!prefersReducedMotion) {
+    tiltCards.forEach((card) => {
+      const inner = card.querySelector<HTMLElement>("[data-tilt-inner]");
+      if (!inner) return;
+
+      const applyTilt = (clientX: number, clientY: number) => {
+        const rect = card.getBoundingClientRect();
+        const px = (clientX - rect.left) / rect.width - 0.5;
+        const py = (clientY - rect.top) / rect.height - 0.5;
+        inner.style.transform = `rotateX(${(-py * maxTiltDeg * 2).toFixed(2)}deg) rotateY(${(px * maxTiltDeg * 2).toFixed(2)}deg)`;
+      };
+
+      const resetTilt = () => {
+        inner.style.transform = "rotateX(0deg) rotateY(0deg)";
+      };
+
+      card.addEventListener("pointermove", (e) => applyTilt(e.clientX, e.clientY));
+      card.addEventListener("pointerleave", resetTilt);
+      card.addEventListener("blur", resetTilt);
+    });
+  }
+</script>

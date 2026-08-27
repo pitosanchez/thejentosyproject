@@ -1,0 +1,67 @@
+---
+import { getLangFromUrl, localizePath } from "../i18n/utils";
+import { hasTranslation } from "../i18n/pages";
+
+interface Props {
+  /** Style context — the dark nav bar vs. the full-screen menu. */
+  variant?: "bar" | "menu";
+}
+const { variant = "bar" } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const other = lang === "en" ? "es" : "en";
+const path = Astro.url.pathname;
+
+// Only offer the switch when the target-locale page exists.
+const counterpartExists =
+  other === "es" ? hasTranslation(path) : true; // every /es/ page has an English source
+
+const target = localizePath(path, other);
+const short = other === "es" ? "ES" : "EN";
+const full = other === "es" ? "Español" : "English";
+const label = variant === "menu" ? full : short;
+const aria =
+  other === "es" ? "Ver esta página en español" : "View this page in English";
+---
+
+{counterpartExists && (
+  <a
+    class={`lang-toggle lang-toggle-${variant}`}
+    href={target}
+    hreflang={other}
+    lang={other}
+    aria-label={aria}
+  >{label}</a>
+)}
+
+<style>
+  .lang-toggle {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-fg-muted);
+    transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+    white-space: nowrap;
+  }
+
+  .lang-toggle:hover {
+    color: var(--ink-fg);
+  }
+
+  .lang-toggle-bar {
+    font-size: 11px;
+    padding: 8px 11px;
+    border: 1px solid var(--ink-line-strong, var(--ink-line));
+    border-radius: var(--radius-pill);
+  }
+
+  .lang-toggle-bar:hover {
+    border-color: var(--ink-fg-muted);
+  }
+
+  .lang-toggle-menu {
+    font-size: 13px;
+  }
+</style>

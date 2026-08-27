@@ -1,11 +1,15 @@
 ---
+import { getLangFromUrl } from "../i18n/utils";
+
 interface Props {
   items: { label: string; href?: string }[];
 }
 const { items } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const ariaLabel = lang === "es" ? "Ruta de navegación" : "Breadcrumb";
 ---
 
-<nav class="breadcrumb" aria-label="Breadcrumb">
+<nav class="breadcrumb" aria-label={ariaLabel}>
   <ol>
     {items.map((item, i) => (
       <li>

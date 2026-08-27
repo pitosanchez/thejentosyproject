@@ -1,70 +1,65 @@
 ---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PhotoSlot from "../../../components/PhotoSlot.astro";
+import VideoSlot from "../../../components/VideoSlot.astro";
+import { localeHref } from "../../../i18n/utils";
 import fs from "node:fs";
 import path from "node:path";
-import BaseLayout from "../../layouts/BaseLayout.astro";
-import PhotoSlot from "../../components/PhotoSlot.astro";
-import VideoSlot from "../../components/VideoSlot.astro";
 
+const L = (p: string) => localeHref(p, "es");
 const exists = (p: string) => fs.existsSync(path.join(process.cwd(), "public", p));
 const heroExists = exists("images/safe.webp");
 
 const answers = [
   {
-    q: "Why",
-    a: "Geography shouldn't decide who understands their own health risk. Education is the one thing that works before a diagnosis becomes an emergency.",
+    q: "Por qué",
+    a: "La geografía no debería decidir quién entiende su propio riesgo de salud. La educación es lo único que funciona antes de que un diagnóstico se convierta en una emergencia.",
   },
   {
-    q: "What",
-    a: "We teach underserved communities about FSGS and APOL1-mediated kidney disease — in plain language, before it's too late to act on it.",
+    q: "Qué",
+    a: "Enseñamos a las comunidades desatendidas sobre la GEFS y la enfermedad renal mediada por APOL1 — en lenguaje claro, antes de que sea demasiado tarde para actuar.",
   },
   {
-    q: "Where",
-    a: "The Bronx first — one of the country's starkest examples of this disparity. Built to expand nationwide from here.",
+    q: "Dónde",
+    a: "El Bronx primero — uno de los ejemplos más marcados de esta desigualdad en el país. Diseñado para expandirse a todo el país desde aquí.",
   },
   {
-    q: "How",
-    a: "Education first, storytelling as the method. Lived experience changes minds that statistics alone can't reach.",
+    q: "Cómo",
+    a: "La educación primero, las historias como método. La experiencia vivida cambia mentes que las estadísticas por sí solas no alcanzan.",
   },
 ];
 ---
 
 <BaseLayout
-  title="About"
-  description="The Jentosy Project is a 501(c)(3) nonprofit advancing kidney health equity for underserved communities, starting in the Bronx."
+  title="Quiénes somos"
+  description="The Jentosy Project es una organización sin fines de lucro 501(c)(3) que promueve la equidad en la salud renal para comunidades desatendidas, empezando por el Bronx."
 >
-  <!-- HERO — image only, no text on the photo. A light, flat tint keeps
-       it feeling of a piece with the site without washing the photo out. -->
   <section class="on-dark about-hero" data-parallax-section>
     {heroExists ? (
       <img class="about-hero-bg" src="/images/safe.webp" alt="" aria-hidden="true" data-parallax-bg />
     ) : (
       <div class="about-hero-placeholder">
         <p class="about-hero-placeholder-note">
-          Hero photo placeholder — drop <code>safe.webp</code> into <code>public/images/</code>{" "}
-          and it'll appear here automatically.
+          Marcador de imagen principal — coloca <code>safe.webp</code> en <code>public/images/</code>{" "}
+          y aparecerá aquí automáticamente.
         </p>
       </div>
     )}
     <div class="about-hero-tint"></div>
   </section>
 
-  <!-- A FUNDER OR PARTNER SHOULD BE ABLE TO GET WHAT THEY NEED FROM THIS
-       PAGE IN UNDER A MINUTE. One short hook, four short answers, one
-       short emotional anchor (the name), two short quotable statements
-       (mission/vision), done. Anyone who wants the long version has
-       Meet The Team, What We Do, and the Storytelling essay to go to. -->
   <section class="on-light about-top">
     <div class="container narrow">
-      <h1 class="about-title reveal">About</h1>
+      <h1 class="about-title reveal">Quiénes somos</h1>
 
       <p class="hook reveal" style="--reveal-delay:0.1s">
-        Kidney disease is often invisible until it isn't — and where you live can decide whether
-        you see it coming. The Jentosy Project exists to change that.
+        La enfermedad renal suele ser invisible hasta que deja de serlo — y el lugar donde vives
+        puede decidir si la ves venir. The Jentosy Project existe para cambiar eso.
       </p>
 
       <p class="press-mention reveal" style="--reveal-delay:0.16s">
         <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">
-          Independently covered by CBS News New York &rarr;
+          Cobertura independiente de CBS News New York &rarr;
         </a>
       </p>
     </div>
@@ -84,20 +79,18 @@ const answers = [
   </section>
 
   <figure class="wide-image wide-image-small subway-image reveal">
-    <PhotoSlot src="/images/NtX0s.webp" alt="A New York City subway sign reading Uptown & The Bronx Express, with the 4 and 5 line bullets" ratio="3 / 2" />
-    <figcaption>A community, not a case study.</figcaption>
+    <PhotoSlot src="/images/NtX0s.webp" alt="Un letrero del metro de Nueva York que dice Uptown & The Bronx Express, con los distintivos de las líneas 4 y 5" ratio="3 / 2" />
+    <figcaption>Una comunidad, no un caso de estudio.</figcaption>
   </figure>
 
-  <!-- THE NAME — the one story worth slowing down for, kept short; video
-       carries the emotional weight instead of more paragraphs. -->
   <section class="on-light section name-section">
     <div class="container narrow">
-      <p class="eyebrow reveal">The Name</p>
+      <p class="eyebrow reveal">El nombre</p>
       <p class="reveal" style="--reveal-delay:0.06s">
-        The Jentosy Project is named for <strong>Jen Keller</strong> and{" "}
-        <strong>Elizabeth Antosy</strong> — two women whose decision to stay in a kidney exchange
-        chain gave founder Robert Sanchez a second transplant, and gave eight strangers new
-        kidneys.
+        The Jentosy Project lleva el nombre de <strong>Jen Keller</strong> y{" "}
+        <strong>Elizabeth Antosy</strong> — dos mujeres cuya decisión de permanecer en una cadena
+        de intercambio de riñones le dio al fundador Robert Sanchez un segundo trasplante, y le
+        dio a ocho desconocidos riñones nuevos.
       </p>
 
       <figure class="story-video-figure reveal" style="--reveal-delay:0.12s">
@@ -105,38 +98,38 @@ const answers = [
           src="/videos/where-the-name-comes-from.mp4"
           youtubeId="nsQ35ZgiWOk"
           ratio="16 / 9"
-          title="Bronx man finally getting kidney transplant after years of waiting — CBS News New York"
+          title="Un hombre del Bronx por fin recibirá un trasplante de riñón tras años de espera — CBS News New York"
         />
         <figcaption>
-          Independently covered by{" "}
+          Cobertura independiente de{" "}
           <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">CBS News New York</a>.
         </figcaption>
       </figure>
 
       <p class="linkline reveal" style="--reveal-delay:0.18s">
-        Read the full story on <a href="/about/team/">Meet The Team</a> · Read the philosophy
-        behind it in <a href="/storytelling/">Storytelling as Medicine</a>
+        Lee la historia completa en <a href={L("/about/team/")}>Nuestro equipo</a> · Lee la
+        filosofía detrás en <a href={L("/storytelling/")}>El poder de las historias</a>
       </p>
     </div>
   </section>
 
-  <!-- MISSION + VISION — the two lines worth remembering. -->
   <section class="on-dark section-tight mv-band">
     <div class="container">
       <div class="mv-grid">
         <div class="mv-col reveal">
-          <p class="mv-label">Mission</p>
+          <p class="mv-label">Misión</p>
           <p class="mv-statement">
-            Advance health equity for underserved communities by educating people about rare
-            kidney diseases — including FSGS and APOL1-mediated kidney disease — and building the
-            partnerships needed to close the gap in kidney care.
+            Promover la equidad en salud para las comunidades desatendidas educando a las personas
+            sobre las enfermedades renales poco frecuentes — incluidas la GEFS y la enfermedad
+            renal mediada por APOL1 — y construyendo las alianzas necesarias para cerrar la brecha
+            en la atención renal.
           </p>
         </div>
         <div class="mv-col mv-col-divided reveal" style="--reveal-delay:0.08s">
-          <p class="mv-label">Vision</p>
+          <p class="mv-label">Visión</p>
           <p class="mv-statement">
-            A future where no one's zip code determines their access to kidney health education,
-            early detection, or life-saving care.
+            Un futuro en el que el código postal de nadie determine su acceso a la educación sobre
+            la salud renal, la detección temprana o la atención que salva vidas.
           </p>
         </div>
       </div>
@@ -144,26 +137,26 @@ const answers = [
   </section>
 
   <figure class="wide-image wide-image-light wide-image-small reveal">
-    <PhotoSlot src="/images/treeoflife.webp" alt="Cupped hands cradling a tree that grows from a pair of kidneys" ratio="5 / 4" />
-    <figcaption>Rooted in care, growing toward equity.</figcaption>
+    <PhotoSlot src="/images/treeoflife.webp" alt="Unas manos ahuecadas que sostienen un árbol que crece a partir de un par de riñones" ratio="5 / 4" />
+    <figcaption>Con raíces en el cuidado, creciendo hacia la equidad.</figcaption>
   </figure>
 
   <section class="on-light section-tight closer-section">
     <div class="container narrow">
-      <p class="pull reveal closer">Where you live should never decide what you know.</p>
+      <p class="pull reveal closer">El lugar donde vives nunca debería decidir lo que sabes.</p>
       <p class="linkline reveal" style="--reveal-delay:0.06s">
-        More on <a href="/about/team/">who's behind this</a> and{" "}
-        <a href="/about/what-we-do/">what we do day to day</a>.
+        Más sobre <a href={L("/about/team/")}>quiénes están detrás de esto</a> y{" "}
+        <a href={L("/about/what-we-do/")}>lo que hacemos día a día</a>.
       </p>
     </div>
   </section>
 
   <section class="on-dark section-tight cta-band">
     <div class="container cta-inner reveal">
-      <h2 class="h2">Help advance health equity in kidney care.</h2>
+      <h2 class="h2">Ayuda a promover la equidad en la atención renal.</h2>
       <div class="cluster gap-3" style="margin-top:var(--space-5);">
-        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
-        <a href="/donate/" class="btn btn-rust">Donate</a>
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
+        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
       </div>
     </div>
   </section>
@@ -233,15 +226,19 @@ const answers = [
 
   .about-title {
     position: relative;
-    top: -4rem;
+    top: -2.5rem;
     margin: 0 0 var(--space-4);
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(72px, 13vw, 180px);
-    line-height: 1;
+    /* "QUIÉNES SOMOS" is two long words — capped so both fit the reading
+       column and centre cleanly (English "ABOUT" runs bigger on its own
+       page). It still wraps to two centred lines on narrow viewports. */
+    font-size: clamp(44px, 8vw, 104px);
+    line-height: 1.02;
     letter-spacing: -0.01em;
     text-align: center;
     text-transform: uppercase;
+    text-wrap: balance;
     color: var(--ink);
     -webkit-text-stroke: 2px #fff;
     paint-order: stroke fill;
@@ -249,7 +246,7 @@ const answers = [
 
   @media (max-width: 640px) {
     .about-title {
-      top: -2rem;
+      top: -1.5rem;
     }
   }
 
@@ -347,10 +344,6 @@ const answers = [
     margin-bottom: 0;
   }
 
-  /* treeoflife.webp's source file is only 462x368 — stretched to a full
-     21:9 banner it was being upscaled well past its real resolution,
-     which is what read as pixelated. Capped near its native size
-     instead, so the browser is barely scaling it at all. */
   .wide-image-small {
     max-width: 420px;
     padding-inline: 0;
@@ -362,7 +355,7 @@ const answers = [
 
   .subway-image {
     max-width: 520px;
-    /* Pulled tight to "The Name" below — the big default wide-image gap
+    /* Pulled tight to "El nombre" below — the big default wide-image gap
        left this photo stranded in whitespace. */
     margin-bottom: var(--space-4);
   }
@@ -470,9 +463,6 @@ const answers = [
   const section = document.querySelector<HTMLElement>("[data-parallax-section]");
   const bg = document.querySelector<HTMLElement>("[data-parallax-bg]");
 
-  // Gentle big-story parallax on the hero photo only — the image is sized
-  // larger than its box (see .about-hero-bg) so the drift never reveals
-  // empty space at the edges.
   if (section && bg && !prefersReducedMotion) {
     gsap.to(bg, {
       yPercent: 12,

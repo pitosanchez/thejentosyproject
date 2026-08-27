@@ -1,0 +1,480 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PageHero from "../../../../components/PageHero.astro";
+import Breadcrumb from "../../../../components/Breadcrumb.astro";
+import StatTile from "../../../../components/StatTile.astro";
+import Donut from "../../../../components/charts/Donut.astro";
+import HBarList from "../../../../components/charts/HBarList.astro";
+import QuickNav from "../../../../components/QuickNav.astro";
+import { viz } from "../../../../lib/palette";
+import { localeHref } from "../../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+
+const quickNavItems = [
+  { label: "Empieza aquí", href: "#start" },
+  { label: "Afecciones relacionadas", href: "#conditions" },
+  { label: "Por vecindario", href: "#neighborhood" },
+  { label: "Contexto social", href: "#social-context" },
+  { label: "APOL1", href: "#apol1" },
+  { label: "GEFS", href: "#fsgs" },
+  { label: "Vacíos de datos", href: "#data-gaps" },
+];
+
+const diabetesCompare = [
+  { label: "Adultos del Bronx", value: 15, color: viz.orange, display: "15%" },
+  { label: "Total de NYC", value: 11, color: viz.neutral, display: "11%" },
+];
+
+const hypertensionNeighborhoods = [
+  { label: "Highbridge y Concourse", value: 42, color: viz.orange, display: "42%" },
+  { label: "Williamsbridge y Baychester", value: 39, color: viz.orange, display: "39%" },
+  { label: "Mott Haven y Melrose", value: 38, color: viz.orange, display: "38%" },
+  { label: "Hunts Point y Longwood", value: 38, color: viz.orange, display: "38%" },
+  { label: "Todo el condado del Bronx", value: 36, color: viz.neutral, display: "36%" },
+];
+
+// Same NYS DOH Bronx County population dataset used elsewhere on the site.
+const population = [
+  { label: "Hispanos", value: 55.4, color: "#2a78d6" },
+  { label: "Personas negras no hispanas", value: 29.6, color: "#eb6834" },
+  { label: "Personas blancas no hispanas", value: 8.9, color: "#1baf7a" },
+  { label: "Asiáticos/isleños del Pacífico", value: 4.7, color: "#eda100" },
+  { label: "Indígenas americanos/nativos de Alaska", value: 0.3, color: "#e87ba4" },
+  { label: "Otro/multirracial o no indicado", value: 1.1, color: "#4a3aa7" },
+];
+
+const dataGapsKnown = [
+  "Prevalencia de diabetes",
+  "Prevalencia de hipertensión",
+  "Pobreza e ingreso del hogar",
+  "Demografía de la población",
+  "Vigilancia del VIH",
+  "Uso hospitalario",
+  "Varios otros indicadores de enfermedades crónicas",
+];
+
+const dataGapsWeak = [
+  "Prevalencia de ERC a nivel de vecindario",
+  "Etapa de la ERC",
+  "Albuminuria",
+  "GEFS",
+  "Enfermedad renal mediada por APOL1",
+  "Tasas de pruebas genéticas",
+  "Progresión de la ERC a insuficiencia renal",
+  "Modalidad de diálisis",
+  "Derivación, evaluación y lista de espera para trasplante",
+];
+---
+
+<BaseLayout
+  title="Datos del Bronx que debes conocer"
+  description="Lo que los datos disponibles muestran de verdad sobre la enfermedad renal y las afecciones relacionadas en el Bronx — diabetes, presión arterial alta, pobreza, APOL1, GEFS y los vacíos reales en lo que sabemos."
+>
+  <PageHero
+    eyebrow="Enfermedad renal · Datos del Bronx que debes conocer"
+    heading="Datos del Bronx que debes conocer"
+    lede="Entender la salud renal significa entender las condiciones que la rodean. El Bronx carga con una carga considerable de diabetes, presión arterial alta, enfermedad crónica y dificultades económicas — todos factores que pueden cruzarse con la salud renal."
+    motif
+  />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <Breadcrumb items={[{ label: "Enfermedad renal", href: L("/the-need/") }, { label: "Datos del Bronx que debes conocer" }]} />
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <div class="card card-rust">
+        <p style="margin:0; font-weight:600; color:var(--fg);">
+          Estas estadísticas describen poblaciones, no el riesgo individual. Tener un origen
+          determinado, vivir en un vecindario determinado o vivir en la pobreza no significa que
+          alguien vaya a desarrollar enfermedad renal.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Empieza por la enfermedad renal</p>
+      <h2 class="h2">Una de las pocas mediciones directas del Bronx que tenemos.</h2>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-5);">
+      <StatTile
+        value="30.5%"
+        label="En los datos de vigilancia de los CDC, el 30.5 % de los beneficiarios de Medicare de pago por servicio del Bronx de 65 años o más tenía enfermedad renal crónica diagnosticada."
+        source="Sistema de Vigilancia de la Enfermedad Renal de los CDC, con datos de los Centros de Servicios de Medicare y Medicaid · presentación por condado de 2021 · condado del Bronx, NY · ERC diagnosticada entre beneficiarios de Medicare de pago por servicio de 65 años o más."
+        accent={viz.orange}
+      />
+    </div>
+
+    <div class="container narrow" style="margin-top:var(--space-5);">
+      <p>
+        Esta es una de las pocas mediciones de ERC disponibles a nivel del condado del Bronx —
+        pero describe a una población de Medicare de mayor edad, no a todos los residentes del
+        Bronx. No puede leerse como "el 30.5 % de los residentes del Bronx tiene enfermedad
+        renal".
+      </p>
+
+      <div class="card card-steel" style="margin-top:var(--space-5);">
+        <p class="eyebrow" style="margin-bottom:8px;">Por qué esto importa</p>
+        <p style="margin:0;">
+          La ERC con frecuencia progresa sin síntomas evidentes. La vigilancia a nivel
+          poblacional puede ayudar a identificar comunidades donde la prevención, las pruebas, la
+          educación y la intervención temprana merecen mayor atención.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="conditions" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Afecciones conectadas con la salud renal</p>
+      <h2 class="h2">La salud renal está conectada con más que los riñones.</h2>
+      <p class="section-dek">
+        Dos afecciones tienen una relación especialmente fuerte y bien documentada con la
+        enfermedad renal crónica: la diabetes y la presión arterial alta. Esto es lo que se sabe
+        de cada una en el Bronx.
+      </p>
+
+      <div class="viz-grid">
+        <div class="card viz-card">
+          <h3 class="viz-title">Diabetes</h3>
+          <HBarList data={diabetesCompare} max={20} />
+          <p style="margin-top:var(--space-4);">
+            La diabetes es una de las principales causas de la enfermedad renal crónica. Una
+            glucosa en sangre persistentemente elevada puede dañar las estructuras de filtrado del
+            riñón con el tiempo. Tener diabetes no significa que una persona vaya a desarrollar
+            enfermedad renal — pero es el factor de riesgo que los médicos vigilan más de cerca.
+          </p>
+          <p class="viz-source">Departamento de Salud e Higiene Mental de la Ciudad de Nueva York, Encuesta de Salud Comunitaria 2022 / Informe sobre Diabetes · Bronx y NYC · Diabetes diagnosticada autorreportada entre adultos.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">Presión arterial alta</h3>
+          <p class="stat-value-inline">36%</p>
+          <p class="viz-note" style="margin-top:-8px;">
+            de los adultos del Bronx reportaron que un profesional de salud les dijo que tenían
+            hipertensión.
+          </p>
+          <p>
+            La presión arterial alta puede dañar los vasos sanguíneos dentro de los riñones,
+            mientras que la enfermedad renal también puede hacer que la presión arterial alta sea
+            más difícil de controlar — la relación va en ambas direcciones.
+          </p>
+          <p class="viz-source">
+            Encuesta de Salud Comunitaria de la Ciudad de Nueva York, datos de 2015–2016, según se
+            presentan en la Evaluación de Salud Comunitaria de NYC. <strong>Esta es una estimación
+            de 2015–2016</strong>, no una cifra del año actual — la cifra de todo el condado se
+            muestra aquí para dar contexto; el detalle por vecindario está más abajo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="neighborhood" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">El Bronx no es una sola experiencia de salud</p>
+      <h2 class="h2">El riesgo de salud cambia de un vecindario a otro.</h2>
+      <p class="section-dek">
+        Donde existen datos confiables a nivel de vecindario, muestran una variación real dentro
+        del condado — la presión arterial alta es un ejemplo claro.
+      </p>
+
+      <div class="card viz-card" style="margin-top:var(--space-5);">
+        <h3 class="viz-title">Adultos a quienes se les dijo que tienen presión arterial alta, por vecindario</h3>
+        <p class="mini-tag" style="color:var(--rust);">Estimaciones de 2015–2016 — no datos del año actual</p>
+        <div style="margin-top:var(--space-3);">
+          <HBarList data={hypertensionNeighborhoods} max={45} />
+        </div>
+        <p class="viz-source">Encuesta de Salud Comunitaria de la Ciudad de Nueva York, 2015–2016, según se presenta en la Evaluación de Salud Comunitaria de NYC · vecindarios del United Hospital Fund.</p>
+      </div>
+
+      <div class="card card-rust gap-card">
+        <p>
+          Tenemos datos sólidos a nivel de vecindario para varios factores de riesgo de la
+          enfermedad renal. Los datos públicos a nivel de vecindario sobre la ERC, la GEFS y la
+          enfermedad renal mediada por APOL1 son mucho más limitados. Ese vacío es en sí mismo un
+          hallazgo importante — no solo la ausencia de uno.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="social-context" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">La salud también tiene un contexto social</p>
+      <h2 class="h2">El lugar puede moldear la exposición y el acceso.</h2>
+
+      <div class="grid stat-grid-4" style="margin-top:var(--space-5);">
+        <StatTile value="22.5%" label="de las familias del Bronx se estimaba que vivían por debajo del nivel federal de pobreza." source="Departamento de Salud del Estado de Nueva York, indicadores de equidad en salud del condado del Bronx · estimaciones 2020–2024 · condado del Bronx · familias por debajo del nivel federal de pobreza." accent={viz.neutral} />
+        <StatTile value="35.9%" label="de los niños del Bronx menores de 18 años se estimaba que vivían por debajo de la pobreza." source="Departamento de Salud del Estado de Nueva York, indicadores de equidad en salud del condado del Bronx · estimaciones 2020–2024 · condado del Bronx · niños menores de 18 años por debajo del nivel federal de pobreza." accent={viz.neutral} />
+        <StatTile value="$48,676" label="ingreso familiar mediano estimado del Bronx." source="Departamento de Salud del Estado de Nueva York, indicadores de equidad en salud del condado del Bronx · estimación 2020–2024 · condado del Bronx · ingreso familiar mediano." accent={viz.neutral} />
+        <StatTile value="1.385M" label="población aproximada del Bronx." source="Departamento de Salud del Estado de Nueva York, indicadores de equidad en salud del condado del Bronx · 2024 · condado del Bronx · población total." accent={viz.neutral} />
+      </div>
+
+      <div class="card viz-card" style="margin-top:var(--space-5);">
+        <h3 class="viz-title">¿Quién vive en el Bronx?</h3>
+        <Donut data={population.map((d) => ({ label: d.label, value: d.value, color: d.color }))} />
+        <p class="viz-source">Departamento de Salud del Estado de Nueva York, Indicadores de Salud del Condado del Bronx por Raza y Etnia · población de 2024.</p>
+      </div>
+
+      <div class="container narrow" style="padding:0; margin-top:var(--space-6);">
+        <p>
+          Estas cifras son contexto demográfico y estructural, no una explicación por sí solas.
+          Los resultados de salud pueden verse influidos por condiciones que se entrecruzan — el
+          acceso a la atención médica, la cobertura de seguro, la calidad de la vivienda, el
+          estrés crónico, el acceso a alimentos, las exposiciones ambientales, el transporte, el
+          empleo y la disponibilidad de atención preventiva. No son un relato sobre que un grupo
+          determinado tenga enfermedad renal a causa de la pobreza.
+        </p>
+        <p class="pull" style="margin-top:var(--space-5);">
+          El lugar puede moldear la exposición y el acceso. No determina el destino.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="apol1" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">APOL1: genética, ascendencia y salud renal</p>
+      <h2 class="h2">Un gen, no un grupo.</h2>
+      <p>
+        APOL1 es un gen. Ciertas variantes de APOL1 surgieron en poblaciones con ascendencia de
+        regiones del África subsahariana porque ofrecían protección contra algunas formas de
+        tripanosomiasis africana — la enfermedad del sueño. Dos variantes de riesgo renal de
+        APOL1 pueden aumentar de forma considerable el riesgo de desarrollar ciertas enfermedades
+        renales en algunas personas.
+      </p>
+      <div class="card card-steel">
+        <p style="margin:0; font-weight:600;">
+          Las variantes de riesgo de APOL1 no garantizan la enfermedad renal. La mayoría de las
+          personas que portan dos variantes de riesgo nunca desarrollan enfermedad renal.
+        </p>
+      </div>
+      <p style="margin-top:var(--space-5);">
+        La APOL1 no es "un gen de las personas negras", y no todas las personas que se identifican
+        como negras o afroamericanas la portan. El riesgo de APOL1 está ligado a la{" "}
+        <strong>ascendencia genética africana</strong> — un linaje biológico que puede existir en
+        personas que se identifican como negras, afroamericanas, afrocaribeñas, latinas, hispanas
+        o de otras maneras por completo. La ascendencia y la identidad están relacionadas, pero no
+        son lo mismo.
+      </p>
+      <p class="lede"><a href={L("/the-need/apol1/")} class="linkline">Lee la historia completa de la APOL1 &rarr;</a></p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="mini-tag" style="color:var(--rust); font-size:11px;">Investigación con participación del Bronx — no datos de prevalencia del Bronx</p>
+      <h2 class="h3">Lo que ha encontrado la investigación que incluye una cohorte del Bronx.</h2>
+      <p>
+        El Estudio de Salud Comunitaria Hispana/Estudio de Latinos (HCHS/SOL), con apoyo del NIH,
+        inscribió a participantes en cuatro centros de campo — <strong>el Bronx, Nueva York</strong>;
+        Chicago, Illinois; Miami, Florida; y San Diego, California. Como abarca cuatro ciudades,
+        sus hallazgos no son estimaciones de prevalencia solo del Bronx — pero el Bronx es una de
+        las comunidades que la investigación estudió de verdad.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-5);">
+      <div class="grid grid-2-col" style="gap:var(--space-4);">
+        <StatTile value="1.0%" label="de los participantes hispanos/latinos de origen caribeño del HCHS/SOL portaban dos variantes de riesgo renal de APOL1." source="Estudio de Salud Comunitaria Hispana/Estudio de Latinos (HCHS/SOL) · análisis publicado · centros de campo del Bronx, Chicago, Miami y San Diego · frecuencia del genotipo de dos variantes de APOL1, participantes de herencia caribeña." accent={viz.orange} />
+        <StatTile value="0.1%" label="de los participantes hispanos/latinos de origen continental del HCHS/SOL portaban dos variantes de riesgo renal de APOL1." source="Estudio de Salud Comunitaria Hispana/Estudio de Latinos (HCHS/SOL) · análisis publicado · centros de campo del Bronx, Chicago, Miami y San Diego · frecuencia del genotipo de dos variantes de APOL1, participantes de herencia continental." accent={viz.neutral} />
+      </div>
+    </div>
+
+    <div class="container narrow" style="margin-top:var(--space-5);">
+      <p>
+        Entre los participantes hispanos/latinos de origen caribeño, portar dos variantes de
+        riesgo de APOL1 se asoció con aproximadamente <strong>3.2 veces las probabilidades de
+        albuminuria</strong> — proteína en la orina, un marcador temprano de daño renal — en el
+        análisis publicado. Esto importa para un condado con poblaciones considerables
+        puertorriqueñas, dominicanas, caribeñas, negras y latinas, aunque no sea una cifra de
+        prevalencia específica del Bronx.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="mini-tag" style="color:var(--rust); font-size:11px;">Investigación multiciudad que incluye una cohorte del Bronx</p>
+      <h2 class="h3">Origen puertorriqueño e incidencia de ERC.</h2>
+      <p>
+        Siguiendo a 8,774 adultos hispanos/latinos, los investigadores del HCHS/SOL reportaron una
+        tasa general de ERC incidente de 10.6 casos por cada 1,000 personas-año. La incidencia
+        ajustada por edad y sexo más alta entre los grupos de herencia se observó en los
+        participantes de origen puertorriqueño.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-5);">
+      <div class="grid grid-2-col" style="gap:var(--space-4);">
+        <StatTile value="10.6" label="casos generales de ERC incidente por cada 1,000 personas-año, en todos los grupos de herencia del HCHS/SOL." source="Estudio de Salud Comunitaria Hispana/Estudio de Latinos (HCHS/SOL) · análisis publicado · centros de campo del Bronx, Chicago, Miami y San Diego · ERC incidente, 8,774 participantes seguidos." accent={viz.neutral} />
+        <StatTile value="15.0" label="casos de ERC incidente por cada 1,000 personas-año entre los participantes de origen puertorriqueño — la más alta de cualquier grupo de herencia." source="Estudio de Salud Comunitaria Hispana/Estudio de Latinos (HCHS/SOL) · análisis publicado · centros de campo del Bronx, Chicago, Miami y San Diego · ERC incidente ajustada por edad y sexo, participantes de origen puertorriqueño." accent={viz.orange} />
+      </div>
+    </div>
+
+    <div class="container narrow" style="margin-top:var(--space-5);">
+      <p>
+        En comparación con los participantes de origen mexicano, el origen puertorriqueño se
+        asoció inicialmente con una tasa de ERC incidente un 79 % mayor. Esa diferencia se{" "}
+        <strong>atenuó de forma considerable</strong> tras tener en cuenta factores
+        sociodemográficos y clínicos — es decir, la mayor parte de la diferencia se explicó por
+        cosas como las circunstancias sociales, la diabetes, la presión arterial y otros factores
+        medidos de salud renal, no por el grupo de herencia en sí. Esa atenuación es el hallazgo
+        importante: apunta a lo que impulsa la desigualdad, no a la etnia como causa biológica.
+      </p>
+    </div>
+  </section>
+
+  <section id="fsgs" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">GEFS: una enfermedad renal que merece mayor atención</p>
+      <h2 class="h2">Un patrón de cicatrización, con más de una causa.</h2>
+      <p>
+        La glomeruloesclerosis focal y segmentaria (GEFS) es un patrón de cicatrización en las
+        unidades de filtrado del riñón, llamadas glomérulos. Puede deberse a distintas vías
+        biológicas y afecciones — genéticas, inmunitarias o secundarias a otra enfermedad. Algunas
+        formas de GEFS se asocian con genotipos APOL1 de alto riesgo en personas con la
+        ascendencia africana pertinente, pero no toda la GEFS está mediada por APOL1.
+      </p>
+
+      <div class="card card-rust gap-card">
+        <p style="margin:0;">
+          Actualmente no tenemos una estimación confiable y de acceso público que muestre cuántos
+          residentes del Bronx viven con GEFS. Este es un vacío de investigación y vigilancia, no
+          una señal de que la GEFS sea poco frecuente aquí.
+        </p>
+      </div>
+
+      <p style="margin-top:var(--space-5);">
+        Investigadores de Montefiore y del Albert Einstein College of Medicine han contribuido a
+        la investigación sobre la GEFS y la enfermedad renal a lo largo de los años. Los hallazgos
+        de cohortes hospitalarias históricas son valiosos, pero describen a los pacientes
+        atendidos en esas instituciones — no una prevalencia actual de todo el Bronx, que es un
+        tipo de medición completamente distinto.
+      </p>
+
+      <p class="lede"><a href={L("/the-need/fsgs/")} class="linkline">Lee la historia completa de la GEFS &rarr;</a></p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">El VIH y la salud renal</p>
+      <h2 class="h3">Por qué el VIH pertenece a una página de salud renal.</h2>
+      <p>
+        El VIH puede afectar la salud renal de forma directa e indirecta — a través del virus en
+        sí, de algunos medicamentos usados para tratarlo y de afecciones relacionadas. La
+        nefropatía asociada al VIH (HIVAN), una afección renal específica ligada al VIH, tiene una
+        relación particularmente importante con las variantes de riesgo de APOL1 entre las
+        personas con la ascendencia pertinente.
+      </p>
+      <p>
+        La mayoría de las personas que viven con VIH no desarrollan enfermedad renal, sobre todo
+        con el tratamiento antirretroviral moderno. El Departamento de Salud e Higiene Mental de
+        NYC publica vigilancia del VIH específica del Bronx con regularidad — no citamos una cifra
+        actual concreta en esta página hasta que pueda enlazarse directamente con ese informe, en
+        lugar de repetir un número de segunda mano.
+      </p>
+    </div>
+  </section>
+
+  <section id="data-gaps" class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container">
+      <p class="eyebrow">Lo que todavía no sabemos lo suficientemente bien</p>
+      <h2 class="h2" style="color:var(--ink-fg);">Los datos que faltan también son datos.</h2>
+      <p class="lede" style="max-width:64ch;">
+        La vigilancia de salud de acceso público nos da información sólida del Bronx sobre varias
+        afecciones. Para las preguntas en el centro del trabajo de esta organización, esa
+        vigilancia es mucho más débil.
+      </p>
+
+      <div class="grid grid-2-col" style="gap:var(--space-4); margin-top:var(--space-6);">
+        <div class="card mini-card" style="background:var(--ink-soft); border-color:var(--ink-line);">
+          <p class="mini-tag" style="color:var(--ink-fg-muted);">Para lo que tenemos datos sólidos</p>
+          <ul class="check-list" style="color:var(--ink-fg-muted);">
+            {dataGapsKnown.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+        <div class="card mini-card" style="background:var(--ink-soft); border-color:var(--ink-line); border-left:2px solid var(--rust-on-dark);">
+          <p class="mini-tag" style="color:var(--rust-on-dark);">Donde los datos públicos son mucho más débiles</p>
+          <ul class="check-list" style="color:var(--ink-fg-muted);">
+            {dataGapsWeak.map((item) => <li>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <p class="pull" style="margin-top:var(--space-6); border-color:var(--rust-on-dark); color:var(--ink-fg);">
+        Los datos que faltan también son datos. Nos muestran dónde hacen falta investigación,
+        vigilancia e inversión.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Qué viene después</p>
+      <h2 class="h2">Las cifras cuentan parte de la historia. El lugar y las personas nos dicen más.</h2>
+      <p class="lede" style="max-width:60ch;">
+        La iniciativa <strong>Where We Live</strong> de The Jentosy Project examinará cómo se
+        entrecruzan la enfermedad renal, las afecciones de salud relacionadas, los factores
+        estructurales, la geografía y la experiencia vivida en las comunidades del Bronx.
+      </p>
+      <div class="cluster gap-3" style="margin-top:var(--space-6);">
+        <a href={L("/where-we-live/")} class="btn btn-rust">Explora Where We Live</a>
+        <a href={L("/about/what-we-do/")} class="btn btn-steel">Conoce nuestro trabajo</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <div class="disclaimer">
+        <p>
+          Esta página resume la vigilancia a nivel poblacional y la investigación publicada con
+          fines de educación general — no es asesoramiento médico ni una evaluación individual del
+          riesgo. Cada estadística de esta página proviene de fuentes nombradas, con el año, la
+          geografía y la población medida indicados junto a ella; donde todavía no existen datos
+          confiables específicos del Bronx, esta página lo dice directamente en lugar de estimar.
+        </p>
+      </div>
+      <a href={L("/the-need/")} class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Volver a Enfermedad renal</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #start,
+  #conditions,
+  #neighborhood,
+  #social-context,
+  #apol1,
+  #fsgs,
+  #data-gaps {
+    scroll-margin-top: 88px;
+  }
+
+  .stat-value-inline {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(36px, 4.5vw, 48px);
+    color: var(--rust);
+    line-height: 1;
+    margin: 0;
+  }
+</style>

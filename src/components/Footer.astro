@@ -1,39 +1,43 @@
 ---
+import { getLangFromUrl, useTranslations, localeHref } from "../i18n/utils";
+
 const year = new Date().getFullYear();
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const L = (path: string) => localeHref(path, lang);
 ---
 
 <footer class="site-footer on-dark">
   <div class="container footer-grid">
     <div class="footer-brand">
       <p class="wordmark">The Jentosy Project</p>
-      <p class="tagline">Health equity for underserved communities, starting in the Bronx.</p>
+      <p class="tagline">{t("cta.tagline")}</p>
     </div>
 
-    <nav class="footer-col" aria-label="Site">
-      <p class="footer-heading">Site</p>
-      <a href="/about/">About</a>
-      <a href="/about/team/">Meet The Team</a>
-      <a href="/about/what-we-do/">What We Do</a>
-      <a href="/the-need/">The Need</a>
-      <a href="/storytelling/">Storytelling</a>
-      <a href="/press/">Press &amp; Credibility</a>
+    <nav class="footer-col" aria-label={t("footer.site")}>
+      <p class="footer-heading">{t("footer.site")}</p>
+      <a href={L("/about/")}>{t("nav.about")}</a>
+      <a href={L("/about/team/")}>{t("nav.team")}</a>
+      <a href={L("/about/what-we-do/")}>{t("nav.whatWeDo")}</a>
+      <a href={L("/the-need/")}>{t("nav.kidneyDisease")}</a>
+      <a href={L("/storytelling/")}>{t("nav.storytelling")}</a>
     </nav>
 
-    <nav class="footer-col" aria-label="Take action">
-      <p class="footer-heading">Take Action</p>
-      <a href="/partner-with-us/">Partner With Us</a>
-      <a href="/donate/">Donate</a>
-      <a href="/contact/">Contact</a>
+    <nav class="footer-col" aria-label={t("footer.takeAction")}>
+      <p class="footer-heading">{t("footer.takeAction")}</p>
+      <a href={L("/partner-with-us/")}>{t("nav.partner")}</a>
+      <a href={L("/donate/")}>{t("nav.donate")}</a>
+      <a href={L("/contact/")}>{t("nav.contact")}</a>
     </nav>
 
-    <nav class="footer-col" aria-label="Legal">
-      <p class="footer-heading">Legal</p>
-      <a href="/privacy-terms/">Privacy &amp; Terms</a>
+    <nav class="footer-col" aria-label={t("footer.legal")}>
+      <p class="footer-heading">{t("footer.legal")}</p>
+      <a href={L("/privacy-terms/")}>{t("footer.privacy")}</a>
     </nav>
   </div>
 
   <div class="container footer-bottom">
-    <p>&copy; {year} The Jentosy Project, Inc. — a 501(c)(3) public charity.</p>
+    <p>&copy; {year} The Jentosy Project, Inc. — {t("footer.rights")}</p>
   </div>
 </footer>
 

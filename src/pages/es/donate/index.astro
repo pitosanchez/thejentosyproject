@@ -1,0 +1,235 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import StatTile from "../../../components/StatTile.astro";
+import NewsletterSignup from "../../../components/NewsletterSignup.astro";
+import { localeHref } from "../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+const zeffyEmbedUrl = import.meta.env.PUBLIC_ZEFFY_EMBED_URL;
+
+const supports = [
+  {
+    title: "Educación en lenguaje claro",
+    body: "Materiales sobre la GEFS y la enfermedad renal mediada por APOL1 que llegan a las personas antes de que un diagnóstico se convierta en una emergencia — no después.",
+  },
+  {
+    title: "Alcance comunitario en el Bronx",
+    body: "Educación presencial donde la desigualdad es más marcada hoy, con un modelo diseñado para expandirse más allá.",
+  },
+  {
+    title: "Alianzas que cierran la brecha",
+    body: "Conectar a investigadores, organizaciones de salud y responsables de políticas públicas en torno a la misma meta: una atención que no dependa del código postal.",
+  },
+];
+---
+
+<BaseLayout
+  title="Donar"
+  description="Apoya el trabajo de The Jentosy Project en educación sobre la enfermedad renal y equidad en salud — donaciones únicas o recurrentes."
+>
+  <PageHero
+    eyebrow="Donar"
+    heading="Cada donación financia educación que llega a las personas antes de que lleguen a la lista de trasplante."
+  />
+
+  <section class="on-light donate-intro">
+    <div class="container narrow">
+      <p>
+        The Jentosy Project es una organización benéfica pública 501(c)(3). Tu donación financia
+        directamente la educación y el alcance comunitario en torno a la GEFS y la enfermedad
+        renal mediada por APOL1 — empezando por el Bronx.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Por qué esto no puede esperar</p>
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">La brecha que tu donación cierra.</h2>
+      <div class="grid donate-stats-grid">
+        <StatTile
+          value="4×"
+          label="Mayor tasa de insuficiencia renal en personas negras que en personas blancas en EE. UU."
+          source="Hoja informativa sobre la enfermedad renal crónica de los CDC, 2026 · USRDS 2023"
+          accent="#83592b"
+        />
+        <StatTile
+          value="87%"
+          label="de los adultos en EE. UU. con enfermedad renal crónica podrían aún no saber que la tienen."
+          source="Estadísticas de enfermedad renal del NIDDK para Estados Unidos, citando a los CDC"
+          accent="#446040"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light donate-embed-section" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <div class="donate-embed-wrap">
+        {zeffyEmbedUrl ? (
+          <iframe
+            title="Formulario de donación"
+            src={zeffyEmbedUrl}
+            class="donate-embed-frame"
+            allowpaymentrequest
+          />
+        ) : (
+          <div class="donate-embed-placeholder">
+            <p class="eyebrow" style="color:var(--steel);">Formulario de donación</p>
+            <p>
+              Este formulario todavía no está conectado — configura <code>PUBLIC_ZEFFY_EMBED_URL</code>
+              cuando se creen la cuenta y el formulario de Zeffy. Configura la redirección
+              posterior a la donación de Zeffy a <code>/es/donate/thank-you/</code> para que la
+              conversión se registre correctamente.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,24px);">Qué financia tu donación</h2>
+      <ol class="donate-supports-list">
+        {supports.map((s, i) => (
+          <li class="donate-supports-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <span class="donate-supports-num">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h3 class="h3" style="font-size:18px;">{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="disclaimer-note">
+        Se admiten donaciones únicas y donaciones mensuales recurrentes. Recibirás un recibo
+        automático y válido a efectos fiscales por cada donación.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight donate-updates">
+    <div class="container donate-updates-inner reveal">
+      <div class="donate-updates-text">
+        <p class="eyebrow">¿No estás listo para donar hoy?</p>
+        <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Mantente al tanto.</h2>
+        <p class="lede">
+          Enviaremos novedades ocasionales sobre el trabajo — nada más. También puedes{" "}
+          <a href={L("/about/team/")} class="linkline-inline">conocer a la junta directiva y al equipo</a>{" "}
+          que lo lideran.
+        </p>
+      </div>
+
+      <NewsletterSignup variant="dark" formId="donate-updates-form" boxed={false} />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 640px;
+  }
+
+  .donate-intro {
+    padding-block: var(--space-6) 0;
+  }
+
+  .donate-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 640px) {
+    .donate-stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .donate-embed-section {
+    padding-block: var(--space-6) clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
+  .donate-embed-wrap {
+    margin: 0 auto;
+    max-width: 980px;
+  }
+
+  .donate-embed-placeholder {
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-7) var(--space-6);
+    background: var(--card);
+  }
+
+  .donate-embed-frame {
+    width: 100%;
+    min-height: 900px;
+    border: none;
+    border-radius: var(--radius-md);
+  }
+
+  .donate-supports-list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 780px) {
+    .donate-supports-list {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .donate-supports-item {
+    border-top: 3px solid var(--rust);
+    padding-top: var(--space-4);
+  }
+
+  .donate-supports-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 32px;
+    color: var(--rust);
+    line-height: 1;
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+
+  .donate-supports-item p {
+    color: var(--fg-soft);
+    font-size: 14.5px;
+  }
+
+  .disclaimer-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin-top: var(--space-6);
+  }
+
+  .donate-updates-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .donate-updates-text {
+    max-width: 480px;
+  }
+
+  .donate-updates-text .lede {
+    margin-top: var(--space-2);
+  }
+
+  .linkline-inline {
+    color: var(--eyebrow-accent);
+    font-weight: 700;
+  }
+</style>

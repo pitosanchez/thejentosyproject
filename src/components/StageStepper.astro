@@ -1,12 +1,34 @@
 ---
-const stages = [
-  { name: "Stage 1", egfr: "90+", desc: "Normal or high", color: "#1baf7a" },
-  { name: "Stage 2", egfr: "60–89", desc: "Mildly decreased", color: "#1baf7a" },
-  { name: "Stage 3a", egfr: "45–59", desc: "Mild–moderate", color: "#eda100" },
-  { name: "Stage 3b", egfr: "30–44", desc: "Moderate–severe", color: "#eda100" },
-  { name: "Stage 4", egfr: "15–29", desc: "Severely decreased", color: "#eb6834" },
-  { name: "Stage 5", egfr: "<15", desc: "Kidney failure", color: "#eb6834", failure: true },
-];
+import { getLangFromUrl } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+
+const stagesByLang = {
+  en: [
+    { name: "Stage 1", egfr: "90+", desc: "Normal or high", color: "#1baf7a" },
+    { name: "Stage 2", egfr: "60–89", desc: "Mildly decreased", color: "#1baf7a" },
+    { name: "Stage 3a", egfr: "45–59", desc: "Mild–moderate", color: "#eda100" },
+    { name: "Stage 3b", egfr: "30–44", desc: "Moderate–severe", color: "#eda100" },
+    { name: "Stage 4", egfr: "15–29", desc: "Severely decreased", color: "#eb6834" },
+    { name: "Stage 5", egfr: "<15", desc: "Kidney failure", color: "#eb6834", failure: true },
+  ],
+  es: [
+    { name: "Etapa 1", egfr: "90+", desc: "Normal o alta", color: "#1baf7a" },
+    { name: "Etapa 2", egfr: "60–89", desc: "Levemente disminuida", color: "#1baf7a" },
+    { name: "Etapa 3a", egfr: "45–59", desc: "Leve a moderada", color: "#eda100" },
+    { name: "Etapa 3b", egfr: "30–44", desc: "Moderada a grave", color: "#eda100" },
+    { name: "Etapa 4", egfr: "15–29", desc: "Gravemente disminuida", color: "#eb6834" },
+    { name: "Etapa 5", egfr: "<15", desc: "Insuficiencia renal", color: "#eb6834", failure: true },
+  ],
+};
+
+const sourceByLang = {
+  en: "eGFR = estimated glomerular filtration rate, mL/min/1.73m² — measured by a routine blood test. Stage 5 (eGFR under 15) is end-stage kidney disease (ESKD), requiring dialysis or transplant.",
+  es: "TFGe = tasa de filtración glomerular estimada, mL/min/1.73 m² — se mide con un análisis de sangre de rutina. La etapa 5 (TFGe menor de 15) es la enfermedad renal en etapa terminal (ERET), que requiere diálisis o trasplante.",
+};
+
+const stages = stagesByLang[lang];
+const source = sourceByLang[lang];
 ---
 
 <div class="stage-stepper">
@@ -21,5 +43,5 @@ const stages = [
   ))}
 </div>
 <p class="viz-source" style="margin-top:var(--space-6);">
-  eGFR = estimated glomerular filtration rate, mL/min/1.73m² — measured by a routine blood test. Stage 5 (eGFR under 15) is end-stage kidney disease (ESKD), requiring dialysis or transplant.
+  {source}
 </p>

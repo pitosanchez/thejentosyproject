@@ -1,0 +1,239 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import NewsletterSignup from "../../../components/NewsletterSignup.astro";
+
+const audiences = [
+  {
+    slug: "funder",
+    name: "Financiadores y fundaciones",
+    pitch:
+      "Apoya a una organización guiada por la experiencia vivida, con un enfoque claro y centrado en la credibilidad para cerrar la brecha en la atención renal en comunidades desatendidas.",
+    option: "Financiador / Fundación",
+  },
+  {
+    slug: "researcher",
+    name: "Investigadores e instituciones de investigación",
+    pitch:
+      "Colabora en educación, concienciación y participación comunitaria en torno a la GEFS y la enfermedad renal mediada por APOL1.",
+    option: "Investigador / Institución de investigación",
+  },
+  {
+    slug: "healthcare",
+    name: "Organizaciones de salud",
+    pitch:
+      "Colabora para llegar antes a los pacientes desatendidos — antes de que enfermedades como la GEFS avancen hacia la diálisis o el trasplante.",
+    option: "Organización de salud",
+  },
+  {
+    slug: "policymaker",
+    name: "Responsables de políticas públicas",
+    pitch:
+      "Trabaja con nosotros en las causas sistémicas y de fondo de las desigualdades en la enfermedad renal — desde el acceso a la atención médica hasta la vivienda y la educación.",
+    option: "Responsable de políticas públicas",
+  },
+];
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+---
+
+<BaseLayout
+  title="Colabora con nosotros"
+  description="Colabora con The Jentosy Project — financiadores, investigadores, organizaciones de salud y responsables de políticas públicas que trabajan para cerrar la brecha en la atención renal."
+>
+  <PageHero
+    eyebrow="Colabora con nosotros"
+    heading="Alianzas institucionales que cierran la brecha en la atención renal."
+  />
+
+  <section class="on-light section">
+    <div class="container">
+      <div class="grid audience-grid">
+        {audiences.map((a, i) => (
+          <div class="card card-steel reveal audience-card" id={a.slug} style={`--reveal-delay:${i * 0.08}s`}>
+            <h3 class="h3">{a.name}</h3>
+            <p>{a.pitch}</p>
+            <a href="#start" class="linkline audience-card-cta" data-audience={a.slug}>
+              Inicia la conversación &rarr;
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Inicia la conversación</h2>
+      <p>Cuéntanos un poco sobre tu organización y cómo te gustaría colaborar.</p>
+
+      {!accessKey && (
+        <p class="form-unconfigured-note">
+          Este formulario todavía no está conectado — configura <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code>
+          para activarlo.
+        </p>
+      )}
+
+      <form
+        class="inquiry-form"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+      >
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input type="hidden" name="subject" value="Nueva solicitud de colaboración desde jentosy.org" />
+        <input type="hidden" name="form_type" value="Partnership Inquiry (ES)" />
+        <input type="hidden" name="redirect" value="https://jentosy.org/es/partner-with-us/thank-you/" />
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <label>
+          Nombre
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Correo electrónico
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Organización
+          <input type="text" name="organization" />
+        </label>
+        <label>
+          Me interesa como
+          <select name="audience" id="audience-select">
+            {audiences.map((a) => <option value={a.slug}>{a.option}</option>)}
+            <option value="other">Otro</option>
+          </select>
+        </label>
+        <label>
+          Mensaje
+          <textarea name="message" rows="4" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-rust" disabled={!accessKey}>
+          {accessKey ? "Enviar solicitud" : "Formulario aún no conectado"}
+        </button>
+      </form>
+
+      <NewsletterSignup
+        formId="partner-newsletter-form"
+        heading="¿Todavía no quieres iniciar una conversación? Mantente al tanto."
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const select = document.getElementById("audience-select") as HTMLSelectElement | null;
+
+  const applyAudience = (slug: string | null) => {
+    if (!select || !slug) return;
+    const match = Array.from(select.options).find((o) => o.value === slug);
+    if (match) select.value = slug;
+  };
+
+  applyAudience(new URLSearchParams(window.location.search).get("audience"));
+
+  document.querySelectorAll<HTMLAnchorElement>(".audience-card-cta").forEach((link) => {
+    link.addEventListener("click", () => {
+      applyAudience(link.dataset.audience ?? null);
+    });
+  });
+</script>
+
+<style>
+  .audience-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 640px) {
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .narrow {
+    max-width: 560px;
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .inquiry-form label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-soft);
+  }
+
+  .inquiry-form input,
+  .inquiry-form select,
+  .inquiry-form textarea {
+    font: inherit;
+    font-size: 16px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    color: var(--fg);
+    font-weight: 400;
+  }
+
+  .inquiry-form input:focus,
+  .inquiry-form select:focus,
+  .inquiry-form textarea:focus {
+    outline: 2px solid var(--steel);
+    outline-offset: 1px;
+    border-color: var(--steel);
+  }
+
+  .inquiry-form button {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+
+  .inquiry-form button:disabled {
+    background: transparent;
+    color: var(--fg-muted);
+    border: 1.5px dashed var(--line-strong);
+    cursor: not-allowed;
+  }
+
+  .inquiry-form button:disabled:hover {
+    opacity: 1;
+  }
+
+  .audience-card {
+    display: flex;
+    flex-direction: column;
+    scroll-margin-top: 88px;
+  }
+
+  .audience-card-cta {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-weight: 700;
+  }
+
+  .form-unconfigured-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    background: var(--card);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+</style>

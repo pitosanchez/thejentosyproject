@@ -1,64 +1,66 @@
 ---
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { getBoard } from "../../../lib/board";
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import { getBoard } from "../../../../lib/board";
+import { localeHref } from "../../../../i18n/utils";
 
-const board = getBoard();
+const L = (p: string) => localeHref(p, "es");
+const board = getBoard("es");
 ---
 
 <BaseLayout
-  title="Meet The Team"
-  description="Meet the people behind The Jentosy Project: founder and CEO Robert Sanchez, and the board and staff joining him as the organization grows."
+  title="Nuestro equipo"
+  description="Conoce a las personas detrás de The Jentosy Project: el fundador y director ejecutivo Robert Sanchez, y la junta directiva y el equipo que lo acompañan a medida que la organización crece."
 >
-  <!-- FOUNDER + CEO — the org's one team member today, told in full. Board
-       and future staff get their own section below, built to extend. -->
   <section class="on-dark founder-hero">
-    <span class="side-label" aria-hidden="true">Meet The Team</span>
+    <span class="side-label" aria-hidden="true">Nuestro equipo</span>
     <div class="container founder-hero-inner">
       <div class="founder-hero-media reveal">
         <img
           class="founder-hero-photo"
           src="/images/founder-portrait.webp"
-          alt="Robert Sanchez, founder of The Jentosy Project"
+          alt="Robert Sanchez, fundador de The Jentosy Project"
         />
         <img
           class="founder-hero-photo-inset"
           src="/images/founder-podium.webp"
-          alt="Robert Sanchez speaking at a podium about kidney disease and health equity"
+          alt="Robert Sanchez hablando en un podio sobre la enfermedad renal y la equidad en salud"
         />
       </div>
 
       <div class="founder-hero-text">
-        <p class="eyebrow reveal">Meet The Team</p>
+        <p class="eyebrow reveal">Nuestro equipo</p>
 
         <p class="reveal" style="--reveal-delay:0.14s">
-          In 2009, Robert Sanchez received his first kidney transplant — a living-donor kidney
-          from a close friend. But FSGS, the rare disease that had already destroyed his own
-          kidneys, recurred in the transplanted one, and by 2014 he was back on dialysis, three
-          times a week. In 2019, out of options, he posted on Facebook asking if anyone knew
-          someone willing to donate a kidney. Within about a week, organ matchmaker Chaya
-          Lipschutz had found a potential match: Elizabeth Antosy. Then, the night before
-          surgery, his transplant surgeon called with news that changed everything — Robert had
-          kidney cancer, and the transplant could not go forward.
+          En 2009, Robert Sanchez recibió su primer trasplante de riñón — un riñón de donante
+          vivo, de un amigo cercano. Pero la GEFS, la enfermedad poco frecuente que ya había
+          destruido sus propios riñones, reapareció en el riñón trasplantado, y para 2014 estaba
+          de nuevo en diálisis, tres veces por semana. En 2019, sin opciones, publicó en Facebook
+          preguntando si alguien conocía a una persona dispuesta a donar un riñón. En cosa de una
+          semana, la coordinadora de donaciones Chaya Lipschutz había encontrado una posible
+          compatibilidad: Elizabeth Antosy. Entonces, la noche antes de la cirugía, su cirujano de
+          trasplantes llamó con una noticia que lo cambió todo — Robert tenía cáncer de riñón, y
+          el trasplante no podía seguir adelante.
         </p>
 
         <div class="founder-hero-statement reveal" style="--reveal-delay:0.2s">
           <p class="founder-hero-statement-text">
-            Two transplants. Two women who wouldn't give up.
+            Dos trasplantes. Dos mujeres que no se rindieron.
           </p>
         </div>
 
         <p class="reveal" style="--reveal-delay:0.26s">
-          Elizabeth was heartbroken — but instead of walking away, she joined a kidney exchange
-          chain. Through it, Robert was matched with a new donor, Jen Keller, and after he
-          cleared cancer, the two were transplanted on October 20, 2021. Elizabeth's decision to
-          stay in the chain ultimately gave <strong>8 people</strong> new kidneys — and gave the
-          organization her name and Jen's: <strong>The Jentosy Project</strong>.
+          Elizabeth estaba desconsolada — pero en lugar de alejarse, se unió a una cadena de
+          intercambio de riñones. A través de ella, Robert fue emparejado con una nueva donante,
+          Jen Keller, y después de que superó el cáncer, ambos fueron trasplantados el 20 de
+          octubre de 2021. La decisión de Elizabeth de permanecer en la cadena finalmente les dio
+          a <strong>8 personas</strong> riñones nuevos — y le dio a la organización su nombre y el
+          de Jen: <strong>The Jentosy Project</strong>.
         </p>
 
         <div class="founder-hero-footer reveal" style="--reveal-delay:0.32s">
           <div class="founder-hero-name">
             <p class="founder-hero-name-text">Robert Sanchez</p>
-            <p class="founder-hero-name-title">Founder &amp; CEO</p>
+            <p class="founder-hero-name-title">Fundador y director ejecutivo</p>
           </div>
         </div>
       </div>
@@ -67,16 +69,15 @@ const board = getBoard();
 
   <section class="on-light section-tight board-divider" style="border-top:1px solid var(--line);">
     <div class="container">
-      <h2 class="board-divider-title reveal">Board of Directors</h2>
+      <h2 class="board-divider-title reveal">Junta directiva</h2>
       <p class="board-divider-note reveal" style="--reveal-delay:0.08s">
-        Clinical research, entertainment, and lived experience with kidney disease — brought
-        together around the same mission. Hover or focus a card to read each member's full bio.
+        Investigación clínica, entretenimiento y experiencia vivida con la enfermedad renal —
+        reunidos en torno a la misma misión. Pasa el cursor o enfoca una tarjeta para leer la
+        biografía completa de cada integrante.
       </p>
     </div>
   </section>
 
-  <!-- THE BOARD — built to extend: as the founder adds board, advisory,
-       and staff members, each becomes another .person-card in this grid. -->
   <section class="on-light section" style="border-top:1px solid var(--line);">
     <div class="container">
       <div class="board-grid">
@@ -90,7 +91,7 @@ const board = getBoard();
                 </div>
                 <div class="person-card-photo-wrap">
                   {person.photoExists ? (
-                    <img class="person-card-photo" src={person.photo} alt={`${person.name} headshot`} />
+                    <img class="person-card-photo" src={person.photo} alt={`Retrato de ${person.name}`} />
                   ) : (
                     <div class="person-card-photo person-card-photo-placeholder" aria-hidden="true"></div>
                   )}
@@ -120,10 +121,10 @@ const board = getBoard();
 
   <section class="on-dark section-tight cta-band">
     <div class="container cta-inner reveal">
-      <h2 class="h2">Help extend what Jen and Elizabeth started.</h2>
+      <h2 class="h2">Ayuda a extender lo que Jen y Elizabeth empezaron.</h2>
       <div class="cluster gap-3" style="margin-top:var(--space-5);">
-        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
-        <a href="/donate/" class="btn btn-rust">Donate</a>
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
+        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
       </div>
     </div>
   </section>

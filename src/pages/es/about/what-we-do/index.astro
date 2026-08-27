@@ -1,0 +1,125 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PageHero from "../../../../components/PageHero.astro";
+import PhotoSlot from "../../../../components/PhotoSlot.astro";
+import { localeHref } from "../../../../i18n/utils";
+
+// Links resolve to the /es/ twin once it exists, else to the English page.
+const L = (path: string) => localeHref(path, "es");
+---
+
+<BaseLayout
+  title="Qué hacemos"
+  description="El trabajo actual de The Jentosy Project: educación y alcance comunitario en el Bronx, con planes de expansión. La equidad en el trasplante sigue siendo parte de nuestra misión a largo plazo."
+>
+  <PageHero
+    eyebrow="Quiénes somos · Qué hacemos"
+    heading="Educación y alcance comunitario en el Bronx — con planes de crecer."
+  />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      <p>
+        Nuestro enfoque actual es la educación y la equidad en salud: llegar a las personas antes
+        de que lleguen a la lista de trasplante. Trabajamos para dar a conocer la GEFS
+        (glomeruloesclerosis focal y segmentaria) y la enfermedad renal mediada por APOL1 en
+        comunidades donde estas enfermedades se hablan poco y se diagnostican poco — empezando por
+        el Bronx.
+      </p>
+    </div>
+
+    <div class="container">
+      <div class="grid focus-grid">
+        <div class="card card-steel reveal">
+          <h3 class="h3">Educación comunitaria</h3>
+          <p>
+            Recursos en lenguaje claro sobre la GEFS y la enfermedad renal mediada por APOL1 —
+            creados para llegar a personas que no encontrarán esta información en ningún otro lugar.
+          </p>
+        </div>
+        <div class="card card-steel reveal" style="--reveal-delay:0.1s">
+          <h3 class="h3">Creación de alianzas</h3>
+          <p>
+            Conectar a investigadores, organizaciones de salud y responsables de políticas
+            públicas en torno a la meta común de cerrar la brecha en la atención renal en
+            comunidades desatendidas.
+          </p>
+        </div>
+        <a href={L("/where-we-live/")} class="card card-rust reveal" style="--reveal-delay:0.2s">
+          <h3 class="h3">Where We Live</h3>
+          <p>
+            Una iniciativa dentro de The Jentosy Project centrada en los datos de salud según el
+            lugar. Es parte de nuestro trabajo más amplio, no su totalidad.
+          </p>
+          <span class="linkline" style="margin-top:var(--space-3); display:inline-block;">Más información &rarr;</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="container outreach-photo-row">
+      <PhotoSlot src="/images/community-education.png" alt="Una sesión de educación comunitaria de The Jentosy Project sobre la salud renal" />
+      <p class="linkline">Una sesión de educación comunitaria sobre la salud renal.</p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Trabajo futuro: equidad en el trasplante</h2>
+      <p>
+        La equidad en el trasplante sigue siendo parte de nuestra misión a largo plazo — es donde
+        comenzó esta organización, en la propia experiencia de nuestro fundador. A medida que The
+        Jentosy Project crezca, nuestra intención es volver a ese trabajo de forma directa. Por
+        ahora, nuestros recursos se concentran más arriba en el proceso: en la educación y la
+        detección temprana.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight cta-band">
+    <div class="container reveal" style="text-align:center;">
+      <h2 class="h2">Ayúdanos a llegar a más comunidades.</h2>
+      <div class="cluster gap-3" style="justify-content:center; margin-top:var(--space-5);">
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
+        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .focus-grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 780px) {
+    .focus-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .outreach-photo-row {
+    max-width: 460px;
+    margin-top: var(--space-7);
+  }
+
+  .outreach-photo-row .linkline {
+    margin-top: var(--space-3);
+  }
+
+  .focus-grid a.card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .focus-grid a.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
+  }
+</style>

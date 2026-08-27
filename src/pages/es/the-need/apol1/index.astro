@@ -1,0 +1,528 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PageHero from "../../../../components/PageHero.astro";
+import Breadcrumb from "../../../../components/Breadcrumb.astro";
+import StatTile from "../../../../components/StatTile.astro";
+import Donut from "../../../../components/charts/Donut.astro";
+import HBarList from "../../../../components/charts/HBarList.astro";
+import NumberedSteps from "../../../../components/NumberedSteps.astro";
+import QuickNav from "../../../../components/QuickNav.astro";
+import SupportResources from "../../../../components/SupportResources.astro";
+import { viz } from "../../../../lib/palette";
+import { localeHref } from "../../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+
+const quickNavItems = [
+  { label: "Qué es la APOL1", href: "#basics" },
+  { label: "Qué puede causar", href: "#causes" },
+  { label: "Si la tienes", href: "#if-you-have-it" },
+  { label: "Hazte la prueba", href: "#testing" },
+  { label: "Buscar apoyo", href: "#get-support" },
+];
+
+const heroStats = [
+  { value: "3–4×", label: "mayor riesgo de ERET a lo largo de la vida con dos copias.", source: "NEJM 2010." },
+  { value: "5–10", label: "años antes de lo habitual en su aparición.", source: "Lancet 2017." },
+  { value: "25%", label: "de los pacientes negros con GEFS portan dos copias.", source: "NIH APOLLO." },
+];
+
+const inheritance = [
+  { name: "Cero copias", tag: "Riesgo habitual", body: "Sin variante G1/G2 heredada. La APOL1 no aumenta de forma significativa el riesgo renal." },
+  { name: "Una copia", tag: "Poco riesgo adicional", body: "Una sola variante de riesgo de uno de los padres es casi siempre inofensiva por sí sola." },
+  { name: "Dos copias", tag: "Riesgo alto", body: "Una variante de riesgo heredada de cada padre — el genotipo asociado a un riesgo renal significativamente elevado." },
+];
+
+const copyDistribution = [
+  { label: "Sin copias de riesgo (0)", value: 60, color: viz.green },
+  { label: "Una copia de riesgo (portador)", value: 28, color: viz.amber },
+  { label: "Dos copias de riesgo (alto)", value: 12, color: viz.orange },
+];
+
+const carrierRates = [
+  { label: "Variante G1 (una o dos copias)", value: 22, color: viz.blue, display: "22%" },
+  { label: "Variante G2 (una o dos copias)", value: 14, color: viz.purple, display: "14%" },
+  { label: "Dos copias de alto riesgo en total", value: 12, color: viz.orange, display: "12%" },
+];
+
+const conditions = [
+  { name: "GEFS", tag: "5–10× más alto", body: "Glomeruloesclerosis focal y segmentaria — cicatrización de las unidades de filtrado del riñón. La APOL1 es la causa genética más fuerte de GEFS en pacientes negros." },
+  { name: "HIVAN", tag: "Muy alto con VIH", body: "Nefropatía asociada al VIH. Los pacientes negros con VIH y 2 copias de APOL1 tienen un riesgo drásticamente elevado de insuficiencia renal rápida." },
+  { name: "ERC / hipertensión", tag: "2–3× más alto", body: "Las variantes de APOL1 hacen que la presión arterial alta sea más dañina para el tejido renal — acelerando de forma significativa la progresión de la ERC." },
+  { name: "Nefritis lúpica", tag: "Peores resultados", body: "Los pacientes negros con lupus que portan 2 copias de APOL1 tienen más probabilidades de desarrollar complicaciones renales graves." },
+  { name: "Nefropatía falciforme", tag: "Riesgo acumulativo", body: "La anemia de células falciformes combinada con el genotipo APOL1 de alto riesgo agrava el daño renal más rápido que cualquiera de las dos afecciones por separado." },
+  { name: "Resultados del trasplante", tag: "Factor de riesgo del donante", body: "Los donantes vivos de riñón con 2 copias de APOL1 enfrentan un mayor riesgo de ERC tras la donación. Se recomienda hacer la prueba antes de que donen personas negras." },
+];
+
+const progression = [
+  { label: "Sin variantes de riesgo", value: 28, color: viz.green, display: "~28 años" },
+  { label: "Una copia de riesgo", value: 24, color: viz.amber, display: "~24 años" },
+  { label: "Dos copias de riesgo", value: 18, color: viz.orange, display: "~18 años" },
+];
+
+const actions = [
+  {
+    title: "Controla la presión arterial",
+    body: "Lo más importante que puedes hacer. Apunta a los niveles que fije tu médico — no solo a lo \"normal\". La APOL1 hace que la hipertensión sea más dañina para el tejido renal.",
+  },
+  {
+    title: "Establece un punto de partida de salud renal",
+    body: "Análisis de TFGe y de proteína en la orina una vez al año si tienes dos copias de riesgo. Los problemas detectados a tiempo pueden frenarse. Detectados tarde, las opciones se reducen rápido.",
+  },
+  {
+    title: "Evita los analgésicos AINE",
+    body: "Los AINE de venta libre comunes — ibuprofeno (Advil, Motrin), naproxeno (Aleve) y aspirina por encima de 325 mg/día — reducen el flujo sanguíneo a los riñones y son más duros con los riñones bajo estrés, según la guía de la National Kidney Foundation. El paracetamol (Tylenol) suele ser la opción más segura para el dolor ocasional si tienes enfermedad renal — pero consulta a tu médico antes de usar cualquier analgésico con regularidad, sobre todo si tu TFGe es menor de 60.",
+  },
+  {
+    title: "Controla la diabetes y el VIH",
+    body: "Ambas afecciones interactúan con las variantes de APOL1 para acelerar el daño renal. Un control estricto del azúcar en sangre o de la carga viral es protector.",
+  },
+  {
+    title: "Pregunta por la inaxaplina",
+    body: "Un nuevo medicamento dirigido específicamente a la enfermedad renal mediada por APOL1 está en ensayos clínicos. Pregúntale a tu nefrólogo si calificas.",
+  },
+];
+
+const testingCriteria = [
+  "Tienes ascendencia africana y enfermedad renal de causa poco clara",
+  "Estás considerando donar un riñón en vida",
+  "Tienes VIH y ascendencia africana",
+  "Tienes antecedentes familiares de insuficiencia renal",
+];
+
+const medicalWebPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  name: "Enfermedad renal mediada por APOL1",
+  url: "https://jentosy.org/es/the-need/apol1/",
+  inLanguage: "es",
+  about: { "@type": "MedicalCondition", name: "Enfermedad renal mediada por APOL1" },
+  audience: { "@type": "Patient" },
+  disclaimer:
+    "Esta página ofrece educación general de nivel introductorio, no asesoramiento médico, y todavía no ha completado una revisión formal de exactitud clínica.",
+};
+
+const recap = [
+  { title: "Dos copias, ambos padres", body: "Necesitas DOS copias de alto riesgo — una de cada padre — para que el riesgo suba de forma significativa. Una sola copia suele ser inofensiva." },
+  { title: "El genotipo no es el destino", body: "Tener dos copias no significa que vayas a tener enfermedad renal. El estilo de vida y el acceso a la atención importan enormemente." },
+  { title: "Control de la presión arterial", body: "Tu protección más poderosa. Este único factor tiene evidencia sólida detrás." },
+  { title: "Una ventaja evolutiva, no una deficiencia", body: "Estas variantes son el resultado de sobrevivir a la enfermedad del sueño, no un defecto biológico. El contexto importa." },
+  { title: "El panorama del tratamiento está cambiando", body: "La inaxaplina y otras terapias dirigidas están en ensayos de fase avanzada." },
+  { title: "Pregunta por la prueba", body: "Si tienes ascendencia africana y enfermedad renal sin explicación, pregúntale a tu médico por la prueba de APOL1." },
+];
+---
+
+<BaseLayout
+  title="APOL1"
+  description="Enfermedad renal mediada por APOL1: un factor de riesgo genético concentrado en personas con ascendencia africana, con raíces en una protección evolutiva contra la enfermedad del sueño."
+>
+  <PageHero
+    eyebrow="Enfermedad renal · Entender la APOL1"
+    heading="1 de cada 10 personas negras en EE. UU."
+    lede="Portan dos copias de variantes del gen APOL1 que elevan el riesgo de enfermedad renal a lo largo de la vida — años antes de que aparezca ningún síntoma. Portar la variante no es un diagnóstico: la mayoría de quienes la portan nunca desarrollan enfermedad renal."
+    motif
+  />
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(medicalWebPageSchema)} />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <Breadcrumb items={[{ label: "Enfermedad renal", href: L("/the-need/") }, { label: "APOL1" }]} />
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <div class="grid stat-grid-3">
+        {heroStats.map((s, i) => (
+          <div class="reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <StatTile value={s.value} label={s.label} source={s.source} accent={viz.orange} />
+          </div>
+        ))}
+      </div>
+      <p class="viz-source" style="margin-top:var(--space-4);">
+        Fuentes: NEJM 2010 &middot; Lancet 2017 &middot; NIH APOL1 Long-term Kidney Transplantation Outcomes Network (APOLLO).
+      </p>
+    </div>
+  </section>
+
+  <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">¿Qué es el gen APOL1?</p>
+      <h2 class="h2">Un gen que en su día salvó vidas.</h2>
+      <p>
+        La APOL1 es una proteína que tu cuerpo produce para combatir infecciones. Hace miles de
+        años, en África Occidental, dos variaciones de este gen — llamadas G1 y G2 — ofrecían una
+        protección potente contra la enfermedad del sueño, una enfermedad parasitaria mortal.
+        Quienes las portaban tenían más probabilidades de sobrevivir. Más probabilidades de tener
+        hijos. Las variantes se propagaron.
+      </p>
+      <p>
+        Las mismas variantes que protegieron a esos antepasados hoy conllevan una contrapartida:
+        cuando alguien hereda dos copias — una de cada padre — la mayor actividad de APOL1 que
+        combate parásitos se vuelve perjudicial para el tejido renal con el tiempo.
+      </p>
+      <p>
+        Esto no es un defecto. Es evolución — el mismo mecanismo que se encuentra en el rasgo de
+        células falciformes, donde la variante que protege contra la malaria con una copia puede
+        causar enfermedad con dos.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Cuántas copias heredas</p>
+      <h2 class="h3">Herencia de las variantes de riesgo de APOL1 — patrón autosómico recesivo.</h2>
+      <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
+        {inheritance.map((c, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <p class="mini-tag">{c.tag}</p>
+            <h3 class="h3" style="font-size:18px;">{c.name}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="card card-steel" style="margin-top:var(--space-5);">
+        <p style="margin:0;">
+          <strong>La clave:</strong> una copia de uno de los padres es casi siempre inofensiva.
+          Necesitas heredar una variante de riesgo de ambos padres para que el riesgo renal suba
+          de forma significativa.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Quién porta las variantes de riesgo de APOL1</p>
+      <h2 class="h2">La mayoría de las personas con variantes de riesgo nunca tendrá enfermedad renal.</h2>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">Distribución de copias de APOL1 &middot; afroamericanos</h3>
+          <Donut data={copyDistribution} />
+          <p class="viz-source">Cerca del 12 % porta dos copias — el genotipo asociado a un riesgo significativamente elevado. Estimaciones de prevalencia basadas en estudios de genética de poblaciones &middot; APOL1 JASN 2016.</p>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">Tasa de portadores de cada variante &middot; afroamericanos</h3>
+          <HBarList data={carrierRates} max={25} suffix="%" />
+          <p class="viz-note" style="margin-top:var(--space-4);">
+            G1+G1, G1+G2 o G2+G2 constituyen el genotipo de alto riesgo. Las variantes G1 y G2 son
+            raras en poblaciones sin ascendencia africana reciente — lo que hace de esta una
+            afección que moldea de forma desproporcionada los resultados renales en las
+            comunidades negras.
+          </p>
+          <p class="viz-source">Genovese et al., Science 2010 &middot; Kopp et al., NEJM 2011.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">Contexto evolutivo</p>
+      <h2 class="h2">La enfermedad del sueño entonces. La enfermedad renal ahora.</h2>
+      <p class="lede">
+        La tripanosomiasis africana — la enfermedad del sueño — fue letal en toda el África
+        subsahariana durante milenios. Las variantes G1 y G2 de APOL1 dieron inmunidad a quienes
+        las portaban. Las comunidades que las portaban sobrevivieron a la enfermedad. Las que no,
+        fueron diezmadas.
+      </p>
+      <p class="lede">
+        Esas variantes llegaron a las Américas a través de la migración forzada de africanos
+        esclavizados. Siguen siendo comunes hoy — un legado biológico tanto de la evolución como
+        de la historia.
+      </p>
+      <p class="lede">
+        Entender este contexto no es una nota al pie. Es la razón por la que la enfermedad renal
+        por APOL1 se concentra en las comunidades negras — y por la que la desigualdad estructural,
+        no solo la genética, moldea quién recibe un diagnóstico, quién recibe tratamiento y quién
+        recibe atención.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-6);" data-outcomes>
+      <p class="eyebrow" style="text-align:center;">El mismo gen — dos desenlaces</p>
+      <div class="outcomes-row">
+        <div class="outcome-card outcome-left" data-outcome-left>
+          <p class="outcome-era">África Occidental &middot; Hace siglos</p>
+          <p class="outcome-headline">Protegidos de la enfermedad del sueño</p>
+          <p class="outcome-body">Variantes de APOL1 &rarr; sobrevivieron a la enfermedad del sueño</p>
+        </div>
+        <div class="outcome-connector" data-outcome-connector>APOL1</div>
+        <div class="outcome-card outcome-right" data-outcome-right>
+          <p class="outcome-era">Estados Unidos &middot; Hoy</p>
+          <p class="outcome-headline">Riesgo renal elevado</p>
+          <p class="outcome-body">2 copias &rarr; riesgo de enfermedad renal 3–4× mayor</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="causes" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Qué puede causar la APOL1</p>
+      <h2 class="h2">Dos copias elevan el riesgo en varias afecciones.</h2>
+      <p class="section-dek">
+        El mismo genotipo de alto riesgo interactúa de forma distinta según qué más esté pasando
+        en tu cuerpo. Cada afección de abajo conlleva un riesgo elevado diferente.
+      </p>
+      <div class="grid stat-grid-3" style="gap:var(--space-4); margin-top:var(--space-5);">
+        {conditions.map((c, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <p class="mini-tag">{c.tag}</p>
+            <h3 class="h3" style="font-size:17px;">{c.name}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+      <p class="viz-source" style="margin-top:var(--space-4);">Estimaciones de riesgo de Kopp et al. NEJM 2011 &middot; Parsa et al. NEJM 2013 &middot; Friedman et al. JASN 2017.</p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Qué tan rápido progresa</p>
+      <h2 class="h2">Años antes. No décadas.</h2>
+      <p>
+        La enfermedad renal por APOL1 no cambia si podrías llegar a desarrollar insuficiencia
+        renal — cambia cuándo. En promedio, entre 5 y 10 años antes que las personas sin el
+        genotipo de alto riesgo.
+      </p>
+      <p>
+        Esa diferencia es toda la ventana para la prevención. El control temprano de la presión
+        arterial, el seguimiento regular y evitar los medicamentos que dañan el riñón pueden
+        retrasar — a veces de forma indefinida — la progresión a diálisis o trasplante.
+      </p>
+    </div>
+    <div class="container">
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <StatTile
+          value="5–10"
+          label="años antes en la aparición de la ERET, en comparación con pacientes equiparables sin el genotipo APOL1 de alto riesgo — incluso tras ajustar por presión arterial, diabetes y otros factores."
+          source="Estudios de cohortes, literatura sobre APOL1."
+          accent={viz.orange}
+        />
+        <div class="card viz-card">
+          <h3 class="viz-title">Tiempo mediano hasta necesitar diálisis (desde el inicio en etapa 1 de ERC)</h3>
+          <HBarList data={progression} max={30} />
+          <p class="viz-note" style="margin-top:var(--space-4);">
+            Rangos ilustrativos basados en estudios de cohortes. La progresión individual varía de
+            forma considerable según las comorbilidades, el control de la presión arterial y el
+            acceso a la atención.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="if-you-have-it" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Si tienes dos copias</p>
+      <h2 class="h2">Tienes más capacidad de acción de lo que sugiere el diagnóstico.</h2>
+      <p>
+        Portar dos copias de riesgo de APOL1 no es una sentencia. La mayoría de las personas con
+        el genotipo nunca desarrolla insuficiencia renal. Estas acciones marcan una diferencia
+        medible.
+      </p>
+      <NumberedSteps steps={actions} />
+      <p class="viz-source">
+        Guía sobre los AINE: National Kidney Foundation, "Pain Medicines and Your Kidneys". Esto
+        es educación general, no asesoramiento médico — consulta a tu médico antes de empezar,
+        suspender o cambiar cualquier medicamento.
+      </p>
+    </div>
+  </section>
+
+  <section id="testing" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">¿Deberías hacerte la prueba?</p>
+      <h2 class="h3">Todavía no es un estándar de atención — pero se recomienda para algunas personas.</h2>
+      <p>El cribado de rutina de APOL1 todavía no es un estándar de atención — pero se recomienda si:</p>
+      <ul class="check-list">
+        {testingCriteria.map((t) => <li>{t}</li>)}
+      </ul>
+      <p>La prueba es una simple muestra de sangre o de saliva. Pregúntale a tu nefrólogo o a tu médico de atención primaria.</p>
+      <p class="viz-source">NephCure Kidney International &middot; Declaración de posición de la ASN sobre APOL1 &middot; Estudio APOLLO del NIH, 2023.</p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">Cosas clave para recordar</p>
+      <ol class="recap-list">
+        {recap.map((r, i) => (
+          <li class="recap-item reveal" style={`--reveal-delay:${i * 0.06}s`}>
+            <span class="recap-num">{i + 1}</span>
+            <p><strong>{r.title}.</strong> {r.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section id="get-support" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <SupportResources />
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="lede"><a href={L("/the-need/fsgs/")} class="linkline">Conoce la GEFS &rarr;</a></p>
+      <div class="disclaimer">
+        <p>
+          Esta página ofrece educación general de nivel introductorio — no asesoramiento médico —
+          y todavía no ha completado una revisión formal de exactitud clínica. Habla con tu médico
+          sobre tu propio riesgo, tus pruebas y tu tratamiento.
+        </p>
+      </div>
+      <a href={L("/the-need/")} class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Volver a Enfermedad renal</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #basics,
+  #causes,
+  #if-you-have-it,
+  #testing,
+  #get-support {
+    scroll-margin-top: 88px;
+  }
+
+  .recap-list {
+    list-style: none;
+    margin: var(--space-5) 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .recap-item {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: var(--space-3);
+    align-items: baseline;
+  }
+
+  .recap-item p {
+    margin: 0;
+    color: var(--ink-fg-muted);
+    font-size: 14.5px;
+  }
+
+  .recap-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--eyebrow-accent);
+  }
+
+  /* ---------- Two outcomes panel ---------- */
+
+  .outcomes-row {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: var(--space-5);
+    align-items: center;
+    margin-top: var(--space-5);
+  }
+
+  @media (max-width: 780px) {
+    .outcomes-row {
+      grid-template-columns: 1fr;
+    }
+    .outcome-connector {
+      justify-self: center;
+    }
+  }
+
+  .outcome-card {
+    background: var(--ink-soft);
+    border: 1px solid var(--ink-line);
+    border-radius: var(--radius-sm);
+    padding: var(--space-5);
+  }
+
+  .outcome-era {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--eyebrow-accent);
+    margin: 0 0 var(--space-2);
+  }
+
+  .outcome-headline {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ink-fg);
+    margin: 0 0 var(--space-2);
+  }
+
+  .outcome-body {
+    font-size: 13.5px;
+    color: var(--ink-fg-muted);
+    margin: 0;
+  }
+
+  .outcome-connector {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-fg);
+    border: 1px solid var(--ink-line-strong);
+    border-radius: var(--radius-pill);
+    padding: var(--space-2) var(--space-4);
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wideEnough = window.matchMedia("(min-width: 780px)").matches;
+
+  const outcomesSection = document.querySelector<HTMLElement>("[data-outcomes]");
+  const left = document.querySelector<HTMLElement>("[data-outcome-left]");
+  const right = document.querySelector<HTMLElement>("[data-outcome-right]");
+  const connector = document.querySelector<HTMLElement>("[data-outcome-connector]");
+
+  if (outcomesSection && left && right && connector && !prefersReducedMotion && wideEnough) {
+    gsap.set(left, { xPercent: 35 });
+    gsap.set(right, { xPercent: -35 });
+    gsap.set(connector, { scale: 0.7 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: outcomesSection,
+        start: "top 75%",
+        end: "bottom 60%",
+        scrub: 0.6,
+      },
+    });
+
+    tl.to(left, { xPercent: 0, duration: 1, ease: "none" })
+      .to(right, { xPercent: 0, duration: 1, ease: "none" }, "<")
+      .to(connector, { scale: 1, duration: 0.5, ease: "none" }, ">-0.3");
+  }
+</script>

@@ -1,39 +1,48 @@
 ---
+import LanguageToggle from "./LanguageToggle.astro";
+import { getLangFromUrl, useTranslations, localeHref } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const L = (path: string) => localeHref(path, lang);
+
 const navLinks = [
-  { href: "/", label: "Home" },
+  { href: L("/"), label: t("nav.home") },
   {
-    href: "/about/",
-    label: "About",
-    hubLabel: "About",
+    href: L("/about/"),
+    label: t("nav.about"),
+    hubLabel: t("nav.about"),
     children: [
-      { href: "/about/team/", label: "Meet The Team" },
-      { href: "/about/what-we-do/", label: "What We Do" },
-      { href: "/press/", label: "Press & Credibility" },
+      { href: L("/about/team/"), label: t("nav.team") },
+      { href: L("/about/what-we-do/"), label: t("nav.whatWeDo") },
     ],
   },
   {
-    href: "/the-need/",
-    label: "Kidney Disease",
-    hubLabel: "Kidney Disease",
+    href: L("/the-need/"),
+    label: t("nav.kidneyDisease"),
+    hubLabel: t("nav.kidneyDisease"),
     children: [
-      { href: "/the-need/fsgs/", label: "FSGS" },
-      { href: "/the-need/apol1/", label: "APOL1-Mediated Kidney Disease" },
-      { href: "/the-need/data/", label: "Bronx Data You Should Know" },
+      { href: L("/the-need/fsgs/"), label: t("nav.fsgs") },
+      { href: L("/the-need/apol1/"), label: t("nav.apol1") },
+      { href: L("/the-need/data/"), label: t("nav.bronxData") },
     ],
   },
-  { href: "/storytelling/", label: "Storytelling" },
-  { href: "/partner-with-us/", label: "Partner With Us" },
-  { href: "/contact/", label: "Contact" },
+  { href: L("/storytelling/"), label: t("nav.storytelling") },
+  { href: L("/partner-with-us/"), label: t("nav.partner") },
+  { href: L("/contact/"), label: t("nav.contact") },
 ];
+
 const currentPath = Astro.url.pathname;
-const isActive = (href: string) => (href === "/" ? currentPath === "/" : currentPath.startsWith(href));
+const homeHref = L("/");
+const isActive = (href: string) =>
+  href === homeHref ? currentPath === homeHref : currentPath.startsWith(href);
 ---
 
 <header class="site-nav on-dark">
   <div class="container nav-row">
-    <a href="/" class="wordmark">The Jentosy Project</a>
+    <a href={homeHref} class="wordmark">The Jentosy Project</a>
 
-    <nav class="desktop-nav" aria-label="Primary">
+    <nav class="desktop-nav" aria-label={t("nav.primaryLabel")}>
       <ul>
         {navLinks.map((link) => (
           <li class={link.children ? "desktop-nav-parent" : undefined}>
@@ -71,15 +80,20 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
       id="menu-trigger"
       aria-expanded="false"
       aria-controls="site-menu"
+      data-label-open={t("nav.menu")}
+      data-label-close={t("nav.close")}
     >
-      <span class="menu-trigger-label">Menu</span>
+      <span class="menu-trigger-label">{t("nav.menu")}</span>
     </button>
 
-    <a href="/donate/" class="btn btn-rust nav-donate">Donate</a>
+    <div class="nav-end">
+      <a href={L("/donate/")} class="btn btn-rust nav-donate">{t("nav.donate")}</a>
+      <LanguageToggle variant="bar" />
+    </div>
   </div>
 
   <div class="site-menu" id="site-menu" aria-hidden="true">
-    <nav class="container site-menu-links" aria-label="Primary">
+    <nav class="container site-menu-links" aria-label={t("nav.primaryLabel")}>
       <ul>
         {navLinks.map((link) => {
           const slug = link.href.replace(/\//g, "");
@@ -130,10 +144,11 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     </nav>
 
     <div class="container site-menu-footer">
-      <p class="site-menu-tagline">Health equity for underserved communities, starting in the Bronx.</p>
+      <p class="site-menu-tagline">{t("cta.tagline")}</p>
       <div class="cluster gap-3">
-        <a href="/partner-with-us/" class="btn btn-steel-outline">Partner With Us</a>
-        <a href="/donate/" class="btn btn-rust">Donate</a>
+        <LanguageToggle variant="menu" />
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">{t("cta.partner")}</a>
+        <a href={L("/donate/")} class="btn btn-rust">{t("cta.donate")}</a>
       </div>
     </div>
   </div>
@@ -155,9 +170,16 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     padding-inline: clamp(16px, 4vw, 40px);
   }
 
-  @media (min-width: 1000px) {
+  /* The full-width bar nav only appears when the whole link row genuinely
+     fits on one line beside the wordmark, Donate button and ES/EN toggle —
+     in Spanish the labels are ~25% longer, so the switch-over is set wide
+     enough for that set, not just the English one. Below this the hamburger
+     menu carries everything. The centre track is minmax(0,1fr) so it can
+     never be forced wider than its share and bleed into the wordmark. */
+  @media (min-width: 1200px) {
     .nav-row {
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      column-gap: var(--space-4);
     }
   }
 
@@ -182,9 +204,23 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     text-overflow: ellipsis;
   }
 
-  .nav-donate {
+  .nav-end {
     justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .nav-donate {
     padding: 12px 24px;
+  }
+
+  /* On the narrowest phones the bar gets crowded (wordmark + Menu +
+     Donate); the language switch is still available inside the menu. */
+  @media (max-width: 420px) {
+    .nav-end .lang-toggle-bar {
+      display: none;
+    }
   }
 
   /* ---------- Desktop nav (visible top-level links) ---------- */
@@ -193,10 +229,11 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     display: none;
   }
 
-  @media (min-width: 1000px) {
+  @media (min-width: 1200px) {
     .desktop-nav {
       display: block;
       justify-self: center;
+      min-width: 0;
     }
   }
 
@@ -205,16 +242,14 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     margin: 0;
     padding: 0;
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    /* Nav labels never wrap mid-phrase (see .nav-link white-space:nowrap) —
-       if a longer label like "Kidney Disease" tips the row past the
-       available 1fr track width at a given viewport, the whole set of
-       links wraps onto a second centered line instead of breaking a
-       single item apart or overlapping the wordmark/Donate button. */
-    row-gap: var(--space-3);
-    column-gap: clamp(16px, 2vw, 28px);
+    /* Single line, always — the links never wrap. Each label also stays
+       intact (see .nav-link white-space:nowrap). Gap is tight enough that
+       the full English and Spanish sets both fit on one row alongside the
+       wordmark, Donate button, and ES/EN toggle. */
+    column-gap: clamp(10px, 1.3vw, 18px);
   }
 
   .desktop-nav > ul > li {
@@ -304,7 +339,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     transition: color var(--dur-fast) var(--ease);
   }
 
-  @media (min-width: 1000px) {
+  @media (min-width: 1200px) {
     .menu-trigger {
       display: none;
     }
@@ -476,6 +511,8 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
   const trigger = document.getElementById("menu-trigger");
   const triggerLabel = trigger?.querySelector(".menu-trigger-label");
   const menu = document.getElementById("site-menu");
+  const labelOpen = trigger?.dataset.labelOpen ?? "Menu";
+  const labelClose = trigger?.dataset.labelClose ?? "Close";
 
   function closeOnEscape(e: KeyboardEvent) {
     if (e.key === "Escape") closeMenu();
@@ -485,7 +522,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     menu?.classList.add("is-open");
     menu?.setAttribute("aria-hidden", "false");
     trigger?.setAttribute("aria-expanded", "true");
-    if (triggerLabel) triggerLabel.textContent = "Close";
+    if (triggerLabel) triggerLabel.textContent = labelClose;
     document.body.style.overflow = "hidden";
     document.addEventListener("keydown", closeOnEscape);
   }
@@ -494,7 +531,7 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     menu?.classList.remove("is-open");
     menu?.setAttribute("aria-hidden", "true");
     trigger?.setAttribute("aria-expanded", "false");
-    if (triggerLabel) triggerLabel.textContent = "Menu";
+    if (triggerLabel) triggerLabel.textContent = labelOpen;
     document.body.style.overflow = "";
     document.removeEventListener("keydown", closeOnEscape);
   }

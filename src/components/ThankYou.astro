@@ -1,10 +1,17 @@
 ---
+import { getLangFromUrl, localizePath } from "../i18n/utils";
+
 interface Props {
   title: string;
   heading: string;
   body: string;
 }
 const { title, heading, body } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const eyebrow = lang === "es" ? "Gracias" : "Thank You";
+const backLabel = lang === "es" ? "Volver al inicio" : "Back to Home";
+const homeHref = localizePath("/", lang);
 ---
 
 <script is:inline>
@@ -18,10 +25,10 @@ const { title, heading, body } = Astro.props;
 
 <section class="on-dark thank-you-section">
   <div class="container thank-you-inner">
-    <p class="eyebrow reveal">Thank You</p>
+    <p class="eyebrow reveal">{eyebrow}</p>
     <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">{heading}</h1>
     <p class="lede reveal" style="--reveal-delay:0.16s;">{body}</p>
-    <a href="/" class="btn btn-steel-outline reveal" style="--reveal-delay:0.24s;">Back to Home</a>
+    <a href={homeHref} class="btn btn-steel-outline reveal" style="--reveal-delay:0.24s;">{backLabel}</a>
   </div>
 </section>
 

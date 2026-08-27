@@ -1,0 +1,587 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import PageHero from "../../../../components/PageHero.astro";
+import Breadcrumb from "../../../../components/Breadcrumb.astro";
+import StatTile from "../../../../components/StatTile.astro";
+import Donut from "../../../../components/charts/Donut.astro";
+import StackedBar from "../../../../components/charts/StackedBar.astro";
+import NumberedSteps from "../../../../components/NumberedSteps.astro";
+import QuickNav from "../../../../components/QuickNav.astro";
+import SupportResources from "../../../../components/SupportResources.astro";
+import { viz } from "../../../../lib/palette";
+import { localeHref } from "../../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+
+const quickNavItems = [
+  { label: "Qué es la GEFS", href: "#basics" },
+  { label: "Síntomas", href: "#symptoms" },
+  { label: "Diagnóstico", href: "#diagnosis" },
+  { label: "Tratamiento", href: "#treatment" },
+  { label: "Buscar apoyo", href: "#get-support" },
+];
+
+const heroStats = [
+  { value: "~5,400", label: "nuevos diagnósticos de GEFS al año en EE. UU.", source: "USRDS 2023." },
+  { value: "3–4×", label: "mayor tasa en adultos negros que en adultos blancos.", source: "Informe sobre la GEFS de NephCure." },
+  { value: "50K+", label: "estadounidenses viven hoy con GEFS.", source: "Revisión epidemiológica, JASN 2021." },
+];
+
+const types = [
+  {
+    label: "Primaria (idiopática)",
+    value: 40,
+    color: viz.orange,
+    tag: "Idiopática · ~40 % · El tipo más común en la práctica clínica",
+    body: "Sin causa identificable. El sistema inmunitario parece atacar las unidades de filtrado del riñón por motivos que siguen sin estar claros. Suele responder a la terapia inmunosupresora — pero las recaídas son frecuentes.",
+  },
+  {
+    label: "Secundaria",
+    value: 35,
+    color: viz.blue,
+    tag: "Causada por otra afección · ~35 % · El tratamiento apunta a la causa, no solo al riñón",
+    body: "Provocada por un factor subyacente conocido: diabetes, obesidad, infección por VIH, anemia de células falciformes o toxicidad por medicamentos. Tratar la causa de fondo es la estrategia principal — no la inmunosupresión.",
+  },
+  {
+    label: "Genética / familiar",
+    value: 15,
+    color: viz.pink,
+    tag: "Familiar / hereditaria · ~15 % · APOL1 es la causa genética más común en pacientes negros",
+    body: "Mutaciones genéticas — incluida APOL1 — dañan directamente los podocitos del riñón. Puede aparecer en varios miembros de una familia. A menudo es resistente a los esteroides. Las pruebas genéticas pueden confirmarla.",
+  },
+  {
+    label: "Desconocida",
+    value: 10,
+    color: viz.neutral,
+    tag: "Sin determinar · ~10 % · El diagnóstico requiere biopsia renal para confirmarlo",
+    body: "Ni siquiera pruebas exhaustivas logran identificar la causa. El tratamiento es empírico — a menudo pruebas de inmunosupresión, con un seguimiento estrecho de la función renal y los niveles de proteína.",
+  },
+];
+
+const riskFactors = [
+  { name: "Ascendencia afroamericana", tag: "Riesgo más alto", body: "Convergen factores estructurales, históricos y genéticos. No se reduce a una sola causa." },
+  { name: "Genotipo APOL1 de alto riesgo", tag: "Causa genética", body: "Dos copias de riesgo de APOL1 elevan considerablemente el riesgo de GEFS y aceleran su progresión." },
+  { name: "Infección por VIH", tag: "Desencadenante de GEFS secundaria", body: "La nefropatía asociada al VIH (HIVAN) es una forma de GEFS secundaria. La terapia antirretroviral es protectora." },
+  { name: "Obesidad", tag: "Estrés mecánico", body: "El exceso de peso somete a los glomérulos a una tensión mecánica crónica, acelerando la GEFS adaptativa." },
+  { name: "Sexo masculino", tag: "Factor de riesgo moderado", body: "Los hombres desarrollan GEFS a tasas ligeramente más altas que las mujeres, en particular la GEFS primaria." },
+  { name: "Enfermedad renal previa", tag: "Riesgo acumulativo", body: "La ERC preexistente o las anomalías congénitas elevan el riesgo de GEFS adaptativa." },
+];
+
+const symptomsList = [
+  { glyph: "◎", name: "Orina espumosa", body: "Proteína que pasa a la orina (proteinuria) — a menudo el primer signo perceptible." },
+  { glyph: "▽", name: "Hinchazón (edema)", body: "Sobre todo en piernas, tobillos y alrededor de los ojos — por proteína baja en la sangre." },
+  { glyph: "⊕", name: "Aumento de peso por líquido", body: "Aumento rápido e inexplicable por retención de agua." },
+  { glyph: "◑", name: "Fatiga y debilidad", body: "Acumulación de toxinas a medida que la función renal disminuye." },
+  { glyph: "▲", name: "Presión arterial alta", body: "A la vez un síntoma y un acelerador del daño." },
+  { glyph: "—", name: "Pérdida del apetito", body: "La uremia (acumulación de desechos) reduce el apetito." },
+  { glyph: "~", name: "Calambres musculares", body: "Desequilibrios de electrolitos por un filtrado deficiente." },
+];
+
+const diagnosisSteps = [
+  { title: "Análisis de proteína en la orina", body: "Una tira reactiva de rutina o un análisis de orina cuantitativo detecta la proteína — el marcador más temprano. Una proteinuria persistente por encima de 3.5 g/día sugiere síndrome nefrótico." },
+  { title: "Análisis de sangre (TFGe, creatinina, albúmina)", body: "Los análisis de la función renal revelan cuánta capacidad de filtrado queda. Una albúmina sérica baja junto con una proteinuria alta apunta a una enfermedad en rango nefrótico." },
+  { title: "Pruebas de imagen (ecografía)", body: "Descartan problemas estructurales del riñón, quistes u obstrucción. No pueden diagnosticar la GEFS — pero confirman el tamaño del riñón y descartan otras causas." },
+  { title: "Biopsia renal", tag: "Necesaria para el diagnóstico", body: "Una aguja fina extrae tejido renal. Los patólogos lo examinan al microscopio en busca del característico patrón de cicatrización \"focal y segmentario\". Esta es la prueba definitiva — y determina el tipo de GEFS." },
+  { title: "Prueba genética de APOL1", tag: "Para pacientes elegibles", body: "Muestra de sangre o de saliva. Se recomienda para pacientes negros con GEFS de causa poco clara — identifica el subtipo genético de GEFS y orienta las decisiones de tratamiento." },
+];
+
+const medications = [
+  { name: "Inhibidores de la ECA / ARA II", tag: "Primera línea", body: "Reducen la presión arterial y la fuga de proteína. Frenan la progresión en todos los tipos de GEFS." },
+  { name: "Corticoesteroides", tag: "GEFS primaria", body: "Reducen el ataque inmunitario a los glomérulos. Pueden inducir remisión, pero requieren vigilar los efectos secundarios." },
+  { name: "Inmunosupresores", tag: "Resistente a esteroides", body: "Tacrolimús, ciclosporina, micofenolato — se usan cuando los esteroides fallan o al reducir la dosis." },
+  { name: "Diuréticos", tag: "Manejo de síntomas", body: "Reducen la retención de líquidos y el edema. No frenan la enfermedad, pero mejoran la calidad de vida." },
+];
+
+const lifestyle = ["Dieta baja en sodio", "Baja ingesta de proteína", "Ejercicio regular", "No fumar", "Peso saludable", "Evitar los AINE", "Vitamina D"];
+
+const outcomes = [
+  { label: "Llegó a ERET a los 10 años", value: 50, color: viz.orange },
+  { label: "Remisión parcial / completa", value: 30, color: viz.green },
+  { label: "ERC estable sin remisión", value: 20, color: viz.amber },
+];
+
+const medicalWebPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "MedicalWebPage",
+  name: "GEFS (Glomeruloesclerosis focal y segmentaria)",
+  url: "https://jentosy.org/es/the-need/fsgs/",
+  inLanguage: "es",
+  about: { "@type": "MedicalCondition", name: "Glomeruloesclerosis focal y segmentaria" },
+  audience: { "@type": "Patient" },
+  disclaimer:
+    "Esta página ofrece educación general de nivel introductorio, no asesoramiento médico, y todavía no ha completado una revisión formal de exactitud clínica.",
+};
+
+const questions = [
+  { ask: "Pregúntale a tu médico", q: "¿Qué tipo de GEFS tengo? ¿El tipo cambia cuál es el tratamiento adecuado para mí?" },
+  { ask: "Pregunta sobre las pruebas", q: "¿Debería hacerme la prueba de variantes de APOL1? ¿Cómo cambiaría eso mi plan de tratamiento?" },
+  { ask: "Pregunta sobre el seguimiento", q: "¿Con qué frecuencia debo revisar mi proteína en la orina y mi TFGe? ¿Qué tendencia debo vigilar?" },
+  { ask: "Pregunta sobre la remisión", q: "¿Cómo es la remisión para mi tipo de GEFS? ¿Cuál es mi probabilidad de lograrla?" },
+  { ask: "Pregunta sobre los ensayos clínicos", q: "¿Soy elegible para algún ensayo clínico de GEFS? ¿Qué se está estudiando en este momento?" },
+  { ask: "Pregunta sobre lo estructural", q: "¿Cómo afecta el lugar donde vivo a mi acceso a la atención de nefrología? ¿Hay opciones de telesalud?" },
+];
+---
+
+<BaseLayout
+  title="GEFS"
+  description="La GEFS (glomeruloesclerosis focal y segmentaria) es la enfermedad renal poco frecuente en el centro de la historia de nuestro fundador — cicatrización en las unidades de filtrado del riñón."
+>
+  <PageHero
+    eyebrow="Enfermedad renal · Entender la GEFS"
+    heading="La GEFS cicatriza las unidades de filtrado del riñón."
+    lede="La glomeruloesclerosis focal y segmentaria es poco frecuente, pero es tratable — sobre todo cuando se detecta a tiempo. Se ve distinta de una persona a otra, y no hay dos casos que sigan el mismo camino. Esto es lo que de verdad se sabe, explicado con claridad."
+    motif
+  />
+
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(medicalWebPageSchema)} />
+
+  <section class="on-light quick-nav-section">
+    <div class="container">
+      <Breadcrumb items={[{ label: "Enfermedad renal", href: L("/the-need/") }, { label: "GEFS" }]} />
+      <QuickNav items={quickNavItems} />
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <div class="grid stat-grid-3">
+        {heroStats.map((s, i) => (
+          <div class="reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <StatTile value={s.value} label={s.label} source={s.source} accent={viz.orange} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Qué está pasando en tu riñón</p>
+      <h2 class="h2">Cicatrización donde se filtra la sangre.</h2>
+      <p>
+        Cada riñón contiene alrededor de un millón de filtros diminutos llamados glomérulos. Su
+        tarea: limpiar los desechos y el exceso de líquido de tu sangre, hora tras hora, durante
+        toda tu vida. En la GEFS — glomeruloesclerosis focal y segmentaria — se forma tejido
+        cicatricial directamente sobre algunos de esos filtros.
+      </p>
+      <p>
+        <strong>Focal</strong> significa que solo algunos glomérulos están afectados.{" "}
+        <strong>Segmentaria</strong> significa que solo una parte de cada glomérulo afectado
+        cicatriza. Pero a medida que la cicatrización se extiende, la función renal disminuye de
+        forma constante.
+      </p>
+      <p>
+        La célula clave que se daña es el <strong>podocito</strong> — una célula especializada que
+        envuelve los capilares glomerulares y actúa como la barrera final de filtrado. Cuando se
+        pierden podocitos, no pueden regenerarse. La fuga resultante permite que la proteína — que
+        debería quedarse en la sangre — pase a la orina.
+      </p>
+    </div>
+
+    <div class="container" style="margin-top:var(--space-6);">
+      <div class="card filtration-diagram" data-filtration>
+        <p class="viz-title">El proceso de filtración</p>
+        <div class="filtration-track">
+          <div class="filtration-line"></div>
+          <div class="filtration-dot" data-filtration-dot aria-hidden="true"></div>
+          <div class="filtration-node">
+            <span class="node-label">Entrada de sangre</span>
+          </div>
+          <div class="filtration-node">
+            <span class="node-label">Glomérulo</span>
+            <span class="node-sub">Filtro normal</span>
+          </div>
+          <div class="filtration-node node-scar" data-filtration-scar>
+            <span class="node-label">Tejido cicatricial</span>
+          </div>
+          <div class="filtration-node">
+            <span class="node-label">Salida de sangre</span>
+          </div>
+        </div>
+        <div class="filtration-result" data-filtration-result>
+          <strong>Fuga de proteína</strong> &rarr; orina espumosa
+        </div>
+        <p class="viz-note" style="margin-top:var(--space-4);">
+          La orina espumosa suele ser el primer signo — la proteína en la orina forma burbujas. Si
+          notas una espuma persistente, pídele a tu médico un análisis de proteína en la orina.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Los cuatro tipos de GEFS</p>
+      <h2 class="h2">La misma enfermedad. Causas muy distintas.</h2>
+      <p class="section-dek">
+        La GEFS no es una sola enfermedad — es un patrón de daño renal con múltiples causas. El
+        tipo determina el tratamiento. Equivocarse de tipo significa tratar el objetivo
+        equivocado.
+      </p>
+
+      <div class="card viz-card" style="margin-top:var(--space-5);">
+        <Donut data={types.map((t) => ({ label: t.label, value: t.value, color: t.color }))} />
+        <p class="viz-source">Distribución aproximada &middot; NephCure, Informe sobre el estado de la enfermedad GEFS 2021.</p>
+      </div>
+
+      <div class="grid grid-2-col" style="gap:var(--space-4); margin-top:var(--space-5);">
+        {types.map((t, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.06}s; border-left:2px solid ${t.color};`}>
+            <p class="mini-tag">{t.tag}</p>
+            <h3 class="h3" style="font-size:19px;">{t.label}</h3>
+            <p>{t.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Quiénes se ven más afectados</p>
+      <h2 class="h2">Esto no se distribuye por igual.</h2>
+      <p>
+        Los adultos negros tienen entre 3 y 4 veces más probabilidades de desarrollar GEFS que los
+        adultos blancos. Entre los pacientes negros con GEFS, aproximadamente el 25 % porta el
+        genotipo APOL1 de alto riesgo — que impulsa una progresión más rápida y un mayor riesgo de
+        diálisis.
+      </p>
+      <p>
+        Pero la genética por sí sola no explica esta desigualdad. La investigación muestra de
+        forma constante que el diagnóstico más tardío, el menor acceso a la atención de
+        nefrología, las tasas más altas de personas sin seguro médico y los factores estructurales
+        a nivel de vecindario contribuyen todos a peores resultados.
+      </p>
+    </div>
+    <div class="container">
+      <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
+        <StatTile value="40%" label="de los casos de GEFS primaria en los grandes registros de EE. UU. son de adultos negros." source="Registro de ensayos clínicos de GEFS." accent={viz.orange} />
+        <StatTile value="50%" label="de los pacientes negros con GEFS llegan a ERET en 10 años sin remisión." source="Kopp et al. JASN 2011." accent={viz.orange} />
+        <StatTile value="25%" label="de los pacientes negros con GEFS portan el genotipo APOL1 de alto riesgo." source="USRDS 2023." accent={viz.orange} />
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Factores de riesgo clave</p>
+      <h2 class="h3">Convergen factores estructurales, históricos y genéticos.</h2>
+      <div class="grid stat-grid-3" style="gap:var(--space-4); margin-top:var(--space-5);">
+        {riskFactors.map((r, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <p class="mini-tag">{r.tag}</p>
+            <h3 class="h3" style="font-size:17px;">{r.name}</h3>
+            <p>{r.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Reconocer la GEFS</p>
+      <h2 class="h2">Muchas personas no tienen ningún síntoma hasta que el daño es significativo.</h2>
+      <p>
+        Esto es lo que hace peligrosa a la GEFS: los riñones pierden función en silencio. Para
+        cuando aparecen el edema o la fatiga, es posible que ya haya ocurrido una cicatrización
+        considerable. Los análisis de rutina de proteína en la orina son el signo de alerta más
+        temprano y confiable.
+      </p>
+    </div>
+    <div class="container">
+      <div class="grid grid-2-col" style="gap:var(--space-3); margin-top:var(--space-5);">
+        {symptomsList.map((s) => (
+          <div class="symptom-row">
+            <span class="symptom-glyph" aria-hidden="true">{s.glyph}</span>
+            <div>
+              <p class="symptom-name">{s.name}</p>
+              <p class="symptom-body">{s.body}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="card card-steel" style="margin-top:var(--space-6);">
+        <p class="eyebrow" style="margin-bottom:8px;">Cuándo consultar a un médico</p>
+        <p style="margin:0;">
+          Si notas orina espumosa persistente, hinchazón inexplicable en las piernas o los
+          tobillos, o un aumento de peso rápido sin cambios en la alimentación — pide un análisis
+          de proteína en la orina. Una simple prueba con tira reactiva en el consultorio puede
+          detectar proteinuria en minutos.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">El camino hacia el diagnóstico</p>
+      <h2 class="h3">Solo una biopsia renal puede confirmar la GEFS.</h2>
+      <NumberedSteps steps={diagnosisSteps} />
+    </div>
+  </section>
+
+  <section id="treatment" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Tratamiento</p>
+      <h2 class="h2">El tratamiento depende del tipo que tengas.</h2>
+      <p class="section-dek">
+        Los mismos medicamentos que ayudan en la GEFS primaria pueden ser perjudiciales en la GEFS
+        genética. Por eso importa el tipo de biopsia antes de empezar cualquier tratamiento.
+      </p>
+
+      <div class="grid stat-grid-4" style="gap:var(--space-4); margin-top:var(--space-5);">
+        {medications.map((m, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.06}s`}>
+            <p class="mini-tag">{m.tag}</p>
+            <h3 class="h3" style="font-size:16px;">{m.name}</h3>
+            <p style="font-size:13.5px;">{m.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="viz-grid" style="margin-top:var(--space-6);">
+        <div class="card viz-card">
+          <h3 class="viz-title">Cambios en el estilo de vida</h3>
+          <ul class="check-list">
+            {lifestyle.map((l) => <li>{l}</li>)}
+          </ul>
+        </div>
+
+        <div class="card viz-card">
+          <h3 class="viz-title">Resultados a 10 años del diagnóstico</h3>
+          <StackedBar data={outcomes} suffix="%" />
+          <p class="viz-source">Braun et al. CJASN 2021 &middot; NephCure Foundation.</p>
+        </div>
+      </div>
+
+      <div class="viz-grid" style="margin-top:var(--space-5);">
+        <div class="card viz-card">
+          <h3 class="viz-title">Metas a corto plazo</h3>
+          <p style="margin:0;">Reducir la proteína en la orina &middot; controlar la presión arterial &middot; manejar la hinchazón.</p>
+        </div>
+        <div class="card viz-card">
+          <h3 class="viz-title">Metas a largo plazo</h3>
+          <p style="margin:0;">Preservar la función renal restante &middot; retrasar o prevenir la diálisis &middot; mantener la calidad de vida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+    <div class="container narrow">
+      <p class="eyebrow">La GEFS y el lugar donde vives</p>
+      <p class="stat-num" style="display:block; font-size:clamp(40px,5vw,56px);">~40%</p>
+      <p class="lede" style="max-width:60ch;">
+        A pesar de representar alrededor del 13 % de la población de EE. UU., los adultos negros
+        representan cerca del 40 % de los casos de GEFS primaria en los grandes estudios de
+        registro.
+      </p>
+      <h2 class="h3" style="margin-top:var(--space-6); color:var(--ink-fg);">La genética explica una parte de esto. El lugar explica el resto.</h2>
+      <p class="lede" style="max-width:64ch;">
+        Las variantes de APOL1 aumentan el riesgo biológico. Pero la brecha en los resultados
+        entre pacientes negros y blancos con GEFS no puede atribuirse solo a la genética. Los
+        estudios muestran que la cobertura de seguro, la cercanía a un nefrólogo, el acceso a
+        alimentos en el vecindario y las barreras sistémicas a la atención temprana predicen todos
+        quién progresa a diálisis — y quién no. Por eso importa mapear dónde viven los pacientes:
+        el código postal donde alguien recibe atención moldea su resultado de GEFS tanto como la
+        variante que porta.
+      </p>
+      <p class="disclaimer-dark">Registro de ensayos clínicos de GEFS, 2021.</p>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow">Tu recorrido con la GEFS</p>
+      <h2 class="h2">No hay dos casos iguales.</h2>
+      <p class="section-dek">
+        La GEFS es una afección que requiere una colaboración estrecha y continua con tu equipo de
+        atención. Un seguimiento estrecho cambia los resultados. Estas preguntas pueden ayudarte a
+        iniciar esa conversación.
+      </p>
+      <div class="grid grid-2-col" style="gap:var(--space-4); margin-top:var(--space-5);">
+        {questions.map((item, i) => (
+          <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <p class="mini-tag">{item.ask}</p>
+            <p class="question-text">&ldquo;{item.q}&rdquo;</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section id="get-support" class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <SupportResources />
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="lede"><a href={L("/the-need/apol1/")} class="linkline">Conoce la APOL1 &rarr;</a></p>
+      <div class="disclaimer">
+        <p>
+          Esta página ofrece educación general de nivel introductorio — no asesoramiento médico —
+          y todavía no ha completado una revisión formal de exactitud clínica. Habla con tu médico
+          sobre tu propio riesgo, tus pruebas y tu tratamiento.
+        </p>
+      </div>
+      <a href={L("/the-need/")} class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Volver a Enfermedad renal</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 700px;
+  }
+
+  .quick-nav-section {
+    padding-block: var(--space-3) 0;
+  }
+
+  #basics,
+  #symptoms,
+  #diagnosis,
+  #treatment,
+  #get-support {
+    scroll-margin-top: 88px;
+  }
+
+  /* ---------- Filtration diagram ---------- */
+
+  .filtration-diagram {
+    position: relative;
+  }
+
+  .filtration-track {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+  }
+
+  .filtration-line {
+    position: absolute;
+    top: 0;
+    left: 6%;
+    right: 6%;
+    height: 2px;
+    background: var(--line-strong);
+  }
+
+  .filtration-dot {
+    position: absolute;
+    top: -5px;
+    left: 6%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--rust);
+    display: none;
+  }
+
+  .filtration-diagram.is-animated .filtration-dot {
+    display: block;
+  }
+
+  .filtration-node {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: center;
+  }
+
+  .node-label {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--fg);
+  }
+
+  .node-sub {
+    font-size: 11px;
+    color: var(--fg-muted);
+  }
+
+  .node-scar .node-label {
+    color: var(--rust);
+  }
+
+  .filtration-diagram.is-animated .node-scar {
+    transform: scale(0.92);
+    transition: transform var(--dur-med) var(--ease);
+  }
+
+  .filtration-diagram.is-animated .node-scar.is-visible {
+    transform: scale(1.08);
+  }
+
+  .filtration-result {
+    margin-top: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 2px solid var(--rust);
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+  }
+
+  .filtration-diagram.is-animated .filtration-result {
+    transform: translateY(6px);
+    transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
+  }
+
+  .filtration-diagram.is-animated .filtration-result.is-visible {
+    transform: translateY(0);
+    box-shadow: 0 4px 14px rgba(131, 89, 43, 0.18);
+  }
+
+  @media (max-width: 700px) {
+    .filtration-track {
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-4);
+    }
+    .filtration-line,
+    .filtration-dot {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const wideEnough = window.matchMedia("(min-width: 700px)").matches;
+
+  const diagram = document.querySelector<HTMLElement>("[data-filtration]");
+  const dot = document.querySelector<HTMLElement>("[data-filtration-dot]");
+  const scarNode = document.querySelector<HTMLElement>("[data-filtration-scar]");
+  const resultPanel = document.querySelector<HTMLElement>("[data-filtration-result]");
+
+  if (diagram && dot && scarNode && resultPanel && !prefersReducedMotion && wideEnough) {
+    diagram.classList.add("is-animated");
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: diagram,
+        start: "top 70%",
+        end: "bottom 50%",
+        scrub: 0.6,
+      },
+    });
+
+    tl.to(dot, { left: "48%", duration: 1, ease: "none" })
+      .to(dot, { left: "72%", duration: 1, ease: "none" })
+      .add(() => scarNode.classList.add("is-visible"))
+      .to(dot, { left: "94%", duration: 1, ease: "none" })
+      .add(() => resultPanel.classList.add("is-visible"));
+  }
+</script>

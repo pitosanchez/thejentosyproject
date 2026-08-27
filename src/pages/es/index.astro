@@ -1,0 +1,577 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { localeHref } from "../../i18n/utils";
+
+const L = (path: string) => localeHref(path, "es");
+
+const audiences = [
+  {
+    name: "Pacientes y familias",
+    pitch: "Conocimiento real y una comunidad para defender tu propia atención — y detectar la enfermedad renal antes de que se afiance.",
+    href: L("/the-need/"),
+    linkLabel: "Empieza por la necesidad",
+  },
+  {
+    name: "Financiadores y fundaciones",
+    pitch: "Respalda a una organización guiada por la experiencia vivida, que cierra la brecha en la atención renal de forma definitiva.",
+    href: L("/partner-with-us/?audience=funder#funder"),
+    linkLabel: "Colabora con nosotros",
+  },
+  {
+    name: "Investigadores e instituciones",
+    pitch: "Colabora con nosotros en educación y participación comunitaria en torno a la GEFS y la APOL1.",
+    href: L("/partner-with-us/?audience=researcher#researcher"),
+    linkLabel: "Colabora con nosotros",
+  },
+  {
+    name: "Organizaciones de salud",
+    pitch: "Ayúdanos a llegar antes a los pacientes desatendidos — antes de que la GEFS llegue a la diálisis o el trasplante.",
+    href: L("/partner-with-us/?audience=healthcare#healthcare"),
+    linkLabel: "Colabora con nosotros",
+  },
+  {
+    name: "Responsables de políticas públicas",
+    pitch: "Aborda las causas de fondo de la enfermedad renal — desde el acceso a la atención médica hasta la vivienda y la educación.",
+    href: L("/partner-with-us/?audience=policymaker#policymaker"),
+    linkLabel: "Colabora con nosotros",
+  },
+];
+
+const howItWorks = [
+  {
+    step: "1",
+    name: "Educar",
+    body: "Educación en lenguaje claro sobre la GEFS y la enfermedad renal mediada por APOL1 — llegando a las personas antes de que lleguen a la lista de trasplante.",
+    href: L("/the-need/"),
+    linkLabel: "Ver la necesidad",
+  },
+  {
+    step: "2",
+    name: "Colaborar",
+    body: "Conectar a investigadores, organizaciones de salud y responsables de políticas públicas en torno a la meta común de cerrar la brecha en la atención renal.",
+    href: L("/partner-with-us/"),
+    linkLabel: "Colabora con nosotros",
+  },
+  {
+    step: "3",
+    name: "Financiar el trabajo",
+    body: "Las donaciones financian directamente la educación y el alcance comunitario que llega a las comunidades desatendidas — empezando por el Bronx.",
+    href: L("/donate/"),
+    linkLabel: "Donar",
+  },
+];
+---
+
+<BaseLayout
+  title="Inicio"
+  description="The Jentosy Project promueve la equidad en salud para comunidades desatendidas educando a las personas sobre la GEFS y la enfermedad renal mediada por APOL1 — empezando por el Bronx."
+>
+  <section class="on-dark hero-photo">
+    <img class="hero-bg" src="/images/archival/third-ave-el-cross-bronx-expwy-1973-cropped.jpg" alt="" aria-hidden="true" />
+    <div class="hero-scrim"></div>
+    <div class="container hero-inner">
+      <p class="eyebrow reveal">Equidad en salud &middot; Enfermedad renal poco frecuente</p>
+      <h1 class="h1 reveal" style="--reveal-delay:0.08s">The Jentosy Project, Inc.</h1>
+      <p class="lede reveal" style="--reveal-delay:0.16s">
+        Las desigualdades en la enfermedad renal no existen de forma aislada. Educamos a las
+        comunidades desatendidas sobre la GEFS y la enfermedad renal mediada por APOL1 —
+        construyendo las alianzas necesarias para cerrar la brecha en la atención renal,
+        empezando por el Bronx.
+      </p>
+      <div class="cluster gap-3 reveal" style="--reveal-delay:0.24s">
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
+        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark bronx-stats">
+    <div class="container">
+      <p class="eyebrow reveal">La enfermedad renal, en cifras</p>
+      <h2 class="h2 reveal" style="--reveal-delay:0.06s; font-size:clamp(22px,2.6vw,28px);">
+        La enfermedad renal no recae por igual sobre todas las comunidades.
+      </h2>
+      <p class="lede reveal" style="--reveal-delay:0.12s; max-width:58ch;">
+        Las comunidades negras y latinas cargan con una parte desproporcionada de la insuficiencia
+        renal y la dependencia de la diálisis — una brecha que esta organización existe para
+        cerrar, empezando por el Bronx.
+      </p>
+
+      <div class="stats-row">
+        <div class="stat reveal">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="4">0</span><span class="stat-suffix">&times;</span>
+          </div>
+          <p class="stat-label">Mayor tasa de insuficiencia renal en personas negras que en personas blancas en EE. UU.</p>
+          <p class="stat-source">Hoja informativa sobre la enfermedad renal crónica de los CDC, 2026 &middot; USRDS 2023</p>
+        </div>
+        <div class="stat reveal" style="--reveal-delay:0.1s">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="35">0</span><span class="stat-suffix">%</span>
+          </div>
+          <p class="stat-label">de los pacientes en diálisis en EE. UU. son personas negras, aun siendo solo el 13.5 % de la población</p>
+          <p class="stat-source">National Kidney Foundation</p>
+        </div>
+        <div class="stat reveal" style="--reveal-delay:0.2s">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="1">0</span><span class="stat-suffix">AÑO+</span>
+          </div>
+          <p class="stat-label">Espera promedio más larga para un trasplante de riñón si eres una persona negra en vez de blanca</p>
+          <p class="stat-source">National Kidney Foundation</p>
+        </div>
+        <div class="stat reveal" style="--reveal-delay:0.3s">
+          <div class="stat-num-row">
+            <span class="stat-num" data-count="336">0</span><span class="stat-suffix">/10K</span>
+          </div>
+          <p class="stat-label">Hospitalizaciones por diabetes al año por cada 10,000 residentes negros del Bronx — la principal causa de insuficiencia renal</p>
+          <p class="stat-source">Depto. de Salud del Estado de Nueva York, Indicadores de Salud del Condado del Bronx</p>
+        </div>
+      </div>
+
+      <a href={L("/the-need/")} class="btn btn-steel-outline" style="margin-top:var(--space-6);">Ver el panorama completo &rarr;</a>
+    </div>
+  </section>
+
+  <section class="on-light section-tight">
+    <div class="container">
+      <p class="eyebrow">Para quién es esto</p>
+      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Cinco públicos, una meta compartida.</h2>
+      <div class="grid audience-grid">
+        {audiences.map((a, i) => (
+          <a
+            href={a.href}
+            class="audience-card reveal"
+            style={`--reveal-delay:${i * 0.06}s; --card-accent: var(${i % 2 === 0 ? "--steel" : "--rust"})`}
+          >
+            <span class="audience-card-index">{String(i + 1).padStart(2, "0")}</span>
+            <h3 class="audience-card-title">{a.name}</h3>
+            <p class="audience-card-pitch">{a.pitch}</p>
+            <span class="linkline audience-card-link">{a.linkLabel} &rarr;</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="on-dark story-bridge">
+    <div class="container story-bridge-inner">
+      <img
+        class="story-bridge-photo"
+        src="/images/founder-portrait.webp"
+        alt="Robert Sanchez, fundador de The Jentosy Project"
+      />
+      <div class="story-bridge-text reveal">
+        <p class="eyebrow">Por qué existe esto</p>
+        <p class="story-bridge-quote">
+          &ldquo;Nuestra meta es dar a todas las personas que enfrentan la enfermedad renal el
+          capital social para tomar decisiones informadas, hacer las preguntas correctas y
+          defenderse por sí mismas — porque el lugar donde vives nunca debería determinar lo que
+          sabes, la atención que recibes ni tu oportunidad de sobrevivir.&rdquo;
+        </p>
+        <div class="story-bridge-footer">
+          <p class="story-bridge-byline">Robert Sanchez, fundador</p>
+          <a href={L("/about/team/")} class="linkline story-bridge-link">Lee su historia completa &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light need-stack">
+    <div class="container need-stack-inner">
+      <div class="need-stack-text">
+        <p class="eyebrow">Enfermedad renal</p>
+        <h2 class="h2">La enfermedad renal poco frecuente, explicada con claridad.</h2>
+        <p class="lede" style="max-width:52ch;">
+          Las desigualdades en la enfermedad renal son consecuencia de la pobreza, el acceso
+          desigual a la educación, el encarcelamiento, los hogares fracturados y el estrés crónico
+          que esas condiciones producen. The Jentosy Project entiende la equidad en salud como
+          algo inseparable de esas condiciones sociales de fondo.
+        </p>
+      </div>
+
+      <div class="disease-grid">
+        <a href={L("/the-need/fsgs/")} class="card card-steel disease-card">
+          <h3 class="h3">GEFS</h3>
+          <p>Glomeruloesclerosis focal y segmentaria — cómo se manifiesta y por qué importa la detección temprana.</p>
+        </a>
+        <a href={L("/the-need/apol1/")} class="card card-steel disease-card">
+          <h3 class="h3">Enfermedad renal mediada por APOL1</h3>
+          <p>Un factor de riesgo genético concentrado en las comunidades negras y latinas.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight teaser-band">
+    <div class="container">
+      <p class="eyebrow">Cómo funciona</p>
+      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">
+        Educación y alcance comunitario en el Bronx — con planes de crecer.
+      </h2>
+      <p class="lede" style="max-width:56ch;">
+        Nuestro enfoque actual es la educación y la equidad en salud: llegar a las personas antes
+        de que lleguen a la lista de trasplante. La equidad en el trasplante sigue siendo parte de
+        nuestra misión a largo plazo.
+      </p>
+
+      <div class="grid how-it-works-grid">
+        {howItWorks.map((item, i) => (
+          <div class="how-it-works-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <span class="how-it-works-step">{item.step}</span>
+            <h3 class="h3">{item.name}</h3>
+            <p>{item.body}</p>
+            <a href={item.href} class="linkline how-it-works-link">{item.linkLabel} &rarr;</a>
+          </div>
+        ))}
+      </div>
+
+      <a href={L("/about/what-we-do/")} class="btn btn-steel" style="margin-top:var(--space-6);">Conoce lo que hacemos</a>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight cta-band">
+    <div class="container cta-inner">
+      <div class="reveal">
+        <h2 class="h2">Fináncialo. Colabora con ello. Sé parte de ello.</h2>
+        <p class="lede">
+          Un financiador, investigador o socio del sector salud debería poder entender por qué
+          este trabajo importa en minutos — y una persona que apoya debería poder actuar en
+          segundos.
+        </p>
+      </div>
+      <div class="cluster gap-3 reveal" style="--reveal-delay:0.1s">
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
+        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero-photo {
+    position: relative;
+    min-height: 72vh;
+    display: flex;
+    align-items: center;
+    overflow: clip;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    filter: brightness(1.22) contrast(1.04);
+    animation: hero-ken-burns 26s ease-in-out infinite alternate;
+  }
+
+  @keyframes hero-ken-burns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.09);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-bg {
+      animation: none;
+    }
+  }
+
+  .hero-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(20,29,21,0.56) 0%, rgba(20,29,21,0.58) 45%, rgba(20,29,21,0.78) 100%);
+  }
+
+  .hero-inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(var(--space-7), 8vw, var(--space-9));
+    max-width: 760px;
+  }
+
+  .hero-inner .h1,
+  .hero-inner .lede,
+  .hero-inner .eyebrow {
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.45);
+  }
+
+  .bronx-stats {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
+  }
+
+  .stats-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: var(--space-6);
+  }
+
+  .stat {
+    flex: 1 1 220px;
+    padding: var(--space-6) var(--space-4) 0 0;
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .stat-num-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: var(--space-3);
+  }
+
+  .stat-num {
+    display: block;
+  }
+
+  .stat-suffix {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(18px, 2vw, 22px);
+    color: var(--eyebrow-accent);
+  }
+
+  .stat-label {
+    font-size: 13.5px;
+    color: var(--ink-fg-muted);
+    line-height: 1.4;
+    max-width: 26ch;
+  }
+
+  .stat-source {
+    margin-top: var(--space-3);
+    font-size: 11px;
+    color: var(--ink-fg-muted);
+    opacity: 0.75;
+  }
+
+  .need-stack {
+    overflow: clip;
+    padding-block: clamp(var(--space-7), 7vw, var(--space-9));
+  }
+
+  .need-stack-inner {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .need-stack-text {
+    max-width: 46ch;
+  }
+
+  .disease-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 900px) {
+    .need-stack-inner {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .disease-card {
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .disease-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
+  }
+
+  .audience-grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (min-width: 1100px) {
+    .audience-grid {
+      grid-template-columns: repeat(5, 1fr);
+    }
+  }
+
+  @media (max-width: 700px) {
+    .audience-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .audience-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .audience-card {
+    display: flex;
+    flex-direction: column;
+    min-height: 264px;
+    padding: var(--space-6) var(--space-5);
+    background: var(--card);
+    border-radius: 16px;
+    box-shadow: 0 1px 2px rgba(29, 42, 30, 0.05), 0 20px 32px -16px rgba(29, 42, 30, 0.22);
+    text-decoration: none;
+    color: inherit;
+    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  }
+
+  .audience-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 4px 10px rgba(29, 42, 30, 0.08), 0 30px 44px -16px rgba(29, 42, 30, 0.28);
+  }
+
+  .audience-card-index {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--card-accent, var(--steel));
+    margin-bottom: var(--space-3);
+  }
+
+  .audience-card-title {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(19px, 1.7vw, 22px);
+    line-height: 1.15;
+    letter-spacing: 0.01em;
+    margin: 0 0 var(--space-3);
+  }
+
+  .audience-card-pitch {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg-muted);
+    margin: 0;
+    flex-grow: 1;
+  }
+
+  .audience-card-link {
+    margin-top: var(--space-4);
+    font-weight: 700;
+    color: var(--card-accent, var(--steel));
+  }
+
+  .story-bridge {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .story-bridge-inner {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: clamp(24px, 4vw, 56px);
+  }
+
+  @media (max-width: 640px) {
+    .story-bridge-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+
+    .story-bridge-photo {
+      margin: 0 auto;
+    }
+
+    .story-bridge-footer {
+      justify-content: center;
+    }
+  }
+
+  .story-bridge-photo {
+    width: clamp(96px, 12vw, 148px);
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 50%;
+    filter: grayscale(1) contrast(1.08) brightness(0.96);
+  }
+
+  .story-bridge-quote {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(17px, 1.9vw, 23px);
+    line-height: 1.45;
+    color: var(--ink-fg);
+    margin: var(--space-2) 0 var(--space-4);
+    max-width: 62ch;
+  }
+
+  .story-bridge-footer {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  .story-bridge-byline {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink-fg-muted);
+  }
+
+  .story-bridge-link {
+    color: var(--eyebrow-accent);
+  }
+
+  .teaser-band {
+    border-top: 1px solid var(--line);
+  }
+
+  .how-it-works-grid {
+    grid-template-columns: repeat(3, 1fr);
+    margin-top: var(--space-6);
+  }
+
+  @media (max-width: 780px) {
+    .how-it-works-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .how-it-works-item {
+    border-top: 3px solid var(--steel);
+    padding-top: var(--space-4);
+  }
+
+  .how-it-works-step {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 34px;
+    color: var(--steel);
+    line-height: 1;
+    display: block;
+    margin-bottom: var(--space-2);
+  }
+
+  .how-it-works-link {
+    display: inline-block;
+    margin-top: var(--space-2);
+    font-weight: 700;
+    color: var(--steel);
+  }
+
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+    flex-wrap: wrap;
+  }
+
+  .cta-inner .lede {
+    max-width: 52ch;
+  }
+</style>

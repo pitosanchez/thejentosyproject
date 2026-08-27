@@ -1,0 +1,46 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="Página no encontrada" description="No se pudo encontrar esta página.">
+  <section class="on-dark not-found-section">
+    <div class="container not-found-inner">
+      <p class="eyebrow reveal">404</p>
+      <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">
+        No encontramos esa página.
+      </h1>
+      <p class="lede reveal" style="--reveal-delay:0.16s;">
+        Es posible que la página que buscas se haya movido. Aquí tienes algunos lugares que vale la pena probar.
+      </p>
+      <div class="cluster gap-3 not-found-links reveal" style="--reveal-delay:0.24s;">
+        <a href="/es/" class="btn btn-steel-outline">Volver al inicio</a>
+        <a href="/es/the-need/" class="btn btn-steel-outline">Enfermedad renal</a>
+        <a href="/es/donate/" class="btn btn-rust">Donar</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found-section {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .not-found-inner {
+    max-width: 520px;
+    text-align: center;
+    margin-inline: auto;
+  }
+
+  .not-found-inner .lede {
+    max-width: none;
+    margin-inline: auto;
+  }
+
+  .not-found-links {
+    justify-content: center;
+    margin-top: var(--space-6);
+  }
+</style>

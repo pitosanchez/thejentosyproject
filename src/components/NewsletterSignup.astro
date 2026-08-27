@@ -1,4 +1,6 @@
 ---
+import { getLangFromUrl } from "../i18n/utils";
+
 interface Props {
   variant?: "light" | "dark";
   heading?: string;
@@ -13,6 +15,26 @@ const {
 } = Astro.props;
 
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+const lang = getLangFromUrl(Astro.url);
+const t = {
+  en: {
+    emailLabel: "Email address",
+    placeholder: "you@example.com",
+    submit: "Get Updates",
+    sending: "Sending…",
+    success: "You're on the list — thank you.",
+    unconfigured: "Sign-up isn't connected yet — set PUBLIC_WEB3FORMS_ACCESS_KEY to enable it.",
+  },
+  es: {
+    emailLabel: "Correo electrónico",
+    placeholder: "tú@ejemplo.com",
+    submit: "Recibir novedades",
+    sending: "Enviando…",
+    success: "Ya estás en la lista — gracias.",
+    unconfigured: "El registro todavía no está conectado — configura PUBLIC_WEB3FORMS_ACCESS_KEY para activarlo.",
+  },
+}[lang];
 ---
 
 <div class={`newsletter-signup newsletter-signup-${variant}${boxed ? " is-boxed" : ""}`}>
@@ -23,18 +45,16 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
       <input type="hidden" name="subject" value="New newsletter signup from jentosy.org" />
       <input type="hidden" name="form_type" value="Newsletter Signup" />
       <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
-      <label class="visually-hidden" for={`${formId}-email`}>Email address</label>
-      <input id={`${formId}-email`} type="email" name="email" placeholder="you@example.com" required />
-      <button type="submit" class="btn btn-steel-outline">Get Updates</button>
+      <label class="visually-hidden" for={`${formId}-email`}>{t.emailLabel}</label>
+      <input id={`${formId}-email`} type="email" name="email" placeholder={t.placeholder} required />
+      <button type="submit" class="btn btn-steel-outline">{t.submit}</button>
     </form>
   ) : (
-    <p class="newsletter-signup-note">
-      Sign-up isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable it.
-    </p>
+    <p class="newsletter-signup-note">{t.unconfigured}</p>
   )}
 </div>
 
-<script define:vars={{ formId }}>
+<script define:vars={{ formId, t }}>
   // Inline success state, no page navigation — a low-commitment secondary
   // action shouldn't feel as heavy as submitting the main form.
   const form = document.getElementById(formId);
@@ -44,7 +64,7 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
     const button = form.querySelector("button");
     if (button) {
       button.disabled = true;
-      button.textContent = "Sending…";
+      button.textContent = t.sending;
     }
 
     try {
@@ -56,15 +76,15 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
       const result = await response.json();
 
       if (result.success) {
-        form.innerHTML = '<p class="newsletter-signup-success">You\'re on the list — thank you.</p>';
+        form.innerHTML = `<p class="newsletter-signup-success">${t.success}</p>`;
       } else if (button) {
         button.disabled = false;
-        button.textContent = "Get Updates";
+        button.textContent = t.submit;
       }
     } catch {
       if (button) {
         button.disabled = false;
-        button.textContent = "Get Updates";
+        button.textContent = t.submit;
       }
     }
   });

@@ -1,0 +1,88 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import PhotoSlot from "../../../components/PhotoSlot.astro";
+import { localeHref } from "../../../i18n/utils";
+
+// Links resolve to the /es/ twin once it exists, else to the English page.
+const L = (path: string) => localeHref(path, "es");
+---
+
+<BaseLayout
+  title="Where We Live"
+  description="Where We Live — The Rare Renal Equity Project (REP): la iniciativa de The Jentosy Project que conecta la geografía, los determinantes sociales de la salud y la experiencia vivida de los pacientes con las desigualdades en la enfermedad renal."
+>
+  <PageHero
+    eyebrow="Where We Live"
+    heading="The Rare Renal Equity Project (REP)."
+    lede="El lugar donde vivimos moldea la salud renal tanto como la biología. Esta iniciativa existe para hacerlo visible — empezando por los datos que ya hemos reunido sobre el Bronx."
+  />
+
+  <section class="on-light section-tight">
+    <div class="container narrow">
+      <p class="eyebrow">Qué es</p>
+      <h2 class="h3">Datos, geografía y experiencia vivida — juntos.</h2>
+      <p>
+        REP combina datos geográficos, determinantes sociales de la salud y las historias de los
+        pacientes para mostrar cómo el lugar influye en la salud renal. Los mapas pueden
+        identificar vecindarios con mayor carga de enfermedad, menos derivaciones a trasplante o
+        acceso limitado a alimentos saludables. Las historias de los pacientes revelan cómo se
+        viven esas condiciones día a día, y por qué importan las desigualdades estructurales que
+        las provocan. Juntos, los datos y la narrativa construyen un panorama más completo que el
+        que cualquiera de los dos podría ofrecer por sí solo.
+      </p>
+    </div>
+
+    <figure class="wide-image reveal">
+      <PhotoSlot
+        src="/images/WhereWeLiveThumbNail.webp"
+        alt="Una sesión comunitaria de mapeo de Where We Live — Rare Renal Equity Project"
+        ratio="16 / 9"
+      />
+    </figure>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <p class="eyebrow">Qué existe hoy</p>
+      <h2 class="h3">Los datos del Bronx detrás de esta iniciativa.</h2>
+      <p>
+        Las cifras según el lugar sobre las que se construye esta iniciativa ya están en{" "}
+        <a href={L("/the-need/data/")}>Datos del Bronx que debes conocer</a> — la composición de la
+        población del Bronx, las tasas de hospitalización por diabetes según la raza y la
+        prevalencia nacional de la enfermedad renal crónica, con datos del Departamento de Salud
+        del Estado de Nueva York, los CDC y el NIDDK. La labor de REP es convertir esos datos en
+        una geografía que el lector pueda ver de verdad, no solo leer como un gráfico de barras.
+      </p>
+    </div>
+  </section>
+
+  <section class="on-dark section-tight">
+    <div class="container narrow">
+      <p class="eyebrow">Qué sigue</p>
+      <h2 class="h3" style="color:var(--ink-fg);">Un mapa interactivo del Bronx — todavía sin construir.</h2>
+      <p class="lede">
+        La siguiente etapa de esta iniciativa es un mapa real e interactivo que superponga esos
+        datos de carga de enfermedad sobre la geografía de los vecindarios del Bronx, junto con
+        las historias de los pacientes que dan contexto a las cifras. Es una iniciativa activa, no
+        un producto terminado — el apoyo mediante alianzas o financiamiento hace avanzar esto
+        directamente.
+      </p>
+      <div class="cluster gap-3" style="margin-top:var(--space-5);">
+        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
+        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 680px;
+  }
+
+  .wide-image {
+    max-width: 620px;
+    margin: var(--space-6) auto 0;
+  }
+</style>

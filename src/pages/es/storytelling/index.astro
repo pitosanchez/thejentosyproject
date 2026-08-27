@@ -1,0 +1,256 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PhotoSlot from "../../../components/PhotoSlot.astro";
+import { localeHref } from "../../../i18n/utils";
+
+const L = (p: string) => localeHref(p, "es");
+---
+
+<BaseLayout
+  title="El poder de las historias"
+  description="Un ensayo de Robert Sanchez, fundador de The Jentosy Project, sobre por qué contar historias es fundamental en la manera en que la organización aborda la equidad en la salud renal."
+>
+  <section class="on-dark story-hero">
+    <img
+      class="story-hero-img"
+      src="/images/stomed.png"
+      alt="El poder de las historias — Las historias sanan. Las historias conectan. Las historias cambian vidas. Una ilustración de un libro abierto con una planta y riñones que crecen de sus páginas, rodeado de los temas de empatía, comprensión, esperanza, conexión, conciencia y sanación."
+    />
+  </section>
+
+  <section class="on-light section">
+    <div class="container narrow essay">
+      <p class="reveal">
+        La enfermedad renal a menudo se mide con valores de laboratorio, estudios de imagen y
+        resultados clínicos. Los médicos vigilan los niveles de creatinina, la tasa de filtración
+        glomerular estimada (TFGe), la proteinuria, la adecuación de la diálisis y la
+        supervivencia del trasplante. Estas mediciones son esenciales, pero cuentan solo una parte
+        de la historia. No pueden captar el miedo a escuchar las palabras
+        <em>&ldquo;Tus riñones están fallando&rdquo;</em>. No pueden explicar el aislamiento de
+        estar sentado en una silla de diálisis tres días a la semana, la incertidumbre de esperar
+        un trasplante ni la fortaleza que hace falta para reconstruir una vida después de una
+        cirugía.
+      </p>
+
+      <p class="pull reveal" style="--reveal-delay:0.06s">
+        En The Jentosy Project, creemos que contar historias es medicina.
+      </p>
+
+      <p class="reveal">
+        Las historias tienen el poder de sanar de maneras que los datos por sí solos no pueden.
+        Reducen el miedo al reemplazar la incertidumbre con comprensión. Crean esperanza al
+        mostrarle a los pacientes que otra persona ha recorrido el mismo camino difícil y ha
+        llegado al otro lado. Construyen confianza en sistemas de salud que a menudo han fallado a
+        las comunidades desatendidas. Y lo más importante: le recuerdan a las personas que son
+        mucho más que un diagnóstico — son individuos con familias, sueños, culturas, historias y
+        futuros por los que vale la pena luchar.
+      </p>
+
+      <p class="reveal">
+        <strong>Como receptor de dos trasplantes de riñón, lo sé de primera mano.</strong>
+      </p>
+
+      <figure class="essay-figure reveal">
+        <img
+          class="essay-photo"
+          src="/images/founder-podium.webp"
+          alt="Robert Sanchez hablando en un podio sobre la enfermedad renal y la equidad en salud"
+        />
+        <figcaption>Robert hablando en público sobre la enfermedad renal y la equidad en salud.</figcaption>
+      </figure>
+
+      <p class="reveal">
+        Cuando me diagnosticaron GEFS y empecé la diálisis, busqué respuestas con desesperación.
+        Quería que alguien me explicara no solo lo que le estaba pasando a mi cuerpo, sino lo que
+        le estaba pasando a mi vida. La información médica que encontraba solía ser técnica,
+        fragmentada y difícil de relacionar con mi experiencia. Lo que en última instancia cambió
+        mi perspectiva fueron las historias de personas que habían vivido la enfermedad renal
+        antes que yo. Sus experiencias le dieron palabras a emociones que yo no podía expresar y
+        me mostraron que sobrevivir era posible. Esas historias transformaron el miedo en
+        propósito y me inspiraron a dedicar mi vida a la defensa de la salud renal.
+      </p>
+
+      <p class="reveal">
+        Contar historias se ha reconocido durante mucho tiempo como una herramienta poderosa en la
+        medicina. Los pacientes que escuchan historias de sus pares con frecuencia reportan menos
+        ansiedad, mayor confianza en las decisiones de tratamiento, mejor comunicación con el
+        personal de salud y un sentido de pertenencia más fuerte. Para las comunidades que han
+        vivido generaciones de desigualdades y desconfianza en la atención de la salud, las
+        historias suelen convertirse en el puente que la evidencia por sí sola no puede construir.
+      </p>
+
+      <p class="reveal">Esto es especialmente importante en la enfermedad renal.</p>
+
+      <p class="reveal">
+        La enfermedad renal afecta de forma desproporcionada a las comunidades negras, hispanas,
+        indígenas y otras comunidades históricamente desatendidas. Estas desigualdades no son
+        simplemente biológicas; están moldeadas por el lugar donde vive la gente, los entornos en
+        los que crece, el acceso a alimentos saludables, el transporte, la atención de salud de
+        calidad, la oportunidad económica, la educación y muchos otros determinantes sociales de
+        la salud. Las estadísticas revelan estas desigualdades, pero las historias las explican.
+        Aportan contexto, humanidad y comprensión detrás de las cifras.
+      </p>
+
+      <p class="reveal">Esa filosofía es fundamental para <strong>The Jentosy Project</strong>.</p>
+
+      <p class="reveal">
+        Nuestra misión es promover la equidad en salud integrando datos, geografía y las historias
+        de los pacientes para abordar las desigualdades en la enfermedad renal. Creemos que la
+        experiencia vivida es una forma de evidencia. El recorrido de cada paciente aporta
+        conocimiento que puede mejorar la investigación, fortalecer las políticas públicas,
+        orientar la práctica clínica y empoderar a los futuros pacientes. Contar historias no está
+        separado de la ciencia — la complementa al revelar lo que los conjuntos de datos
+        tradicionales no pueden.
+      </p>
+
+      <p class="reveal">
+        Esta filosofía se materializa en nuestra iniciativa insignia,
+        <a href={L("/where-we-live/")}><strong>Where We Live &mdash; The Rare Renal Equity Project (REP)</strong></a>.
+        REP combina datos geográficos, determinantes sociales de la salud y las experiencias
+        vividas de los pacientes para mostrar cómo el lugar influye en la salud renal. Los mapas
+        pueden identificar vecindarios con mayor carga de enfermedad, menos derivaciones a
+        trasplante o acceso limitado a alimentos saludables. Las historias de los pacientes
+        revelan cómo se sienten esas condiciones, cómo moldean la vida diaria y por qué importan
+        las desigualdades estructurales. Juntos, los datos y la narrativa crean una comprensión más
+        completa que la que cualquiera de los dos podría ofrecer por sí solo.
+      </p>
+
+      <PhotoSlot
+        src="/images/WhereWeLiveThumbNail.webp"
+        alt="Una sesión comunitaria de mapeo de Where We Live — Rare Renal Equity Project"
+        ratio="16 / 9"
+      />
+
+      <p class="reveal">Nuestra meta va más allá de la concienciación.</p>
+
+      <p class="reveal">
+        Queremos que cada historia se convierta en una fuente de capital social — un recurso que
+        ayude a los pacientes a moverse por el sistema de salud de forma más eficaz. Las historias
+        enseñan a los pacientes qué preguntas hacer, qué recursos existen, cómo defenderse por sí
+        mismos y dónde encontrar esperanza en los momentos difíciles. También educan a médicos,
+        investigadores, responsables de políticas públicas y sistemas de salud al poner en el
+        centro las voces de quienes viven con enfermedad renal cada día.
+      </p>
+
+      <p class="reveal">
+        Cuando los pacientes se reconocen en la experiencia de otra persona, se sienten menos
+        aislados. Cuando el personal de salud escucha relatos auténticos de pacientes, se vuelve
+        más empático y está mejor preparado para ofrecer una atención centrada en la persona.
+        Cuando los investigadores comprenden las realidades vividas detrás de las desigualdades,
+        hacen mejores preguntas. Cuando los responsables de políticas públicas escuchan tanto los
+        datos como las historias, es más probable que impulsen un cambio estructural
+        significativo.
+      </p>
+
+      <p class="pull reveal">
+        Por eso contar historias no es simplemente comunicación &mdash; es una intervención.
+      </p>
+
+      <p class="reveal">
+        Mejora la alfabetización en salud. Fortalece la confianza. Fomenta la detección y el
+        tratamiento más tempranos. Aumenta la participación en la investigación. Apoya la toma de
+        decisiones compartida. Inspira la donación de riñón en vida. Reduce el estigma. Construye
+        comunidad. Y quizá lo más importante, le recuerda a cada paciente que no está solo.
+      </p>
+
+      <p class="reveal">
+        En The Jentosy Project, imaginamos un futuro en el que la historia de cada paciente tenga
+        el poder de mejorar el resultado de otra persona. En el que la narrativa y la ciencia
+        trabajen juntas para transformar la atención de la salud. En el que la geografía, los
+        datos y la experiencia vivida revelen no solo dónde existen las desigualdades, sino cómo
+        podemos eliminarlas.
+      </p>
+
+      <p class="essay-closer reveal">
+        Porque sanar empieza por ser visto.<br />
+        Y cada historia tiene el poder de salvar una vida.
+      </p>
+
+      <div class="essay-byline reveal">
+        <p class="essay-byline-name">Robert Sanchez</p>
+        <p class="essay-byline-title">Fundador y director ejecutivo, The Jentosy Project</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
+    <div class="container narrow">
+      <a href={L("/about/team/")} class="btn btn-steel">Conoce a Robert &rarr;</a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .story-hero {
+    padding-top: clamp(var(--space-5), 4vw, var(--space-6));
+    padding-bottom: 2px;
+  }
+
+  .story-hero-img {
+    display: block;
+    width: 100%;
+    max-width: 820px;
+    margin-inline: auto;
+    aspect-ratio: 1.75 / 1;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .narrow {
+    max-width: 700px;
+  }
+
+  .essay p {
+    color: var(--fg-soft);
+  }
+
+  .essay-figure {
+    margin: var(--space-6) 0;
+  }
+
+  .essay-photo {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center 25%;
+    border-radius: var(--radius-sm);
+  }
+
+  .essay-figure figcaption {
+    margin-top: var(--space-2);
+    font-size: 12.5px;
+    color: var(--fg-muted);
+  }
+
+  .essay-closer {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(20px, 2.4vw, 26px);
+    line-height: 1.5;
+    color: var(--fg);
+    margin: var(--space-7) 0;
+  }
+
+  .essay-byline {
+    border-top: 1px solid var(--line);
+    padding-top: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .essay-byline-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+  }
+
+  .essay-byline-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin: var(--space-1) 0 0;
+  }
+</style>

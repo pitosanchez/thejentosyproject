@@ -1,23 +1,36 @@
 ---
+import { getLangFromUrl } from "../i18n/utils";
+
 interface Props {
   heading?: string;
 }
-const { heading = "Need to talk to someone now?" } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const copy = {
+  en: {
+    heading: "Need to talk to someone now?",
+    body: "The Jentosy Project's own contact line is still coming online — in the meantime, the National Kidney Foundation runs a real, free patient helpline staffed by people who can talk through a new diagnosis with you.",
+    hours: "NKF Cares · M–F, 9am–7pm",
+    link: "More support resources at kidney.org/support →",
+  },
+  es: {
+    heading: "¿Necesitas hablar con alguien ahora?",
+    body: "La línea de contacto propia de The Jentosy Project todavía se está poniendo en marcha — mientras tanto, la National Kidney Foundation tiene una línea de ayuda para pacientes real y gratuita, atendida por personas que pueden conversar contigo sobre un nuevo diagnóstico. (La atención telefónica es en inglés.)",
+    hours: "NKF Cares · lun.–vie., 9 a. m.–7 p. m.",
+    link: "Más recursos de apoyo en kidney.org/support →",
+  },
+}[lang];
+const { heading = copy.heading } = Astro.props;
 ---
 
 <div class="card card-steel support-resources">
   <p class="eyebrow" style="color:var(--steel); margin-bottom:var(--space-2);">{heading}</p>
-  <p>
-    The Jentosy Project's own contact line is still coming online — in the meantime, the National
-    Kidney Foundation runs a real, free patient helpline staffed by people who can talk through a
-    new diagnosis with you.
-  </p>
+  <p>{copy.body}</p>
   <div class="support-resources-row">
     <a href="tel:+18556532273" class="support-resources-phone">855.653.2273</a>
-    <span class="support-resources-hours">NKF Cares &middot; M&ndash;F, 9am&ndash;7pm</span>
+    <span class="support-resources-hours">{copy.hours}</span>
   </div>
   <a href="https://www.kidney.org/support" target="_blank" rel="noopener noreferrer" class="linkline support-resources-link">
-    More support resources at kidney.org/support &rarr;
+    {copy.link}
   </a>
 </div>
 

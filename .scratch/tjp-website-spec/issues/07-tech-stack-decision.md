@@ -16,7 +16,7 @@ Given the researched stack options, the chosen donation platform's integration r
 
 **Donation integration:** Zeffy's embeddable widget (static HTML/JS, no framework-specific work).
 
-**Forms (Contact, Partner inquiry):** Formspree — host-agnostic, free tier (50 submissions/mo) covers pre-launch volume.
+**Forms (Contact, Partner inquiry): Web3Forms.** _(Amended in build phase — this ticket originally chose Formspree.)_ Host-agnostic like Formspree, but a single shared access key (`PUBLIC_WEB3FORMS_ACCESS_KEY`) covers every form instead of a per-form endpoint ID, and the free tier is more generous. Honeypot field enabled on both forms against spam.
 
 **Deployment pipeline:** GitHub repo → Cloudflare Pages auto-deploys on push to `main`; every PR gets a preview URL for review before promoting to production.
 
@@ -24,9 +24,9 @@ Given the researched stack options, the chosen donation platform's integration r
 - Static/pre-rendered output — no application server, database, or admin panel exposed; this is the largest attack-surface reduction available, and it's a direct consequence of the framework/hosting choice above.
 - HTTPS enforced by default via Cloudflare Pages.
 - Cloudflare's network-level DDoS protection and bot-fight mode enabled; rate-limiting on donation/contact forms.
-- Content Security Policy (`_headers` file in the repo) restricting which domains can execute scripts — relevant specifically because Zeffy and Formspree are embedded third-party widgets.
-- No sensitive data on TJP's own infrastructure: donor payment data stays with Zeffy (PCI-compliant), form submissions stay with Formspree.
-- Formspree honeypot/reCAPTCHA enabled against spam/abuse.
+- Content Security Policy (`_headers` file in the repo) restricting which domains can execute scripts — relevant specifically because Zeffy and Web3Forms are embedded third-party widgets.
+- No sensitive data on TJP's own infrastructure: donor payment data stays with Zeffy (PCI-compliant), form submissions stay with Web3Forms.
+- Web3Forms honeypot field enabled on every form against spam/abuse.
 - GitHub Dependabot enabled for automated dependency-vulnerability alerts.
 - Repo hygiene: 2FA on the GitHub account, branch protection on `main`, any future secrets go in Cloudflare's encrypted environment variables, never committed to the repo.
 - Forms collect only name/email/message — no incidental health information — keeping the org's own data-handling scope minimal.

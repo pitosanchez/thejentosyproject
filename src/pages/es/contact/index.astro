@@ -1,0 +1,139 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import PageHero from "../../../components/PageHero.astro";
+import SupportResources from "../../../components/SupportResources.astro";
+import NewsletterSignup from "../../../components/NewsletterSignup.astro";
+
+const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
+const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
+---
+
+<BaseLayout title="Contacto" description="Ponte en contacto con The Jentosy Project.">
+  <PageHero eyebrow="Contacto" heading="Ponte en contacto." />
+
+  <section class="on-light section">
+    <div class="container narrow">
+      {!accessKey && (
+        <p class="form-unconfigured-note">
+          Este formulario todavía no está conectado — configura <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code>
+          para activarlo.
+          {contactEmail && (
+            <>
+              {" "}Mientras tanto, escríbenos directamente a{" "}
+              <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+            </>
+          )}
+        </p>
+      )}
+
+      <form
+        class="inquiry-form"
+        action="https://api.web3forms.com/submit"
+        method="POST"
+      >
+        <input type="hidden" name="access_key" value={accessKey} />
+        <input type="hidden" name="subject" value="Nuevo mensaje desde jentosy.org" />
+        <input type="hidden" name="form_type" value="General Contact (ES)" />
+        <input type="hidden" name="redirect" value="https://jentosy.org/es/contact/thank-you/" />
+        <input type="checkbox" name="botcheck" class="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <label>
+          Nombre
+          <input type="text" name="name" required />
+        </label>
+        <label>
+          Correo electrónico
+          <input type="email" name="email" required />
+        </label>
+        <label>
+          Mensaje
+          <textarea name="message" rows="5" required></textarea>
+        </label>
+        <button type="submit" class="btn btn-rust" disabled={!accessKey}>
+          {accessKey ? "Enviar mensaje" : "Formulario aún no conectado"}
+        </button>
+      </form>
+
+      <SupportResources heading="¿Necesitas hablar con alguien antes de que te respondamos?" />
+
+      <NewsletterSignup
+        formId="contact-newsletter-form"
+        heading="¿Todavía no quieres enviar un mensaje? Mantente al tanto."
+      />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .narrow {
+    max-width: 560px;
+  }
+
+  .inquiry-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  .inquiry-form label {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--fg-soft);
+  }
+
+  .inquiry-form input,
+  .inquiry-form textarea {
+    font: inherit;
+    font-size: 16px;
+    padding: 10px 12px;
+    border: 1.5px solid var(--line-strong);
+    border-radius: var(--radius-sm);
+    background: var(--card);
+    color: var(--fg);
+    font-weight: 400;
+  }
+
+  .inquiry-form input:focus,
+  .inquiry-form textarea:focus {
+    outline: 2px solid var(--steel);
+    outline-offset: 1px;
+    border-color: var(--steel);
+  }
+
+  .inquiry-form button {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+
+  .inquiry-form button:disabled {
+    background: transparent;
+    color: var(--fg-muted);
+    border: 1.5px dashed var(--line-strong);
+    cursor: not-allowed;
+  }
+
+  .inquiry-form button:disabled:hover {
+    opacity: 1;
+  }
+
+  .botcheck {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .form-unconfigured-note {
+    font-size: 13px;
+    color: var(--fg-muted);
+    background: var(--card);
+    border: 1.5px dashed var(--line-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-3) var(--space-4);
+    margin-bottom: var(--space-5);
+  }
+</style>
