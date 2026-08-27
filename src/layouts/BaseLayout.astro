@@ -11,11 +11,18 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
-const pageTitle = `${title} — The Jentosy Project`;
 const ga4Id = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID;
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// The home page leads with the brand ("The Jentosy Project — Kidney Health
+// Equity"), not "Home — …"; every interior page is "<Page> — The Jentosy
+// Project".
+const isHome = Astro.url.pathname === "/" || Astro.url.pathname === "/es/";
+const pageTitle = isHome
+  ? `The Jentosy Project — ${t("meta.homeTagline")}`
+  : `${title} — The Jentosy Project`;
 const alternates = alternateUrls(Astro.url);
 // Only advertise the Spanish alternate once its twin actually exists.
 const hasEs = lang === "es" || hasTranslation(Astro.url.pathname);

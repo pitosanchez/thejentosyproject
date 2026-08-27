@@ -42,6 +42,7 @@ export const ui = {
     "footer.privacy": "Privacy & Terms",
     "footer.rights": "a 501(c)(3) public charity.",
 
+    "meta.homeTagline": "Kidney Health Equity",
     "a11y.skip": "Skip to content",
     "lang.switchTo": "Ver en español",
     "lang.current": "English",
@@ -77,6 +78,7 @@ export const ui = {
     "footer.privacy": "Privacidad y términos",
     "footer.rights": "una organización benéfica pública 501(c)(3).",
 
+    "meta.homeTagline": "Equidad en la salud renal",
     "a11y.skip": "Saltar al contenido",
     "lang.switchTo": "View in English",
     "lang.current": "Español",
