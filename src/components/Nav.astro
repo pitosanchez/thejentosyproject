@@ -158,6 +158,15 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     text-decoration: none;
     color: var(--ink-fg);
     white-space: nowrap;
+    /* A grid item's own 1fr track won't shrink below its content's
+       natural size by default (min-width:auto) — on a narrow-enough
+       phone this pushed the Donate button in the next 1fr track past
+       the viewport edge instead of ever letting the wordmark itself
+       shrink. min-width:0 lets the track actually shrink; overflow +
+       ellipsis is the fallback if it still doesn't fit. */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .nav-donate {
@@ -250,7 +259,14 @@ const isActive = (href: string) => (href === "/" ? currentPath === "/" : current
     justify-self: center;
     background: none;
     border: none;
-    padding: 4px 0;
+    padding: 4px 10px;
+    /* The single most important nav control on mobile was only 24px
+       tall — right at WCAG's bare minimum tap-target size with no
+       margin for error. min-height + centered content guarantees a
+       comfortable target regardless of the label's own font metrics. */
+    min-height: 44px;
+    display: flex;
+    align-items: center;
     color: var(--ink-fg);
     cursor: pointer;
     transition: color var(--dur-fast) var(--ease);

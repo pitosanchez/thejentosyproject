@@ -506,7 +506,13 @@ p:last-child {
 
 .viz-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* minmax(0, 1fr), not plain 1fr — a bare 1fr track's implicit minimum
+     is auto (its content's min-content size), so a wide, non-shrinking
+     child (the fixed-size donut chart, in particular) grows the track
+     past the container instead of ever letting flex-wrap inside the
+     card do its job. This is what caused a real, if small, page-level
+     horizontal overflow at narrow phone widths. */
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: var(--space-5);
   margin-top: var(--space-6);
   align-items: stretch;
@@ -514,7 +520,7 @@ p:last-child {
 
 @media (max-width: 780px) {
   .viz-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -575,6 +581,7 @@ p:last-child {
   flex-direction: column;
   gap: var(--space-2);
   flex: 1 1 180px;
+  min-width: 0;
 }
 
 .legend li {
@@ -978,6 +985,21 @@ p:last-child {
 @media (max-width: 560px) {
   .stat-grid-3,
   .stat-grid-4 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Ad hoc 2-column mini-card/symptom rows on the disease pages used to be
+   hardcoded via an inline grid-template-columns with no mobile
+   breakpoint — real horizontal-overflow bug on narrow phones, since
+   inline styles can't be overridden by a class's own media query. This
+   is the reusable, responsive replacement for all of those. */
+.grid-2-col {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 640px) {
+  .grid-2-col {
     grid-template-columns: 1fr;
   }
 }

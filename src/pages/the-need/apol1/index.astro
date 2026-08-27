@@ -253,7 +253,7 @@ const recap = [
         The same high-risk genotype interacts differently depending on what else is happening in
         your body. Each condition below carries a distinct elevated risk.
       </p>
-      <div class="grid" style="grid-template-columns:repeat(3,1fr); gap:var(--space-4); margin-top:var(--space-5);">
+      <div class="grid stat-grid-3" style="gap:var(--space-4); margin-top:var(--space-5);">
         {conditions.map((c, i) => (
           <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
             <p class="mini-tag">{c.tag}</p>

@@ -298,18 +298,31 @@ const supports = [
     display: flex;
     gap: var(--space-3);
     flex-wrap: wrap;
-    flex: 0 0 auto;
+    flex: 1 1 320px;
+    max-width: 420px;
+    width: 100%;
+  }
+
+  @media (max-width: 480px) {
+    .donate-updates-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
   }
 
   .donate-updates-form input[type="email"] {
     font: inherit;
-    font-size: 14.5px;
+    /* 16px, not smaller — iOS Safari auto-zooms the whole page on focus
+       for any input under 16px, a real mobile annoyance, not a style
+       preference. */
+    font-size: 16px;
     padding: 12px 14px;
     border: 1.5px solid var(--ink-line-strong);
     border-radius: var(--radius-sm);
     background: var(--ink-soft);
     color: var(--ink-fg);
-    min-width: 240px;
+    flex: 1 1 200px;
+    min-width: 0;
   }
 
   .donate-updates-form input[type="email"]::placeholder {

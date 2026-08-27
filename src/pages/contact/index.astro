@@ -81,7 +81,10 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
   .inquiry-form input,
   .inquiry-form textarea {
     font: inherit;
-    font-size: 14.5px;
+    /* 16px, not smaller — iOS Safari auto-zooms the whole page on focus
+       for any input under 16px, a real mobile annoyance, not a style
+       preference. */
+    font-size: 16px;
     padding: 10px 12px;
     border: 1.5px solid var(--line-strong);
     border-radius: var(--radius-sm);
