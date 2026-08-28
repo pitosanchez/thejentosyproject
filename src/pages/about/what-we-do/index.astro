@@ -1,74 +1,147 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import PageHero from "../../../components/PageHero.astro";
 import PhotoSlot from "../../../components/PhotoSlot.astro";
+
+const exists = (p: string) => fs.existsSync(path.join(process.cwd(), "public", p));
+const heroExists = exists("images/community-education.png");
+
+// "How We Work" — the inputs that converge into an understanding.
+const inputs = [
+  "Kidney-health education",
+  "Data",
+  "Geography",
+  "Research",
+  "Partnerships",
+  "Patient storytelling",
+];
+
+// "What We Do" — the work itself, as a numbered index.
+const work = [
+  {
+    title: "Kidney-health education & resources",
+    body:
+      "Plain-language explanations of FSGS, APOL1-mediated kidney disease, and chronic kidney disease — built to reach people who won't find this information anywhere else, before a diagnosis becomes an emergency.",
+    href: "/the-need/",
+    linkLabel: "See the education",
+  },
+  {
+    title: "Community partnerships",
+    body:
+      "Connecting researchers, healthcare organizations, and policymakers around one shared goal: closing the kidney-care gap in underserved communities.",
+    href: "/partner-with-us/",
+    linkLabel: "Partner with us",
+  },
+  {
+    title: "Patient stories",
+    body:
+      "Lived experience treated as a form of evidence. Stories give the data context — and give patients language, and the sense that they are not alone.",
+    href: "/storytelling/",
+    linkLabel: "Why storytelling",
+  },
+  {
+    title: "Where We Live",
+    body:
+      "An initiative examining the relationship between kidney disease, place, and the conditions that shape health — starting with the Bronx data we've already gathered.",
+    href: "/where-we-live/",
+    linkLabel: "Explore the initiative",
+  },
+];
 ---
 
 <BaseLayout
   title="What We Do"
-  description="The Jentosy Project's current work: education and outreach in the Bronx, expanding over time. Transplantation equity remains part of our long-term mission."
+  description="Beginning in the Bronx, The Jentosy Project develops kidney-health education, rare kidney disease resources, community partnerships, patient stories, and place-based initiatives such as Where We Live."
 >
-  <PageHero
-    eyebrow="About · What We Do"
-    heading="Education and outreach in the Bronx — expanding over time."
-  />
-
-  <section class="on-light section">
-    <div class="container narrow">
-      <p>
-        Our current focus is education and health equity: reaching people before they reach the
-        transplant list. We work to raise awareness of FSGS and APOL1-mediated kidney disease in
-        communities where these diseases are under-discussed and under-diagnosed — starting in
-        the Bronx.
+  <!-- ============ HERO — photo, heading over it ============ -->
+  <section class="on-dark wwd-hero">
+    {heroExists ? (
+      <img class="wwd-hero-bg" src="/images/community-education.png" alt="" aria-hidden="true" />
+    ) : (
+      <div class="wwd-hero-fallback" aria-hidden="true"></div>
+    )}
+    <div class="wwd-hero-scrim"></div>
+    <div class="container wwd-hero-inner">
+      <p class="eyebrow reveal">About · What We Do</p>
+      <h1 class="wwd-hero-heading reveal" style="--reveal-delay:0.08s">
+        The work, starting in the Bronx.
+      </h1>
+      <p class="lede reveal wwd-hero-lede" style="--reveal-delay:0.16s">
+        Beginning in the Bronx, The Jentosy Project develops kidney-health education, rare kidney
+        disease resources, community partnerships, patient stories, and initiatives such as Where
+        We Live that examine the relationship between kidney disease, place, and the conditions
+        that shape health.
       </p>
     </div>
+  </section>
 
+  <!-- ============ HOW WE WORK — inputs converge ============ -->
+  <section class="on-light section how-we-work">
     <div class="container">
-      <div class="grid focus-grid">
-        <div class="card card-steel reveal">
-          <h3 class="h3">Community education</h3>
-          <p>
-            Plain-language resources on FSGS and APOL1-mediated kidney disease — built to reach
-            people who won't find this information anywhere else.
-          </p>
+      <p class="eyebrow reveal">How We Work</p>
+      <p class="hww-lead reveal" style="--reveal-delay:0.05s">
+        We bring together six kinds of knowledge — and read them against each other.
+      </p>
+      <div class="hww-grid">
+        <ul class="hww-inputs">
+          {inputs.map((label, i) => (
+            <li class="hww-input reveal" style={`--reveal-delay:${i * 0.05}s`}>{label}</li>
+          ))}
+        </ul>
+        <div class="hww-arrow" aria-hidden="true">
+          <svg viewBox="0 0 40 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 12h34" />
+            <path d="M28 4l8 8-8 8" />
+          </svg>
         </div>
-        <div class="card card-steel reveal" style="--reveal-delay:0.1s">
-          <h3 class="h3">Partnership building</h3>
-          <p>
-            Connecting researchers, healthcare organizations, and policymakers around the shared
-            goal of closing the kidney-care gap in underserved communities.
-          </p>
-        </div>
-        <a href="/where-we-live/" class="card card-rust reveal" style="--reveal-delay:0.2s">
-          <h3 class="h3">Where We Live</h3>
-          <p>
-            One initiative under The Jentosy Project focused on place-based health data. It's part
-            of our broader work, not the whole of it.
-          </p>
-          <span class="linkline" style="margin-top:var(--space-3); display:inline-block;">Learn more &rarr;</span>
-        </a>
+        <p class="hww-outcome reveal">
+          A clearer picture of <strong>where disparities exist</strong> — and{" "}
+          <strong>what communities actually need</strong>.
+        </p>
       </div>
     </div>
+  </section>
 
-    <div class="container outreach-photo-row">
-      <PhotoSlot src="/images/community-education.png" alt="A Jentosy Project community education session on kidney health" />
-      <p class="linkline">A community education session on kidney health.</p>
+  <!-- ============ THE WORK — numbered index ============ -->
+  <section class="on-light section-tight the-work" style="border-top:1px solid var(--line);">
+    <div class="container">
+      <p class="eyebrow reveal">The Work</p>
+      <ol class="work-list">
+        {work.map((w, i) => (
+          <li class="work-item reveal" style={`--reveal-delay:${i * 0.06}s`}>
+            <span class="work-num">{String(i + 1).padStart(2, "0")}</span>
+            <div class="work-body">
+              <h2 class="h3 work-title">{w.title}</h2>
+              <p>{w.body}</p>
+              <a href={w.href} class="linkline work-link">{w.linkLabel} &rarr;</a>
+            </div>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
 
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
-      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Future work: transplantation equity</h2>
-      <p>
-        Transplantation equity remains part of our long-term mission — it's where this
-        organization began, in our founder's own experience. As The Jentosy Project grows, we
-        intend to build back toward that work directly. For now, our resources are focused
-        upstream, on education and early awareness.
-      </p>
+  <!-- ============ FUTURE WORK — transplantation equity ============ -->
+  <section class="on-dark section future-work">
+    <div class="container future-work-inner">
+      <figure class="future-work-figure reveal">
+        <PhotoSlot src="/images/healingheart.webp" alt="An illustration of a heart held in cupped hands" ratio="1 / 1" />
+      </figure>
+      <div class="future-work-text">
+        <p class="eyebrow reveal">Where This Returns</p>
+        <h2 class="h2 reveal" style="font-size:clamp(22px,2.6vw,30px);">Transplantation equity.</h2>
+        <p class="lede reveal" style="--reveal-delay:0.06s">
+          Transplantation equity is where this organization began — in our founder's own
+          experience. As The Jentosy Project grows, we intend to build back toward that work
+          directly. For now, our resources are focused upstream: on education and early awareness,
+          reaching people before they reach the transplant list.
+        </p>
+      </div>
     </div>
   </section>
 
-  <section class="on-dark section-tight cta-band">
+  <section class="on-dark section-tight cta-band" style="border-top:1px solid var(--ink-line);">
     <div class="container reveal" style="text-align:center;">
       <h2 class="h2">Help us reach more communities.</h2>
       <div class="cluster gap-3" style="justify-content:center; margin-top:var(--space-5);">
@@ -80,39 +153,227 @@ import PhotoSlot from "../../../components/PhotoSlot.astro";
 </BaseLayout>
 
 <style>
-  .narrow {
-    max-width: 700px;
+  /* ---------- Hero ---------- */
+
+  .wwd-hero {
+    position: relative;
+    min-height: 52vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: clip;
   }
 
-  .focus-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .wwd-hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 28% 22%;
+    filter: brightness(0.82) contrast(1.04) saturate(0.95);
+  }
+
+  .wwd-hero-fallback {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(150deg, var(--ink), var(--ink-soft));
+  }
+
+  /* Left- and bottom-weighted so the copy always sits on deep shade,
+     whatever the photo is doing behind it. */
+  .wwd-hero-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(20, 29, 21, 0.35) 0%, rgba(20, 29, 21, 0.55) 55%, rgba(20, 29, 21, 0.92) 100%),
+      linear-gradient(90deg, rgba(20, 29, 21, 0.75) 0%, rgba(20, 29, 21, 0.3) 60%, rgba(20, 29, 21, 0.15) 100%);
+  }
+
+  .wwd-hero-inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(var(--space-7), 8vw, var(--space-9));
+    max-width: 780px;
+  }
+
+  .wwd-hero-heading {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(34px, 5.4vw, 62px);
+    line-height: 1.08;
+    color: var(--ink-fg);
+    margin: 0;
+    text-shadow: 0 2px 16px rgba(0, 0, 0, 0.4);
+  }
+
+  .wwd-hero-lede {
+    margin-top: var(--space-5);
+    max-width: 60ch;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+  }
+
+  /* ---------- How We Work ---------- */
+
+  .hww-lead {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(19px, 2.3vw, 26px);
+    line-height: 1.4;
+    color: var(--fg);
+    max-width: 30ch;
+    margin: 0;
+  }
+
+  .hww-grid {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
     margin-top: var(--space-6);
   }
 
-  @media (max-width: 780px) {
-    .focus-grid {
+  @media (max-width: 820px) {
+    .hww-grid {
       grid-template-columns: 1fr;
+      gap: var(--space-5);
     }
   }
 
-  .outreach-photo-row {
-    max-width: 460px;
-    margin-top: var(--space-7);
+  .hww-inputs {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
   }
 
-  .outreach-photo-row .linkline {
+  .hww-input {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(17px, 1.9vw, 21px);
+    color: var(--fg);
+    padding-left: var(--space-4);
+    border-left: 2px solid var(--steel);
+  }
+
+  .hww-arrow {
+    color: var(--rust);
+    width: clamp(40px, 6vw, 64px);
+  }
+
+  .hww-arrow svg {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 820px) {
+    .hww-arrow {
+      transform: rotate(90deg);
+      justify-self: center;
+    }
+  }
+
+  .hww-outcome {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 2.6vw, 28px);
+    line-height: 1.4;
+    color: var(--fg);
+    margin: 0;
+    max-width: 26ch;
+  }
+
+  .hww-outcome strong {
+    font-weight: 600;
+    color: var(--rust);
+  }
+
+  /* ---------- The Work ---------- */
+
+  .work-list {
+    list-style: none;
+    margin: var(--space-6) 0 0;
+    padding: 0;
+  }
+
+  .work-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: clamp(16px, 3vw, 40px);
+    padding: clamp(var(--space-5), 4vw, var(--space-7)) 0;
+    border-top: 1px solid var(--line);
+  }
+
+  .work-item:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .work-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1;
+    color: var(--line-strong);
+  }
+
+  .work-title {
+    margin-bottom: var(--space-3);
+  }
+
+  .work-body p {
+    color: var(--fg-soft);
+    max-width: 56ch;
+  }
+
+  .work-link {
+    display: inline-block;
     margin-top: var(--space-3);
+    font-weight: 700;
+    color: var(--steel);
   }
 
-  .focus-grid a.card {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+  /* ---------- Future work ---------- */
+
+  .future-work-inner {
+    display: grid;
+    grid-template-columns: minmax(160px, 240px) 1fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
   }
 
-  .focus-grid a.card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 22px rgba(20, 33, 59, 0.12);
+  @media (max-width: 720px) {
+    .future-work-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .future-work-figure {
+      max-width: 220px;
+      margin-inline: auto;
+    }
+  }
+
+  .future-work-figure {
+    margin: 0;
+  }
+
+  .future-work-figure :global(.photo-slot),
+  .future-work-figure :global(.photo-slot-placeholder) {
+    border-radius: 50%;
+  }
+
+  .future-work-text .lede {
+    max-width: 56ch;
+  }
+
+  @media (max-width: 720px) {
+    .future-work-text .lede {
+      margin-inline: auto;
+    }
+  }
+
+  .cta-inner {
+    text-align: center;
   }
 </style>

@@ -1,38 +1,28 @@
 ---
+import fs from "node:fs";
+import path from "node:path";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PhotoSlot from "../../../components/PhotoSlot.astro";
 import VideoSlot from "../../../components/VideoSlot.astro";
 import { localeHref } from "../../../i18n/utils";
-import fs from "node:fs";
-import path from "node:path";
 
 const L = (p: string) => localeHref(p, "es");
 const exists = (p: string) => fs.existsSync(path.join(process.cwd(), "public", p));
 const heroExists = exists("images/safe.webp");
 
-const answers = [
-  {
-    q: "Por qué",
-    a: "La geografía no debería decidir quién entiende su propio riesgo de salud. La educación es lo único que funciona antes de que un diagnóstico se convierta en una emergencia.",
-  },
-  {
-    q: "Qué",
-    a: "Enseñamos a las comunidades desatendidas sobre la GEFS y la enfermedad renal mediada por APOL1 — en lenguaje claro, antes de que sea demasiado tarde para actuar.",
-  },
-  {
-    q: "Dónde",
-    a: "El Bronx primero — uno de los ejemplos más marcados de esta desigualdad en el país. Diseñado para expandirse a todo el país desde aquí.",
-  },
-  {
-    q: "Cómo",
-    a: "La educación primero, las historias como método. La experiencia vivida cambia mentes que las estadísticas por sí solas no alcanzan.",
-  },
+const method = [
+  { term: "Educación sobre la salud renal", note: "Explicaciones en lenguaje claro de lo que de verdad ocurre en el cuerpo." },
+  { term: "Datos", note: "Vigilancia a nivel poblacional — y sus vacíos." },
+  { term: "Geografía", note: "Dónde se concentran la carga de enfermedad, las derivaciones y los recursos." },
+  { term: "Investigación", note: "Lo que la literatura revisada por pares establece y lo que no." },
+  { term: "Alianzas", note: "Investigadores, sistemas de salud y responsables de políticas en torno a una meta." },
+  { term: "Historias de los pacientes", note: "La experiencia vivida como una forma de evidencia." },
 ];
 ---
 
 <BaseLayout
   title="Quiénes somos"
-  description="The Jentosy Project es una organización sin fines de lucro 501(c)(3) que promueve la equidad en la salud renal para comunidades desatendidas, empezando por el Bronx."
+  description="The Jentosy Project es una organización sin fines de lucro 501(c)(3) que promueve la equidad en la salud renal para comunidades desatendidas, empezando por el Bronx — fundada por un receptor de dos trasplantes de riñón."
 >
   <section class="on-dark about-hero" data-parallax-section>
     {heroExists ? (
@@ -48,40 +38,66 @@ const answers = [
     <div class="about-hero-tint"></div>
   </section>
 
-  <section class="on-light about-top">
-    <div class="container narrow">
-      <h1 class="about-title reveal">Quiénes somos</h1>
-
-      <p class="hook reveal" style="--reveal-delay:0.1s">
-        La enfermedad renal suele ser invisible hasta que deja de serlo — y el lugar donde vives
-        puede decidir si la ves venir. The Jentosy Project existe para cambiar eso.
-      </p>
-
-      <p class="press-mention reveal" style="--reveal-delay:0.16s">
-        <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">
-          Cobertura independiente de CBS News New York &rarr;
-        </a>
-      </p>
-    </div>
-  </section>
-
-  <section class="on-light answers-section">
+  <section class="on-light founders-note">
     <div class="container">
-      <div class="answers-grid">
-        {answers.map((item, i) => (
-          <div class="answer reveal" style={`--reveal-delay:${i * 0.06}s`}>
-            <p class="answer-q">{item.q}</p>
-            <p class="answer-a">{item.a}</p>
+      <h1 class="about-title reveal">Quiénes somos</h1>
+      <div class="founders-note-inner">
+        <span class="founders-note-mark" aria-hidden="true">&ldquo;</span>
+        <p class="eyebrow reveal">Por qué existimos</p>
+        <p class="founders-note-lead reveal">
+          Creé The Jentosy Project porque sé lo que se siente tener enfermedad renal y no entender
+          del todo lo que te está pasando.
+        </p>
+        <p class="founders-note-body reveal" style="--reveal-delay:0.06s">
+          Demasiadas personas reciben la información que necesitan solo cuando ya enfrentan una
+          enfermedad grave. Creo que las comunidades merecen información comprensible antes — y que
+          el lugar donde vive la gente, aquello a lo que está expuesta y los recursos a los que
+          puede acceder deben ser parte de cómo entendemos la salud renal.
+        </p>
+        <div class="founders-note-sign reveal" style="--reveal-delay:0.12s">
+          <img
+            class="founders-note-portrait"
+            src="/images/founder-portrait.webp"
+            alt="Robert Sanchez, fundador de The Jentosy Project"
+          />
+          <div>
+            <p class="founders-note-name">Robert Sanchez</p>
+            <p class="founders-note-role">Fundador y director ejecutivo · Receptor de dos trasplantes de riñón</p>
           </div>
-        ))}
+        </div>
+        <p class="founders-note-press reveal" style="--reveal-delay:0.16s">
+          <a href="https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/">
+            Su historia fue reportada de forma independiente por CBS News New York &rarr;
+          </a>
+        </p>
       </div>
     </div>
   </section>
 
-  <figure class="wide-image wide-image-small subway-image reveal">
-    <PhotoSlot src="/images/NtX0s.webp" alt="Un letrero del metro de Nueva York que dice Uptown & The Bronx Express, con los distintivos de las líneas 4 y 5" ratio="3 / 2" />
-    <figcaption>Una comunidad, no un caso de estudio.</figcaption>
+  <figure class="bleed-figure reveal">
+    <PhotoSlot src="/images/movement.webp" alt="Una ilustración de personas que avanzan juntas hacia un horizonte compartido" ratio="3.4 / 1" />
+    <figcaption>Un movimiento, no un momento.</figcaption>
   </figure>
+
+  <section class="on-dark method-band">
+    <div class="container">
+      <p class="eyebrow reveal">Cómo trabajamos</p>
+      <p class="method-lead reveal">
+        Reunimos educación sobre la salud renal, datos, geografía, investigación, alianzas y las
+        historias de los pacientes — para entender mejor dónde existen las desigualdades y qué
+        necesitan las comunidades.
+      </p>
+      <ol class="method-list">
+        {method.map((m, i) => (
+          <li class="method-item reveal" style={`--reveal-delay:${i * 0.05}s`}>
+            <span class="method-num">{String(i + 1).padStart(2, "0")}</span>
+            <p class="method-term">{m.term}</p>
+            <p class="method-note">{m.note}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
 
   <section class="on-light section name-section">
     <div class="container narrow">
@@ -136,18 +152,18 @@ const answers = [
     </div>
   </section>
 
-  <figure class="wide-image wide-image-light wide-image-small reveal">
-    <PhotoSlot src="/images/treeoflife.webp" alt="Unas manos ahuecadas que sostienen un árbol que crece a partir de un par de riñones" ratio="5 / 4" />
-    <figcaption>Con raíces en el cuidado, creciendo hacia la equidad.</figcaption>
-  </figure>
-
-  <section class="on-light section-tight closer-section">
-    <div class="container narrow">
-      <p class="pull reveal closer">El lugar donde vives nunca debería decidir lo que sabes.</p>
-      <p class="linkline reveal" style="--reveal-delay:0.06s">
-        Más sobre <a href={L("/about/team/")}>quiénes están detrás de esto</a> y{" "}
-        <a href={L("/about/what-we-do/")}>lo que hacemos día a día</a>.
-      </p>
+  <section class="on-light section closer-section">
+    <div class="container closer-inner">
+      <figure class="closer-figure reveal">
+        <PhotoSlot src="/images/treeoflife.webp" alt="Unas manos ahuecadas que sostienen un árbol que crece a partir de un par de riñones" ratio="5 / 4" />
+      </figure>
+      <div class="closer-text">
+        <p class="pull reveal closer-line">El lugar donde vives nunca debería decidir lo que sabes.</p>
+        <p class="linkline reveal" style="--reveal-delay:0.06s">
+          Más sobre <a href={L("/about/what-we-do/")}>lo que hacemos día a día</a> y{" "}
+          <a href={L("/about/team/")}>quiénes están detrás de esto</a>.
+        </p>
+      </div>
     </div>
   </section>
 
@@ -164,16 +180,13 @@ const answers = [
 
 <style>
   .narrow {
-    max-width: 620px;
+    max-width: 640px;
     margin-inline: auto;
-    text-align: center;
   }
-
-  /* ---------- Hero (photo only) ---------- */
 
   .about-hero {
     position: relative;
-    min-height: 58vh;
+    min-height: 46vh;
     overflow: clip;
   }
 
@@ -217,30 +230,25 @@ const answers = [
     border-radius: 2px;
   }
 
-  /* ---------- Top: ABOUT + one-line hook ---------- */
+  /* ---------- Por qué existimos: la nota del fundador ---------- */
 
-  .about-top {
+  .founders-note {
     padding-top: 0;
-    padding-bottom: clamp(var(--space-6), 5vw, var(--space-7));
+    padding-bottom: clamp(var(--space-7), 7vw, var(--space-9));
   }
 
   .about-title {
     position: relative;
     top: -2.5rem;
-    margin: 0 0 var(--space-4);
+    margin: 0 0 clamp(var(--space-4), 4vw, var(--space-7));
     font-family: var(--font-display);
     font-weight: 700;
-    /* "QUIÉNES SOMOS" is two long words — capped so both fit the reading
-       column and centre cleanly (English "ABOUT" runs bigger on its own
-       page). It still wraps to two centred lines on narrow viewports. */
-    font-size: clamp(44px, 8vw, 104px);
+    font-size: clamp(40px, 7vw, 92px);
     line-height: 1.02;
     letter-spacing: -0.01em;
-    text-align: center;
     text-transform: uppercase;
-    text-wrap: balance;
     color: var(--ink);
-    -webkit-text-stroke: 2px #fff;
+    -webkit-text-stroke: 2px var(--paper);
     paint-order: stroke fill;
   }
 
@@ -250,121 +258,193 @@ const answers = [
     }
   }
 
-  .hook {
+  .founders-note-inner {
+    position: relative;
+    max-width: 780px;
+  }
+
+  .founders-note-mark {
+    position: absolute;
+    left: -0.12em;
+    top: -0.62em;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(90px, 12vw, 150px);
+    line-height: 1;
+    color: var(--rust);
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .founders-note .eyebrow {
+    margin-bottom: var(--space-4);
+  }
+
+  .founders-note-lead {
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(20px, 2.6vw, 26px);
-    line-height: 1.4;
+    font-size: clamp(24px, 3.1vw, 38px);
+    line-height: 1.3;
     color: var(--fg);
-    max-width: 34ch;
-    margin-inline: auto;
+    margin: 0 0 var(--space-5);
+    max-width: 20ch;
   }
 
-  .press-mention {
-    margin-top: var(--space-4);
-    font-size: 12.5px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    color: var(--fg-muted);
-  }
-
-  .press-mention a {
-    color: var(--steel);
-  }
-
-  /* ---------- Why / What / Where / How ---------- */
-
-  .answers-section {
-    padding-block: 0 clamp(var(--space-7), 6vw, var(--space-8));
-  }
-
-  .answers-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: clamp(28px, 4vw, 48px) clamp(32px, 5vw, 64px);
-  }
-
-  @media (max-width: 700px) {
-    .answers-grid {
-      grid-template-columns: 1fr;
-      gap: var(--space-6);
+  @media (min-width: 620px) {
+    .founders-note-lead {
+      max-width: 34ch;
     }
   }
 
-  .answer {
-    border-top: 2px solid var(--ink);
-    padding-top: var(--space-3);
-    text-align: center;
+  .founders-note-body {
+    font-size: clamp(16px, 1.55vw, 18.5px);
+    line-height: 1.7;
+    color: var(--fg-soft);
+    max-width: 60ch;
+    margin: 0;
   }
 
-  .answer-q {
-    font-family: var(--font-body);
-    font-weight: 800;
-    font-size: 12px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--rust);
-    margin: 0 0 var(--space-2);
+  .founders-note-sign {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
   }
 
-  .answer-a {
+  .founders-note-portrait {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center 20%;
+    flex-shrink: 0;
+    filter: grayscale(1) contrast(1.06);
+  }
+
+  .founders-note-name {
     font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(18px, 2vw, 21px);
-    line-height: 1.4;
+    font-weight: 600;
+    font-size: 18px;
     color: var(--fg);
-    max-width: 32ch;
-    margin-inline: auto;
+    margin: 0;
   }
 
-  /* ---------- Wide images ---------- */
-
-  .wide-image {
-    margin: 0 auto clamp(var(--space-7), 6vw, var(--space-8));
+  .founders-note-role {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+    margin: var(--space-1) 0 0;
   }
 
-  .wide-image :global(.photo-slot),
-  .wide-image :global(.photo-slot-placeholder) {
+  .founders-note-press {
+    margin: var(--space-4) 0 0;
+    font-size: 12.5px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .founders-note-press a {
+    color: var(--steel);
+  }
+
+  /* ---------- Franja de imagen a sangre ---------- */
+
+  .bleed-figure {
+    margin: 0;
+  }
+
+  .bleed-figure :global(.photo-slot),
+  .bleed-figure :global(.photo-slot-placeholder) {
     display: block;
+    border-radius: 0;
   }
 
-  .wide-image figcaption {
+  .bleed-figure figcaption {
+    text-align: center;
     margin-top: var(--space-3);
-    padding-inline: clamp(20px, 5vw, 56px);
     font-family: var(--font-display);
     font-style: italic;
     font-weight: 500;
     font-size: 15px;
     color: var(--fg-muted);
+  }
+
+  /* ---------- Cómo trabajamos: el método ---------- */
+
+  .method-band {
+    padding-block: clamp(var(--space-7), 8vw, var(--space-9));
+  }
+
+  .method-lead {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(19px, 2.3vw, 26px);
+    line-height: 1.5;
+    color: var(--ink-fg);
+    max-width: 44ch;
+    margin: 0 0 var(--space-7);
+  }
+
+  .method-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6) var(--space-6);
+  }
+
+  @media (max-width: 860px) {
+    .method-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 520px) {
+    .method-list {
+      grid-template-columns: 1fr;
+      gap: var(--space-5);
+    }
+  }
+
+  .method-item {
+    border-top: 1px solid var(--ink-line-strong);
+    padding-top: var(--space-3);
+  }
+
+  .method-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1;
+    color: var(--eyebrow-accent);
+  }
+
+  .method-term {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(18px, 1.9vw, 21px);
+    color: var(--ink-fg);
+    margin: var(--space-2) 0 var(--space-1);
+  }
+
+  .method-note {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--ink-fg-muted);
+    margin: 0;
+  }
+
+  /* ---------- El nombre ---------- */
+
+  .name-section .eyebrow,
+  .name-section p {
     text-align: center;
-  }
-
-  .wide-image-light {
-    margin-top: clamp(var(--space-7), 6vw, var(--space-8));
-    margin-bottom: 0;
-  }
-
-  .wide-image-small {
-    max-width: 420px;
-    padding-inline: 0;
-  }
-
-  .wide-image-small figcaption {
-    padding-inline: 0;
-  }
-
-  .subway-image {
-    max-width: 520px;
-    /* Pulled tight to "El nombre" below — the big default wide-image gap
-       left this photo stranded in whitespace. */
-    margin-bottom: var(--space-4);
-  }
-
-  /* ---------- The Name ---------- */
-
-  .name-section {
-    margin-top: 0;
-    padding-top: var(--space-5);
   }
 
   .story-video-figure {
@@ -375,9 +455,10 @@ const answers = [
     margin-top: var(--space-2);
     font-size: 12.5px;
     color: var(--fg-muted);
+    text-align: center;
   }
 
-  /* ---------- Mission / Vision ---------- */
+  /* ---------- Misión / Visión ---------- */
 
   .mv-grid {
     display: grid;
@@ -390,10 +471,6 @@ const answers = [
       grid-template-columns: 1fr;
       gap: var(--space-6);
     }
-  }
-
-  .mv-col {
-    text-align: center;
   }
 
   .mv-col-divided {
@@ -425,25 +502,44 @@ const answers = [
     font-size: clamp(19px, 2vw, 23px);
     line-height: 1.4;
     color: var(--ink-fg);
-    max-width: 36ch;
-    margin-inline: auto;
+    max-width: 40ch;
+    margin: 0;
   }
 
-  /* ---------- Closer ---------- */
+  /* ---------- Cierre ---------- */
 
-  .closer-section {
-    text-align: center;
+  .closer-inner {
+    display: grid;
+    grid-template-columns: minmax(220px, 320px) 1fr;
+    gap: clamp(28px, 5vw, 64px);
+    align-items: center;
   }
 
-  .closer {
-    display: inline-block;
-    border-left: none;
-    padding-left: 0;
-    font-size: clamp(24px, 3vw, 32px);
+  @media (max-width: 720px) {
+    .closer-inner {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
+    .closer-figure {
+      max-width: 300px;
+      margin-inline: auto;
+    }
   }
 
-  .closer-section .linkline {
-    margin-top: var(--space-3);
+  .closer-figure {
+    margin: 0;
+  }
+
+  .closer-line {
+    font-size: clamp(23px, 3vw, 32px);
+    margin: 0 0 var(--space-3);
+  }
+
+  @media (max-width: 720px) {
+    .closer-line {
+      border-left: none;
+      padding-left: 0;
+    }
   }
 
   .cta-inner {
