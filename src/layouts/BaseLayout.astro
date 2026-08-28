@@ -70,7 +70,12 @@ const orgSchema = {
     <link rel="alternate" hreflang="en" href={alternates.en} />
     {hasEs && <link rel="alternate" hreflang="es" href={alternates.es} />}
     <link rel="alternate" hreflang="x-default" href={alternates.en} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1d2a1e" />
 
     <meta property="og:site_name" content="The Jentosy Project" />
     <meta property="og:title" content={pageTitle} />

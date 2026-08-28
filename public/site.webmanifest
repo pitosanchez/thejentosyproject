@@ -1,0 +1,14 @@
+{
+  "name": "The Jentosy Project",
+  "short_name": "Jentosy Project",
+  "description": "Advancing kidney health equity for underserved communities, starting in the Bronx.",
+  "icons": [
+    { "src": "/icon-192.png", "type": "image/png", "sizes": "192x192", "purpose": "any" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
+    { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
+  ],
+  "theme_color": "#1d2a1e",
+  "background_color": "#f6f2e8",
+  "display": "standalone",
+  "start_url": "/"
+}

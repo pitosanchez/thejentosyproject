@@ -40,7 +40,10 @@ const isActive = (href: string) =>
 
 <header class="site-nav on-dark">
   <div class="container nav-row">
-    <a href={homeHref} class="wordmark">The Jentosy Project</a>
+    <a href={homeHref} class="wordmark">
+      <img class="wordmark-mark" src="/logo-light.png" alt="" width="36" height="36" />
+      <span class="wordmark-text">The Jentosy Project</span>
+    </a>
 
     <nav class="desktop-nav" aria-label={t("nav.primaryLabel")}>
       <ul>
@@ -185,6 +188,9 @@ const isActive = (href: string) =>
 
   .wordmark {
     justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 18px;
@@ -192,14 +198,25 @@ const isActive = (href: string) =>
     text-transform: uppercase;
     text-decoration: none;
     color: var(--ink-fg);
-    white-space: nowrap;
     /* A grid item's own 1fr track won't shrink below its content's
        natural size by default (min-width:auto) — on a narrow-enough
        phone this pushed the Donate button in the next 1fr track past
        the viewport edge instead of ever letting the wordmark itself
        shrink. min-width:0 lets the track actually shrink; overflow +
-       ellipsis is the fallback if it still doesn't fit. */
+       ellipsis on the text is the fallback if it still doesn't fit. */
     min-width: 0;
+  }
+
+  .wordmark-mark {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    display: block;
+  }
+
+  .wordmark-text {
+    min-width: 0;
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -492,8 +509,14 @@ const isActive = (href: string) =>
 
   @media (max-width: 480px) {
     .wordmark {
+      gap: 8px;
       font-size: 12.5px;
       letter-spacing: 0.05em;
+    }
+
+    .wordmark-mark {
+      width: 28px;
+      height: 28px;
     }
 
     .nav-donate {
@@ -503,6 +526,20 @@ const isActive = (href: string) =>
 
     .menu-trigger-label {
       font-size: 14px;
+    }
+  }
+
+  /* On phones the wordmark text can't share the bar with Menu + Donate +
+     the language toggle — keep the JP mark, drop the text (the mark is
+     still a link home). The full lockup returns on wider screens. */
+  @media (max-width: 560px) {
+    .wordmark-text {
+      display: none;
+    }
+
+    .wordmark-mark {
+      width: 30px;
+      height: 30px;
     }
   }
 </style>

@@ -5,7 +5,8 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 <BaseLayout title="Página no encontrada" description="No se pudo encontrar esta página.">
   <section class="on-dark not-found-section">
     <div class="container not-found-inner">
-      <p class="eyebrow reveal">404</p>
+      <img class="not-found-mark reveal" src="/logo-light.png" alt="The Jentosy Project" width="64" height="64" />
+      <p class="eyebrow reveal" style="--reveal-delay:0.04s;">404</p>
       <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">
         No encontramos esa página.
       </h1>
@@ -32,6 +33,13 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
     max-width: 520px;
     text-align: center;
     margin-inline: auto;
+  }
+
+  .not-found-mark {
+    width: 60px;
+    height: 60px;
+    display: block;
+    margin: 0 auto var(--space-5);
   }
 
   .not-found-inner .lede {

@@ -10,7 +10,10 @@ const L = (path: string) => localeHref(path, lang);
 <footer class="site-footer on-dark">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <p class="wordmark">The Jentosy Project</p>
+      <p class="wordmark">
+        <img class="footer-mark" src="/logo-light.png" alt="" width="32" height="32" />
+        <span>The Jentosy Project</span>
+      </p>
       <p class="tagline">{t("cta.tagline")}</p>
     </div>
 
@@ -61,12 +64,22 @@ const L = (path: string) => localeHref(path, lang);
   }
 
   .footer-brand .wordmark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 17px;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin: 0 0 var(--space-3);
+  }
+
+  .footer-mark {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: block;
   }
 
   .footer-brand .tagline {
