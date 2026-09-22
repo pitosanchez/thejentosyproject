@@ -17,7 +17,9 @@
   --ink-line: #324232;
   --ink-line-strong: #445544;
   --ink-fg: #f3eedd;
-  --ink-fg-muted: rgba(243, 238, 221, 0.72);
+  /* Opacity raised from 0.72 → 0.84 to match --fg-muted (see note there) —
+     same color, brighter against --ink so dark-band copy stops washing out. */
+  --ink-fg-muted: rgba(243, 238, 221, 0.84);
 
   /* Light — informative reading sections */
   --paper: #f6f2e8;
@@ -26,7 +28,10 @@
   --line-strong: #c3b696;
   --fg: #262a21;
   --fg-soft: #3a4032;
-  --fg-muted: rgba(38, 42, 33, 0.72);
+  /* Opacity raised from 0.72 → 0.84 (2026-09-22, brighten pass): same
+     color, just less washed out — the old value left every secondary
+     line (labels, nav, footer, card copy) reading faint against paper. */
+  --fg-muted: rgba(38, 42, 33, 0.84);
 
   /* Accents — two distinct jobs, not one accent doing everything.
      Verified against WCAG 2.2 AA (4.5:1 text, 3:1 UI components) via
@@ -200,6 +205,7 @@ h3,
 }
 
 p {
+  font-size: 16.5px;
   margin: 0 0 var(--space-4);
   max-width: var(--reading-max);
 }
@@ -209,7 +215,7 @@ p:last-child {
 }
 
 .lede {
-  font-size: clamp(16px, 1.6vw, 19px);
+  font-size: clamp(17px, 1.7vw, 20px);
   line-height: 1.65;
   color: var(--fg-muted);
 }
@@ -300,6 +306,10 @@ p:last-child {
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
   padding: var(--space-5);
+  /* Soft elevation so cards visibly separate from --paper instead of
+     reading as a same-tone rectangle with a hairline around it — the two
+     backgrounds are close in value, so a border alone stayed too flat. */
+  box-shadow: 0 1px 2px rgba(29, 42, 30, 0.04), 0 10px 22px -14px rgba(29, 42, 30, 0.22);
 }
 
 .card-steel {
