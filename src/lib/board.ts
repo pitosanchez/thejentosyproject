@@ -4,8 +4,10 @@ import path from "node:path";
 /**
  * The Jentosy Project Board of Directors — the single source of truth.
  *
- * Every page that shows board members (Meet The Team's full flip cards,
- * and anything added later) imports from here. Add a member to this array
+ * Every page that shows board members (Meet The Team's card grid, each
+ * member's own profile page, and anything added later) imports from here.
+ * A new member also needs their /about/team/<slug>/ path added to
+ * src/i18n/pages.ts so the language toggle offers the Spanish twin. Add a member to this array
  * once and they appear everywhere automatically, in this order.
  *
  * `officerTitle` is the person's role *on this board* (Chair, Treasurer,
@@ -14,6 +16,8 @@ import path from "node:path";
  * until the founder confirms board officer designations.
  */
 export interface BoardMember {
+  /** URL slug for the member's own page: /about/team/<slug>/ (and /es/…). */
+  slug: string;
   /** Full name as displayed, including post-nominals (e.g. "Junelle Speller, MBA"). */
   name: string;
   /** Outside professional role — shown under the name on every surface. */
@@ -24,7 +28,7 @@ export interface BoardMember {
   officerTitle?: string;
   /** Absolute path from /public, e.g. "/images/daryl.jpeg". */
   photo: string;
-  /** Full biography — shown on Meet The Team's card back. */
+  /** Full biography — shown on the member's own page (/about/team/<slug>/). */
   bio: string;
   /** Spanish translation of `bio` (machine-drafted, under review — see i18n map). */
   bioEs: string;
@@ -32,6 +36,7 @@ export interface BoardMember {
 
 const board: BoardMember[] = [
   {
+    slug: "daryl-spivey",
     name: "Daryl Spivey",
     role: "Writer / Executive Producer",
     roleEs: "Escritor / Productor ejecutivo",
@@ -40,6 +45,7 @@ const board: BoardMember[] = [
     bioEs: "Daryl Spivey es un escritor y productor galardonado que comenzó su carrera en Wall Street como analista de segmentos de mercado. Daryl ha ganado 4 premios Telly, incluidos dos Telly de Oro por dirección/producción mientras lideraba el desarrollo en Al Roker Entertainment, recibió una nominación al EMMY en 2019 y obtuvo un premio AURORA a la excelencia cinematográfica por el documental Thread, de Baltimore, Maryland. Su largometraje, Greenwood Avenue, está actualmente en producción con Hill Harper como director. Otros proyectos incluyen colaboraciones creativas con el ícono musical Ludacris, Mary J. Blige, el autor superventas Nelson DeMille y NBA Entertainment. Daryl también es productor ejecutivo, junto al nominado al Óscar Edward James Olmos y el Harvard Institute for Race and Justice, de una serie documental centrada en la historia de la raza en Estados Unidos.",
   },
   {
+    slug: "junelle-speller",
     name: "Junelle Speller, MBA",
     role: "Chief Strategy Officer, GlomCon Foundation",
     roleEs: "Directora de Estrategia, GlomCon Foundation",
@@ -48,6 +54,7 @@ const board: BoardMember[] = [
     bioEs: "Junelle Speller, MBA, es directora de Estrategia de la GlomCon Foundation, donde lidera la estrategia organizacional, los programas de investigación, el alcance comunitario y las alianzas globales para mejorar la atención y los resultados de las personas con enfermedades glomerulares y renales poco frecuentes. Tiene más de 25 años de experiencia que abarca políticas de salud, estrategia empresarial, infraestructura de investigación y liderazgo en organizaciones sin fines de lucro. Antes de unirse a GlomCon, la Sra. Speller fue vicepresidenta sénior de Estrategia de Atención Médica en NORC de la Universidad de Chicago y vicepresidenta de Investigación en la Pulmonary Fibrosis Foundation, donde dirigió iniciativas nacionales de registros de enfermedades poco frecuentes. Su carrera también incluye cargos de liderazgo en consultoría de gestión, tecnología de la salud y políticas de salud, incluidos casi 15 años en la American Academy of Pediatrics. Receptora de dos trasplantes de riñón, la Sra. Speller aporta una experiencia vivida que nutre su trabajo en estrategia de salud, investigación y generación de evidencia. Forma parte del Comité de Asuntos de Pacientes de la OPTN, es coinvestigadora paciente en un estudio financiado por PCORI y ha presentado en importantes congresos internacionales, incluido KDIGO. La Sra. Speller tiene una licenciatura en biología de la Universidad de Yale y un MBA de la Kellogg School of Management de la Universidad Northwestern.",
   },
   {
+    slug: "josh-fessel",
     name: "Dr. Josh Fessel",
     role: "Physician-Scientist",
     roleEs: "Médico e investigador científico",
@@ -56,6 +63,7 @@ const board: BoardMember[] = [
     bioEs: "Soy médico, científico, docente, asesor y servidor agradecido. Mis grandes metas son desarrollar formas más eficaces de convertir los descubrimientos en acciones para tratar y prevenir enfermedades de todo tipo, y llevar esas acciones basadas en descubrimientos a tantas personas como sea posible, por una mejor salud para todos. Tengo experiencia en todos los aspectos de la investigación clínica y traslacional, incluidos los ensayos clínicos, los aspectos operativos de la investigación clínica, la protección de sujetos humanos, la bioética, la investigación con macrodatos y datos del mundo real, la inteligencia artificial en entornos biomédicos y de atención de la salud, y la política de investigación clínica. Mi especialidad clínica es la enfermedad pulmonar y la medicina de cuidados intensivos (UCI). Mi propia investigación se centró en el estudio de los mecanismos que controlan el metabolismo a nivel molecular, y en cómo el metabolismo anormal y la función mitocondrial contribuyen a enfermedades como la hipertensión pulmonar, la insuficiencia cardíaca, la sepsis, el delirio por enfermedad crítica, el cáncer, la fibrosis pulmonar y otras enfermedades complejas.",
   },
   {
+    slug: "glenda-roberts",
     name: "Glenda V. Roberts",
     role: "Director of Communications & Patient Engagement, Mount Sinai Center for Kidney Disease Innovation, Icahn School of Medicine at Mount Sinai",
     roleEs: "Directora de Comunicaciones y Participación de Pacientes, Mount Sinai Center for Kidney Disease Innovation, Icahn School of Medicine at Mount Sinai",
@@ -79,3 +87,25 @@ export function getBoard(lang: "en" | "es" = "en") {
 }
 
 export default board;
+
+const ABBREVIATIONS = /\b(?:Ms|Mr|Mrs|Dr|Sr|Sra|Srta|St)\.$/;
+
+/**
+ * Split a one-string bio into readable paragraphs of ~`perParagraph`
+ * sentences. Sentence breaks after honorifics ("Ms.", "Dr.", "Sra.") are
+ * rejoined so a name is never split from its title.
+ */
+export function bioParagraphs(bio: string, perParagraph = 3): string[] {
+  const raw = bio.split(/(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ"“])/u);
+  const sentences: string[] = [];
+  for (const piece of raw) {
+    const prev = sentences[sentences.length - 1];
+    if (prev && ABBREVIATIONS.test(prev)) sentences[sentences.length - 1] = `${prev} ${piece}`;
+    else sentences.push(piece);
+  }
+  const paragraphs: string[] = [];
+  for (let i = 0; i < sentences.length; i += perParagraph) {
+    paragraphs.push(sentences.slice(i, i + perParagraph).join(" "));
+  }
+  return paragraphs;
+}

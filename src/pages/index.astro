@@ -93,8 +93,8 @@ const howItWorks = [
   <section class="on-dark bronx-stats">
     <div class="container">
       <p class="eyebrow reveal">Kidney Disease, By The Numbers</p>
-      <h2 class="h2 reveal" style="--reveal-delay:0.06s; font-size:clamp(22px,2.6vw,28px);">
-        Kidney disease doesn't fall on every community equally.
+      <h2 class="h2 reveal" style="--reveal-delay:0.06s;">
+        Kidney disease doesn't fall on every community <span class="hl">equally.</span>
       </h2>
       <p class="lede reveal" style="--reveal-delay:0.12s; max-width:58ch;">
         Black and Brown communities carry a disproportionate share of kidney failure and
@@ -140,7 +140,7 @@ const howItWorks = [
   <section class="on-light section-tight">
     <div class="container">
       <p class="eyebrow">Who This Is For</p>
-      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">Five audiences, one shared goal.</h2>
+      <h2 class="h2">Five audiences, <span class="hl">one shared goal.</span></h2>
       <div class="grid audience-grid">
         {audiences.map((a, i) => (
           <a
@@ -164,7 +164,7 @@ const howItWorks = [
        between. This restores the storytelling thread at the exact seam
        where it was cut, and gives "Patients & Families" above somewhere to
        land emotionally before the disease facts start. -->
-  <section class="on-dark story-bridge">
+  <section class="on-dark on-soft story-bridge">
     <div class="container story-bridge-inner">
       <img
         class="story-bridge-photo"
@@ -196,7 +196,7 @@ const howItWorks = [
     <div class="container need-stack-inner">
       <div class="need-stack-text">
         <p class="eyebrow">Kidney Disease</p>
-        <h2 class="h2">Rare kidney disease, plainly explained.</h2>
+        <h2 class="h2">Rare kidney disease, <span class="hl">plainly explained.</span></h2>
         <p class="lede" style="max-width:52ch;">
           Kidney disease disparities are downstream of poverty, unequal access to education,
           incarceration, broken homes, and the chronic stress those conditions produce. The
@@ -222,8 +222,8 @@ const howItWorks = [
   <section class="on-light section-tight teaser-band">
     <div class="container">
       <p class="eyebrow">How It Works</p>
-      <h2 class="h2" style="font-size:clamp(22px,2.6vw,28px);">
-        Education and outreach in the Bronx — expanding over time.
+      <h2 class="h2">
+        Education and outreach <span class="hl">in the Bronx</span> — expanding over time.
       </h2>
       <p class="lede" style="max-width:56ch;">
         Our current focus is education and health equity: reaching people before they reach the
@@ -246,10 +246,10 @@ const howItWorks = [
   </section>
 
   <!-- CLOSING CTA — dark band -->
-  <section class="on-dark section-tight cta-band">
+  <section class="on-dark on-soft section-tight cta-band">
     <div class="container cta-inner">
       <div class="reveal">
-        <h2 class="h2">Fund it. Partner with it. Be part of it.</h2>
+        <h2 class="h2">Fund it. Partner with it. <span class="hl">Be part of it.</span></h2>
         <p class="lede">
           A funder, researcher, or healthcare partner should be able to understand why this work
           matters in minutes — and a supporter should be able to act in seconds.
@@ -306,12 +306,15 @@ const howItWorks = [
   .hero-scrim {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(20,29,21,0.56) 0%, rgba(20,29,21,0.58) 45%, rgba(20,29,21,0.78) 100%);
+    background: linear-gradient(180deg, rgba(10,12,10,0.30) 0%, rgba(10,12,10,0.50) 45%, rgba(10,12,10,0.60) 100%);
   }
 
   .hero-inner {
     position: relative;
     z-index: 2;
+    /* Scrim was lightened in the 2026-11-24 brighten pass; this soft shadow
+       keeps the copy legible over the busier, brighter photo. */
+    text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7), 0 0 2px rgba(0, 0, 0, 0.5);
     padding-block: clamp(var(--space-7), 8vw, var(--space-9));
     max-width: 760px;
   }
@@ -353,9 +356,9 @@ const howItWorks = [
   }
 
   .stat-suffix {
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: clamp(18px, 2vw, 22px);
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(22px, 2.6vw, 30px);
     color: var(--eyebrow-accent);
   }
 
@@ -449,7 +452,7 @@ const howItWorks = [
     padding: var(--space-6) var(--space-5);
     background: var(--card);
     border-radius: 16px;
-    box-shadow: 0 1px 2px rgba(29, 42, 30, 0.05), 0 20px 32px -16px rgba(29, 42, 30, 0.22);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 20px 32px -16px rgba(0, 0, 0, 0.22);
     text-decoration: none;
     color: inherit;
     transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
@@ -457,7 +460,7 @@ const howItWorks = [
 
   .audience-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 4px 10px rgba(29, 42, 30, 0.08), 0 30px 44px -16px rgba(29, 42, 30, 0.28);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08), 0 30px 44px -16px rgba(0, 0, 0, 0.28);
   }
 
   .audience-card-index {

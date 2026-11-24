@@ -7,7 +7,7 @@
     { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "any" },
     { "src": "/icon-512.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
   ],
-  "theme_color": "#1d2a1e",
+  "theme_color": "#0d0d0d",
   "background_color": "#f6f2e8",
   "display": "standalone",
   "start_url": "/"

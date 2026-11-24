@@ -257,7 +257,7 @@ const dataGapsWeak = [
   <section id="apol1" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">APOL1: Genetics, Ancestry, and Kidney Health</p>
-      <h2 class="h2">A gene, not a group.</h2>
+      <h2 class="h2">A gene, <span class="hl">not a group.</span></h2>
       <p>
         APOL1 is a gene. Certain APOL1 variants arose in populations with ancestry from regions of
         sub-Saharan Africa because they provided protection against some forms of African
@@ -403,10 +403,10 @@ const dataGapsWeak = [
 
   <!-- ============ DATA GAPS ============ -->
 
-  <section id="data-gaps" class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+  <section id="data-gaps" class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
     <div class="container">
       <p class="eyebrow">What We Still Don't Know Well Enough</p>
-      <h2 class="h2" style="color:var(--ink-fg);">Missing data is also data.</h2>
+      <h2 class="h2" style="color:var(--ink-fg);">Missing data is <span class="hl">also data.</span></h2>
       <p class="lede" style="max-width:64ch;">
         Publicly accessible health surveillance gives us strong Bronx information about several
         conditions. For the questions at the center of this organization's work, that surveillance
@@ -489,8 +489,9 @@ const dataGapsWeak = [
   }
 
   .stat-value-inline {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-weight: 800;
+    letter-spacing: -0.02em;
     font-size: clamp(36px, 4.5vw, 48px);
     color: var(--rust);
     line-height: 1;

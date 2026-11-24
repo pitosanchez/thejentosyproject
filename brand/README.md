@@ -11,7 +11,7 @@ Original logo assets supplied by the founder (2026-08-28). Not deployed —
 Generated, deployed assets live in `public/`:
 `favicon.ico`, `favicon.svg` (light/dark adaptive), `favicon-16/32.png`,
 `apple-touch-icon.png`, `icon-192/512.png`, `site.webmanifest`,
-`logo.png` (green, transparent), `logo-light.png` (cream, for dark surfaces),
+`logo.png` (black #0d0d0d, transparent — recolored from forest green 2026-11-24), `logo-light.png` (cream, for dark surfaces),
 `logo-fine.png`, and the `og-image*.jpg` share cards.
 
 To regenerate after a logo change, re-run the ImageMagick steps from the

@@ -11,27 +11,39 @@
    ============================================================ */
 
 :root {
-  /* Dark — nav, hero, CTA bands, footer (the bold opening) */
-  --ink: #1d2a1e;
-  --ink-soft: #263624;
-  --ink-line: #324232;
-  --ink-line-strong: #445544;
-  --ink-fg: #f3eedd;
+  /* Dark — nav, heroes, footer. Deep navy since 2026-11-24 (was forest
+     green #0d0d0d; founder: "I don't like that forest green"). The whole
+     green family moved to blue with it: --steel, --sage tint, --fg. */
+  --ink: #0d0d0d;
+  --ink-soft: #1a1a1a;
+  --ink-line: #2b2b2b;
+  --ink-line-strong: #444444;
+  --ink-fg: #f5f2ea;
   /* Opacity raised from 0.72 → 0.84 to match --fg-muted (see note there) —
      same color, brighter against --ink so dark-band copy stops washing out. */
-  --ink-fg-muted: rgba(243, 238, 221, 0.84);
+  --ink-fg-muted: rgba(245, 242, 234, 0.84);
 
   /* Light — informative reading sections */
-  --paper: #f6f2e8;
-  --card: #eee7d6;
-  --line: #ded3b6;
-  --line-strong: #c3b696;
-  --fg: #262a21;
-  --fg-soft: #3a4032;
+  /* Brightened 2026-11-24: paper moved from a yellowed cream (#f6f2e8)
+     to a clean warm white, and cards went from a *darker* tan (#eee7d6,
+     which made every card look dingy against the page) to white, so
+     cards lift off the page instead of sinking into it. */
+  --paper: #ffffff;
+  --card: #ffffff;
+  --line: #e4e2dc;
+  --line-strong: #c6c7c0;
+
+  /* Soft band — light sage from the same forest family as --ink. Used by
+     .on-soft to turn a mid-page "dark band" light without touching its
+     markup; see the .on-soft rule below. */
+  --sage: #f3f2ee;
+  --sage-line: #dedcd5;
+  --fg: #111111;
+  --fg-soft: #333333;
   /* Opacity raised from 0.72 → 0.84 (2026-09-22, brighten pass): same
      color, just less washed out — the old value left every secondary
      line (labels, nav, footer, card copy) reading faint against paper. */
-  --fg-muted: rgba(38, 42, 33, 0.84);
+  --fg-muted: rgba(17, 17, 17, 0.84);
 
   /* Accents — two distinct jobs, not one accent doing everything.
      Verified against WCAG 2.2 AA (4.5:1 text, 3:1 UI components) via
@@ -40,13 +52,24 @@
      UI element directly on the dark --ink background (that tension
      couldn't be solved by one color at both jobs) — dark-background
      outline elements use --ink-fg instead; see .btn-steel-outline. */
-  --rust: #83592b;
-  --rust-hover: #6e4a23;
+  /* --rust was #83592b (a muddy brown). Now a clearer amber — still the
+     text/link/eyebrow color on LIGHT backgrounds, where it must clear
+     4.5:1 (5.58 on paper, 5.16 on sage, 5.87 on white). The bright
+     marigold below can't do that job (1.6:1 on paper), so the two split:
+     --gold for fills + text on dark, --rust for text on light. */
+  --rust: #8c5a00;
+  --rust-hover: #734a00;
   --rust-ink: #fbf6ec;
-  --steel: #446040;
-  --steel-hover: #374d34;
-  --steel-ink: #f3eedd;
-  --eyebrow-accent: #e7dfc8;
+  --steel: #111111;
+  --steel-hover: #333333;
+  --steel-ink: #ffffff;
+  /* Signature pop color (2026-11-24, after healthhopehiphop.org's single
+     vivid accent): Donate/primary buttons, stats, eyebrows on dark,
+     highlighter strokes. 8.89:1 against --ink either way round. */
+  --gold: #f5c02e;
+  --gold-hover: #e6ae12;
+  --gold-ink: #0d0d0d;
+  --eyebrow-accent: var(--gold);
 
   /* --rust itself is 2.45:1 on --ink — fails even the 3:1 large-text
      minimum, which is exactly why nothing above uses it directly on the
@@ -54,7 +77,7 @@
      clears 4.5:1 (4.69:1, verified in contrast-check.mjs), for the one
      spot (the full-screen nav menu) that wants a rust-family hover on
      dark without failing AA. */
-  --rust-on-dark: #a88b6b;
+  --rust-on-dark: var(--gold);
 
   /* Type — Cormorant Garamond for every heading (elegant serif,
      mixed case for h1/h3, tracked uppercase for h2), Work Sans for
@@ -193,10 +216,30 @@ h3,
 
 /* Section titles read as a tracked, uppercase serif label rather than
    a mixed-case headline — the editorial "POLANKI 112" pattern. */
+/* Section titles: bold sans, mixed case (2026-11-24 hybrid type
+   decision). Page titles (.h1) and card titles (.h3) stay in the serif,
+   so the brand keeps its warmth while section titles get punch. Was a
+   tracked uppercase serif. */
 .h2 {
-  font-size: clamp(24px, 2.8vw, 38px);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: clamp(26px, 3vw, 42px);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+
+/* Highlighter stroke under a key word or phrase in a heading — wrap it
+   in <span class="hl">. Drawn as a soft hand-made marker swipe in
+   --gold behind the lower part of the text; text color is unchanged,
+   so contrast is the text's own. */
+.hl {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 20' preserveAspectRatio='none'%3E%3Cpath d='M3 13 C 40 7, 90 9, 130 8 S 185 10, 197 7 L 196 16 C 160 18, 110 15, 70 17 S 15 18, 4 18 Z' fill='%23f5c02e'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: 100% 0.5em;
+  background-position: 0 92%;
+  padding-inline: 0.06em;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 .h3 {
@@ -239,6 +282,7 @@ p:last-child {
 
 .btn {
   display: inline-flex;
+  text-shadow: none;
   align-items: center;
   gap: var(--space-2);
   font-family: var(--font-body);
@@ -246,8 +290,8 @@ p:last-child {
   font-size: 12px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 15px 30px;
-  border-radius: var(--radius-sm);
+  padding: 16px 32px;
+  border-radius: var(--radius-pill);
   border: 1px solid transparent;
   text-decoration: none;
   cursor: pointer;
@@ -263,12 +307,13 @@ p:last-child {
 }
 
 .btn-rust {
-  background: var(--rust);
-  color: var(--rust-ink);
+  background: var(--gold);
+  color: var(--gold-ink);
+  font-weight: 700;
 }
 
 .btn-rust:hover {
-  background: var(--rust-hover);
+  background: var(--gold-hover);
   opacity: 1;
 }
 
@@ -286,7 +331,7 @@ p:last-child {
   border-color: var(--ink-fg);
   color: var(--ink-fg);
   opacity: 1;
-  background: rgba(243, 238, 221, 0.08);
+  background: rgba(245, 242, 234, 0.08);
 }
 
 .btn-steel {
@@ -309,7 +354,7 @@ p:last-child {
   /* Soft elevation so cards visibly separate from --paper instead of
      reading as a same-tone rectangle with a hairline around it — the two
      backgrounds are close in value, so a border alone stayed too flat. */
-  box-shadow: 0 1px 2px rgba(29, 42, 30, 0.04), 0 10px 22px -14px rgba(29, 42, 30, 0.22);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 10px 22px -14px rgba(0, 0, 0, 0.22);
 }
 
 .card-steel {
@@ -325,6 +370,24 @@ p:last-child {
 .on-dark {
   background: var(--ink);
   color: var(--ink-fg);
+}
+
+/* .on-soft — add next to .on-dark ("on-dark on-soft") to render a band
+   light. Every component styled for dark bands reads the --ink* tokens,
+   so re-scoping those tokens here flips the whole band (text, rules,
+   eyebrows, outline buttons) with no per-component CSS. Added in the
+   2026-11-24 brighten pass: dark is now reserved for the bookends — nav,
+   page heroes, footer — instead of alternating dark/light all page long
+   (the home page was 58% dark green before this). */
+.on-soft {
+  --ink: var(--sage);
+  --ink-soft: #e9e7e1;
+  --ink-line: var(--sage-line);
+  --ink-line-strong: #c4c1b8;
+  --ink-fg: var(--fg);
+  --ink-fg-muted: var(--fg-muted);
+  --eyebrow-accent: var(--rust);
+  --rust-on-dark: var(--rust);
 }
 
 .on-light {
@@ -398,9 +461,11 @@ p:last-child {
 /* ---------- Stat cluster ---------- */
 
 .stat-num {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: clamp(28px, 4vw, 36px);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: clamp(44px, 5.5vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: var(--eyebrow-accent);
   font-variant-numeric: tabular-nums;
 }
@@ -909,7 +974,7 @@ p:last-child {
   right: 10%;
   bottom: -10px;
   height: 16px;
-  background: radial-gradient(ellipse at center, rgba(38, 42, 33, 0.28), rgba(38, 42, 33, 0) 72%);
+  background: radial-gradient(ellipse at center, rgba(17, 17, 17, 0.28), rgba(17, 17, 17, 0) 72%);
   filter: blur(5px);
   z-index: -1;
   opacity: 0;
@@ -931,12 +996,12 @@ p:last-child {
   padding: var(--space-4) var(--space-3);
   transform-style: preserve-3d;
   transition: transform 0.15s linear, box-shadow var(--dur-med) var(--ease), border-top-color var(--dur-med) var(--ease);
-  box-shadow: 0 6px 14px rgba(38, 42, 33, 0.1);
+  box-shadow: 0 6px 14px rgba(17, 17, 17, 0.1);
 }
 
 .stage:hover .stage-inner,
 .stage:focus-within .stage-inner {
-  box-shadow: 0 16px 28px rgba(38, 42, 33, 0.2);
+  box-shadow: 0 16px 28px rgba(17, 17, 17, 0.2);
 }
 
 .stage.is-failure .stage-inner {
@@ -1096,4 +1161,19 @@ p:last-child {
   margin-top: var(--space-4);
   font-size: 11.5px;
   color: var(--ink-fg-muted);
+}
+
+/* On true-dark bands the light text can't sit on top of the gold, so the
+   highlighter drops to a thinner underline-style swipe beneath the words. */
+.on-dark:not(.on-soft) .hl {
+  background-size: 100% 0.2em;
+  background-position: 0 100%;
+  padding-bottom: 0.08em;
+}
+
+/* Breathing room between a section title and the copy right under it —
+   the bolder, larger sans titles crowded the lede at the old spacing. */
+.h2 + .lede,
+.h2 + p {
+  margin-top: var(--space-4);
 }

@@ -1,0 +1,20 @@
+---
+import BaseLayout from "../../../../layouts/BaseLayout.astro";
+import BoardMemberProfile from "../../../../components/BoardMemberProfile.astro";
+import { getBoard, bioParagraphs } from "../../../../lib/board";
+
+export function getStaticPaths() {
+  return getBoard("es").map((m) => ({ params: { slug: m.slug } }));
+}
+
+const { slug } = Astro.params;
+const person = getBoard("es").find((m) => m.slug === slug)!;
+const lead = bioParagraphs(person.bio, 1)[0];
+---
+
+<BaseLayout
+  title={`${person.name} — Junta directiva`}
+  description={`${person.name}, ${person.role}. ${lead}`.slice(0, 300)}
+>
+  <BoardMemberProfile slug={slug!} lang="es" />
+</BaseLayout>

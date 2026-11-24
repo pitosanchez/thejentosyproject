@@ -243,7 +243,7 @@ const dataGapsWeak = [
   <section id="apol1" class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="eyebrow">APOL1: genética, ascendencia y salud renal</p>
-      <h2 class="h2">Un gen, no un grupo.</h2>
+      <h2 class="h2">Un gen, <span class="hl">no un grupo.</span></h2>
       <p>
         APOL1 es un gen. Ciertas variantes de APOL1 surgieron en poblaciones con ascendencia de
         regiones del África subsahariana porque ofrecían protección contra algunas formas de
@@ -386,10 +386,10 @@ const dataGapsWeak = [
     </div>
   </section>
 
-  <section id="data-gaps" class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+  <section id="data-gaps" class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
     <div class="container">
       <p class="eyebrow">Lo que todavía no sabemos lo suficientemente bien</p>
-      <h2 class="h2" style="color:var(--ink-fg);">Los datos que faltan también son datos.</h2>
+      <h2 class="h2" style="color:var(--ink-fg);">Los datos que faltan <span class="hl">también son datos.</span></h2>
       <p class="lede" style="max-width:64ch;">
         La vigilancia de salud de acceso público nos da información sólida del Bronx sobre varias
         afecciones. Para las preguntas en el centro del trabajo de esta organización, esa
@@ -470,8 +470,9 @@ const dataGapsWeak = [
   }
 
   .stat-value-inline {
-    font-family: var(--font-display);
-    font-weight: 700;
+    font-family: var(--font-body);
+    font-weight: 800;
+    letter-spacing: -0.02em;
     font-size: clamp(36px, 4.5vw, 48px);
     color: var(--rust);
     line-height: 1;

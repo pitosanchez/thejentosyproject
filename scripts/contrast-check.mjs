@@ -25,22 +25,26 @@ function contrast(hex1, hex2) {
 
 // Current tokens (keep in sync with src/styles/global.css)
 const tokens = {
-  ink: "#1D2A1E",
-  paper: "#F6F2E8",
-  card: "#EEE7D6",
-  rust: "#83592B",
+  ink: "#0D0D0D", // black (forest green #1D2A1E → navy → black, 2026-11-24)
+  paper: "#FFFFFF",
+  card: "#FFFFFF",
+  sage: "#F3F2EE", // .on-soft band background (light warm gray; token name kept)
+  rust: "#8C5A00",
+  gold: "#F5C02E",
+  "gold-ink": "#0D0D0D",
   "rust-ink": "#FBF6EC",
-  "rust-on-dark": "#A88B6B",
-  steel: "#446040",
-  "steel-ink": "#F3EEDD",
-  "eyebrow-accent": "#E7DFC8",
-  fg: "#262A21",
-  "ink-fg": "#F3EEDD",
+  "rust-on-dark": "#F5C02E", // = --gold
+  steel: "#111111",
+  "steel-ink": "#FFFFFF",
+  "eyebrow-accent": "#F5C02E", // = --gold
+  fg: "#111111",
+  "ink-fg": "#F5F2EA",
 };
 
 const pairs = [
   ["rust text on paper", tokens.rust, tokens.paper, 4.5],
-  ["rust-ink on rust (Donate button)", tokens["rust-ink"], tokens.rust, 4.5],
+  ["gold-ink on gold (Donate / primary pill button)", tokens["gold-ink"], tokens.gold, 4.5],
+  ["gold text on ink (stats, eyebrows on dark)", tokens.gold, tokens.ink, 4.5],
   ["steel text on paper", tokens.steel, tokens.paper, 4.5],
   ["steel-ink on steel (btn-steel)", tokens["steel-ink"], tokens.steel, 4.5],
   ["ink-fg on ink (headline/body dark)", tokens["ink-fg"], tokens.ink, 4.5],
@@ -55,6 +59,12 @@ const pairs = [
   ["rust as left-border accent on card (UI component)", tokens.rust, tokens.card, 3.0],
   ["steel as left-border accent on card (UI component)", tokens.steel, tokens.card, 3.0],
   ["rust-on-dark as nav menu link hover on ink", tokens["rust-on-dark"], tokens.ink, 4.5],
+  // .on-soft bands re-scope --ink to --sage and --ink-fg to --fg, and
+  // --eyebrow-accent/--rust-on-dark to --rust (see global.css).
+  ["fg on sage (.on-soft body/headline)", tokens.fg, tokens.sage, 4.5],
+  ["rust on sage (.on-soft eyebrow/link)", tokens.rust, tokens.sage, 4.5],
+  ["steel on sage (.on-soft text)", tokens.steel, tokens.sage, 4.5],
+  ["fg as outline-button border on sage (UI component)", tokens.fg, tokens.sage, 3.0],
 ];
 
 console.log("label".padEnd(52), "ratio".padEnd(8), "required", "pass?");

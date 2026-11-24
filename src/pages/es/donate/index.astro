@@ -46,19 +46,19 @@ const supports = [
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">Por qué esto no puede esperar</p>
-      <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">La brecha que tu donación cierra.</h2>
+      <h2 class="h2">La brecha que <span class="hl">tu donación</span> cierra.</h2>
       <div class="grid donate-stats-grid">
         <StatTile
           value="4×"
           label="Mayor tasa de insuficiencia renal en personas negras que en personas blancas en EE. UU."
           source="Hoja informativa sobre la enfermedad renal crónica de los CDC, 2026 · USRDS 2023"
-          accent="#83592b"
+          accent="var(--gold)"
         />
         <StatTile
           value="87%"
           label="de los adultos en EE. UU. con enfermedad renal crónica podrían aún no saber que la tienen."
           source="Estadísticas de enfermedad renal del NIDDK para Estados Unidos, citando a los CDC"
-          accent="#446040"
+          accent="#111111"
         />
       </div>
     </div>
@@ -91,7 +91,7 @@ const supports = [
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
-      <h2 class="h2" style="font-size:clamp(20px,2.4vw,24px);">Qué financia tu donación</h2>
+      <h2 class="h2">Qué financia tu donación</h2>
       <ol class="donate-supports-list">
         {supports.map((s, i) => (
           <li class="donate-supports-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
@@ -110,11 +110,11 @@ const supports = [
     </div>
   </section>
 
-  <section class="on-dark section-tight donate-updates">
+  <section class="on-dark on-soft section-tight donate-updates">
     <div class="container donate-updates-inner reveal">
       <div class="donate-updates-text">
         <p class="eyebrow">¿No estás listo para donar hoy?</p>
-        <h2 class="h2" style="font-size:clamp(20px,2.4vw,26px);">Mantente al tanto.</h2>
+        <h2 class="h2">Mantente al tanto.</h2>
         <p class="lede">
           Enviaremos novedades ocasionales sobre el trabajo — nada más. También puedes{" "}
           <a href={L("/about/team/")} class="linkline-inline">conocer a la junta directiva y al equipo</a>{" "}

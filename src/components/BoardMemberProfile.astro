@@ -1,0 +1,276 @@
+---
+/**
+ * One board member's own page — opened by clicking their card on Meet The
+ * Team. Shared by /about/team/[slug] and /es/about/team/[slug] so the two
+ * languages can't drift.
+ *
+ * Entrance: the photo arrives centered in the column, then slides left into
+ * place while the bio fades in beside it (founder's brief: "click on the
+ * picture, then the picture slides to the left"). Centering uses container
+ * query units, so the slide distance is exact at any width. Stacked on
+ * small screens (no slide), and fully static under prefers-reduced-motion.
+ */
+import Breadcrumb from "./Breadcrumb.astro";
+import { getBoard, bioParagraphs } from "../lib/board";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  slug: string;
+  lang: "en" | "es";
+}
+const { slug, lang } = Astro.props;
+
+const board = getBoard(lang);
+const index = board.findIndex((m) => m.slug === slug);
+const person = board[index];
+const prev = board[(index - 1 + board.length) % board.length];
+const next = board[(index + 1) % board.length];
+const L = (p: string) => localeHref(p, lang);
+
+const copy =
+  lang === "es"
+    ? {
+        about: "Quiénes somos",
+        team: "Nuestro equipo",
+        eyebrow: "Junta directiva",
+        back: "Toda la junta directiva",
+        prev: "Anterior",
+        next: "Siguiente",
+        headshot: "Retrato de",
+      }
+    : {
+        about: "About",
+        team: "Meet The Team",
+        eyebrow: "Board of Directors",
+        back: "All board members",
+        prev: "Previous",
+        next: "Next",
+        headshot: "Headshot of",
+      };
+---
+
+<section class="on-light member">
+  <div class="container">
+    <Breadcrumb
+      items={[
+        { label: copy.about, href: L("/about/") },
+        { label: copy.team, href: L("/about/team/") },
+        { label: person.name },
+      ]}
+    />
+
+    <div class="member-grid">
+      <figure class="member-photo-frame">
+        {person.photoExists ? (
+          <img class="member-photo" src={person.photo} alt={`${copy.headshot} ${person.name}`} />
+        ) : (
+          <div class="member-photo member-photo-placeholder" aria-hidden="true"></div>
+        )}
+      </figure>
+
+      <div class="member-text">
+        <p class="eyebrow">{copy.eyebrow}</p>
+        <h1 class="member-name">{person.name}</h1>
+        <p class="member-role">{person.role}</p>
+        {person.officerTitle && <p class="member-officer">{person.officerTitle}</p>}
+
+        <div class="member-bio">
+          {bioParagraphs(person.bio).map((para) => <p>{para}</p>)}
+        </div>
+
+        <div class="member-actions">
+          <a href={L("/about/team/")} class="btn btn-steel">&larr; {copy.back}</a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="member-pager" aria-label={copy.eyebrow}>
+      <a href={L(`/about/team/${prev.slug}/`)} class="member-pager-link">
+        <span class="member-pager-dir">&larr; {copy.prev}</span>
+        <span class="member-pager-name">{prev.name}</span>
+      </a>
+      <a href={L(`/about/team/${next.slug}/`)} class="member-pager-link member-pager-next">
+        <span class="member-pager-dir">{copy.next} &rarr;</span>
+        <span class="member-pager-name">{next.name}</span>
+      </a>
+    </nav>
+  </div>
+</section>
+
+<style>
+  .member {
+    padding-block: var(--space-5) clamp(var(--space-7), 8vw, var(--space-9));
+  }
+
+  .member-grid {
+    container-type: inline-size;
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+    margin-top: var(--space-6);
+  }
+
+  .member-photo-frame {
+    margin: 0;
+    position: sticky;
+    top: var(--space-6);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 26px 48px -20px rgba(0, 0, 0, 0.45);
+    /* Arrive centered in the grid, then slide left into the photo column.
+       50cqw = half the grid's width; 50% = half this element's width. */
+    animation: member-photo-slide 1.05s var(--ease) 0.25s both;
+  }
+
+  @keyframes member-photo-slide {
+    from {
+      transform: translateX(calc(50cqw - 50%));
+    }
+    to {
+      transform: none;
+    }
+  }
+
+  .member-photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 22%;
+    display: block;
+  }
+
+  .member-photo-placeholder {
+    background: linear-gradient(160deg, var(--sage), var(--line));
+  }
+
+  .member-text {
+    animation: member-text-in 0.8s var(--ease) 0.85s both;
+  }
+
+  @keyframes member-text-in {
+    from {
+      opacity: 0;
+      transform: translateX(28px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  .member-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(38px, 4.4vw, 64px);
+    line-height: 1.05;
+    margin: 0;
+  }
+
+  .member-role {
+    margin: var(--space-4) 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--rust);
+    max-width: 60ch;
+  }
+
+  .member-officer {
+    margin: var(--space-2) 0 0;
+    font-weight: 600;
+  }
+
+  .member-bio {
+    margin-top: var(--space-6);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--line);
+  }
+
+  .member-bio p {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--fg-soft);
+  }
+
+  .member-actions {
+    margin-top: var(--space-6);
+  }
+
+  .member-pager {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-5);
+    margin-top: clamp(var(--space-7), 6vw, var(--space-8));
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line);
+  }
+
+  .member-pager-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    text-decoration: none;
+  }
+
+  .member-pager-next {
+    text-align: right;
+  }
+
+  .member-pager-dir {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  .member-pager-name {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: clamp(17px, 1.8vw, 22px);
+  }
+
+  .member-pager-link:hover .member-pager-name {
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 4px;
+  }
+
+  @media (max-width: 860px) {
+    .member-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .member-photo-frame {
+      position: static;
+      max-width: 420px;
+      animation-name: member-fade-up;
+    }
+
+    .member-text {
+      animation-delay: 0.35s;
+    }
+  }
+
+  @keyframes member-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .member-photo-frame,
+    .member-text {
+      animation: none;
+    }
+  }
+</style>

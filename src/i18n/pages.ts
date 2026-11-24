@@ -11,6 +11,11 @@ export const translatedPaths: ReadonlySet<string> = new Set([
   "/",
   "/about/",
   "/about/team/",
+  // Board member profiles — one per slug in src/lib/board.ts.
+  "/about/team/daryl-spivey/",
+  "/about/team/junelle-speller/",
+  "/about/team/josh-fessel/",
+  "/about/team/glenda-roberts/",
   "/about/what-we-do/",
   "/storytelling/",
   "/where-we-live/",

@@ -161,7 +161,7 @@ const riskFactors = [
   <section id="stages" class="on-light section-tight" style="border-top:1px solid var(--line);" data-stage-section>
     <div class="container">
       <p class="eyebrow">The Five Stages of Kidney Disease</p>
-      <h2 class="h2">From normal function to failure.</h2>
+      <h2 class="h2">From normal function <span class="hl">to failure.</span></h2>
       <p class="section-dek">
         Your healthcare team determines your stage using a blood test called the estimated
         glomerular filtration rate (eGFR) — it measures how much blood your kidneys filter each
@@ -289,7 +289,7 @@ const riskFactors = [
        Closes the "what does this mean for me" arc before the page turns
        to the population-level evidence below. -->
 
-  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+  <section class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
     <div class="container narrow">
       <p class="eyebrow">The Bottom Line</p>
       <p class="lede reveal" style="max-width:64ch;">
@@ -321,10 +321,10 @@ const riskFactors = [
        stat pair and a clear link, instead of appending three more
        chart-heavy sections here. -->
 
-  <section class="on-dark section-tight" style="border-top:1px solid var(--ink-line);">
+  <section class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
     <div class="container">
       <p class="eyebrow">The Data Behind This</p>
-      <h2 class="h2 reveal">The gap, quantified — nationally and in the Bronx.</h2>
+      <h2 class="h2 reveal">The gap, quantified — nationally and <span class="hl">in the Bronx.</span></h2>
       <p class="lede reveal" style="--reveal-delay:0.08s; max-width:60ch;">
         37 million Americans live with chronic kidney disease, and Black adults develop kidney
         failure at four times the rate of white adults — with an even sharper gap in the Bronx
@@ -386,7 +386,7 @@ const riskFactors = [
     right: 12%;
     bottom: -14px;
     height: 22px;
-    background: radial-gradient(ellipse at center, rgba(38, 42, 33, 0.3), rgba(38, 42, 33, 0) 72%);
+    background: radial-gradient(ellipse at center, rgba(17, 17, 17, 0.3), rgba(17, 17, 17, 0) 72%);
     filter: blur(6px);
     z-index: -1;
     transition: opacity var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
@@ -408,14 +408,14 @@ const riskFactors = [
     padding: var(--space-6) var(--space-5);
     overflow: hidden;
     transform-style: preserve-3d;
-    box-shadow: 0 10px 22px rgba(38, 42, 33, 0.14);
+    box-shadow: 0 10px 22px rgba(17, 17, 17, 0.14);
     transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-med) var(--ease), border-top-color var(--dur-med) var(--ease);
   }
 
   .disease-card:hover .disease-card-inner,
   .disease-card:focus-visible .disease-card-inner {
     border-top-color: var(--rust);
-    box-shadow: 0 26px 44px rgba(38, 42, 33, 0.22);
+    box-shadow: 0 26px 44px rgba(17, 17, 17, 0.22);
   }
 
   .disease-card:focus-visible .disease-card-inner {
