@@ -1,0 +1,45 @@
+---
+/**
+ * "Where to next" — the doorway block for pages that are otherwise dead
+ * ends (thank-you pages, 404). A light section with an eyebrow and a
+ * two-column IndexList of links in the page's language.
+ */
+import IndexList from "./IndexList.astro";
+import { getLangFromUrl, localeHref } from "../../i18n/utils";
+
+interface Props {
+  items?: { term: string; note?: string; href: string }[];
+}
+const lang = getLangFromUrl(Astro.url);
+const L = (p: string) => localeHref(p, lang);
+
+const defaults = {
+  en: [
+    { term: "Back to the start", note: "The Jentosy Project at a glance.", href: "/" },
+    { term: "Kidney disease basics", note: "What it is, how it's found, how it's treated.", href: "/the-need/" },
+    { term: "Storytelling as Medicine", note: "Why stories are central to this work.", href: "/storytelling/" },
+    { term: "Meet the team", note: "The founder's story and the board.", href: "/about/team/" },
+  ],
+  es: [
+    { term: "Volver al inicio", note: "The Jentosy Project de un vistazo.", href: "/" },
+    { term: "Lo básico de la enfermedad renal", note: "Qué es, cómo se detecta, cómo se trata.", href: "/the-need/" },
+    { term: "Las historias como medicina", note: "Por qué las historias son centrales en este trabajo.", href: "/storytelling/" },
+    { term: "Nuestro equipo", note: "La historia del fundador y la junta directiva.", href: "/about/team/" },
+  ],
+};
+const items = (Astro.props.items ?? defaults[lang]).map((i) => ({ ...i, href: L(i.href) }));
+const eyebrow = lang === "es" ? "¿A dónde ahora?" : "Where to next";
+---
+
+<section class="on-light next-steps">
+  <div class="container">
+    <p class="eyebrow reveal">{eyebrow}</p>
+    <IndexList items={items} columns={2} size="md" />
+  </div>
+</section>
+
+<style>
+  .next-steps {
+    padding-block: clamp(var(--space-7), 6vw, var(--space-8));
+  }
+</style>

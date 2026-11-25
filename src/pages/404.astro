@@ -1,54 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import PageHero from "../components/PageHero.astro";
+import NextSteps from "../components/ui/NextSteps.astro";
 ---
 
 <BaseLayout title="Page Not Found" description="This page could not be found.">
-  <section class="on-dark not-found-section">
-    <div class="container not-found-inner">
-      <img class="not-found-mark reveal" src="/logo-light.png" alt="The Jentosy Project" width="64" height="64" />
-      <p class="eyebrow reveal" style="--reveal-delay:0.04s;">404</p>
-      <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">
-        We couldn't find that page.
-      </h1>
-      <p class="lede reveal" style="--reveal-delay:0.16s;">
-        The page you're looking for may have moved. Here are a few places worth trying instead.
-      </p>
-      <div class="cluster gap-3 not-found-links reveal" style="--reveal-delay:0.24s;">
-        <a href="/" class="btn btn-steel-outline">Back to Home</a>
-        <a href="/the-need/" class="btn btn-steel-outline">Kidney Disease</a>
-        <a href="/donate/" class="btn btn-rust">Donate</a>
-      </div>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="404"
+    heading="We couldn't find"
+    accent="that page."
+    lede="The page you're looking for may have moved. Here are a few places worth trying instead."
+  />
+  <NextSteps
+    items={[
+    { term: "Back to the start", note: "The Jentosy Project at a glance.", href: "/" },
+    { term: "Kidney disease basics", note: "What it is, how it's found, how it's treated.", href: "/the-need/" },
+    { term: "About us", note: "Who we are and why we exist.", href: "/about/" },
+    { term: "Contact", note: "Tell us what you were looking for.", href: "/contact/" },
+  ]}
+  />
 </BaseLayout>
-
-<style>
-  .not-found-section {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-  }
-
-  .not-found-inner {
-    max-width: 520px;
-    text-align: center;
-    margin-inline: auto;
-  }
-
-  .not-found-mark {
-    width: 60px;
-    height: 60px;
-    display: block;
-    margin: 0 auto var(--space-5);
-  }
-
-  .not-found-inner .lede {
-    max-width: none;
-    margin-inline: auto;
-  }
-
-  .not-found-links {
-    justify-content: center;
-    margin-top: var(--space-6);
-  }
-</style>

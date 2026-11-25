@@ -1,17 +1,25 @@
 ---
-import { getLangFromUrl, localizePath } from "../i18n/utils";
+/**
+ * Shared thank-you page body (contact, donate, partner — EN + ES).
+ * Standard PageHero (the heading's last word set as the gold accent) plus
+ * a "Where to next" block, so a confirmation is a doorway, not a dead end.
+ */
+import PageHero from "./PageHero.astro";
+import NextSteps from "./ui/NextSteps.astro";
+import { getLangFromUrl } from "../i18n/utils";
 
 interface Props {
   title: string;
   heading: string;
   body: string;
 }
-const { title, heading, body } = Astro.props;
+const { heading, body } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
-const eyebrow = lang === "es" ? "Gracias" : "Thank You";
-const backLabel = lang === "es" ? "Volver al inicio" : "Back to Home";
-const homeHref = localizePath("/", lang);
+const eyebrow = lang === "es" ? "Gracias" : "Thank you";
+const words = heading.trim().split(/\s+/);
+const accent = words.pop();
+const head = words.join(" ");
 ---
 
 <script is:inline>
@@ -23,34 +31,5 @@ const homeHref = localizePath("/", lang);
   }
 </script>
 
-<section class="on-dark thank-you-section">
-  <div class="container thank-you-inner">
-    <p class="eyebrow reveal">{eyebrow}</p>
-    <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">{heading}</h1>
-    <p class="lede reveal" style="--reveal-delay:0.16s;">{body}</p>
-    <a href={homeHref} class="btn btn-steel-outline reveal" style="--reveal-delay:0.24s;">{backLabel}</a>
-  </div>
-</section>
-
-<style>
-  .thank-you-section {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-  }
-
-  .thank-you-inner {
-    max-width: 560px;
-    text-align: center;
-    margin-inline: auto;
-  }
-
-  .thank-you-inner .lede {
-    max-width: none;
-    margin-inline: auto;
-  }
-
-  .thank-you-inner .btn {
-    margin-top: var(--space-6);
-  }
-</style>
+<PageHero eyebrow={eyebrow} heading={head} accent={accent} lede={body} />
+<NextSteps />

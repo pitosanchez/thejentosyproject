@@ -1,54 +1,22 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import PageHero from "../../components/PageHero.astro";
+import NextSteps from "../../components/ui/NextSteps.astro";
 ---
 
 <BaseLayout title="Página no encontrada" description="No se pudo encontrar esta página.">
-  <section class="on-dark not-found-section">
-    <div class="container not-found-inner">
-      <img class="not-found-mark reveal" src="/logo-light.png" alt="The Jentosy Project" width="64" height="64" />
-      <p class="eyebrow reveal" style="--reveal-delay:0.04s;">404</p>
-      <h1 class="h1 reveal" style="--reveal-delay:0.08s; font-size:clamp(28px,4vw,42px);">
-        No encontramos esa página.
-      </h1>
-      <p class="lede reveal" style="--reveal-delay:0.16s;">
-        Es posible que la página que buscas se haya movido. Aquí tienes algunos lugares que vale la pena probar.
-      </p>
-      <div class="cluster gap-3 not-found-links reveal" style="--reveal-delay:0.24s;">
-        <a href="/es/" class="btn btn-steel-outline">Volver al inicio</a>
-        <a href="/es/the-need/" class="btn btn-steel-outline">Enfermedad renal</a>
-        <a href="/es/donate/" class="btn btn-rust">Donar</a>
-      </div>
-    </div>
-  </section>
+  <PageHero
+    eyebrow="404"
+    heading="No encontramos"
+    accent="esa página."
+    lede="Es posible que la página que buscas se haya movido. Aquí tienes algunos lugares que vale la pena probar."
+  />
+  <NextSteps
+    items={[
+    { term: "Volver al inicio", note: "The Jentosy Project de un vistazo.", href: "/" },
+    { term: "Lo básico de la enfermedad renal", note: "Qué es, cómo se detecta, cómo se trata.", href: "/the-need/" },
+    { term: "Quiénes somos", note: "Quiénes somos y por qué existimos.", href: "/about/" },
+    { term: "Contacto", note: "Cuéntanos qué buscabas.", href: "/contact/" },
+  ]}
+  />
 </BaseLayout>
-
-<style>
-  .not-found-section {
-    min-height: 60vh;
-    display: flex;
-    align-items: center;
-  }
-
-  .not-found-inner {
-    max-width: 520px;
-    text-align: center;
-    margin-inline: auto;
-  }
-
-  .not-found-mark {
-    width: 60px;
-    height: 60px;
-    display: block;
-    margin: 0 auto var(--space-5);
-  }
-
-  .not-found-inner .lede {
-    max-width: none;
-    margin-inline: auto;
-  }
-
-  .not-found-links {
-    justify-content: center;
-    margin-top: var(--space-6);
-  }
-</style>

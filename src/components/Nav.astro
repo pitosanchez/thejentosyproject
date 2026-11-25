@@ -327,10 +327,15 @@ const isActive = (href: string) =>
     transition: color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
   }
 
+  /* Hover, keyboard focus, and the current page all light up in the same
+     gold as the dropdown's hub label, with a gold bar on the left edge. */
   .desktop-nav-dropdown a:hover,
+  .desktop-nav-dropdown a:focus-visible,
   .desktop-nav-dropdown a[aria-current="page"] {
-    color: var(--ink-fg);
+    color: var(--gold);
     background: var(--ink-soft);
+    box-shadow: inset 3px 0 0 var(--gold);
+    outline: none;
   }
 
   .desktop-nav-dropdown a.desktop-nav-dropdown-hub {

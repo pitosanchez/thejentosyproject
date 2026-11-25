@@ -10,33 +10,56 @@ const L = (p: string) => localeHref(p, "es");
   title="Privacidad y términos"
   description="La política de privacidad y los términos de uso de The Jentosy Project."
 >
-  <PageHero eyebrow="Legal" heading="Privacidad y términos" />
+  <PageHero
+    eyebrow="Legal"
+    heading="Privacidad y"
+    accent="términos."
+    lede="Cómo tratamos tu información y los términos para usar este sitio."
+  />
 
-  <section class="on-light section">
-    <div class="container narrow">
+  <section class="on-light legal-section">
+    <div class="container legal-grid">
+      <nav class="legal-toc" aria-label="En esta página">
+        <p class="eyebrow">En esta página</p>
+        <ol>
+          <li class="toc-l2"><a href="#politica-de-privacidad">Política de privacidad</a></li>
+          <li class="toc-l3"><a href="#informacion-que-recopilamos">Información que recopilamos</a></li>
+          <li class="toc-l3"><a href="#como-la-usamos">Cómo la usamos</a></li>
+          <li class="toc-l3"><a href="#procesamiento-de-donaciones">Procesamiento de donaciones</a></li>
+          <li class="toc-l3"><a href="#cookies-y-analitica">Cookies y analítica</a></li>
+          <li class="toc-l3"><a href="#tus-opciones">Tus opciones</a></li>
+          <li class="toc-l2"><a href="#divulgaciones-para-donantes">Divulgaciones para donantes</a></li>
+          <li class="toc-l2"><a href="#terminos-de-uso">Términos de uso</a></li>
+          <li class="toc-l3"><a href="#contenido-medico">Contenido médico</a></li>
+          <li class="toc-l3"><a href="#propiedad-intelectual">Propiedad intelectual</a></li>
+          <li class="toc-l3"><a href="#sin-garantia">Sin garantía</a></li>
+          <li class="toc-l3"><a href="#contacto">Contacto</a></li>
+        </ol>
+      </nav>
+      <div class="legal-body">
       <p class="effective-date">Fecha de entrada en vigor: 26 de agosto de 2026</p>
 
-      <h2 class="h3">Política de privacidad</h2>
+      <h2 id="politica-de-privacidad" class="h2 legal-h2">Política de privacidad</h2>
       <p>
         The Jentosy Project, Inc. (&ldquo;The Jentosy Project&rdquo;, &ldquo;nosotros&rdquo;)
         recopila únicamente la información necesaria para procesar donaciones, responder a
         consultas y solicitudes de colaboración, y entender cómo usan este sitio las personas que
         lo visitan.
       </p>
-      <p><strong>Información que recopilamos</strong></p>
+      <h3 id="informacion-que-recopilamos" class="legal-h3">Información que recopilamos</h3>
       <ul class="check-list">
         <li>Los datos de contacto que envías a través de nuestros formularios de Contacto, Colabora con nosotros o el boletín — nombre, correo electrónico, organización y el contenido del mensaje.</li>
         <li>La información de donación procesada en nuestro nombre por Zeffy, nuestra plataforma de donaciones de terceros — ver más abajo.</li>
         <li>Datos agregados y anonimizados de uso del sitio recopilados mediante Google Analytics (páginas visitadas, ubicación general, tipo de dispositivo) — que nosotros nunca vinculamos con tu nombre o correo electrónico.</li>
       </ul>
-      <p><strong>Cómo la usamos</strong></p>
+      <h3 id="como-la-usamos" class="legal-h3">Cómo la usamos</h3>
       <p>
         Usamos la información que proporcionas para responder a tu mensaje, procesar tu donación y
         enviar un recibo, enviar novedades ocasionales si así lo has aceptado, y entender qué
         partes del sitio son útiles para quienes lo visitan. No vendemos, alquilamos ni
         intercambiamos tu información personal con ningún tercero con fines de marketing.
       </p>
-      <p><strong>Procesamiento de donaciones</strong></p>
+      <h3 id="procesamiento-de-donaciones" class="legal-h3">Procesamiento de donaciones</h3>
       <p>
         Las donaciones realizadas a través de este sitio las procesa y retiene <strong>Zeffy</strong>,
         una plataforma de donaciones independiente — no The Jentosy Project directamente. Zeffy
@@ -44,14 +67,14 @@ const L = (p: string) => localeHref(p, "es");
         prácticas de seguridad; nosotros recibimos tu nombre, correo electrónico y el monto de la
         donación para poder emitir un recibo y mantenerte informado.
       </p>
-      <p><strong>Cookies y analítica</strong></p>
+      <h3 id="cookies-y-analitica" class="legal-h3">Cookies y analítica</h3>
       <p>
         Este sitio usa Google Analytics (GA4) para entender el comportamiento agregado de las
         visitas. Google Analytics usa cookies y tecnologías similares; puedes desactivarlas desde
         la configuración de tu navegador o con una extensión como el complemento de inhabilitación
         de Google Analytics. No usamos cookies de publicidad ni de seguimiento entre sitios.
       </p>
-      <p><strong>Tus opciones</strong></p>
+      <h3 id="tus-opciones" class="legal-h3">Tus opciones</h3>
       <p>
         Puedes pedirnos que corrijamos o eliminemos la información personal que tenemos sobre ti, y
         puedes darte de baja de cualquier novedad por correo electrónico en cualquier momento
@@ -60,7 +83,7 @@ const L = (p: string) => localeHref(p, "es");
         ningún fin más allá de lo descrito aquí sin consultarte primero.
       </p>
 
-      <h2 class="h3">Divulgaciones para donantes</h2>
+      <h2 id="divulgaciones-para-donantes" class="h2 legal-h2">Divulgaciones para donantes</h2>
       <p>
         The Jentosy Project, Inc. es una organización benéfica pública 501(c)(3). Las donaciones
         son deducibles de impuestos en la medida en que lo permita la ley, y no se proporcionaron
@@ -76,12 +99,12 @@ const L = (p: string) => localeHref(p, "es");
         contigo directamente.
       </p>
 
-      <h2 class="h3">Términos de uso</h2>
+      <h2 id="terminos-de-uso" class="h2 legal-h2">Términos de uso</h2>
       <p>
         Al usar este sitio, aceptas los siguientes términos. Si no estás de acuerdo, por favor no
         uses el sitio.
       </p>
-      <p><strong>Contenido médico</strong></p>
+      <h3 id="contenido-medico" class="legal-h3">Contenido médico</h3>
       <p>
         El contenido de este sitio sobre la GEFS, la enfermedad renal mediada por APOL1 y la
         enfermedad renal crónica en general se ofrece únicamente con fines educativos generales y{" "}
@@ -89,7 +112,7 @@ const L = (p: string) => localeHref(p, "es");
         debe reemplazar la orientación de un profesional de salud calificado. Consulta siempre a tu
         médico o a un nefrólogo sobre tu propio diagnóstico, pruebas o tratamiento.
       </p>
-      <p><strong>Propiedad intelectual</strong></p>
+      <h3 id="propiedad-intelectual" class="legal-h3">Propiedad intelectual</h3>
       <p>
         Los textos, ilustraciones y visualizaciones de datos de este sitio son propiedad de The
         Jentosy Project, Inc. salvo que se indique otra fuente, y no pueden reproducirse con fines
@@ -97,18 +120,19 @@ const L = (p: string) => localeHref(p, "es");
         fuentes originales (CDC, USRDS, NIDDK y los estudios revisados por pares enlazados a lo
         largo del sitio).
       </p>
-      <p><strong>Sin garantía</strong></p>
+      <h3 id="sin-garantia" class="legal-h3">Sin garantía</h3>
       <p>
         Este sitio se ofrece &ldquo;tal cual&rdquo;. Aunque trabajamos para mantener la información
         exacta y con fuentes, The Jentosy Project no ofrece ninguna garantía sobre su integridad o
         idoneidad para un fin determinado, y no se hace responsable de las decisiones tomadas con
         base en el contenido de este sitio.
       </p>
-      <p><strong>Contacto</strong></p>
+      <h3 id="contacto" class="legal-h3">Contacto</h3>
       <p>
         Las preguntas sobre esta política o sobre tu información pueden enviarse a través de
         nuestra <a href={L("/contact/")}>página de Contacto</a>.
       </p>
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -126,5 +150,93 @@ const L = (p: string) => localeHref(p, "es");
 
   .check-list li {
     max-width: none;
+  }
+
+  /* ---------- Legal layout (2026-11-25 consistency pass) ---------- */
+  .legal-section {
+    padding-block: clamp(var(--space-8), 7vw, 112px);
+  }
+
+  .legal-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1.4fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .legal-toc {
+    position: sticky;
+    top: 110px;
+  }
+
+  .legal-toc ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 2px solid var(--line);
+  }
+
+  .legal-toc li a {
+    display: block;
+    padding: 6px 0 6px var(--space-4);
+    margin-left: -2px;
+    border-left: 2px solid transparent;
+    color: var(--fg-soft);
+    text-decoration: none;
+    font-size: 14.5px;
+  }
+
+  .legal-toc li.toc-l2 a {
+    font-weight: 700;
+    color: var(--fg);
+    margin-top: var(--space-3);
+  }
+
+  .legal-toc li.toc-l3 a {
+    padding-left: var(--space-6);
+  }
+
+  .legal-toc li a:hover {
+    border-left-color: var(--gold);
+    color: var(--fg);
+  }
+
+  .legal-body {
+    max-width: 68ch;
+  }
+
+  .legal-body p,
+  .legal-body li {
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  .legal-h2 {
+    margin: clamp(var(--space-7), 5vw, var(--space-8)) 0 var(--space-4);
+    padding-top: var(--space-5);
+    border-top: 3px solid var(--ink);
+    scroll-margin-top: 110px;
+  }
+
+  .legal-body > .legal-h2:first-of-type {
+    margin-top: var(--space-5);
+  }
+
+  .legal-h3 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 19px;
+    margin: var(--space-6) 0 var(--space-2);
+    scroll-margin-top: 110px;
+  }
+
+  @media (max-width: 900px) {
+    .legal-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .legal-toc {
+      position: static;
+    }
   }
 </style>

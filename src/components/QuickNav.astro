@@ -78,9 +78,67 @@ const labels = {
     transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
   }
 
-  .quick-nav a:hover {
+  .quick-nav a:hover,
+  .quick-nav a:focus-visible {
     background: var(--steel);
     color: var(--steel-ink);
     border-color: var(--steel);
   }
+
+  /* The section currently in view — same gold as the nav's current item. */
+  .quick-nav a[aria-current="true"] {
+    background: var(--gold);
+    color: var(--gold-ink);
+    border-color: var(--gold);
+  }
 </style>
+
+<script>
+  // Scrollspy: mark the Jump-to link whose section is currently in view,
+  // and keep it scrolled into view inside the bar on narrow screens.
+  document.querySelectorAll<HTMLElement>(".quick-nav").forEach((nav) => {
+    const links = Array.from(nav.querySelectorAll<HTMLAnchorElement>('a[href^="#"]'));
+    const targets = links
+      .map((a) => document.getElementById(decodeURIComponent(a.hash.slice(1))))
+      .filter((el): el is HTMLElement => !!el);
+    if (!targets.length) return;
+
+    const setActive = (id: string | null) => {
+      links.forEach((a) => {
+        const on = a.hash.slice(1) === id;
+        if (on) {
+          a.setAttribute("aria-current", "true");
+          a.scrollIntoView({ block: "nearest", inline: "nearest" });
+        } else {
+          a.removeAttribute("aria-current");
+        }
+      });
+    };
+
+    const update = () => {
+      // The active section is the last one whose top has passed under the
+      // sticky nav + Jump-to bar.
+      const line = 170;
+      let current: string | null = null;
+      for (const el of targets) {
+        if (el.getBoundingClientRect().top - line <= 0) current = el.id;
+      }
+      setActive(current);
+    };
+
+    let ticking = false;
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+      },
+      { passive: true }
+    );
+    update();
+  });
+</script>

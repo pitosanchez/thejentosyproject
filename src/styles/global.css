@@ -1270,3 +1270,40 @@ p:last-child {
     position: static;
   }
 }
+
+/* ---------- Sticky "Jump to" bar (clinical pages) ----------
+   Pins just under the sticky site nav while reading. The bar highlights
+   the section in view (see QuickNav.astro) in the same gold used for the
+   nav's current item. */
+.breadcrumb-section {
+  padding-top: var(--space-4);
+}
+
+.quick-nav-section {
+  position: sticky;
+  top: var(--nav-h, 76px);
+  z-index: 60;
+  padding-block: 0 !important;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(1.4) blur(8px);
+  -webkit-backdrop-filter: saturate(1.4) blur(8px);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 10px 24px -20px rgba(0, 0, 0, 0.35);
+}
+
+.quick-nav-section .quick-nav {
+  padding-block: 10px;
+}
+
+/* Keep the gold underline on a top-level nav item while its dropdown is
+   open, and on the section you're currently in. */
+.desktop-nav-parent:hover > .nav-link,
+.desktop-nav-parent:focus-within > .nav-link {
+  color: var(--ink-fg);
+}
+
+.desktop-nav-parent:hover > .nav-link::after,
+.desktop-nav-parent:focus-within > .nav-link::after,
+.nav-link[aria-current="page"]::after {
+  width: 100%;
+}
