@@ -124,5 +124,5 @@ that makes a protein"); D (About). Also corrected Where We Live's stale descript
 Kept on purpose: Bronx Data's APOL1 section (its ancestry-vs-identity argument is unique to that page,
 and its "most carriers never get sick" line is a safety caveat next to the stats); the helpline box on
 each clinical page (patients land anywhere). Result: ~8,000 → ~7,700 words.
-Not yet done: a deeper layout pass inside the four clinical pages (their bodies still use the older
-card grids); "West Africa" (APOL1) vs "sub-Saharan Africa" (Data) left as is — both accurate.
+Clinical pages: layout pass done 2026-11-25 (sticky two-column sections, real section titles,
+alternating bands, closing CTA); hub's APOL1 card now uses the ancestry framing. "West Africa" (APOL1) vs "sub-Saharan Africa" (Data) left as is — both accurate.
