@@ -1,0 +1,258 @@
+---
+/**
+ * The Jentosy Project x StoryCorps partnership page — /storytelling/storycorps/
+ * and /es/storytelling/storycorps/. Background facts are from
+ * storycorps.org/about (checked 2026-11-24); keep them in sync if StoryCorps
+ * updates its figures. The image is a screenshot of storycorps.org's hero.
+ * Partnership wording is a DRAFT pending founder confirmation of scope.
+ */
+import PageHero from "./PageHero.astro";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+const hero =
+  lang === "es"
+    ? { eyebrow: "Historias · Alianza", heading: "The Jentosy Project × StoryCorps", lede: "Porque cada historia renal merece ser escuchada — y preservada." }
+    : { eyebrow: "Storytelling · Partnership", heading: "The Jentosy Project × StoryCorps", lede: "Because every kidney story deserves to be heard — and kept." };
+const back = lang === "es" ? "Las historias como medicina" : "Storytelling as Medicine";
+const backEyebrow = lang === "es" ? "Sigue leyendo" : "Keep reading";
+---
+
+<PageHero eyebrow={hero.eyebrow} heading={hero.heading} lede={hero.lede} />
+
+{lang === "es" ? (
+<Fragment>
+  <section class="on-dark on-soft section partner-sc" id="storycorps">
+    <div class="container partner-sc-grid">
+      <div class="partner-sc-text">
+        <p class="eyebrow reveal">En alianza</p>
+        <h2 class="h2 reveal" style="--reveal-delay:0.06s">
+          Cada historia renal merece ser <span class="hl">escuchada &mdash; y preservada.</span>
+        </h2>
+        <p class="lede reveal" style="--reveal-delay:0.12s">
+          The Jentosy Project se ha aliado con StoryCorps para llevar su método sencillo y poderoso
+          &mdash; una conversación grabada entre dos personas &mdash; a quienes viven con
+          enfermedad renal, sus familias, cuidadores y donantes vivos. Juntos queremos que las
+          voces detrás de los datos se escuchen y se preserven, para que la experiencia de una
+          persona ayude a la siguiente que enfrenta el mismo diagnóstico a sentirse menos sola.
+        </p>
+
+        <h3 class="partner-sc-subhead reveal">Sobre StoryCorps</h3>
+        <p class="reveal">
+          Fundada en 2003, StoryCorps es una organización independiente sin fines de lucro que
+          parte de la idea de que todas las personas tienen una historia importante que contar
+          &mdash; y de que la historia de cada persona importa. Su misión es <em>&ldquo;ayudarnos
+          a creer los unos en los otros iluminando la humanidad y el potencial que hay en todos
+          nosotros &mdash; una historia a la vez.&rdquo;</em>
+        </p>
+        <p class="reveal">
+          StoryCorps ha ayudado a más de 750,000 personas en todo el país a grabar conversaciones
+          significativas sobre sus vidas. Esas grabaciones se conservan en la Biblioteca del
+          Congreso de EE. UU. y en el archivo en línea de StoryCorps &mdash; la mayor colección de
+          voces humanas jamás reunida &mdash; y algunas historias llegan al público a través de
+          transmisiones semanales, un pódcast, cortos animados y libros superventas.
+        </p>
+
+        <div class="reveal" style="margin-top:var(--space-5);">
+          <a href="https://storycorps.org/" class="btn btn-rust" target="_blank" rel="noopener">
+            Visita StoryCorps <span aria-hidden="true">&#8599;</span>
+            <span class="visually-hidden">(se abre en una pestaña nueva; sitio en inglés)</span>
+          </a>
+        </div>
+      </div>
+
+      <figure class="partner-sc-figure reveal" style="--reveal-delay:0.1s">
+        <a href="https://storycorps.org/" target="_blank" rel="noopener" class="partner-sc-frame">
+          <span class="partner-sc-bar" aria-hidden="true"><i></i><i></i><i></i><span>storycorps.org</span></span>
+          <img
+            src="/images/storycorps-hero.webp"
+            alt="La página de inicio de StoryCorps: historias grabadas destacadas y su declaración de misión. Abre storycorps.org en una pestaña nueva."
+            width="1600"
+            height="896"
+            loading="lazy"
+          />
+        </a>
+        <figcaption>StoryCorps &mdash; storycorps.org (sitio en inglés)</figcaption>
+      </figure>
+    </div>
+  </section>
+</Fragment>
+) : (
+<Fragment>
+  <section class="on-dark on-soft section partner-sc" id="storycorps">
+    <div class="container partner-sc-grid">
+      <div class="partner-sc-text">
+        <p class="eyebrow reveal">In Partnership</p>
+        <h2 class="h2 reveal" style="--reveal-delay:0.06s">
+          Every kidney story deserves to be <span class="hl">heard &mdash; and kept.</span>
+        </h2>
+        <p class="lede reveal" style="--reveal-delay:0.12s">
+          The Jentosy Project is partnering with StoryCorps to bring its simple, powerful method
+          &mdash; a recorded conversation between two people &mdash; to people living with kidney
+          disease, their families, caregivers, and living donors. Together, we want the voices
+          behind the data to be heard and preserved, so that one person's experience can help the
+          next person facing the same diagnosis feel less alone.
+        </p>
+
+        <h3 class="partner-sc-subhead reveal">About StoryCorps</h3>
+        <p class="reveal">
+          Founded in 2003, StoryCorps is an independent nonprofit built on the idea that everyone
+          has an important story to tell &mdash; and that everyone&rsquo;s story matters. Its
+          mission is <em>&ldquo;to help us believe in each other by illuminating the humanity and
+          possibility in us all &mdash; one story at a time.&rdquo;</em>
+        </p>
+        <p class="reveal">
+          StoryCorps has helped more than 750,000 people across the country record meaningful
+          conversations about their lives. Those recordings are collected in the U.S. Library of
+          Congress and in StoryCorps&rsquo; online archive &mdash; the largest single collection
+          of human voices ever gathered &mdash; and select stories reach the public through
+          weekly broadcasts, a podcast, animated shorts, and best-selling books.
+        </p>
+
+        <div class="reveal" style="margin-top:var(--space-5);">
+          <a href="https://storycorps.org/" class="btn btn-rust" target="_blank" rel="noopener">
+            Visit StoryCorps <span aria-hidden="true">&#8599;</span>
+            <span class="visually-hidden">(opens in a new tab)</span>
+          </a>
+        </div>
+      </div>
+
+      <figure class="partner-sc-figure reveal" style="--reveal-delay:0.1s">
+        <a href="https://storycorps.org/" target="_blank" rel="noopener" class="partner-sc-frame">
+          <span class="partner-sc-bar" aria-hidden="true"><i></i><i></i><i></i><span>storycorps.org</span></span>
+          <img
+            src="/images/storycorps-hero.webp"
+            alt="The StoryCorps homepage: recorded-story highlights and the mission statement, “to help us believe in each other by illuminating the humanity and possibility in us all — one story at a time.” Opens storycorps.org in a new tab."
+            width="1600"
+            height="896"
+            loading="lazy"
+          />
+        </a>
+        <figcaption>StoryCorps &mdash; storycorps.org</figcaption>
+      </figure>
+    </div>
+  </section>
+</Fragment>
+)}
+
+<section class="on-light section-tight sc-back">
+  <div class="container">
+    <p class="eyebrow">{backEyebrow}</p>
+    <a href={L("/storytelling/")} class="sc-back-link">&larr; {back}</a>
+  </div>
+</section>
+
+<style>
+  /* ---------- StoryCorps partnership ---------- */
+
+  .partner-sc-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .partner-sc-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 901px) {
+    .partner-sc-figure {
+      position: sticky;
+      top: 120px;
+      margin-top: var(--space-8);
+    }
+  }
+
+  .partner-sc-subhead {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: var(--space-6) 0 var(--space-3);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--ink-line);
+  }
+
+  .partner-sc-figure {
+    margin: 0;
+  }
+
+  .partner-sc-frame {
+    display: block;
+    text-decoration: none;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--ink-line-strong);
+    box-shadow: 0 30px 60px -28px rgba(0, 0, 0, 0.45);
+    transition: transform var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease);
+  }
+
+  .partner-sc-frame:hover,
+  .partner-sc-frame:focus-visible {
+    transform: translateY(-6px);
+    box-shadow: 0 40px 70px -28px rgba(0, 0, 0, 0.5);
+  }
+
+  .partner-sc-frame:focus-visible {
+    outline: 3px solid var(--gold);
+    outline-offset: 4px;
+  }
+
+  .partner-sc-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #f1f0ec;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .partner-sc-bar i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #d6d3cb;
+  }
+
+  .partner-sc-bar span {
+    margin-left: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--fg-muted);
+  }
+
+  .partner-sc-frame img {
+    width: 100%;
+    height: auto;
+  }
+
+  .partner-sc-figure figcaption {
+    margin-top: var(--space-3);
+    font-size: 12.5px;
+    color: var(--ink-fg-muted);
+  }
+
+  .partner-sc {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-9));
+  }
+
+  .sc-back-link {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(24px, 3vw, 36px);
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
+  }
+</style>

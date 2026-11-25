@@ -1,0 +1,710 @@
+---
+/**
+ * "Storytelling as Medicine" — Robert Sanchez's essay, redesigned
+ * 2026-11-24 as an editorial zig-zag (text / photo, then photo / text)
+ * and condensed to roughly 40% of the original long-form text, at the
+ * founder's request. Shared by /storytelling/ and /es/storytelling/ so the
+ * two languages can't drift: all copy lives in `copy` below.
+ */
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+
+const en = {
+  heroEyebrow: "An essay by Robert Sanchez",
+  heroTitleA: "Storytelling as",
+  heroTitleB: "Medicine",
+  heroDek:
+    "Lab values tell part of the story. Lived experience tells the rest — and sometimes, it's what saves a life.",
+  heroAlt:
+    "Illustration of an open book with a plant and two kidneys growing from its pages, surrounded by the words empathy, understanding, hope, connection, awareness, and healing.",
+  introA:
+    "Kidney disease is measured in creatinine, eGFR, proteinuria, and transplant survival. Those numbers are essential. But they can't capture the fear of hearing",
+  introQuote: "“Your kidneys are failing,”",
+  introB:
+    "the isolation of a dialysis chair three days a week, or the resilience it takes to rebuild a life.",
+  beliefA: "We believe storytelling is",
+  beliefB: "medicine.",
+  chapters: [
+    {
+      eyebrow: "Why it's personal",
+      titleA: "I know this",
+      titleB: "firsthand.",
+      body: [
+        "When I was diagnosed with FSGS and began dialysis, I searched desperately for answers. The medical information I found was technical, fragmented, and hard to relate to.",
+        "What changed everything were the stories of people who had lived through kidney disease before me. They gave language to emotions I couldn't express — and showed me survival was possible. Those stories turned fear into purpose.",
+      ],
+      img: "/images/founder-podium.webp",
+      alt: "Robert Sanchez speaking at a podium about kidney disease and health equity",
+      caption: "Robert, a two-time kidney transplant recipient, speaking on kidney health equity.",
+    },
+    {
+      eyebrow: "Why it matters in the Bronx",
+      titleA: "Statistics reveal inequities.",
+      titleB: "Stories explain them.",
+      body: [
+        "Kidney disease falls hardest on Black, Hispanic, Indigenous, and other historically underserved communities — shaped by where people live, the food and care they can reach, and the opportunities around them.",
+        "For communities with generations of reasons to mistrust healthcare, stories are often the bridge evidence alone can't build. That's why we treat lived experience as a form of evidence.",
+      ],
+      img: "/images/NtX0s.webp",
+      alt: "A New York City subway sign reading Uptown & The Bronx Express, 4 and 5 trains",
+      caption: "Where people live shapes how kidney disease shows up — and who it reaches first.",
+    },
+    {
+      eyebrow: "Our flagship initiative",
+      titleA: "Where We Live.",
+      titleB: "",
+      sub: "The Rare Renal Equity Project (REP)",
+      body: [
+        "REP pairs geographic data and social determinants of health with lived patient experience. Maps show where disease burden is higher, transplant referrals fewer, and healthy food harder to find.",
+        "Stories show what those conditions feel like — and why they matter. Together, data and narrative reveal more than either could alone.",
+      ],
+      link: { href: "/where-we-live/", label: "Explore Where We Live" },
+      img: "/images/WhereWeLiveThumbNail.webp",
+      alt: "The Where We Live — Rare Renal Equity Project map and stories platform",
+      caption: "Where We Live maps genetics, place, and structural inequity alongside patient stories.",
+    },
+  ],
+  interventionEyebrow: "Beyond awareness",
+  interventionTitleA: "Storytelling isn't just communication.",
+  interventionTitleB: "It's intervention.",
+  interventionDek:
+    "Every story can become social capital — helping patients know which questions to ask and where to find hope, and helping clinicians, researchers, and policymakers see the people behind the numbers.",
+  effects: [
+    "Improves health literacy",
+    "Strengthens trust",
+    "Encourages earlier screening",
+    "Increases research participation",
+    "Supports shared decision-making",
+    "Inspires living kidney donation",
+    "Reduces stigma",
+    "Builds community",
+    "Reminds every patient they are not alone",
+  ],
+  closerA: "Because healing begins with being seen.",
+  closerB: "And every story has the power to save a life.",
+  signName: "Robert Sanchez",
+  signTitle: "Founder & CEO, The Jentosy Project",
+  meet: "Read Robert's full story",
+  scEyebrow: "In partnership",
+  scTitle: "Preserving kidney stories with StoryCorps.",
+  scBody:
+    "We're partnering with StoryCorps — the nonprofit behind the largest collection of human voices ever gathered — to record and keep the stories of people living with kidney disease.",
+  scLink: "About the partnership",
+  scAlt: "The StoryCorps homepage",
+};
+
+const es: typeof en = {
+  heroEyebrow: "Un ensayo de Robert Sanchez",
+  heroTitleA: "Las historias como",
+  heroTitleB: "medicina",
+  heroDek:
+    "Los valores de laboratorio cuentan parte de la historia. La experiencia vivida cuenta el resto — y a veces, es lo que salva una vida.",
+  heroAlt:
+    "Ilustración de un libro abierto con una planta y dos riñones que crecen de sus páginas, rodeado de las palabras empatía, comprensión, esperanza, conexión, conciencia y sanación.",
+  introA:
+    "La enfermedad renal se mide en creatinina, TFGe, proteinuria y supervivencia del trasplante. Esas cifras son esenciales. Pero no pueden captar el miedo de escuchar",
+  introQuote: "«Sus riñones están fallando»,",
+  introB:
+    "el aislamiento de una silla de diálisis tres días a la semana, ni la resiliencia que hace falta para reconstruir una vida.",
+  beliefA: "Creemos que las historias son",
+  beliefB: "medicina.",
+  chapters: [
+    {
+      eyebrow: "Por qué es personal",
+      titleA: "Lo sé por",
+      titleB: "experiencia propia.",
+      body: [
+        "Cuando me diagnosticaron GEFS y empecé diálisis, busqué respuestas con desesperación. La información médica que encontraba era técnica, fragmentada y difícil de entender como propia.",
+        "Lo que lo cambió todo fueron las historias de personas que habían vivido la enfermedad renal antes que yo. Le dieron palabras a emociones que yo no podía expresar — y me mostraron que sobrevivir era posible. Esas historias convirtieron el miedo en propósito.",
+      ],
+      img: "/images/founder-podium.webp",
+      alt: "Robert Sanchez hablando en un podio sobre la enfermedad renal y la equidad en salud",
+      caption: "Robert, dos veces receptor de un trasplante de riñón, hablando sobre la equidad en la salud renal.",
+    },
+    {
+      eyebrow: "Por qué importa en el Bronx",
+      titleA: "Las estadísticas revelan desigualdades.",
+      titleB: "Las historias las explican.",
+      body: [
+        "La enfermedad renal golpea con más fuerza a las comunidades negras, hispanas, indígenas y otras históricamente desatendidas — marcada por dónde vive la gente, la comida y la atención a su alcance, y las oportunidades a su alrededor.",
+        "Para comunidades con generaciones de razones para desconfiar del sistema de salud, las historias suelen ser el puente que la evidencia sola no logra construir. Por eso tratamos la experiencia vivida como una forma de evidencia.",
+      ],
+      img: "/images/NtX0s.webp",
+      alt: "Un letrero del metro de Nueva York que dice Uptown & The Bronx Express, trenes 4 y 5",
+      caption: "El lugar donde vive la gente determina cómo se manifiesta la enfermedad renal — y a quién alcanza primero.",
+    },
+    {
+      eyebrow: "Nuestra iniciativa insignia",
+      titleA: "Where We Live.",
+      titleB: "",
+      sub: "The Rare Renal Equity Project (REP)",
+      body: [
+        "REP combina datos geográficos y determinantes sociales de la salud con la experiencia vivida de los pacientes. Los mapas muestran dónde la carga de enfermedad es mayor, las derivaciones a trasplante son menos y la comida saludable es más difícil de encontrar.",
+        "Las historias muestran cómo se sienten esas condiciones — y por qué importan. Juntos, los datos y la narración revelan más de lo que cualquiera podría por sí solo.",
+      ],
+      link: { href: "/where-we-live/", label: "Explora Where We Live" },
+      img: "/images/WhereWeLiveThumbNail.webp",
+      alt: "La plataforma de mapas e historias de Where We Live — Rare Renal Equity Project",
+      caption: "Where We Live mapea la genética, el lugar y la desigualdad estructural junto a las historias de pacientes.",
+    },
+  ],
+  interventionEyebrow: "Más allá de la concientización",
+  interventionTitleA: "Contar historias no es solo comunicar.",
+  interventionTitleB: "Es intervenir.",
+  interventionDek:
+    "Cada historia puede convertirse en capital social — ayuda a los pacientes a saber qué preguntar y dónde encontrar esperanza, y ayuda a médicos, investigadores y legisladores a ver a las personas detrás de las cifras.",
+  effects: [
+    "Mejora la alfabetización en salud",
+    "Fortalece la confianza",
+    "Fomenta la detección temprana",
+    "Aumenta la participación en la investigación",
+    "Apoya la toma de decisiones compartida",
+    "Inspira la donación de riñón en vida",
+    "Reduce el estigma",
+    "Construye comunidad",
+    "Le recuerda a cada paciente que no está solo",
+  ],
+  closerA: "Porque sanar empieza por ser visto.",
+  closerB: "Y cada historia tiene el poder de salvar una vida.",
+  signName: "Robert Sanchez",
+  signTitle: "Fundador y director ejecutivo, The Jentosy Project",
+  meet: "Lee la historia completa de Robert",
+  scEyebrow: "En alianza",
+  scTitle: "Preservando historias renales con StoryCorps.",
+  scBody:
+    "Nos aliamos con StoryCorps — la organización sin fines de lucro detrás de la mayor colección de voces humanas jamás reunida — para grabar y conservar las historias de personas que viven con enfermedad renal.",
+  scLink: "Sobre la alianza",
+  scAlt: "La página de inicio de StoryCorps",
+};
+
+const c = lang === "es" ? es : en;
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<!-- HERO — title left, illustration right over a gold sun disc -->
+<section class="on-light st-hero">
+  <div class="container st-hero-grid">
+    <div class="st-hero-text">
+      <p class="eyebrow reveal">{c.heroEyebrow}</p>
+      <h1 class="st-hero-title reveal" style="--reveal-delay:0.06s">
+        {c.heroTitleA} <em class="hl">{c.heroTitleB}</em>
+      </h1>
+      <p class="lede reveal" style="--reveal-delay:0.12s">{c.heroDek}</p>
+    </div>
+    <div class="st-hero-art reveal" style="--reveal-delay:0.1s">
+      <span class="st-sun" aria-hidden="true"></span>
+      <img src="/images/stomed.png" alt={c.heroAlt} width="1536" height="1024" />
+    </div>
+  </div>
+</section>
+
+<!-- BELIEF — split: the "what numbers can't capture" paragraph on the
+     left behind a gold rule, the thesis set huge and right-aligned on the
+     right (founder's direction: paragraph left, title right). -->
+<section class="on-dark st-belief">
+  <div class="container st-belief-grid">
+    <p class="st-intro reveal">
+      {c.introA} <em>{c.introQuote}</em> {c.introB}
+    </p>
+    <h2 class="st-belief-line reveal" style="--reveal-delay:0.1s">
+      {c.beliefA} <span class="st-gold">{c.beliefB}</span>
+    </h2>
+  </div>
+</section>
+
+<!-- CHAPTERS — zig-zag: text/photo, photo/text, text/photo -->
+<section class="on-light st-chapters">
+  <div class="container">
+    {c.chapters.map((ch, i) => (
+      <article class={`st-row${i % 2 === 1 ? " st-row-flip" : ""}`}>
+        <div class="st-row-text">
+          <span class="st-num" aria-hidden="true">{pad(i + 1)}</span>
+          <p class="eyebrow reveal">{ch.eyebrow}</p>
+          <h2 class="h2 reveal" style="--reveal-delay:0.06s">
+            {ch.titleA}{ch.titleB && " "}
+            {ch.titleB && <span class="hl">{ch.titleB}</span>}
+          </h2>
+          {"sub" in ch && ch.sub && <p class="st-row-sub reveal">{ch.sub}</p>}
+          {ch.body.map((para, j) => (
+            <p class="reveal" style={`--reveal-delay:${0.1 + j * 0.06}s`}>{para}</p>
+          ))}
+          {"link" in ch && ch.link && (
+            <a href={L(ch.link.href)} class="st-row-link reveal">{ch.link.label} &rarr;</a>
+          )}
+        </div>
+        <figure class="st-row-media reveal" style="--reveal-delay:0.08s">
+          <div class="st-frame">
+            <img src={ch.img} alt={ch.alt} loading="lazy" />
+          </div>
+          <figcaption>{ch.caption}</figcaption>
+        </figure>
+      </article>
+    ))}
+  </div>
+</section>
+
+<!-- INTERVENTION — nine effects as a tile grid; the last one in gold -->
+<section class="on-dark st-intervention">
+  <div class="container">
+    <p class="eyebrow reveal">{c.interventionEyebrow}</p>
+    <h2 class="h2 reveal" style="--reveal-delay:0.06s">
+      {c.interventionTitleA} <span class="hl">{c.interventionTitleB}</span>
+    </h2>
+    <p class="lede reveal" style="--reveal-delay:0.12s">{c.interventionDek}</p>
+    <ol class="st-effects">
+      {c.effects.map((e, i) => (
+        <li class={`reveal${i === c.effects.length - 1 ? " st-effect-key" : ""}`} style={`--reveal-delay:${(i % 3) * 0.06}s`}>
+          <span class="st-effect-num">{pad(i + 1)}</span>
+          <span class="st-effect-text">{e}</span>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<!-- CLOSER — the essay's last line, signed -->
+<section class="on-light st-closer">
+  <div class="container st-closer-inner">
+    <span class="st-closer-mark" aria-hidden="true">&ldquo;</span>
+    <p class="st-closer-line reveal">
+      {c.closerA}<br />
+      <span class="hl">{c.closerB}</span>
+    </p>
+    <div class="st-sign reveal" style="--reveal-delay:0.1s">
+      <img src="/images/founder-portrait.webp" alt="" width="64" height="64" />
+      <div>
+        <p class="st-sign-name">{c.signName}</p>
+        <p class="st-sign-title">{c.signTitle}</p>
+      </div>
+    </div>
+    <a href={L("/about/team/")} class="st-row-link reveal">{c.meet} &rarr;</a>
+  </div>
+</section>
+
+<!-- STORYCORPS TEASER — points to the partnership page -->
+<section class="on-dark on-soft st-sc">
+  <div class="container st-sc-grid">
+    <a href={L("/storytelling/storycorps/")} class="st-sc-thumb reveal" tabindex="-1" aria-hidden="true">
+      <img src="/images/storycorps-hero.webp" alt="" loading="lazy" />
+    </a>
+    <div class="reveal" style="--reveal-delay:0.06s">
+      <p class="eyebrow">{c.scEyebrow}</p>
+      <h2 class="h2">{c.scTitle}</h2>
+      <p>{c.scBody}</p>
+      <a href={L("/storytelling/storycorps/")} class="btn btn-rust" style="margin-top:var(--space-4);">
+        {c.scLink} &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* ---------- Hero ---------- */
+
+  .st-hero {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-9)) clamp(var(--space-6), 5vw, var(--space-8));
+    overflow: clip;
+  }
+
+  .st-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    gap: clamp(24px, 4vw, 56px);
+    align-items: center;
+  }
+
+  .st-hero-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(48px, 6.4vw, 104px);
+    line-height: 0.98;
+    letter-spacing: -0.005em;
+    margin: 0 0 var(--space-5);
+  }
+
+  .st-hero-title em {
+    font-style: italic;
+    display: inline-block;
+  }
+
+  .st-hero-art {
+    position: relative;
+  }
+
+  .st-sun {
+    position: absolute;
+    width: 78%;
+    aspect-ratio: 1;
+    left: 11%;
+    top: 4%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 38%, #ffd75e, var(--gold) 55%, #e9ac10);
+    opacity: 0.9;
+  }
+
+  .st-hero-art img {
+    position: relative;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.18));
+  }
+
+  /* ---------- Belief band ---------- */
+
+  .st-belief {
+    padding-block: clamp(var(--space-8), 9vw, 140px);
+    overflow: clip;
+  }
+
+  .st-belief-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .st-intro {
+    position: relative;
+    font-size: clamp(17px, 1.5vw, 19px);
+    line-height: 1.8;
+    color: var(--ink-fg-muted);
+    max-width: 44ch;
+    margin: 0;
+    padding-left: var(--space-5);
+    border-left: 3px solid var(--gold);
+  }
+
+  .st-intro em {
+    color: var(--ink-fg);
+    font-family: var(--font-display);
+    font-size: 1.2em;
+  }
+
+  .st-belief-line {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(44px, 6.2vw, 100px);
+    line-height: 0.98;
+    letter-spacing: -0.01em;
+    text-align: right;
+    margin: 0;
+  }
+
+  @media (max-width: 860px) {
+    .st-belief-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .st-belief-line {
+      text-align: left;
+    }
+  }
+
+  .st-gold {
+    color: var(--gold);
+    font-style: italic;
+  }
+
+  /* ---------- Chapters (zig-zag) ---------- */
+
+  .st-chapters {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .st-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .st-row + .st-row {
+    margin-top: clamp(var(--space-8), 9vw, 140px);
+  }
+
+  .st-row-flip .st-row-text {
+    order: 2;
+  }
+
+  .st-row-text {
+    position: relative;
+    isolation: isolate; /* keeps the z-index:-1 numeral above the section bg */
+  }
+
+  .st-row-text p:not(.eyebrow):not(.st-row-sub) {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--fg-soft);
+  }
+
+  .st-row-text .h2 {
+    margin-bottom: var(--space-4);
+  }
+
+  /* Giant outlined chapter numeral sitting behind the copy. */
+  .st-num {
+    position: absolute;
+    top: -0.78em;
+    left: -0.08em;
+    z-index: -1;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(120px, 15vw, 220px);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--line-strong);
+    opacity: 0.8;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .st-row-sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(19px, 2vw, 24px);
+    margin: calc(-1 * var(--space-2)) 0 var(--space-4);
+  }
+
+  .st-row-link {
+    display: inline-block;
+    margin-top: var(--space-3);
+    font-weight: 700;
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+
+  .st-row-media {
+    margin: 0;
+  }
+
+  /* Photo with an offset gold frame behind it — flips side with the row. */
+  .st-frame {
+    position: relative;
+  }
+
+  .st-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate(18px, 18px);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+    z-index: 0;
+  }
+
+  .st-row-flip .st-frame::before {
+    transform: translate(-18px, 18px);
+  }
+
+  .st-frame img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+    box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.45);
+  }
+
+  .st-row-media figcaption {
+    margin-top: calc(var(--space-5) + 18px);
+    font-size: 13px;
+    color: var(--fg-muted);
+    max-width: 52ch;
+  }
+
+  @media (max-width: 860px) {
+    .st-hero-grid,
+    .st-row {
+      grid-template-columns: 1fr;
+    }
+
+    .st-row-flip .st-row-text {
+      order: 0;
+    }
+
+    .st-hero-art {
+      max-width: 520px;
+    }
+  }
+
+  /* ---------- Intervention ---------- */
+
+  .st-intervention {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .st-effects {
+    list-style: none;
+    padding: 0;
+    margin: var(--space-7) 0 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--ink-line);
+    border: 1px solid var(--ink-line);
+  }
+
+  .st-effects li {
+    background: var(--ink);
+    padding: var(--space-6) var(--space-5);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-height: 150px;
+  }
+
+  .st-effect-num {
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--gold);
+    letter-spacing: 0.06em;
+  }
+
+  .st-effect-text {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: clamp(18px, 1.8vw, 23px);
+    line-height: 1.25;
+  }
+
+  .st-effects li.st-effect-key {
+    background: var(--gold);
+    color: var(--gold-ink);
+  }
+
+  .st-effects li.st-effect-key .st-effect-num {
+    color: var(--gold-ink);
+  }
+
+  @media (max-width: 860px) {
+    .st-effects {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .st-effects li.st-effect-key {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .st-effects {
+      grid-template-columns: 1fr;
+    }
+
+    .st-effects li {
+      min-height: 0;
+    }
+  }
+
+  /* ---------- Closer ---------- */
+
+  .st-closer {
+    padding-block: clamp(var(--space-8), 9vw, 140px);
+    text-align: center;
+  }
+
+  .st-closer-inner {
+    position: relative;
+    max-width: 920px;
+  }
+
+  .st-closer-mark {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 160px;
+    line-height: 0.6;
+    color: var(--gold);
+    margin-bottom: var(--space-4);
+  }
+
+  .st-closer-line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(30px, 4vw, 54px);
+    line-height: 1.2;
+    max-width: none;
+    margin: 0 auto var(--space-7);
+  }
+
+  .st-sign {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-4);
+    text-align: left;
+  }
+
+  .st-sign img {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold);
+  }
+
+  .st-sign-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0;
+  }
+
+  .st-sign-title {
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0;
+  }
+
+  .st-closer .st-row-link {
+    display: block;
+    width: fit-content;
+    margin: var(--space-5) auto 0;
+  }
+
+  /* ---------- StoryCorps teaser ---------- */
+
+  .st-sc {
+    padding-block: clamp(var(--space-7), 7vw, var(--space-9));
+  }
+
+  .st-sc-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: center;
+  }
+
+  .st-sc-thumb {
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--ink-line-strong);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.45);
+    transform: rotate(-2deg);
+    transition: transform var(--dur-med) var(--ease);
+  }
+
+  .st-sc-thumb:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+
+  .st-sc-thumb img {
+    width: 100%;
+    height: auto;
+  }
+
+  @media (max-width: 860px) {
+    .st-sc-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

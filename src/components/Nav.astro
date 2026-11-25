@@ -27,7 +27,12 @@ const navLinks = [
       { href: L("/the-need/data/"), label: t("nav.bronxData") },
     ],
   },
-  { href: L("/storytelling/"), label: t("nav.storytelling") },
+  {
+    href: L("/storytelling/"),
+    label: t("nav.storytelling"),
+    hubLabel: t("nav.storyMedicine"),
+    children: [{ href: L("/storytelling/storycorps/"), label: t("nav.storycorps") }],
+  },
   { href: L("/partner-with-us/"), label: t("nav.partner") },
   { href: L("/contact/"), label: t("nav.contact") },
 ];
