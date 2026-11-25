@@ -1177,3 +1177,96 @@ p:last-child {
 .h2 + p {
   margin-top: var(--space-4);
 }
+
+/* ============================================================
+   Clinical pages (Kidney Disease hub, FSGS, APOL1, Bronx Data) —
+   2026-11-25 consistency pass. Same grammar as the rest of the site:
+   generous rhythm, alternating light / soft bands instead of hairlines,
+   and editorial two-column sections — the eyebrow + title sit in a
+   sticky left column, the content reads on the right at a comfortable
+   measure. Markup: <div class="clin"> wraps the page body; sections
+   whose container has .clin-split get the two-column treatment.
+   ============================================================ */
+
+.clin > section {
+  border-top: 0 !important;
+  padding-block: clamp(var(--space-7), 5.5vw, 88px);
+}
+
+/* Alternate light / soft bands (dark bands keep their own color). */
+.clin > section.on-light:nth-of-type(even) {
+  background: var(--sage);
+}
+
+.clin > section.on-light:nth-of-type(even) .card,
+.clin > section.on-light:nth-of-type(even) .viz-card {
+  background: var(--card);
+}
+
+/* The page's last band is always light, so it never sits gray-on-gray
+   against the soft closing CTA that follows. */
+.clin > section.on-light:last-of-type {
+  background: var(--paper);
+}
+
+.clin .container.narrow {
+  max-width: var(--content-max);
+}
+
+.clin-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(32px, 6vw, 96px);
+  align-items: start;
+}
+
+.clin-head {
+  position: sticky;
+  top: 110px;
+}
+
+.clin-head .h2 {
+  margin: 0;
+}
+
+.clin-head .section-dek {
+  margin-top: var(--space-4);
+  font-size: clamp(16.5px, 1.4vw, 18px);
+  line-height: 1.7;
+  color: var(--fg-soft);
+}
+
+.clin-body {
+  min-width: 0;
+}
+
+.clin-body > p,
+.clin-body li {
+  font-size: 17px;
+  line-height: 1.75;
+}
+
+.clin-body > p {
+  color: var(--fg-soft);
+  max-width: 64ch;
+}
+
+.clin-body > :first-child {
+  margin-top: 0;
+}
+
+/* Text sections without a split header still read at a good measure. */
+.clin .container.narrow:not(.clin-split) {
+  max-width: 820px;
+}
+
+@media (max-width: 900px) {
+  .clin-split {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .clin-head {
+    position: static;
+  }
+}

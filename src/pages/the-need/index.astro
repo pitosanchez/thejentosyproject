@@ -17,7 +17,7 @@ const diseases = [
     slug: "apol1",
     name: "APOL1-Mediated Kidney Disease",
     full: "APOL1 Gene Variants",
-    blurb: "A genetic risk factor concentrated in Black and Brown communities.",
+    blurb: "A genetic risk tied to African ancestry — and why most people who carry it never get sick.",
   },
 ];
 
@@ -76,8 +76,8 @@ const riskFactors = [
 >
   <PageHero
     eyebrow="Understanding Kidney Disease"
-    heading="Rare kidney disease, plainly explained."
-    lede="Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce."
+    heading="Kidney disease, plainly explained."
+    lede="What kidney disease is, how doctors find it, how it's treated, and where to get support — in plain language."
     motif
   />
 
@@ -89,13 +89,12 @@ const riskFactors = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section">
     <div class="container narrow">
       <p>
-        These conditions take a measurable toll on the body, including the kidneys. The Jentosy
-        Project treats health equity as inseparable from these upstream social conditions, not
-        just a matter of medical access — which is why our education work starts with two
-        specific, under-discussed diseases.
+        Our education starts with two under-discussed diseases:
       </p>
     </div>
 
@@ -127,9 +126,12 @@ const riskFactors = [
        the mission — not as the first thing a scared reader hits. -->
 
   <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">What Is Kidney Disease?</p>
-      <h2 class="h3">A filtration system, damaged over time.</h2>
+      <h2 class="h2">A filtration system, damaged over time.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Chronic kidney disease (CKD) happens when the kidneys are damaged for more than a few
         months. Think of your kidneys as your body's filtration system — they clean the blood by
@@ -152,6 +154,7 @@ const riskFactors = [
           is why regular check-ups matter, especially if you have risk factors like high blood
           pressure or diabetes.
         </p>
+      </div>
       </div>
     </div>
   </section>
@@ -181,9 +184,12 @@ const riskFactors = [
   <!-- ============ DIAGNOSIS ============ -->
 
   <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">How Do Doctors Find Kidney Disease?</p>
-      <h2 class="h3">Blood and urine tests, first.</h2>
+      <h2 class="h2">Blood and urine tests, first.</h2>
+      </header>
+      <div class="clin-body">
       <p>Healthcare professionals can find kidney disease through blood and urine tests. These tests look for:</p>
       <NumberedSteps steps={diagnosisSteps} />
       <p style="margin-top:var(--space-5);">Doctors might also use imaging tests like:</p>
@@ -191,19 +197,22 @@ const riskFactors = [
         <li><strong>Ultrasound</strong> — creates pictures of your kidneys using sound waves.</li>
         <li><strong>CT scans</strong> — take detailed X-ray images to look at the kidneys in detail.</li>
       </ul>
+      </div>
     </div>
   </section>
 
   <!-- ============ SYMPTOMS ============ -->
 
   <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Symptoms of Kidney Disease</p>
-      <h2 class="h3">Symptoms develop slowly — often too slowly to notice.</h2>
+      <h2 class="h2">Symptoms develop slowly — often too slowly to notice.</h2>
+      </header>
+      <div class="clin-body">
       <p>
-        Chronic kidney disease symptoms tend to develop slowly over time. In the early stages,
-        you might not notice anything at all. This is why many people don't realize they have
-        kidney disease until it's advanced.
+        Symptoms tend to develop slowly, which is why many people don't realize they have kidney
+        disease until it's advanced.
       </p>
       <p>
         <strong>Why symptoms develop:</strong> loss of kidney function causes a buildup of fluid
@@ -213,15 +222,19 @@ const riskFactors = [
       <div class="grid grid-2-col" style="gap:var(--space-2) var(--space-5); margin-top:var(--space-5);">
         {symptoms.map((s) => <p class="symptom-item">{s}</p>)}
       </div>
+      </div>
     </div>
   </section>
 
   <!-- ============ TREATMENT ============ -->
 
   <section id="treatment" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Treatment for Kidney Disease</p>
-      <h2 class="h3">Slowing the damage, not just managing symptoms.</h2>
+      <h2 class="h2">Slowing the damage, not just managing symptoms.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         The goal of treatment is to slow down damage to the kidneys. This is often done by
         managing the underlying cause of the damage — for example, controlling blood pressure or
@@ -238,11 +251,10 @@ const riskFactors = [
       <div class="card card-rust" style="margin-top:var(--space-6);">
         <p class="eyebrow" style="margin-bottom:8px;">If kidney disease progresses to end-stage</p>
         <p style="margin:0;">
-          Chronic kidney disease can progress to end-stage kidney failure. This is fatal unless a
-          person gets a kidney transplant or starts dialysis — a treatment that does the job of
-          the kidneys. Of the 831,000 Americans currently living with ESKD, 67% are on dialysis
+          Without a kidney transplant or dialysis, end-stage kidney disease is fatal. Of the 831,000 Americans currently living with ESKD, 67% are on dialysis
           and 33% have a transplant.
         </p>
+      </div>
       </div>
     </div>
   </section>
@@ -250,9 +262,12 @@ const riskFactors = [
   <!-- ============ WHEN TO SEE A DOCTOR ============ -->
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">When to See a Doctor</p>
-      <h2 class="h3">Risk factors your doctor should know about.</h2>
+      <h2 class="h2">Risk factors your doctor should know about.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         If you have an ongoing health condition that raises your risk of kidney disease, your
         main healthcare professional may want to monitor the health of your kidneys. Risk factors
@@ -266,15 +281,19 @@ const riskFactors = [
         test results show possible kidney problems, you may be referred to a nephrologist — a
         doctor who specializes in kidney diseases.
       </p>
+      </div>
     </div>
   </section>
 
   <!-- ============ TYPES ============ -->
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Different Types of Kidney Disease</p>
-      <h2 class="h3">The type you have shapes how it's treated.</h2>
+      <h2 class="h2">The type you have shapes how it's treated.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Chronic kidney disease can result from many different causes. Two are the focus of our
         education work — read more on their dedicated pages above. Other types include diabetic
@@ -282,6 +301,7 @@ const riskFactors = [
         high blood pressure. Your doctor can explain which type you have and what it means for
         your treatment.
       </p>
+      </div>
     </div>
   </section>
 
@@ -293,15 +313,12 @@ const riskFactors = [
     <div class="container narrow">
       <p class="eyebrow">The Bottom Line</p>
       <p class="lede reveal" style="max-width:64ch;">
-        Kidney disease often has no symptoms in early stages, making regular check-ups essential
-        if you have risk factors. The good news is that treatment can slow disease progression,
-        especially when started early. Work with your healthcare team to monitor your kidney
+        Treatment can slow kidney disease, especially when it starts early — so if you have risk
+        factors, regular check-ups matter. Work with your healthcare team to monitor your kidney
         health and manage any underlying conditions.
       </p>
       <p class="disclaimer-dark">
-        This page provides general, credibility-level education — not medical advice — and has
-        not yet completed a formal clinical-accuracy review. Talk to your doctor about your own
-        risk, testing, and treatment.
+        This page is general education, not medical advice. Talk to your doctor about your own risk, testing, and treatment.
       </p>
     </div>
   </section>
@@ -334,7 +351,9 @@ const riskFactors = [
       <a href="/the-need/data/" class="btn btn-steel-outline" style="margin-top:var(--space-6);">See Bronx Data You Should Know &rarr;</a>
     </div>
   </section>
-</BaseLayout>
+  </div>
+
+  </BaseLayout>
 
 <style>
   .narrow {

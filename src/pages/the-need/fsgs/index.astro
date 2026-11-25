@@ -1,4 +1,5 @@
 ---
+import ClosingCTA from "../../../components/ui/ClosingCTA.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHero from "../../../components/PageHero.astro";
 import Breadcrumb from "../../../components/Breadcrumb.astro";
@@ -105,7 +106,7 @@ const medicalWebPageSchema = {
   about: { "@type": "MedicalCondition", name: "Focal Segmental Glomerulosclerosis" },
   audience: { "@type": "Patient" },
   disclaimer:
-    "This page provides general, credibility-level education, not medical advice, and has not yet completed a formal clinical-accuracy review.",
+    "This page is general education, not medical advice.",
 };
 
 const questions = [
@@ -138,6 +139,8 @@ const questions = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <div class="grid stat-grid-3">
@@ -153,9 +156,12 @@ const questions = [
   <!-- ============ WHAT'S HAPPENING IN YOUR KIDNEY ============ -->
 
   <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">What Is Happening in Your Kidney</p>
       <h2 class="h2">Scarring where blood is filtered.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Each kidney contains about one million tiny filters called glomeruli. Their job: clean
         waste and excess fluid from your blood, hour by hour, for your entire life. In FSGS —
@@ -172,6 +178,7 @@ const questions = [
         podocytes are lost, they cannot regenerate. The resulting leak allows protein — which
         should stay in the blood — to spill into the urine.
       </p>
+      </div>
     </div>
 
     <div class="container" style="margin-top:var(--space-6);">
@@ -236,9 +243,12 @@ const questions = [
   <!-- ============ WHO IS MOST AFFECTED ============ -->
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Who Is Most Affected</p>
       <h2 class="h2">This is not distributed <span class="hl">equally.</span></h2>
+      </header>
+      <div class="clin-body">
       <p>
         Black adults are 3&ndash;4 times more likely to develop FSGS than white adults. Among
         Black FSGS patients, approximately 25% carry the high-risk APOL1 genotype — which drives
@@ -249,6 +259,7 @@ const questions = [
         later diagnosis, less access to nephrology care, higher rates of uninsured status, and
         neighborhood-level structural factors all contribute to worse outcomes.
       </p>
+      </div>
     </div>
     <div class="container">
       <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
@@ -264,7 +275,7 @@ const questions = [
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">Key Risk Factors</p>
-      <h2 class="h3">Structural, historical, and genetic factors converge.</h2>
+      <h2 class="h2">Structural, historical, and genetic factors converge.</h2>
       <div class="grid stat-grid-3" style="gap:var(--space-4); margin-top:var(--space-5);">
         {riskFactors.map((r, i) => (
           <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.05}s`}>
@@ -280,14 +291,18 @@ const questions = [
   <!-- ============ RECOGNIZING FSGS ============ -->
 
   <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Recognizing FSGS</p>
       <h2 class="h2">Many people have no symptoms at all until damage is significant.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         This is what makes FSGS dangerous: the kidneys lose function silently. By the time edema
         or fatigue appears, substantial scarring may have already occurred. Routine
         protein-in-urine tests are the earliest and most reliable warning sign.
       </p>
+      </div>
     </div>
     <div class="container">
       <div class="grid grid-2-col" style="gap:var(--space-3); margin-top:var(--space-5);">
@@ -316,10 +331,14 @@ const questions = [
   <!-- ============ PATH TO DIAGNOSIS ============ -->
 
   <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">The Path to Diagnosis</p>
-      <h2 class="h3">Only a kidney biopsy can confirm FSGS.</h2>
+      <h2 class="h2">Only a kidney biopsy can confirm FSGS.</h2>
+      </header>
+      <div class="clin-body">
       <NumberedSteps steps={diagnosisSteps} />
+      </div>
     </div>
   </section>
 
@@ -375,14 +394,17 @@ const questions = [
   <!-- ============ WHERE YOU LIVE ============ -->
 
   <section class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">FSGS and Where You Live</p>
       <p class="stat-num" style="display:block; font-size:clamp(40px,5vw,56px);">~40%</p>
       <p class="lede" style="max-width:60ch;">
         Despite representing ~13% of the US population, Black adults account for ~40% of primary
         FSGS cases in large registry studies.
       </p>
-      <h2 class="h3" style="margin-top:var(--space-6); color:var(--ink-fg);">Genetics explains part of this. Place explains the rest.</h2>
+      <h2 class="h2" style="margin-top:var(--space-6); color:var(--ink-fg);">Genetics explains part of this. Place explains the rest.</h2>
+      </header>
+      <div class="clin-body">
       <p class="lede" style="max-width:64ch;">
         APOL1 variants increase biological risk. But the gap in outcomes between Black and white
         FSGS patients cannot be attributed to genetics alone. Studies show that insurance
@@ -392,6 +414,7 @@ const questions = [
         outcome as much as the variant they carry.
       </p>
       <p class="disclaimer-dark">FSGS Clinical Trial Registry 2021.</p>
+      </div>
     </div>
   </section>
 
@@ -429,14 +452,15 @@ const questions = [
       <p class="lede"><a href="/the-need/apol1/" class="linkline">Learn About APOL1 &rarr;</a></p>
       <div class="disclaimer">
         <p>
-          This page provides general, credibility-level education — not medical advice — and has
-          not yet completed a formal clinical-accuracy review. Talk to your doctor about your own
-          risk, testing, and treatment.
+          This page is general education, not medical advice. Talk to your doctor about your own risk, testing, and treatment.
         </p>
       </div>
       <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to Kidney Disease</a>
     </div>
   </section>
+  </div>
+
+  <ClosingCTA title="Help us reach people" accent="earlier." />
 </BaseLayout>
 
 <style>

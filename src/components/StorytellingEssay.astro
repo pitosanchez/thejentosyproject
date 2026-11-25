@@ -6,6 +6,7 @@
  * founder's request. Shared by /storytelling/ and /es/storytelling/ so the
  * two languages can't drift: all copy lives in `copy` below.
  */
+import PageHero from "./PageHero.astro";
 import { localeHref } from "../i18n/utils";
 
 interface Props {
@@ -66,7 +67,7 @@ const en = {
       link: { href: "/where-we-live/", label: "Explore Where We Live" },
       img: "/images/WhereWeLiveThumbNail.webp",
       alt: "The Where We Live — Rare Renal Equity Project map and stories platform",
-      caption: "Where We Live maps genetics, place, and structural inequity alongside patient stories.",
+      caption: "A preview of Where We Live, now in development: genetics, place, and structural inequity mapped alongside patient stories.",
     },
   ],
   interventionEyebrow: "Beyond awareness",
@@ -74,17 +75,15 @@ const en = {
   interventionTitleB: "It's intervention.",
   interventionDek:
     "Every story can become social capital — helping patients know which questions to ask and where to find hope, and helping clinicians, researchers, and policymakers see the people behind the numbers.",
-  effects: [
-    "Improves health literacy",
-    "Strengthens trust",
-    "Encourages earlier screening",
-    "Increases research participation",
-    "Supports shared decision-making",
-    "Inspires living kidney donation",
-    "Reduces stigma",
-    "Builds community",
-    "Reminds every patient they are not alone",
+  rippleCenter: "One story",
+  ringWord: "Ring",
+  ripples: [
+    { label: "The person", items: ["Improves health literacy", "Strengthens trust", "Encourages earlier screening"] },
+    { label: "Care & science", items: ["Increases research participation", "Supports shared decision-making", "Inspires living kidney donation"] },
+    { label: "The community", items: ["Reduces stigma", "Builds community"] },
   ],
+  finaleA: "And above all, it reminds every patient",
+  finaleB: "they are not alone.",
   closerA: "Because healing begins with being seen.",
   closerB: "And every story has the power to save a life.",
   signName: "Robert Sanchez",
@@ -150,7 +149,7 @@ const es: typeof en = {
       link: { href: "/where-we-live/", label: "Explora Where We Live" },
       img: "/images/WhereWeLiveThumbNail.webp",
       alt: "La plataforma de mapas e historias de Where We Live — Rare Renal Equity Project",
-      caption: "Where We Live mapea la genética, el lugar y la desigualdad estructural junto a las historias de pacientes.",
+      caption: "Un adelanto de Where We Live, ahora en desarrollo: la genética, el lugar y la desigualdad estructural mapeados junto a las historias de pacientes.",
     },
   ],
   interventionEyebrow: "Más allá de la concientización",
@@ -158,17 +157,15 @@ const es: typeof en = {
   interventionTitleB: "Es intervenir.",
   interventionDek:
     "Cada historia puede convertirse en capital social — ayuda a los pacientes a saber qué preguntar y dónde encontrar esperanza, y ayuda a médicos, investigadores y legisladores a ver a las personas detrás de las cifras.",
-  effects: [
-    "Mejora la alfabetización en salud",
-    "Fortalece la confianza",
-    "Fomenta la detección temprana",
-    "Aumenta la participación en la investigación",
-    "Apoya la toma de decisiones compartida",
-    "Inspira la donación de riñón en vida",
-    "Reduce el estigma",
-    "Construye comunidad",
-    "Le recuerda a cada paciente que no está solo",
+  rippleCenter: "Una historia",
+  ringWord: "Onda",
+  ripples: [
+    { label: "La persona", items: ["Mejora la alfabetización en salud", "Fortalece la confianza", "Fomenta la detección temprana"] },
+    { label: "La atención y la ciencia", items: ["Aumenta la participación en la investigación", "Apoya la toma de decisiones compartida", "Inspira la donación de riñón en vida"] },
+    { label: "La comunidad", items: ["Reduce el estigma", "Construye comunidad"] },
   ],
+  finaleA: "Y, sobre todo, le recuerda a cada paciente",
+  finaleB: "que no está solo.",
   closerA: "Porque sanar empieza por ser visto.",
   closerB: "Y cada historia tiene el poder de salvar una vida.",
   signName: "Robert Sanchez",
@@ -186,22 +183,14 @@ const c = lang === "es" ? es : en;
 const pad = (n: number) => String(n).padStart(2, "0");
 ---
 
-<!-- HERO — title left, illustration right over a gold sun disc -->
-<section class="on-light st-hero">
-  <div class="container st-hero-grid">
-    <div class="st-hero-text">
-      <p class="eyebrow reveal">{c.heroEyebrow}</p>
-      <h1 class="st-hero-title reveal" style="--reveal-delay:0.06s">
-        {c.heroTitleA} <em class="hl">{c.heroTitleB}</em>
-      </h1>
-      <p class="lede reveal" style="--reveal-delay:0.12s">{c.heroDek}</p>
-    </div>
-    <div class="st-hero-art reveal" style="--reveal-delay:0.1s">
-      <span class="st-sun" aria-hidden="true"></span>
-      <img src="/images/stomed.png" alt={c.heroAlt} width="1536" height="1024" />
-    </div>
-  </div>
-</section>
+<!-- HERO — the shared PageHero, with the illustration uncropped -->
+<PageHero
+  eyebrow={c.heroEyebrow}
+  heading={c.heroTitleA}
+  accent={c.heroTitleB}
+  lede={c.heroDek}
+  image={{ src: "/images/stomed.png", alt: c.heroAlt, fit: "contain" }}
+/>
 
 <!-- BELIEF — split: the "what numbers can't capture" paragraph on the
      left behind a gold rule, the thesis set huge and right-aligned on the
@@ -248,22 +237,66 @@ const pad = (n: number) => String(n).padStart(2, "0");
   </div>
 </section>
 
-<!-- INTERVENTION — nine effects as a tile grid; the last one in gold -->
-<section class="on-dark st-intervention">
+<!-- INTERVENTION — "the ripple." One story at the center; its effects
+     travel outward in three rings (the person → care & science → the
+     community), and the ninth effect lands as the finale. Hovering a ring's
+     list lights that ring in the diagram. -->
+<section class="on-dark st-int">
   <div class="container">
-    <p class="eyebrow reveal">{c.interventionEyebrow}</p>
-    <h2 class="h2 reveal" style="--reveal-delay:0.06s">
-      {c.interventionTitleA} <span class="hl">{c.interventionTitleB}</span>
-    </h2>
-    <p class="lede reveal" style="--reveal-delay:0.12s">{c.interventionDek}</p>
-    <ol class="st-effects">
-      {c.effects.map((e, i) => (
-        <li class={`reveal${i === c.effects.length - 1 ? " st-effect-key" : ""}`} style={`--reveal-delay:${(i % 3) * 0.06}s`}>
-          <span class="st-effect-num">{pad(i + 1)}</span>
-          <span class="st-effect-text">{e}</span>
-        </li>
-      ))}
-    </ol>
+    <div class="st-int-grid">
+      <div class="st-int-aside">
+        <p class="eyebrow reveal">{c.interventionEyebrow}</p>
+        <h2 class="st-int-title reveal" style="--reveal-delay:0.06s">
+          {c.interventionTitleA} <span class="st-gold">{c.interventionTitleB}</span>
+        </h2>
+        <p class="st-int-dek reveal" style="--reveal-delay:0.12s">{c.interventionDek}</p>
+
+        <svg class="st-ripple reveal" viewBox="0 0 400 400" aria-hidden="true" style="--reveal-delay:0.18s">
+          <circle class="st-pulse" cx="200" cy="200" r="170" />
+          <circle class="st-pulse st-pulse-2" cx="200" cy="200" r="170" />
+          <circle class="st-ring st-ring-3" cx="200" cy="200" r="170" />
+          <circle class="st-ring st-ring-2" cx="200" cy="200" r="115" />
+          <circle class="st-ring st-ring-1" cx="200" cy="200" r="60" />
+          <circle class="st-core" cx="200" cy="200" r="13" />
+          <text class="st-core-label" x="200" y="227" text-anchor="middle">{c.rippleCenter}</text>
+          <text class="st-ring-num" x="267" y="204">01</text>
+          <text class="st-ring-num" x="322" y="204">02</text>
+          <text class="st-ring-num" x="377" y="204">03</text>
+        </svg>
+      </div>
+
+      <div class="st-tiers">
+        {c.ripples.map((ring, i) => {
+          const offset = c.ripples.slice(0, i).reduce((n, r) => n + r.items.length, 0);
+          return (
+            <div class={`st-tier st-tier-${i + 1}`}>
+              <p class="st-tier-head reveal">
+                <span class="st-tier-icon" aria-hidden="true">
+                  {Array.from({ length: i + 1 }).map((_, k) => <i style={`--k:${k}`}></i>)}
+                </span>
+                {c.ringWord} {pad(i + 1)} &middot; {ring.label}
+              </p>
+              <ul class="st-tier-list">
+                {ring.items.map((item, j) => (
+                  <li class="reveal" style={`--reveal-delay:${j * 0.07}s`}>
+                    <span class="st-tier-n" aria-hidden="true">{pad(offset + j + 1)}</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <div class="st-finale">
+      <span class="st-finale-n reveal" aria-hidden="true">09</span>
+      <p class="st-finale-line reveal" style="--reveal-delay:0.08s">
+        {c.finaleA}<br />
+        <span class="st-gold">{c.finaleB}</span>
+      </p>
+    </div>
   </div>
 </section>
 
@@ -304,56 +337,6 @@ const pad = (n: number) => String(n).padStart(2, "0");
 </section>
 
 <style>
-  /* ---------- Hero ---------- */
-
-  .st-hero {
-    padding-block: clamp(var(--space-7), 7vw, var(--space-9)) clamp(var(--space-6), 5vw, var(--space-8));
-    overflow: clip;
-  }
-
-  .st-hero-grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
-    gap: clamp(24px, 4vw, 56px);
-    align-items: center;
-  }
-
-  .st-hero-title {
-    font-family: var(--font-display);
-    font-weight: 500;
-    font-size: clamp(48px, 6.4vw, 104px);
-    line-height: 0.98;
-    letter-spacing: -0.005em;
-    margin: 0 0 var(--space-5);
-  }
-
-  .st-hero-title em {
-    font-style: italic;
-    display: inline-block;
-  }
-
-  .st-hero-art {
-    position: relative;
-  }
-
-  .st-sun {
-    position: absolute;
-    width: 78%;
-    aspect-ratio: 1;
-    left: 11%;
-    top: 4%;
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 38%, #ffd75e, var(--gold) 55%, #e9ac10);
-    opacity: 0.9;
-  }
-
-  .st-hero-art img {
-    position: relative;
-    width: 100%;
-    height: auto;
-    filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.18));
-  }
-
   /* ---------- Belief band ---------- */
 
   .st-belief {
@@ -522,7 +505,6 @@ const pad = (n: number) => String(n).padStart(2, "0");
   }
 
   @media (max-width: 860px) {
-    .st-hero-grid,
     .st-row {
       grid-template-columns: 1fr;
     }
@@ -530,78 +512,265 @@ const pad = (n: number) => String(n).padStart(2, "0");
     .st-row-flip .st-row-text {
       order: 0;
     }
-
-    .st-hero-art {
-      max-width: 520px;
-    }
   }
 
-  /* ---------- Intervention ---------- */
+  /* ---------- Intervention: the ripple ---------- */
 
-  .st-intervention {
-    padding-block: clamp(var(--space-8), 8vw, 128px);
+  .st-int {
+    padding-block: clamp(var(--space-8), 9vw, 150px) 0;
+    overflow: clip;
   }
 
-  .st-effects {
-    list-style: none;
-    padding: 0;
-    margin: var(--space-7) 0 0;
+  .st-int-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--ink-line);
-    border: 1px solid var(--ink-line);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: clamp(40px, 7vw, 120px);
+    align-items: start;
   }
 
-  .st-effects li {
-    background: var(--ink);
-    padding: var(--space-6) var(--space-5);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    min-height: 150px;
+  .st-int-aside {
+    position: sticky;
+    top: 110px;
   }
 
-  .st-effect-num {
-    font-weight: 800;
-    font-size: 15px;
-    color: var(--gold);
-    letter-spacing: 0.06em;
+  .st-int-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(36px, 4.4vw, 64px);
+    line-height: 1.04;
+    margin: 0 0 var(--space-5);
   }
 
-  .st-effect-text {
+  .st-int-title .st-gold {
+    display: block;
+  }
+
+  .st-int-dek {
+    color: var(--ink-fg-muted);
+    font-size: 16.5px;
+    line-height: 1.75;
+    max-width: 46ch;
+  }
+
+  /* The diagram */
+  .st-ripple {
+    display: block;
+    width: min(100%, 400px);
+    margin-top: var(--space-6);
+    overflow: visible;
+  }
+
+  .st-ring {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.25;
+    transition: stroke-width 0.4s var(--ease), stroke-opacity 0.4s var(--ease);
+  }
+
+  .st-ring-1 { stroke-opacity: 0.9; }
+  .st-ring-2 { stroke-opacity: 0.55; }
+  .st-ring-3 { stroke-opacity: 0.3; stroke-dasharray: 2 6; }
+
+  .st-core {
+    fill: var(--gold);
+  }
+
+  .st-core-label {
+    fill: var(--ink-fg);
     font-family: var(--font-body);
     font-weight: 700;
-    font-size: clamp(18px, 1.8vw, 23px);
-    line-height: 1.25;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
-  .st-effects li.st-effect-key {
+  .st-ring-num {
+    fill: var(--gold);
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+
+  /* Two rings forever travelling outward from the core. */
+  .st-pulse {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2;
+    transform-box: view-box;
+    transform-origin: 200px 200px;
+    animation: st-ripple-out 5s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  }
+
+  .st-pulse-2 {
+    animation-delay: 2.5s;
+  }
+
+  @keyframes st-ripple-out {
+    from {
+      transform: scale(0.08);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(1.08);
+      opacity: 0;
+    }
+  }
+
+  /* Hovering a tier lights its ring in the diagram. */
+  .st-int-grid:has(.st-tier-1:hover) .st-ring-1,
+  .st-int-grid:has(.st-tier-2:hover) .st-ring-2,
+  .st-int-grid:has(.st-tier-3:hover) .st-ring-3 {
+    stroke-opacity: 1;
+    stroke-width: 3.5;
+  }
+
+  /* The tiers */
+  .st-tier + .st-tier {
+    margin-top: clamp(var(--space-7), 5vw, var(--space-8));
+  }
+
+  .st-tier-head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 var(--space-3);
+  }
+
+  .st-tier-icon {
+    position: relative;
+    width: 22px;
+    height: 22px;
+    flex: none;
+  }
+
+  .st-tier-icon i {
+    position: absolute;
+    inset: calc(var(--k) * 4px);
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+  }
+
+  .st-tier-icon i:last-child {
     background: var(--gold);
+  }
+
+  .st-tier-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .st-tier-list li {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding: 18px 0;
+    border-top: 1px solid var(--ink-line);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: clamp(22px, 2.5vw, 34px);
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    transition: transform 0.45s var(--ease), color 0.45s var(--ease);
+  }
+
+  .st-tier-list li:last-child {
+    border-bottom: 1px solid var(--ink-line);
+  }
+
+  .st-tier-list li:hover {
+    transform: translateX(10px);
+    color: var(--gold);
+  }
+
+  .st-tier-n {
+    flex: none;
+    width: 2.4em;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--ink-fg-muted);
+  }
+
+  /* The finale — the ninth effect, given the whole stage, sitting on its
+     own field of faint concentric rings. */
+  .st-finale {
+    position: relative;
+    margin-top: clamp(var(--space-8), 9vw, 150px);
+    padding-block: clamp(var(--space-8), 8vw, 130px);
+    text-align: center;
+    border-top: 1px solid var(--ink-line);
+    isolation: isolate;
+  }
+
+  .st-finale::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: min(1100px, 150%);
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: repeating-radial-gradient(
+      circle,
+      transparent 0 58px,
+      rgba(245, 192, 46, 0.12) 58px 59px
+    );
+    mask-image: radial-gradient(circle, #000 25%, transparent 68%);
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .st-finale-n {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.2em;
     color: var(--gold-ink);
+    background: var(--gold);
+    border-radius: var(--radius-pill);
+    padding: 6px 14px;
+    margin-bottom: var(--space-5);
   }
 
-  .st-effects li.st-effect-key .st-effect-num {
-    color: var(--gold-ink);
+  .st-finale-line {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-weight: 500;
+    font-size: clamp(34px, 5.2vw, 84px);
+    line-height: 1.05;
+    max-width: none;
+    margin: 0 auto;
+    text-wrap: balance;
   }
 
-  @media (max-width: 860px) {
-    .st-effects {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .st-effects li.st-effect-key {
-      grid-column: 1 / -1;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .st-effects {
+  @media (max-width: 900px) {
+    .st-int-grid {
       grid-template-columns: 1fr;
     }
 
-    .st-effects li {
-      min-height: 0;
+    .st-int-aside {
+      position: static;
+    }
+
+    .st-ripple {
+      width: min(100%, 300px);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .st-pulse {
+      display: none;
+    }
+
+    .st-tier-list li:hover {
+      transform: none;
     }
   }
 

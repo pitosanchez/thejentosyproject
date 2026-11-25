@@ -1,0 +1,148 @@
+---
+/**
+ * A signed, first-person quote: portrait in a gold offset frame on the left,
+ * a large serif quote on the right with an optional supporting paragraph,
+ * then the signature. Use for the founder's voice anywhere on the site.
+ * Extra content (a press link, etc.) goes in the default slot.
+ */
+interface Props {
+  eyebrow?: string;
+  quote: string;
+  body?: string;
+  name: string;
+  role?: string;
+  photo: string;
+  photoAlt: string;
+}
+const { eyebrow, quote, body, name, role, photo, photoAlt } = Astro.props;
+const hasExtra = Astro.slots.has("default");
+---
+
+<figure class="quote">
+  <div class="quote-photo reveal">
+    <div class="quote-frame">
+      <img src={photo} alt={photoAlt} loading="lazy" />
+    </div>
+  </div>
+  <div class="quote-text">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+    <blockquote class="quote-line reveal" style="--reveal-delay:0.05s">{quote}</blockquote>
+    {body && <p class="quote-body reveal" style="--reveal-delay:0.1s">{body}</p>}
+    <figcaption class="quote-sign reveal" style="--reveal-delay:0.14s">
+      <span class="quote-name">{name}</span>
+      {role && <span class="quote-role">{role}</span>}
+    </figcaption>
+    {hasExtra && <div class="quote-extra reveal" style="--reveal-delay:0.18s"><slot /></div>}
+  </div>
+</figure>
+
+<style>
+  .quote {
+    margin: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .quote-frame {
+    position: relative;
+  }
+
+  .quote-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate(-16px, 16px);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+  }
+
+  .quote-frame img {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: var(--radius-md);
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  .quote-text {
+    position: relative;
+  }
+
+  .quote-mark {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 120px;
+    line-height: 0.55;
+    color: var(--gold);
+    margin: var(--space-3) 0 var(--space-2);
+  }
+
+  .quote-line {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(28px, 3.3vw, 48px);
+    line-height: 1.15;
+    text-wrap: balance;
+  }
+
+  .quote-body {
+    margin: var(--space-5) 0 0;
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--fg-soft);
+    max-width: 58ch;
+  }
+
+  :global(.on-dark:not(.on-soft)) .quote-body {
+    color: var(--ink-fg-muted);
+  }
+
+  .quote-sign {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line);
+    max-width: 58ch;
+  }
+
+  .quote-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 22px;
+  }
+
+  .quote-role {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--rust);
+  }
+
+  :global(.on-dark:not(.on-soft)) .quote-role {
+    color: var(--gold);
+  }
+
+  .quote-extra {
+    margin-top: var(--space-4);
+  }
+
+  @media (max-width: 760px) {
+    .quote {
+      grid-template-columns: 1fr;
+    }
+
+    .quote-photo {
+      max-width: 260px;
+    }
+  }
+</style>

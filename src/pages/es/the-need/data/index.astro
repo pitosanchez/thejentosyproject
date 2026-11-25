@@ -1,4 +1,5 @@
 ---
+import ClosingCTA from "../../../../components/ui/ClosingCTA.astro";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import PageHero from "../../../../components/PageHero.astro";
 import Breadcrumb from "../../../../components/Breadcrumb.astro";
@@ -85,6 +86,8 @@ const dataGapsWeak = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <div class="card card-rust">
@@ -98,9 +101,13 @@ const dataGapsWeak = [
   </section>
 
   <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Empieza por la enfermedad renal</p>
       <h2 class="h2">Una de las pocas mediciones directas del Bronx que tenemos.</h2>
+      </header>
+      <div class="clin-body">
+      </div>
     </div>
 
     <div class="container" style="margin-top:var(--space-5);">
@@ -241,9 +248,12 @@ const dataGapsWeak = [
   </section>
 
   <section id="apol1" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">APOL1: genética, ascendencia y salud renal</p>
       <h2 class="h2">Un gen, <span class="hl">no un grupo.</span></h2>
+      </header>
+      <div class="clin-body">
       <p>
         APOL1 es un gen. Ciertas variantes de APOL1 surgieron en poblaciones con ascendencia de
         regiones del África subsahariana porque ofrecían protección contra algunas formas de
@@ -266,13 +276,14 @@ const dataGapsWeak = [
         son lo mismo.
       </p>
       <p class="lede"><a href={L("/the-need/apol1/")} class="linkline">Lee la historia completa de la APOL1 &rarr;</a></p>
+      </div>
     </div>
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="mini-tag" style="color:var(--rust); font-size:11px;">Investigación con participación del Bronx — no datos de prevalencia del Bronx</p>
-      <h2 class="h3">Lo que ha encontrado la investigación que incluye una cohorte del Bronx.</h2>
+      <h2 class="h2">Lo que ha encontrado la investigación que incluye una cohorte del Bronx.</h2>
       <p>
         El Estudio de Salud Comunitaria Hispana/Estudio de Latinos (HCHS/SOL), con apoyo del NIH,
         inscribió a participantes en cuatro centros de campo — <strong>el Bronx, Nueva York</strong>;
@@ -304,7 +315,7 @@ const dataGapsWeak = [
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="mini-tag" style="color:var(--rust); font-size:11px;">Investigación multiciudad que incluye una cohorte del Bronx</p>
-      <h2 class="h3">Origen puertorriqueño e incidencia de ERC.</h2>
+      <h2 class="h2">Origen puertorriqueño e incidencia de ERC.</h2>
       <p>
         Siguiendo a 8,774 adultos hispanos/latinos, los investigadores del HCHS/SOL reportaron una
         tasa general de ERC incidente de 10.6 casos por cada 1,000 personas-año. La incidencia
@@ -334,9 +345,12 @@ const dataGapsWeak = [
   </section>
 
   <section id="fsgs" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">GEFS: una enfermedad renal que merece mayor atención</p>
       <h2 class="h2">Un patrón de cicatrización, con más de una causa.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         La glomeruloesclerosis focal y segmentaria (GEFS) es un patrón de cicatrización en las
         unidades de filtrado del riñón, llamadas glomérulos. Puede deberse a distintas vías
@@ -362,13 +376,17 @@ const dataGapsWeak = [
       </p>
 
       <p class="lede"><a href={L("/the-need/fsgs/")} class="linkline">Lee la historia completa de la GEFS &rarr;</a></p>
+      </div>
     </div>
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">El VIH y la salud renal</p>
-      <h2 class="h3">Por qué el VIH pertenece a una página de salud renal.</h2>
+      <h2 class="h2">Por qué el VIH pertenece a una página de salud renal.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         El VIH puede afectar la salud renal de forma directa e indirecta — a través del virus en
         sí, de algunos medicamentos usados para tratarlo y de afecciones relacionadas. La
@@ -383,6 +401,7 @@ const dataGapsWeak = [
         actual concreta en esta página hasta que pueda enlazarse directamente con ese informe, en
         lugar de repetir un número de segunda mano.
       </p>
+      </div>
     </div>
   </section>
 
@@ -419,9 +438,12 @@ const dataGapsWeak = [
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Qué viene después</p>
       <h2 class="h2">Las cifras cuentan parte de la historia. El lugar y las personas nos dicen más.</h2>
+      </header>
+      <div class="clin-body">
       <p class="lede" style="max-width:60ch;">
         La iniciativa <strong>Where We Live</strong> de The Jentosy Project examinará cómo se
         entrecruzan la enfermedad renal, las afecciones de salud relacionadas, los factores
@@ -430,6 +452,7 @@ const dataGapsWeak = [
       <div class="cluster gap-3" style="margin-top:var(--space-6);">
         <a href={L("/where-we-live/")} class="btn btn-rust">Explora Where We Live</a>
         <a href={L("/about/what-we-do/")} class="btn btn-steel">Conoce nuestro trabajo</a>
+      </div>
       </div>
     </div>
   </section>
@@ -448,6 +471,9 @@ const dataGapsWeak = [
       <a href={L("/the-need/")} class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Volver a Enfermedad renal</a>
     </div>
   </section>
+  </div>
+
+  <ClosingCTA title="Ayúdanos a llegar" accent="antes." />
 </BaseLayout>
 
 <style>

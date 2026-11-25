@@ -1,0 +1,122 @@
+---
+/**
+ * What We Do — /about/what-we-do/ and /es/. Editorial role: "What do you
+ * actually do?" — the four strands of work, each linking to the page that
+ * owns it. The six-inputs method lives on About only (audit 2026-11-25).
+ * Hero lede is the founder's own "What We Do" sentence, kept verbatim.
+ */
+import PageHero from "./PageHero.astro";
+import SectionHead from "./ui/SectionHead.astro";
+import IndexList from "./ui/IndexList.astro";
+import Feature from "./ui/Feature.astro";
+import ClosingCTA from "./ui/ClosingCTA.astro";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+
+const en = {
+  heroEyebrow: "About · What We Do",
+  heroTitle: "The work,",
+  heroAccent: "in four parts.",
+  heroLede:
+    "Beginning in the Bronx, The Jentosy Project develops kidney-health education, rare kidney disease resources, community partnerships, patient stories, and initiatives such as Where We Live that examine the relationship between kidney disease, place, and the conditions that shape health.",
+  heroAlt: "A community health educator presenting on FSGS, APOL1, and rare kidney diseases to a seated group",
+  workEyebrow: "The work",
+  workTitle: "Four strands,",
+  workAccent: "one goal.",
+  work: [
+    { term: "Kidney-health education & resources", note: "Plain-language explanations of FSGS, APOL1-mediated kidney disease, and chronic kidney disease — built to reach people who won't find this information anywhere else, before a diagnosis becomes an emergency.", href: "/the-need/" },
+    { term: "Community partnerships", note: "Researchers, healthcare organizations, and policymakers working toward care that doesn't depend on zip code.", href: "/partner-with-us/" },
+    { term: "Patient stories", note: "Recorded and shared — including through our StoryCorps partnership — so patients have language for what they're living through, and know they're not alone.", href: "/storytelling/" },
+    { term: "Where We Live", note: "A map of kidney disease, place, and the conditions that shape health, paired with patient stories — now in development.", href: "/where-we-live/" },
+  ],
+  teEyebrow: "Where this returns",
+  teTitle: "Transplantation",
+  teAccent: "equity.",
+  teBody: [
+    "Transplantation equity is where this organization began — in our founder's own experience.",
+    "As The Jentosy Project grows, we intend to build back toward that work directly. For now, our resources are focused upstream: on education and early awareness.",
+  ],
+  heartAlt: "An illustration of a heart held in cupped hands",
+  ctaTitle: "Help us reach",
+  ctaAccent: "more communities.",
+};
+
+const es: typeof en = {
+  heroEyebrow: "Quiénes somos · Qué hacemos",
+  heroTitle: "El trabajo,",
+  heroAccent: "en cuatro partes.",
+  heroLede:
+    "Empezando por el Bronx, The Jentosy Project desarrolla educación sobre la salud renal, recursos sobre enfermedades renales poco frecuentes, alianzas comunitarias, historias de pacientes e iniciativas como Where We Live que examinan la relación entre la enfermedad renal, el lugar y las condiciones que moldean la salud.",
+  heroAlt: "Una educadora de salud comunitaria presenta sobre la GEFS, la APOL1 y las enfermedades renales poco frecuentes a un grupo sentado",
+  workEyebrow: "El trabajo",
+  workTitle: "Cuatro líneas,",
+  workAccent: "una meta.",
+  work: [
+    { term: "Educación y recursos sobre la salud renal", note: "Explicaciones en lenguaje claro sobre la GEFS, la enfermedad renal mediada por APOL1 y la enfermedad renal crónica — creadas para llegar a personas que no encontrarán esta información en ningún otro lugar, antes de que un diagnóstico se convierta en una emergencia.", href: "/the-need/" },
+    { term: "Alianzas comunitarias", note: "Investigadores, organizaciones de salud y responsables de políticas públicas que trabajan por una atención que no dependa del código postal.", href: "/partner-with-us/" },
+    { term: "Historias de pacientes", note: "Grabadas y compartidas — incluso a través de nuestra alianza con StoryCorps — para que los pacientes tengan palabras para lo que están viviendo, y sepan que no están solos.", href: "/storytelling/" },
+    { term: "Where We Live", note: "Un mapa de la enfermedad renal, el lugar y las condiciones que moldean la salud, junto a historias de pacientes — ahora en desarrollo.", href: "/where-we-live/" },
+  ],
+  teEyebrow: "A dónde vuelve esto",
+  teTitle: "Equidad en el",
+  teAccent: "trasplante.",
+  teBody: [
+    "La equidad en el trasplante es donde comenzó esta organización — en la propia experiencia de nuestro fundador.",
+    "A medida que The Jentosy Project crezca, nuestra intención es volver a ese trabajo de forma directa. Por ahora, nuestros recursos se concentran más arriba en el proceso: en la educación y la detección temprana.",
+  ],
+  heartAlt: "Una ilustración de un corazón sostenido por unas manos ahuecadas",
+  ctaTitle: "Ayúdanos a llegar a",
+  ctaAccent: "más comunidades.",
+};
+
+const c = lang === "es" ? es : en;
+---
+
+<PageHero
+  eyebrow={c.heroEyebrow}
+  heading={c.heroTitle}
+  accent={c.heroAccent}
+  lede={c.heroLede}
+  image={{ src: "/images/community-education.png", alt: c.heroAlt }}
+/>
+
+<section class="on-light wwd-section">
+  <div class="container">
+    <SectionHead eyebrow={c.workEyebrow} title={c.workTitle} accent={c.workAccent} />
+    <IndexList items={c.work.map((w) => ({ ...w, href: L(w.href) }))} />
+  </div>
+</section>
+
+<section class="on-dark on-soft wwd-section">
+  <div class="container">
+    <Feature
+      eyebrow={c.teEyebrow}
+      title={c.teTitle}
+      accent={c.teAccent}
+      img="/images/healingheart.webp"
+      alt={c.heartAlt}
+      ratio="1 / 1"
+      fit="contain"
+      flip
+    >
+      {c.teBody.map((p) => <p>{p}</p>)}
+    </Feature>
+  </div>
+</section>
+
+<ClosingCTA title={c.ctaTitle} accent={c.ctaAccent} />
+
+<style>
+  .wwd-section {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .wwd-section :global(.feature-media) {
+    max-width: 380px;
+  }
+</style>

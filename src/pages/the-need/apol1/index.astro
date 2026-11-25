@@ -1,4 +1,5 @@
 ---
+import ClosingCTA from "../../../components/ui/ClosingCTA.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHero from "../../../components/PageHero.astro";
 import Breadcrumb from "../../../components/Breadcrumb.astro";
@@ -95,7 +96,7 @@ const medicalWebPageSchema = {
   about: { "@type": "MedicalCondition", name: "APOL1-Mediated Kidney Disease" },
   audience: { "@type": "Patient" },
   disclaimer:
-    "This page provides general, credibility-level education, not medical advice, and has not yet completed a formal clinical-accuracy review.",
+    "This page is general education, not medical advice.",
 };
 
 const recap = [
@@ -128,6 +129,8 @@ const recap = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <div class="grid stat-grid-3">
@@ -146,11 +149,14 @@ const recap = [
   <!-- ============ WHAT IS APOL1 ============ -->
 
   <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">What Is the APOL1 Gene?</p>
       <h2 class="h2">A gene that once <span class="hl">saved lives.</span></h2>
+      </header>
+      <div class="clin-body">
       <p>
-        APOL1 is a protein your body makes to fight infections. Thousands of years ago in West
+        APOL1 is a gene that makes a protein your body uses to fight infections. Thousands of years ago in West
         Africa, two variations of this gene — called G1 and G2 — offered powerful protection
         against sleeping sickness, a deadly parasitic disease. People who carried them were more
         likely to survive. More likely to have children. The variants spread.
@@ -164,6 +170,7 @@ const recap = [
         This is not a flaw. It is evolution — the same mechanism found in sickle cell trait,
         where the variant that protects against malaria with one copy can cause disease with two.
       </p>
+      </div>
     </div>
   </section>
 
@@ -172,7 +179,7 @@ const recap = [
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">How Many Copies You Inherit</p>
-      <h2 class="h3">APOL1 risk variant inheritance — autosomal recessive pattern.</h2>
+      <h2 class="h2">APOL1 risk variant inheritance — autosomal recessive pattern.</h2>
       <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
         {inheritance.map((c, i) => (
           <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.08}s`}>
@@ -222,9 +229,12 @@ const recap = [
   <!-- ============ EVOLUTIONARY CONTEXT ============ -->
 
   <section class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Evolutionary Context</p>
       <h2 class="h2">Sleeping sickness then. Kidney disease now.</h2>
+      </header>
+      <div class="clin-body">
       <p class="lede">
         African trypanosomiasis — sleeping sickness — was lethal across sub-Saharan Africa for
         millennia. The G1 and G2 APOL1 variants gave their carriers immunity. Communities that
@@ -239,6 +249,7 @@ const recap = [
         concentrated in Black communities — and why structural inequity, not just genetics,
         shapes who gets diagnosed, who gets treated, and who gets care.
       </p>
+      </div>
     </div>
 
     <div class="container" style="margin-top:var(--space-6);" data-outcomes>
@@ -285,9 +296,12 @@ const recap = [
   <!-- ============ HOW FAST IT PROGRESSES ============ -->
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">How Fast It Progresses</p>
       <h2 class="h2">Years earlier. Not decades.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         APOL1 kidney disease doesn't change whether you might eventually develop kidney failure —
         it changes when. On average, 5 to 10 years earlier than peers without the high-risk
@@ -298,6 +312,7 @@ const recap = [
         monitoring, and avoiding kidney-damaging medications can delay — sometimes indefinitely —
         the progression to dialysis or transplant.
       </p>
+      </div>
     </div>
     <div class="container">
       <div class="viz-grid" style="margin-top:var(--space-5);">
@@ -322,9 +337,12 @@ const recap = [
   <!-- ============ IF YOU HAVE TWO COPIES ============ -->
 
   <section id="if-you-have-it" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">If You Have Two Copies</p>
       <h2 class="h2">You have <span class="hl">more agency</span> than the diagnosis suggests.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Carrying two APOL1 risk copies is not a sentence. The majority of people with the
         genotype never develop kidney failure. These actions make a measurable difference.
@@ -335,21 +353,26 @@ const recap = [
         general education, not medical advice — talk to your doctor before starting, stopping, or
         changing any medication.
       </p>
+      </div>
     </div>
   </section>
 
   <!-- ============ SHOULD YOU GET TESTED ============ -->
 
   <section id="testing" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Should You Get Tested?</p>
-      <h2 class="h3">Not yet standard of care — but recommended for some.</h2>
+      <h2 class="h2">Not yet standard of care — but recommended for some.</h2>
+      </header>
+      <div class="clin-body">
       <p>Routine APOL1 screening is not yet standard of care — but it is recommended if you:</p>
       <ul class="check-list">
         {testingCriteria.map((t) => <li>{t}</li>)}
       </ul>
       <p>Testing is a simple blood or saliva sample. Ask your nephrologist or primary care doctor.</p>
       <p class="viz-source">NephCure Kidney International &middot; ASN APOL1 Position Statement &middot; NIH APOLLO Study 2023.</p>
+      </div>
     </div>
   </section>
 
@@ -382,14 +405,15 @@ const recap = [
       <p class="lede"><a href="/the-need/fsgs/" class="linkline">Learn About FSGS &rarr;</a></p>
       <div class="disclaimer">
         <p>
-          This page provides general, credibility-level education — not medical advice — and has
-          not yet completed a formal clinical-accuracy review. Talk to your doctor about your own
-          risk, testing, and treatment.
+          This page is general education, not medical advice. Talk to your doctor about your own risk, testing, and treatment.
         </p>
       </div>
       <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to Kidney Disease</a>
     </div>
   </section>
+  </div>
+
+  <ClosingCTA title="Help us reach people" accent="earlier." />
 </BaseLayout>
 
 <style>

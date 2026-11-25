@@ -1,65 +1,11 @@
 ---
+import HomeSections from "../../components/HomeSections.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { localeHref } from "../../i18n/utils";
 
 const L = (path: string) => localeHref(path, "es");
 
-const audiences = [
-  {
-    name: "Pacientes y familias",
-    pitch: "Conocimiento real y una comunidad para defender tu propia atención — y detectar la enfermedad renal antes de que se afiance.",
-    href: L("/the-need/"),
-    linkLabel: "Empieza por la necesidad",
-  },
-  {
-    name: "Financiadores y fundaciones",
-    pitch: "Respalda a una organización guiada por la experiencia vivida, que cierra la brecha en la atención renal de forma definitiva.",
-    href: L("/partner-with-us/?audience=funder#funder"),
-    linkLabel: "Colabora con nosotros",
-  },
-  {
-    name: "Investigadores e instituciones",
-    pitch: "Colabora con nosotros en educación y participación comunitaria en torno a la GEFS y la APOL1.",
-    href: L("/partner-with-us/?audience=researcher#researcher"),
-    linkLabel: "Colabora con nosotros",
-  },
-  {
-    name: "Organizaciones de salud",
-    pitch: "Ayúdanos a llegar antes a los pacientes desatendidos — antes de que la GEFS llegue a la diálisis o el trasplante.",
-    href: L("/partner-with-us/?audience=healthcare#healthcare"),
-    linkLabel: "Colabora con nosotros",
-  },
-  {
-    name: "Responsables de políticas públicas",
-    pitch: "Aborda las causas de fondo de la enfermedad renal — desde el acceso a la atención médica hasta la vivienda y la educación.",
-    href: L("/partner-with-us/?audience=policymaker#policymaker"),
-    linkLabel: "Colabora con nosotros",
-  },
-];
 
-const howItWorks = [
-  {
-    step: "1",
-    name: "Educar",
-    body: "Educación en lenguaje claro sobre la GEFS y la enfermedad renal mediada por APOL1 — llegando a las personas antes de que lleguen a la lista de trasplante.",
-    href: L("/the-need/"),
-    linkLabel: "Ver la necesidad",
-  },
-  {
-    step: "2",
-    name: "Colaborar",
-    body: "Conectar a investigadores, organizaciones de salud y responsables de políticas públicas en torno a la meta común de cerrar la brecha en la atención renal.",
-    href: L("/partner-with-us/"),
-    linkLabel: "Colabora con nosotros",
-  },
-  {
-    step: "3",
-    name: "Financiar el trabajo",
-    body: "Las donaciones financian directamente la educación y el alcance comunitario que llega a las comunidades desatendidas — empezando por el Bronx.",
-    href: L("/donate/"),
-    linkLabel: "Donar",
-  },
-];
 ---
 
 <BaseLayout
@@ -89,8 +35,7 @@ const howItWorks = [
       </h2>
       <p class="lede reveal" style="--reveal-delay:0.12s; max-width:58ch;">
         Las comunidades negras y latinas cargan con una parte desproporcionada de la insuficiencia
-        renal y la dependencia de la diálisis — una brecha que esta organización existe para
-        cerrar, empezando por el Bronx.
+        renal y la dependencia de la diálisis — la brecha que existimos para cerrar.
       </p>
 
       <div class="stats-row">
@@ -124,123 +69,11 @@ const howItWorks = [
         </div>
       </div>
 
-      <a href={L("/the-need/")} class="btn btn-steel-outline" style="margin-top:var(--space-6);">Ver el panorama completo &rarr;</a>
+      <a href={L("/the-need/data/")} class="btn btn-steel-outline" style="margin-top:var(--space-6);">Ver el panorama completo &rarr;</a>
     </div>
   </section>
 
-  <section class="on-light section-tight">
-    <div class="container">
-      <p class="eyebrow">Para quién es esto</p>
-      <h2 class="h2">Cinco públicos, <span class="hl">una meta compartida.</span></h2>
-      <div class="grid audience-grid">
-        {audiences.map((a, i) => (
-          <a
-            href={a.href}
-            class="audience-card reveal"
-            style={`--reveal-delay:${i * 0.06}s; --card-accent: var(${i % 2 === 0 ? "--steel" : "--rust"})`}
-          >
-            <span class="audience-card-index">{String(i + 1).padStart(2, "0")}</span>
-            <h3 class="audience-card-title">{a.name}</h3>
-            <p class="audience-card-pitch">{a.pitch}</p>
-            <span class="linkline audience-card-link">{a.linkLabel} &rarr;</span>
-          </a>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="on-dark on-soft story-bridge">
-    <div class="container story-bridge-inner">
-      <img
-        class="story-bridge-photo"
-        src="/images/founder-portrait.webp"
-        alt="Robert Sanchez, fundador de The Jentosy Project"
-      />
-      <div class="story-bridge-text reveal">
-        <p class="eyebrow">Por qué existe esto</p>
-        <p class="story-bridge-quote">
-          &ldquo;Nuestra meta es dar a todas las personas que enfrentan la enfermedad renal el
-          capital social para tomar decisiones informadas, hacer las preguntas correctas y
-          defenderse por sí mismas — porque el lugar donde vives nunca debería determinar lo que
-          sabes, la atención que recibes ni tu oportunidad de sobrevivir.&rdquo;
-        </p>
-        <div class="story-bridge-footer">
-          <p class="story-bridge-byline">Robert Sanchez, fundador</p>
-          <a href={L("/about/team/")} class="linkline story-bridge-link">Lee su historia completa &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light need-stack">
-    <div class="container need-stack-inner">
-      <div class="need-stack-text">
-        <p class="eyebrow">Enfermedad renal</p>
-        <h2 class="h2">La enfermedad renal poco frecuente, <span class="hl">explicada con claridad.</span></h2>
-        <p class="lede" style="max-width:52ch;">
-          Las desigualdades en la enfermedad renal son consecuencia de la pobreza, el acceso
-          desigual a la educación, el encarcelamiento, los hogares fracturados y el estrés crónico
-          que esas condiciones producen. The Jentosy Project entiende la equidad en salud como
-          algo inseparable de esas condiciones sociales de fondo.
-        </p>
-      </div>
-
-      <div class="disease-grid">
-        <a href={L("/the-need/fsgs/")} class="card card-steel disease-card">
-          <h3 class="h3">GEFS</h3>
-          <p>Glomeruloesclerosis focal y segmentaria — cómo se manifiesta y por qué importa la detección temprana.</p>
-        </a>
-        <a href={L("/the-need/apol1/")} class="card card-steel disease-card">
-          <h3 class="h3">Enfermedad renal mediada por APOL1</h3>
-          <p>Un factor de riesgo genético concentrado en las comunidades negras y latinas.</p>
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight teaser-band">
-    <div class="container">
-      <p class="eyebrow">Cómo funciona</p>
-      <h2 class="h2">
-        Educación y alcance comunitario <span class="hl">en el Bronx</span> — con planes de crecer.
-      </h2>
-      <p class="lede" style="max-width:56ch;">
-        Nuestro enfoque actual es la educación y la equidad en salud: llegar a las personas antes
-        de que lleguen a la lista de trasplante. La equidad en el trasplante sigue siendo parte de
-        nuestra misión a largo plazo.
-      </p>
-
-      <div class="grid how-it-works-grid">
-        {howItWorks.map((item, i) => (
-          <div class="how-it-works-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
-            <span class="how-it-works-step">{item.step}</span>
-            <h3 class="h3">{item.name}</h3>
-            <p>{item.body}</p>
-            <a href={item.href} class="linkline how-it-works-link">{item.linkLabel} &rarr;</a>
-          </div>
-        ))}
-      </div>
-
-      <a href={L("/about/what-we-do/")} class="btn btn-steel" style="margin-top:var(--space-6);">Conoce lo que hacemos</a>
-    </div>
-  </section>
-
-  <section class="on-dark on-soft section-tight cta-band">
-    <div class="container cta-inner">
-      <div class="reveal">
-        <h2 class="h2">Fináncialo. Colabora con ello. <span class="hl">Sé parte de ello.</span></h2>
-        <p class="lede">
-          Un financiador, investigador o socio del sector salud debería poder entender por qué
-          este trabajo importa en minutos — y una persona que apoya debería poder actuar en
-          segundos.
-        </p>
-      </div>
-      <div class="cluster gap-3 reveal" style="--reveal-delay:0.1s">
-        <a href={L("/partner-with-us/")} class="btn btn-steel-outline">Colabora con nosotros</a>
-        <a href={L("/donate/")} class="btn btn-rust">Donar</a>
-      </div>
-    </div>
-  </section>
+  <HomeSections lang="es" />
 </BaseLayout>
 
 <style>

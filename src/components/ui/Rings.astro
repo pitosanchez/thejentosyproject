@@ -1,0 +1,83 @@
+---
+/**
+ * The brand motif: one story at the center, rings moving outward (first
+ * drawn for "the ripple" on Storytelling). Decorative only. Used by
+ * PageHero when a page has no hero image, and anywhere a page wants the
+ * motif. Pulses slowly; static under prefers-reduced-motion.
+ */
+interface Props {
+  class?: string;
+  label?: string;
+}
+const { class: className = "", label } = Astro.props;
+---
+
+<svg class={`rings ${className}`} viewBox="0 0 400 400" aria-hidden="true">
+  <circle class="rings-pulse" cx="200" cy="200" r="170" />
+  <circle class="rings-pulse rings-pulse-2" cx="200" cy="200" r="170" />
+  <circle class="rings-ring rings-3" cx="200" cy="200" r="170" />
+  <circle class="rings-ring rings-2" cx="200" cy="200" r="115" />
+  <circle class="rings-ring rings-1" cx="200" cy="200" r="60" />
+  <circle class="rings-core" cx="200" cy="200" r="13" />
+  {label && <text class="rings-label" x="200" y="227" text-anchor="middle">{label}</text>}
+</svg>
+
+<style>
+  .rings {
+    display: block;
+    overflow: visible;
+  }
+
+  .rings-ring {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 1.25;
+  }
+
+  .rings-1 { stroke-opacity: 0.9; }
+  .rings-2 { stroke-opacity: 0.55; }
+  .rings-3 { stroke-opacity: 0.3; stroke-dasharray: 2 6; }
+
+  .rings-core {
+    fill: var(--gold);
+  }
+
+  .rings-label {
+    fill: var(--ink-fg);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .rings-pulse {
+    fill: none;
+    stroke: var(--gold);
+    stroke-width: 2;
+    transform-box: view-box;
+    transform-origin: 200px 200px;
+    animation: rings-out 5s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+  }
+
+  .rings-pulse-2 {
+    animation-delay: 2.5s;
+  }
+
+  @keyframes rings-out {
+    from {
+      transform: scale(0.08);
+      opacity: 0.9;
+    }
+    to {
+      transform: scale(1.08);
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rings-pulse {
+      display: none;
+    }
+  }
+</style>

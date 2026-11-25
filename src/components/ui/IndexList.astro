@@ -1,0 +1,125 @@
+---
+/**
+ * A numbered index: big bold lines, small numerals, hairline rules — the
+ * site's replacement for grids of small cards when the items are a list.
+ * `columns={2}` sets it in two columns on wide screens. Each item can carry
+ * an optional note and href. Works on light and dark bands.
+ */
+interface Item {
+  term: string;
+  note?: string;
+  href?: string;
+}
+interface Props {
+  items: Item[];
+  columns?: 1 | 2 | 3;
+  start?: number;
+  size?: "lg" | "md";
+}
+const { items, columns = 1, start = 1, size = "lg" } = Astro.props;
+---
+
+<ol class={`ilist ilist-c${columns} ilist-${size}`} start={start}>
+  {items.map((item, i) => {
+    const Inner = item.href ? "a" : "div";
+    return (
+      <li class="reveal" style={`--reveal-delay:${(i % 3) * 0.06}s`}>
+        <Inner class="ilist-row" href={item.href}>
+          <span class="ilist-n" aria-hidden="true">{String(start + i).padStart(2, "0")}</span>
+          <span class="ilist-body">
+            <span class="ilist-term">{item.term}{item.href && <span aria-hidden="true"> &rarr;</span>}</span>
+            {item.note && <span class="ilist-note">{item.note}</span>}
+          </span>
+        </Inner>
+      </li>
+    );
+  })}
+</ol>
+
+<style>
+  .ilist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    column-gap: clamp(24px, 4vw, 64px);
+  }
+
+  @media (min-width: 760px) {
+    .ilist-c2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .ilist-c3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .ilist li {
+    border-top: 1px solid var(--ink-line, var(--line));
+  }
+
+  :global(.on-light) .ilist li {
+    border-top-color: var(--line);
+  }
+
+  .ilist-row {
+    display: flex;
+    gap: var(--space-4);
+    align-items: baseline;
+    padding: 18px 0;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.45s var(--ease);
+  }
+
+  a.ilist-row:hover {
+    transform: translateX(8px);
+  }
+
+  a.ilist-row:hover .ilist-term {
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 5px;
+  }
+
+  .ilist-n {
+    flex: none;
+    width: 2.4em;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--rust);
+  }
+
+  :global(.on-dark:not(.on-soft)) .ilist-n {
+    color: var(--gold);
+  }
+
+  .ilist-body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ilist-term {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+
+  .ilist-lg .ilist-term {
+    font-size: clamp(21px, 2.2vw, 30px);
+  }
+
+  .ilist-md .ilist-term {
+    font-size: clamp(18px, 1.6vw, 21px);
+  }
+
+  .ilist-note {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--fg-muted);
+  }
+
+  :global(.on-dark:not(.on-soft)) .ilist-note {
+    color: var(--ink-fg-muted);
+  }
+</style>

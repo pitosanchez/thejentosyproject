@@ -1,4 +1,5 @@
 ---
+import ClosingCTA from "../../../../components/ui/ClosingCTA.astro";
 import BaseLayout from "../../../../layouts/BaseLayout.astro";
 import PageHero from "../../../../components/PageHero.astro";
 import Breadcrumb from "../../../../components/Breadcrumb.astro";
@@ -99,7 +100,7 @@ const medicalWebPageSchema = {
   about: { "@type": "MedicalCondition", name: "Enfermedad renal mediada por APOL1" },
   audience: { "@type": "Patient" },
   disclaimer:
-    "Esta página ofrece educación general de nivel introductorio, no asesoramiento médico, y todavía no ha completado una revisión formal de exactitud clínica.",
+    "Esta página es educación general, no asesoramiento médico.",
 };
 
 const recap = [
@@ -132,6 +133,8 @@ const recap = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <div class="grid stat-grid-3">
@@ -148,11 +151,14 @@ const recap = [
   </section>
 
   <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">¿Qué es el gen APOL1?</p>
       <h2 class="h2">Un gen que en su día <span class="hl">salvó vidas.</span></h2>
+      </header>
+      <div class="clin-body">
       <p>
-        La APOL1 es una proteína que tu cuerpo produce para combatir infecciones. Hace miles de
+        La APOL1 es un gen que produce una proteína que tu cuerpo usa para combatir infecciones. Hace miles de
         años, en África Occidental, dos variaciones de este gen — llamadas G1 y G2 — ofrecían una
         protección potente contra la enfermedad del sueño, una enfermedad parasitaria mortal.
         Quienes las portaban tenían más probabilidades de sobrevivir. Más probabilidades de tener
@@ -168,13 +174,14 @@ const recap = [
         células falciformes, donde la variante que protege contra la malaria con una copia puede
         causar enfermedad con dos.
       </p>
+      </div>
     </div>
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container">
       <p class="eyebrow">Cuántas copias heredas</p>
-      <h2 class="h3">Herencia de las variantes de riesgo de APOL1 — patrón autosómico recesivo.</h2>
+      <h2 class="h2">Herencia de las variantes de riesgo de APOL1 — patrón autosómico recesivo.</h2>
       <div class="grid stat-grid-3" style="margin-top:var(--space-5);">
         {inheritance.map((c, i) => (
           <div class="card mini-card reveal" style={`--reveal-delay:${i * 0.08}s`}>
@@ -222,9 +229,12 @@ const recap = [
   </section>
 
   <section class="on-dark on-soft section-tight" style="border-top:1px solid var(--ink-line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Contexto evolutivo</p>
       <h2 class="h2">La enfermedad del sueño entonces. La enfermedad renal ahora.</h2>
+      </header>
+      <div class="clin-body">
       <p class="lede">
         La tripanosomiasis africana — la enfermedad del sueño — fue letal en toda el África
         subsahariana durante milenios. Las variantes G1 y G2 de APOL1 dieron inmunidad a quienes
@@ -242,6 +252,7 @@ const recap = [
         no solo la genética, moldea quién recibe un diagnóstico, quién recibe tratamiento y quién
         recibe atención.
       </p>
+      </div>
     </div>
 
     <div class="container" style="margin-top:var(--space-6);" data-outcomes>
@@ -284,9 +295,12 @@ const recap = [
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Qué tan rápido progresa</p>
       <h2 class="h2">Años antes. No décadas.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         La enfermedad renal por APOL1 no cambia si podrías llegar a desarrollar insuficiencia
         renal — cambia cuándo. En promedio, entre 5 y 10 años antes que las personas sin el
@@ -297,6 +311,7 @@ const recap = [
         arterial, el seguimiento regular y evitar los medicamentos que dañan el riñón pueden
         retrasar — a veces de forma indefinida — la progresión a diálisis o trasplante.
       </p>
+      </div>
     </div>
     <div class="container">
       <div class="viz-grid" style="margin-top:var(--space-5);">
@@ -320,9 +335,12 @@ const recap = [
   </section>
 
   <section id="if-you-have-it" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Si tienes dos copias</p>
       <h2 class="h2">Tienes <span class="hl">más capacidad de acción</span> de lo que sugiere el diagnóstico.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Portar dos copias de riesgo de APOL1 no es una sentencia. La mayoría de las personas con
         el genotipo nunca desarrolla insuficiencia renal. Estas acciones marcan una diferencia
@@ -334,19 +352,24 @@ const recap = [
         es educación general, no asesoramiento médico — consulta a tu médico antes de empezar,
         suspender o cambiar cualquier medicamento.
       </p>
+      </div>
     </div>
   </section>
 
   <section id="testing" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">¿Deberías hacerte la prueba?</p>
-      <h2 class="h3">Todavía no es un estándar de atención — pero se recomienda para algunas personas.</h2>
+      <h2 class="h2">Todavía no es un estándar de atención — pero se recomienda para algunas personas.</h2>
+      </header>
+      <div class="clin-body">
       <p>El cribado de rutina de APOL1 todavía no es un estándar de atención — pero se recomienda si:</p>
       <ul class="check-list">
         {testingCriteria.map((t) => <li>{t}</li>)}
       </ul>
       <p>La prueba es una simple muestra de sangre o de saliva. Pregúntale a tu nefrólogo o a tu médico de atención primaria.</p>
       <p class="viz-source">NephCure Kidney International &middot; Declaración de posición de la ASN sobre APOL1 &middot; Estudio APOLLO del NIH, 2023.</p>
+      </div>
     </div>
   </section>
 
@@ -375,14 +398,15 @@ const recap = [
       <p class="lede"><a href={L("/the-need/fsgs/")} class="linkline">Conoce la GEFS &rarr;</a></p>
       <div class="disclaimer">
         <p>
-          Esta página ofrece educación general de nivel introductorio — no asesoramiento médico —
-          y todavía no ha completado una revisión formal de exactitud clínica. Habla con tu médico
-          sobre tu propio riesgo, tus pruebas y tu tratamiento.
+          Esta página es educación general, no asesoramiento médico. Habla con tu médico sobre tu propio riesgo, tus pruebas y tu tratamiento.
         </p>
       </div>
       <a href={L("/the-need/")} class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Volver a Enfermedad renal</a>
     </div>
   </section>
+  </div>
+
+  <ClosingCTA title="Ayúdanos a llegar" accent="antes." />
 </BaseLayout>
 
 <style>

@@ -20,7 +20,7 @@ const diseases = [
     slug: "apol1",
     name: "Enfermedad renal mediada por APOL1",
     full: "Variantes del gen APOL1",
-    blurb: "Un factor de riesgo genético concentrado en las comunidades negras y latinas.",
+    blurb: "Un riesgo genético ligado a la ascendencia africana — y por qué la mayoría de quienes lo portan nunca enferman.",
   },
 ];
 
@@ -79,8 +79,8 @@ const riskFactors = [
 >
   <PageHero
     eyebrow="Entender la enfermedad renal"
-    heading="La enfermedad renal poco frecuente, explicada con claridad."
-    lede="Las desigualdades en la enfermedad renal son consecuencia de la pobreza, el acceso desigual a la educación, el encarcelamiento, los hogares fracturados y el estrés crónico que esas condiciones producen."
+    heading="La enfermedad renal, explicada con claridad."
+    lede="Qué es la enfermedad renal, cómo la detectan los médicos, cómo se trata y dónde encontrar apoyo — en lenguaje claro."
     motif
   />
 
@@ -90,13 +90,12 @@ const riskFactors = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section">
     <div class="container narrow">
       <p>
-        Estas condiciones cobran un precio medible en el cuerpo, incluidos los riñones. The
-        Jentosy Project entiende la equidad en salud como algo inseparable de estas condiciones
-        sociales de fondo, no solo como una cuestión de acceso médico — por eso nuestro trabajo
-        educativo empieza con dos enfermedades específicas de las que poco se habla.
+        Nuestra labor educativa empieza con dos enfermedades de las que poco se habla:
       </p>
     </div>
 
@@ -120,9 +119,12 @@ const riskFactors = [
   </section>
 
   <section id="basics" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">¿Qué es la enfermedad renal?</p>
-      <h2 class="h3">Un sistema de filtración que se daña con el tiempo.</h2>
+      <h2 class="h2">Un sistema de filtración que se daña con el tiempo.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         La enfermedad renal crónica (ERC) ocurre cuando los riñones sufren daño durante más de
         unos meses. Piensa en tus riñones como el sistema de filtración de tu cuerpo — limpian la
@@ -146,6 +148,7 @@ const riskFactors = [
           avanzada. Por eso importan los chequeos regulares, sobre todo si tienes factores de
           riesgo como presión arterial alta o diabetes.
         </p>
+      </div>
       </div>
     </div>
   </section>
@@ -172,9 +175,12 @@ const riskFactors = [
   </section>
 
   <section id="diagnosis" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">¿Cómo detectan los médicos la enfermedad renal?</p>
-      <h2 class="h3">Primero, análisis de sangre y de orina.</h2>
+      <h2 class="h2">Primero, análisis de sangre y de orina.</h2>
+      </header>
+      <div class="clin-body">
       <p>Los profesionales de salud pueden detectar la enfermedad renal con análisis de sangre y de orina. Estos análisis buscan:</p>
       <NumberedSteps steps={diagnosisSteps} />
       <p style="margin-top:var(--space-5);">Los médicos también podrían usar pruebas de imagen como:</p>
@@ -182,17 +188,20 @@ const riskFactors = [
         <li><strong>Ecografía</strong> — crea imágenes de tus riñones usando ondas de sonido.</li>
         <li><strong>Tomografías computarizadas (TC)</strong> — toman imágenes de rayos X detalladas para observar los riñones a fondo.</li>
       </ul>
+      </div>
     </div>
   </section>
 
   <section id="symptoms" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Síntomas de la enfermedad renal</p>
-      <h2 class="h3">Los síntomas aparecen despacio — a menudo demasiado despacio para notarlos.</h2>
+      <h2 class="h2">Los síntomas aparecen despacio — a menudo demasiado despacio para notarlos.</h2>
+      </header>
+      <div class="clin-body">
       <p>
-        Los síntomas de la enfermedad renal crónica tienden a desarrollarse lentamente con el
-        tiempo. En las primeras etapas, podrías no notar nada en absoluto. Por eso muchas personas
-        no se dan cuenta de que tienen enfermedad renal hasta que está avanzada.
+        Los síntomas tienden a desarrollarse lentamente, por eso muchas personas no se dan cuenta
+        de que tienen enfermedad renal hasta que está avanzada.
       </p>
       <p>
         <strong>Por qué aparecen los síntomas:</strong> la pérdida de función renal provoca una
@@ -202,13 +211,17 @@ const riskFactors = [
       <div class="grid grid-2-col" style="gap:var(--space-2) var(--space-5); margin-top:var(--space-5);">
         {symptoms.map((s) => <p class="symptom-item">{s}</p>)}
       </div>
+      </div>
     </div>
   </section>
 
   <section id="treatment" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Tratamiento de la enfermedad renal</p>
-      <h2 class="h3">Frenar el daño, no solo controlar los síntomas.</h2>
+      <h2 class="h2">Frenar el daño, no solo controlar los síntomas.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         El objetivo del tratamiento es frenar el daño a los riñones. Esto suele hacerse
         controlando la causa subyacente del daño — por ejemplo, controlando la presión arterial o
@@ -225,19 +238,21 @@ const riskFactors = [
       <div class="card card-rust" style="margin-top:var(--space-6);">
         <p class="eyebrow" style="margin-bottom:8px;">Si la enfermedad renal progresa a etapa terminal</p>
         <p style="margin:0;">
-          La enfermedad renal crónica puede progresar a insuficiencia renal en etapa terminal.
-          Esto es mortal a menos que la persona reciba un trasplante de riñón o comience diálisis —
-          un tratamiento que hace el trabajo de los riñones. De los 831,000 estadounidenses que
+          Sin un trasplante de riñón o diálisis, la enfermedad renal en etapa terminal es mortal. De los 831,000 estadounidenses que
           viven actualmente con ERET, el 67 % está en diálisis y el 33 % tiene un trasplante.
         </p>
+      </div>
       </div>
     </div>
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Cuándo consultar a un médico</p>
-      <h2 class="h3">Factores de riesgo que tu médico debería conocer.</h2>
+      <h2 class="h2">Factores de riesgo que tu médico debería conocer.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Si tienes una afección de salud continua que aumenta tu riesgo de enfermedad renal, tu
         profesional de salud principal podría querer vigilar la salud de tus riñones. Los factores
@@ -251,13 +266,17 @@ const riskFactors = [
         análisis. Si los resultados muestran posibles problemas renales, podrían derivarte a un
         nefrólogo — un médico especializado en enfermedades de los riñones.
       </p>
+      </div>
     </div>
   </section>
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Distintos tipos de enfermedad renal</p>
-      <h2 class="h3">El tipo que tienes determina cómo se trata.</h2>
+      <h2 class="h2">El tipo que tienes determina cómo se trata.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         La enfermedad renal crónica puede deberse a muchas causas distintas. Dos son el centro de
         nuestro trabajo educativo — lee más en sus páginas dedicadas más arriba. Otros tipos
@@ -265,6 +284,7 @@ const riskFactors = [
         poliquística y la enfermedad renal causada por la presión arterial alta. Tu médico puede
         explicarte qué tipo tienes y qué significa para tu tratamiento.
       </p>
+      </div>
     </div>
   </section>
 
@@ -272,16 +292,12 @@ const riskFactors = [
     <div class="container narrow">
       <p class="eyebrow">En resumen</p>
       <p class="lede reveal" style="max-width:64ch;">
-        La enfermedad renal a menudo no tiene síntomas en las primeras etapas, lo que hace que los
-        chequeos regulares sean esenciales si tienes factores de riesgo. La buena noticia es que
-        el tratamiento puede frenar la progresión de la enfermedad, sobre todo cuando se empieza a
-        tiempo. Trabaja con tu equipo de salud para vigilar la salud de tus riñones y controlar
+        El tratamiento puede frenar la enfermedad renal, sobre todo cuando se empieza a tiempo — por
+        eso, si tienes factores de riesgo, los chequeos regulares importan. Trabaja con tu equipo de salud para vigilar la salud de tus riñones y controlar
         cualquier afección subyacente.
       </p>
       <p class="disclaimer-dark">
-        Esta página ofrece educación general de nivel introductorio — no asesoramiento médico — y
-        todavía no ha completado una revisión formal de exactitud clínica. Habla con tu médico
-        sobre tu propio riesgo, tus pruebas y tu tratamiento.
+        Esta página es educación general, no asesoramiento médico. Habla con tu médico sobre tu propio riesgo, tus pruebas y tu tratamiento.
       </p>
     </div>
   </section>
@@ -306,7 +322,9 @@ const riskFactors = [
       <a href={L("/the-need/data/")} class="btn btn-steel-outline" style="margin-top:var(--space-6);">Ver Datos del Bronx que debes conocer &rarr;</a>
     </div>
   </section>
-</BaseLayout>
+  </div>
+
+  </BaseLayout>
 
 <style>
   .narrow {

@@ -30,21 +30,14 @@ const supports = [
 >
   <PageHero
     eyebrow="Donar"
-    heading="Cada donación financia educación que llega a las personas antes de que lleguen a la lista de trasplante."
+    heading="Cada donación financia educación que llega a las personas"
+    accent="antes de que lleguen a la lista de trasplante."
+    lede="The Jentosy Project es una organización benéfica pública 501(c)(3). Tu donación financia directamente la educación y el alcance comunitario en torno a la GEFS y la enfermedad renal mediada por APOL1."
   />
 
-  <section class="on-light donate-intro">
-    <div class="container narrow">
-      <p>
-        The Jentosy Project es una organización benéfica pública 501(c)(3). Tu donación financia
-        directamente la educación y el alcance comunitario en torno a la GEFS y la enfermedad
-        renal mediada por APOL1 — empezando por el Bronx.
-      </p>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container">
+  <section class="on-light donate-main">
+    <div class="container donate-grid">
+      <div class="donate-why">
       <p class="eyebrow">Por qué esto no puede esperar</p>
       <h2 class="h2">La brecha que <span class="hl">tu donación</span> cierra.</h2>
       <div class="grid donate-stats-grid">
@@ -61,11 +54,26 @@ const supports = [
           accent="#111111"
         />
       </div>
-    </div>
-  </section>
-
-  <section class="on-light donate-embed-section" style="border-top:1px solid var(--line);">
-    <div class="container">
+        <div class="donate-supports">
+      <h2 class="h2">Qué financia tu donación</h2>
+      <ol class="donate-supports-list">
+        {supports.map((s, i) => (
+          <li class="donate-supports-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
+            <span class="donate-supports-num">{String(i + 1).padStart(2, "0")}</span>
+            <div>
+              <h3 class="h3" style="font-size:18px;">{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <p class="disclaimer-note">
+        Se admiten donaciones únicas y donaciones mensuales recurrentes. Recibirás un recibo
+        automático y válido a efectos fiscales por cada donación.
+      </p>
+        </div>
+      </div>
+      <aside class="donate-give">
       <div class="donate-embed-wrap">
         {zeffyEmbedUrl ? (
           <iframe
@@ -86,27 +94,7 @@ const supports = [
           </div>
         )}
       </div>
-    </div>
-  </section>
-
-  <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container">
-      <h2 class="h2">Qué financia tu donación</h2>
-      <ol class="donate-supports-list">
-        {supports.map((s, i) => (
-          <li class="donate-supports-item reveal" style={`--reveal-delay:${i * 0.08}s`}>
-            <span class="donate-supports-num">{String(i + 1).padStart(2, "0")}</span>
-            <div>
-              <h3 class="h3" style="font-size:18px;">{s.title}</h3>
-              <p>{s.body}</p>
-            </div>
-          </li>
-        ))}
-      </ol>
-      <p class="disclaimer-note">
-        Se admiten donaciones únicas y donaciones mensuales recurrentes. Recibirás un recibo
-        automático y válido a efectos fiscales por cada donación.
-      </p>
+      </aside>
     </div>
   </section>
 
@@ -231,5 +219,52 @@ const supports = [
   .linkline-inline {
     color: var(--eyebrow-accent);
     font-weight: 700;
+  }
+
+  /* ---------- Donate layout (2026-11-25 consistency pass) ---------- */
+  .donate-main {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .donate-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .donate-supports {
+    margin-top: clamp(var(--space-7), 5vw, var(--space-8));
+  }
+
+  .donate-give {
+    position: sticky;
+    top: 110px;
+  }
+
+  .donate-why .donate-stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .donate-why .donate-supports-list {
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+
+  .donate-why .donate-supports-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+  }
+
+  @media (max-width: 900px) {
+    .donate-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .donate-give {
+      position: static;
+      order: -1;
+    }
   }
 </style>

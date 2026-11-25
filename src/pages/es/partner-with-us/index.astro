@@ -8,7 +8,7 @@ const audiences = [
     slug: "funder",
     name: "Financiadores y fundaciones",
     pitch:
-      "Apoya a una organización guiada por la experiencia vivida, con un enfoque claro y centrado en la credibilidad para cerrar la brecha en la atención renal en comunidades desatendidas.",
+      "Apoya la educación sobre la salud renal en comunidades desatendidas, guiada por la experiencia vivida.",
     option: "Financiador / Fundación",
   },
   {
@@ -29,7 +29,7 @@ const audiences = [
     slug: "policymaker",
     name: "Responsables de políticas públicas",
     pitch:
-      "Trabaja con nosotros en las causas sistémicas y de fondo de las desigualdades en la enfermedad renal — desde el acceso a la atención médica hasta la vivienda y la educación.",
+      "Trabaja con nosotros en las causas de fondo de las desigualdades en la enfermedad renal — desde el acceso a la atención médica hasta la vivienda y la educación.",
     option: "Responsable de políticas públicas",
   },
 ];
@@ -43,27 +43,30 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 >
   <PageHero
     eyebrow="Colabora con nosotros"
-    heading="Alianzas institucionales que cierran la brecha en la atención renal."
+    heading="Alianzas institucionales,"
+    accent="una meta compartida."
+    lede="Financiadores, investigadores, sistemas de salud y responsables de políticas públicas tienen un papel en lograr una atención renal que no dependa del código postal."
   />
 
-  <section class="on-light section">
-    <div class="container">
-      <div class="grid audience-grid">
-        {audiences.map((a, i) => (
-          <div class="card card-steel reveal audience-card" id={a.slug} style={`--reveal-delay:${i * 0.08}s`}>
-            <h3 class="h3">{a.name}</h3>
-            <p>{a.pitch}</p>
-            <a href="#start" class="linkline audience-card-cta" data-audience={a.slug}>
-              Inicia la conversación &rarr;
-            </a>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
 
-  <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+  <section class="on-light partner-section">
+    <div class="container partner-grid">
+      <aside class="partner-aside">
+        <p class="eyebrow reveal">Cuatro maneras de colaborar</p>
+        <ol class="partner-list">
+          {audiences.map((a, i) => (
+            <li id={a.slug} class="reveal" style={`--reveal-delay:${i * 0.06}s`}>
+              <span class="partner-n" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <div>
+                <h2 class="partner-name">{a.name}</h2>
+                <p class="partner-pitch">{a.pitch}</p>
+                <a href="#start" class="partner-cta audience-card-cta" data-audience={a.slug}>Inicia la conversación &rarr;</a>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </aside>
+      <div id="start" class="partner-form">
       <h2 class="h2">Inicia <span class="hl">la conversación</span></h2>
       <p>Cuéntanos un poco sobre tu organización y cómo te gustaría colaborar.</p>
 
@@ -117,6 +120,7 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
         formId="partner-newsletter-form"
         heading="¿Todavía no quieres iniciar una conversación? Mantente al tanto."
       />
+      </div>
     </div>
   </section>
 </BaseLayout>
@@ -235,5 +239,91 @@ const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
     width: 1px;
     height: 1px;
     opacity: 0;
+  }
+
+  /* ---------- Partner layout (2026-11-25 consistency pass) ---------- */
+  .partner-section {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .partner-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .partner-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .partner-list li {
+    display: flex;
+    gap: var(--space-4);
+    padding: var(--space-5) 0;
+    border-top: 1px solid var(--line);
+    scroll-margin-top: 120px;
+  }
+
+  .partner-list li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .partner-list li:target {
+    background: linear-gradient(90deg, rgba(245, 192, 46, 0.14), transparent);
+  }
+
+  .partner-n {
+    flex: none;
+    width: 2.4em;
+    padding-top: 8px;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: var(--rust);
+  }
+
+  .partner-name {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: clamp(21px, 2vw, 26px);
+    letter-spacing: -0.015em;
+    margin: 0 0 var(--space-2);
+  }
+
+  .partner-pitch {
+    color: var(--fg-soft);
+    margin: 0 0 var(--space-3);
+  }
+
+  .partner-cta {
+    font-weight: 700;
+    color: var(--fg);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+
+  .partner-form {
+    position: sticky;
+    top: 110px;
+    padding: clamp(var(--space-5), 3vw, var(--space-7));
+    background: var(--sage);
+    border-radius: var(--radius-md);
+    border-top: 4px solid var(--gold);
+    scroll-margin-top: 110px;
+  }
+
+  @media (max-width: 900px) {
+    .partner-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .partner-form {
+      position: static;
+    }
   }
 </style>

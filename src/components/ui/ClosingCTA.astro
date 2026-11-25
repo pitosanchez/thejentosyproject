@@ -1,0 +1,57 @@
+---
+/**
+ * Every page ends the same way: a soft band with one line and the two
+ * actions, then the footer. `title` + gold-highlighted `accent` + `after`.
+ * Buttons default to Partner With Us / Donate in the page's language;
+ * override with the `actions` slot.
+ */
+import { getLangFromUrl, useTranslations, localeHref } from "../../i18n/utils";
+
+interface Props {
+  title: string;
+  accent?: string;
+  after?: string;
+}
+const { title, accent, after } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const L = (p: string) => localeHref(p, lang);
+const hasActions = Astro.slots.has("default");
+---
+
+<section class="on-dark on-soft closing-cta">
+  <div class="container closing-cta-inner reveal">
+    <h2 class="h2 closing-cta-title">
+      {title}{accent && " "}{accent && <span class="hl">{accent}</span>}{after && ` ${after}`}
+    </h2>
+    <div class="cluster gap-3">
+      {hasActions ? (
+        <slot />
+      ) : (
+        <>
+          <a href={L("/partner-with-us/")} class="btn btn-steel-outline">{t("cta.partner")}</a>
+          <a href={L("/donate/")} class="btn btn-rust">{t("cta.donate")}</a>
+        </>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .closing-cta {
+    padding-block: clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
+  .closing-cta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  .closing-cta-title {
+    margin: 0;
+    max-width: 22ch;
+  }
+</style>

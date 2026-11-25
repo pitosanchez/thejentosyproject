@@ -1,63 +1,154 @@
 ---
+/**
+ * The one hero every inner page uses (site-wide consistency pass,
+ * 2026-11-24). Black band, split layout:
+ *   left  — eyebrow, serif title (optional `accent` phrase in gold italic), lede
+ *   right — `image` in a gold offset frame, or the brand rings motif
+ * Breadcrumbs or extra content go in the default slot (rendered above the
+ * eyebrow). `motif` is kept for backwards compatibility; the rings motif is
+ * now shown whenever there's no image.
+ */
+import Rings from "./ui/Rings.astro";
+
 interface Props {
   eyebrow: string;
   heading: string;
+  /** Phrase appended to the heading in gold italic serif. */
+  accent?: string;
   lede?: string;
+  image?: { src: string; alt: string; position?: string; fit?: "cover" | "contain" };
+  /** @deprecated rings motif is automatic when there's no image */
   motif?: boolean;
 }
-const { eyebrow, heading, lede, motif = false } = Astro.props;
+const { eyebrow, heading, accent, lede, image } = Astro.props;
+const hasSlot = Astro.slots.has("default");
 ---
 
-<section class={`on-dark page-hero${motif ? " has-motif" : ""}`}>
-  {/* Decorative line-art motif — the same restrained, single-stroke
-      language as the flip-card hint icon elsewhere on the site — so
-      text-only heroes (The Need, FSGS, APOL1) get something for the
-      eye to land on without commissioning new illustration. */}
-  {motif && (
-    <svg class="page-hero-motif" viewBox="0 0 420 420" fill="none" aria-hidden="true">
-      <path d="M260 90c48 0 86 46 86 110s-38 130-86 130-86-66-86-130 38-110 86-110Z" stroke="currentColor" stroke-width="1.5" />
-      <path d="M260 140c26 0 46 28 46 62s-20 76-46 76-46-42-46-76 20-62 46-62Z" stroke="currentColor" stroke-width="1.5" />
-      <path d="M150 60c30 0 54 40 54 96s-24 112-54 112-54-56-54-112 24-96 54-96Z" stroke="currentColor" stroke-width="1.5" />
-      <path d="M84 96C64 130 64 200 84 250" stroke="currentColor" stroke-width="1.5" />
-      <path d="M336 116c22 32 22 100 4 148" stroke="currentColor" stroke-width="1.5" />
-    </svg>
-  )}
-  <div class="container page-hero-inner">
-    <p class="eyebrow reveal">{eyebrow}</p>
-    <h1 class="h1 reveal" style="--reveal-delay:0.08s">{heading}</h1>
-    {lede && (
-      <p class="lede reveal" style="--reveal-delay:0.16s">
-        {lede}
-      </p>
-    )}
+<section class="on-dark page-hero">
+  <div class="container page-hero-grid">
+    <div class="page-hero-text">
+      {hasSlot && <div class="page-hero-pre"><slot /></div>}
+      <p class="eyebrow reveal">{eyebrow}</p>
+      <h1 class="page-hero-title reveal" style="--reveal-delay:0.06s">
+        {heading}{accent && " "}{accent && <em class="page-hero-accent">{accent}</em>}
+      </h1>
+      {lede && (
+        <p class="page-hero-lede reveal" style="--reveal-delay:0.12s">
+          {lede}
+        </p>
+      )}
+    </div>
+
+    <div class="page-hero-art reveal" style="--reveal-delay:0.1s">
+      {image ? (
+        <div class={`page-hero-frame${image.fit === "contain" ? " page-hero-frame-contain" : ""}`}>
+          <img
+            src={image.src}
+            alt={image.alt}
+            style={image.position ? `object-position:${image.position}` : undefined}
+          />
+        </div>
+      ) : (
+        <Rings class="page-hero-rings" />
+      )}
+    </div>
   </div>
 </section>
 
 <style>
-  .page-hero-inner {
-    padding-block: clamp(var(--space-7), 7vw, var(--space-8));
-    max-width: 720px;
-  }
-
-  .page-hero.has-motif {
-    position: relative;
+  .page-hero {
     overflow: clip;
   }
 
-  .page-hero-motif {
-    position: absolute;
-    top: 50%;
-    right: clamp(-40px, 2vw, 20px);
-    transform: translateY(-50%);
-    width: clamp(220px, 26vw, 380px);
-    height: auto;
-    color: var(--rust-on-dark);
-    opacity: 0.28;
-    pointer-events: none;
+  .page-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(32px, 5vw, 80px);
+    align-items: center;
+    padding-block: clamp(var(--space-7), 6.5vw, 104px);
   }
 
-  @media (max-width: 780px) {
-    .page-hero-motif {
+  .page-hero-pre {
+    margin-bottom: var(--space-5);
+  }
+
+  .page-hero-title {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(40px, 5.2vw, 80px);
+    line-height: 1.02;
+    letter-spacing: 0;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .page-hero-accent {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .page-hero-lede {
+    margin: var(--space-5) 0 0;
+    font-size: clamp(17px, 1.5vw, 19px);
+    line-height: 1.7;
+    color: var(--ink-fg-muted);
+    max-width: 52ch;
+  }
+
+  .page-hero-art {
+    justify-self: end;
+    width: 100%;
+  }
+
+  .page-hero-frame {
+    position: relative;
+  }
+
+  .page-hero-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate(16px, 16px);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+  }
+
+  .page-hero-frame img {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radius-md);
+  }
+
+  /* Transparent illustrations: no frame, no crop. */
+  .page-hero-frame-contain::before {
+    display: none;
+  }
+
+  .page-hero-frame-contain img {
+    aspect-ratio: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 24px 30px rgba(0, 0, 0, 0.4));
+  }
+
+  :global(.page-hero-rings) {
+    width: min(100%, 360px);
+    margin-left: auto;
+  }
+
+  @media (max-width: 860px) {
+    .page-hero-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .page-hero-art {
+      justify-self: start;
+      max-width: 460px;
+    }
+
+    :global(.page-hero-rings) {
       display: none;
     }
   }

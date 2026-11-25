@@ -1,0 +1,146 @@
+---
+/**
+ * Home page, everything after the stats band (EN + ES share it).
+ * Editorial role (see .scratch/tjp-editorial/audit.md): Home answers
+ * "why should I care, and where do I go?" — it points into the site
+ * instead of re-explaining what each page already says.
+ *   1. Rare disease, plainly explained — the upstream thesis + an index
+ *      into FSGS / APOL1 / the basics / Bronx data
+ *   2. The founder's voice (Quote)
+ *   3. Find your way in — one line per audience (Partner owns the detail)
+ *   4. Closing CTA
+ */
+import SectionHead from "./ui/SectionHead.astro";
+import IndexList from "./ui/IndexList.astro";
+import Quote from "./ui/Quote.astro";
+import ClosingCTA from "./ui/ClosingCTA.astro";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+
+const en = {
+  learnEyebrow: "Kidney disease",
+  learnTitle: "Rare disease,",
+  learnAccent: "plainly explained.",
+  learnDek:
+    "Kidney disease disparities are downstream of poverty, unequal access to education, incarceration, broken homes, and the chronic stress those conditions produce. Our education starts with two under-discussed diseases.",
+  learn: [
+    { term: "FSGS", note: "Scarring in the kidney's filtering units — the disease our founder lives with.", href: "/the-need/fsgs/" },
+    { term: "APOL1-mediated kidney disease", note: "A genetic risk tied to African ancestry — and why most people who carry it never get sick.", href: "/the-need/apol1/" },
+    { term: "Kidney disease basics", note: "What it is, how it's found, and how it's treated.", href: "/the-need/" },
+    { term: "Bronx data you should know", note: "What the numbers say about kidney health where we start.", href: "/the-need/data/" },
+  ],
+  quoteEyebrow: "Why this exists",
+  quote:
+    "Our goal is to give everyone navigating kidney disease the social capital to make informed decisions, ask the right questions, and advocate for themselves.",
+  quoteRole: "Founder & CEO",
+  quoteAlt: "Robert Sanchez, founder of The Jentosy Project",
+  quoteLink: "Read his full story",
+  wayEyebrow: "Who this is for",
+  wayTitle: "Find",
+  wayAccent: "your way in.",
+  ways: [
+    { term: "Patients & families", note: "Plain-language answers — and where to find support today.", href: "/the-need/" },
+    { term: "Funders & foundations", note: "Back education led by lived experience.", href: "/partner-with-us/?audience=funder#funder" },
+    { term: "Researchers & institutions", note: "Community engagement around FSGS and APOL1.", href: "/partner-with-us/?audience=researcher#researcher" },
+    { term: "Healthcare organizations", note: "Reach underserved patients earlier.", href: "/partner-with-us/?audience=healthcare#healthcare" },
+    { term: "Policymakers", note: "The upstream drivers of kidney disease.", href: "/partner-with-us/?audience=policymaker#policymaker" },
+  ],
+  wwd: "What we do, day to day",
+  ctaTitle: "Fund it. Partner with it.",
+  ctaAccent: "Be part of it.",
+};
+
+const es: typeof en = {
+  learnEyebrow: "Enfermedad renal",
+  learnTitle: "Enfermedades poco frecuentes,",
+  learnAccent: "explicadas con claridad.",
+  learnDek:
+    "Las desigualdades en la enfermedad renal son consecuencia de la pobreza, el acceso desigual a la educación, el encarcelamiento, los hogares fracturados y el estrés crónico que esas condiciones producen. Nuestra labor educativa empieza con dos enfermedades de las que se habla poco.",
+  learn: [
+    { term: "GEFS", note: "Cicatrización en las unidades de filtrado del riñón — la enfermedad con la que vive nuestro fundador.", href: "/the-need/fsgs/" },
+    { term: "Enfermedad renal mediada por APOL1", note: "Un riesgo genético ligado a la ascendencia africana — y por qué la mayoría de quienes lo portan nunca enferman.", href: "/the-need/apol1/" },
+    { term: "Lo básico de la enfermedad renal", note: "Qué es, cómo se detecta y cómo se trata.", href: "/the-need/" },
+    { term: "Datos del Bronx que debes conocer", note: "Lo que dicen las cifras sobre la salud renal donde empezamos.", href: "/the-need/data/" },
+  ],
+  quoteEyebrow: "Por qué existimos",
+  quote:
+    "Nuestra meta es dar a todas las personas que enfrentan la enfermedad renal el capital social para tomar decisiones informadas, hacer las preguntas correctas y defenderse por sí mismas.",
+  quoteRole: "Fundador y director ejecutivo",
+  quoteAlt: "Robert Sanchez, fundador de The Jentosy Project",
+  quoteLink: "Lee su historia completa",
+  wayEyebrow: "Para quién es esto",
+  wayTitle: "Encuentra",
+  wayAccent: "tu camino.",
+  ways: [
+    { term: "Pacientes y familias", note: "Respuestas en lenguaje claro — y dónde encontrar apoyo hoy.", href: "/the-need/" },
+    { term: "Financiadores y fundaciones", note: "Respalda una labor educativa guiada por la experiencia vivida.", href: "/partner-with-us/?audience=funder#funder" },
+    { term: "Investigadores e instituciones", note: "Participación comunitaria en torno a la GEFS y la APOL1.", href: "/partner-with-us/?audience=researcher#researcher" },
+    { term: "Organizaciones de salud", note: "Llega antes a los pacientes desatendidos.", href: "/partner-with-us/?audience=healthcare#healthcare" },
+    { term: "Responsables de políticas públicas", note: "Las causas de fondo de la enfermedad renal.", href: "/partner-with-us/?audience=policymaker#policymaker" },
+  ],
+  wwd: "Lo que hacemos, día a día",
+  ctaTitle: "Fináncialo. Colabora con ello.",
+  ctaAccent: "Sé parte de ello.",
+};
+
+const c = lang === "es" ? es : en;
+const withL = (items: { term: string; note: string; href: string }[]) =>
+  items.map((i) => ({ ...i, href: L(i.href) }));
+---
+
+<section class="on-light home-section">
+  <div class="container">
+    <SectionHead eyebrow={c.learnEyebrow} title={c.learnTitle} accent={c.learnAccent} dek={c.learnDek} layout="split" />
+    <IndexList items={withL(c.learn)} columns={2} />
+  </div>
+</section>
+
+<section class="on-dark on-soft home-section">
+  <div class="container">
+    <Quote
+      eyebrow={c.quoteEyebrow}
+      quote={c.quote}
+      name="Robert Sanchez"
+      role={c.quoteRole}
+      photo="/images/founder-portrait.webp"
+      photoAlt={c.quoteAlt}
+    >
+      <a href={L("/about/team/")} class="home-link">{c.quoteLink} &rarr;</a>
+    </Quote>
+  </div>
+</section>
+
+<section class="on-light home-section">
+  <div class="container">
+    <SectionHead eyebrow={c.wayEyebrow} title={c.wayTitle} accent={c.wayAccent} />
+    <IndexList items={withL(c.ways)} columns={2} size="md" />
+    <a href={L("/about/what-we-do/")} class="home-link home-wwd">{c.wwd} &rarr;</a>
+  </div>
+</section>
+
+<ClosingCTA title={c.ctaTitle} accent={c.ctaAccent} />
+
+<style>
+  .home-section {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .home-link {
+    font-weight: 700;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+
+  .home-wwd {
+    display: inline-block;
+    margin-top: var(--space-6);
+  }
+</style>

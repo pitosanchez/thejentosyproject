@@ -1,0 +1,156 @@
+---
+/**
+ * The zig-zag feature row: copy on one side, a photo in a gold offset frame
+ * on the other. Alternate `flip` on consecutive rows. `num` draws the large
+ * outlined numeral behind the copy. Body copy goes in the default slot
+ * (plain <p> elements); an optional link/CTA can go in slot="actions".
+ * Use inside a light section's .container.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  accent?: string;
+  sub?: string;
+  num?: number;
+  flip?: boolean;
+  img?: string;
+  alt?: string;
+  caption?: string;
+  ratio?: string;
+  fit?: "cover" | "contain";
+}
+const { eyebrow, title, accent, sub, num, flip = false, img, alt = "", caption, ratio = "4 / 3", fit = "cover" } = Astro.props;
+const hasActions = Astro.slots.has("actions");
+const hasMedia = Astro.slots.has("media");
+---
+
+<article class={`feature${flip ? " feature-flip" : ""}`}>
+  <div class="feature-text">
+    {num !== undefined && <span class="feature-num" aria-hidden="true">{String(num).padStart(2, "0")}</span>}
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    <h2 class="h2 feature-title reveal" style="--reveal-delay:0.05s">
+      {title}{accent && " "}{accent && <span class="hl">{accent}</span>}
+    </h2>
+    {sub && <p class="feature-sub reveal">{sub}</p>}
+    <div class="feature-body reveal" style="--reveal-delay:0.1s"><slot /></div>
+    {hasActions && <div class="feature-actions reveal"><slot name="actions" /></div>}
+  </div>
+  <figure class="feature-media reveal" style="--reveal-delay:0.08s">
+    {hasMedia ? (
+      <slot name="media" />
+    ) : (
+      img && (
+        <div class="feature-frame">
+          <img src={img} alt={alt} loading="lazy" style={`aspect-ratio:${ratio};object-fit:${fit}`} />
+        </div>
+      )
+    )}
+    {caption && <figcaption>{caption}</figcaption>}
+  </figure>
+</article>
+
+<style>
+  .feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .feature + :global(.feature) {
+    margin-top: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .feature-flip .feature-text {
+    order: 2;
+  }
+
+  .feature-text {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .feature-num {
+    position: absolute;
+    top: -0.78em;
+    left: -0.08em;
+    z-index: -1;
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(110px, 14vw, 200px);
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--line-strong);
+    opacity: 0.8;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .feature-title {
+    margin-bottom: var(--space-4);
+  }
+
+  .feature-sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(19px, 2vw, 24px);
+    margin: calc(-1 * var(--space-2)) 0 var(--space-4);
+  }
+
+  .feature-body :global(p) {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--fg-soft);
+  }
+
+  .feature-actions {
+    margin-top: var(--space-5);
+  }
+
+  .feature-media {
+    margin: 0;
+  }
+
+  .feature-frame {
+    position: relative;
+  }
+
+  .feature-frame::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate(18px, 18px);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+  }
+
+  .feature-flip .feature-frame::before {
+    transform: translate(-18px, 18px);
+  }
+
+  .feature-frame img {
+    position: relative;
+    display: block;
+    width: 100%;
+    border-radius: var(--radius-md);
+    background: var(--paper);
+    box-shadow: 0 30px 50px -30px rgba(0, 0, 0, 0.45);
+  }
+
+  .feature-media figcaption {
+    margin-top: calc(var(--space-5) + 18px);
+    font-size: 13px;
+    color: var(--fg-muted);
+    max-width: 52ch;
+  }
+
+  @media (max-width: 860px) {
+    .feature {
+      grid-template-columns: 1fr;
+    }
+
+    .feature-flip .feature-text {
+      order: 0;
+    }
+  }
+</style>

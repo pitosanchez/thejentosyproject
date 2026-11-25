@@ -1,0 +1,536 @@
+---
+/**
+ * Meet The Team — /about/team/ and /es/about/team/ (shared so the two
+ * languages can't drift). Redesigned 2026-11-24 to be compact:
+ *
+ *  - Founder: name-first header, portrait + podium inset, story set in two
+ *    columns on wide screens instead of one long single column.
+ *  - Board: one aligned row (4 across on desktop), each card a solid 3D
+ *    block — an extruded gold edge instead of a floating drop shadow — that
+ *    tilts toward the pointer with its name plate lifted forward in Z.
+ *    Static (still 3D, no tilt) for touch and prefers-reduced-motion.
+ *
+ * Board data comes from src/lib/board.ts; each card links to the member's
+ * profile at /about/team/<slug>/.
+ */
+import { getBoard } from "../lib/board";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+const board = getBoard(lang);
+
+const en = {
+  eyebrow: "Meet The Team",
+  founderTitle: "Founder & CEO",
+  portraitAlt: "Robert Sanchez, founder of The Jentosy Project",
+  podiumAlt: "Robert Sanchez speaking at a podium about kidney disease and health equity",
+  statement: "Two transplants. Two women who wouldn't give up.",
+  story: [
+    "In 2009, Robert Sanchez received his first kidney transplant — a living-donor kidney from a close friend. But FSGS, the rare disease that had already destroyed his own kidneys, recurred in the transplanted one, and by 2014 he was back on dialysis, three times a week. In 2019, out of options, he posted on Facebook asking if anyone knew someone willing to donate a kidney. Within about a week, organ matchmaker Chaya Lipschutz had found a potential match: Elizabeth Antosy. Then, the night before surgery, his transplant surgeon called with news that changed everything — Robert had kidney cancer, and the transplant could not go forward.",
+    "Elizabeth was heartbroken — but instead of walking away, she joined a kidney exchange chain. Through it, Robert was matched with a new donor, Jen Keller, and after he cleared cancer, the two were transplanted on October 20, 2021. Elizabeth's decision to stay in the chain ultimately gave <strong>8 people</strong> new kidneys — and gave the organization her name and Jen's: <strong>The Jentosy Project</strong>.",
+  ],
+  boardEyebrow: "Governance",
+  boardTitleA: "Board of",
+  boardTitleB: "Directors",
+  boardNote:
+    "Clinical research, entertainment, and lived experience with kidney disease — brought together around the same mission.",
+  viewBio: "View bio",
+  cardLabel: (name: string) => `Read ${name}'s full bio`,
+  ctaA: "Help extend what",
+  ctaHl: "Jen and Elizabeth",
+  ctaB: "started.",
+  partner: "Partner With Us",
+  donate: "Donate",
+};
+
+const es: typeof en = {
+  eyebrow: "Nuestro equipo",
+  founderTitle: "Fundador y director ejecutivo",
+  portraitAlt: "Robert Sanchez, fundador de The Jentosy Project",
+  podiumAlt: "Robert Sanchez hablando en un podio sobre la enfermedad renal y la equidad en salud",
+  statement: "Dos trasplantes. Dos mujeres que no se rindieron.",
+  story: [
+    "En 2009, Robert Sanchez recibió su primer trasplante de riñón — un riñón de donante vivo, de un amigo cercano. Pero la GEFS, la enfermedad poco frecuente que ya había destruido sus propios riñones, reapareció en el riñón trasplantado, y para 2014 estaba de nuevo en diálisis, tres veces por semana. En 2019, sin opciones, publicó en Facebook preguntando si alguien conocía a una persona dispuesta a donar un riñón. En cosa de una semana, la coordinadora de donaciones Chaya Lipschutz había encontrado una posible compatibilidad: Elizabeth Antosy. Entonces, la noche antes de la cirugía, su cirujano de trasplantes llamó con una noticia que lo cambió todo — Robert tenía cáncer de riñón, y el trasplante no podía seguir adelante.",
+    "Elizabeth estaba desconsolada — pero en lugar de alejarse, se unió a una cadena de intercambio de riñones. A través de ella, Robert fue emparejado con una nueva donante, Jen Keller, y después de que superó el cáncer, ambos fueron trasplantados el 20 de octubre de 2021. La decisión de Elizabeth de permanecer en la cadena finalmente les dio a <strong>8 personas</strong> riñones nuevos — y le dio a la organización su nombre y el de Jen: <strong>The Jentosy Project</strong>.",
+  ],
+  boardEyebrow: "Gobernanza",
+  boardTitleA: "Junta",
+  boardTitleB: "directiva",
+  boardNote:
+    "Investigación clínica, entretenimiento y experiencia vivida con la enfermedad renal — reunidos en torno a la misma misión.",
+  viewBio: "Ver biografía",
+  cardLabel: (name: string) => `Leer la biografía completa de ${name}`,
+  ctaA: "Ayuda a extender lo que",
+  ctaHl: "Jen y Elizabeth",
+  ctaB: "empezaron.",
+  partner: "Colabora con nosotros",
+  donate: "Donar",
+};
+
+const c = lang === "es" ? es : en;
+---
+
+<!-- FOUNDER -->
+<section class="on-dark founder">
+  <div class="container founder-grid">
+    <div class="founder-media reveal">
+      <img class="founder-portrait" src="/images/founder-portrait.webp" alt={c.portraitAlt} />
+      <img class="founder-inset" src="/images/founder-podium.webp" alt={c.podiumAlt} />
+    </div>
+
+    <div class="founder-text">
+      <p class="eyebrow reveal">{c.eyebrow}</p>
+      <h1 class="founder-name reveal" style="--reveal-delay:0.06s">Robert Sanchez</h1>
+      <p class="founder-title reveal" style="--reveal-delay:0.1s">{c.founderTitle}</p>
+      <p class="founder-statement reveal" style="--reveal-delay:0.14s">{c.statement}</p>
+      <div class="founder-story reveal" style="--reveal-delay:0.2s">
+        {c.story.map((para) => <p set:html={para} />)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOARD -->
+<section class="on-light board">
+  <div class="container">
+    <header class="board-head">
+      <div>
+        <p class="eyebrow reveal">{c.boardEyebrow}</p>
+        <h2 class="h2 reveal" style="--reveal-delay:0.06s">
+          {c.boardTitleA} <span class="hl">{c.boardTitleB}</span>
+        </h2>
+      </div>
+      <p class="board-note reveal" style="--reveal-delay:0.1s">{c.boardNote}</p>
+    </header>
+
+    <ul class="board-row">
+      {board.map((person, i) => (
+        <li class="reveal" style={`--reveal-delay:${i * 0.07}s`}>
+          <a class="bcard" href={L(`/about/team/${person.slug}/`)} aria-label={c.cardLabel(person.name)}>
+            <div class="bcard-body">
+              <div class="bcard-photo">
+                {person.photoExists ? (
+                  <img src={person.photo} alt="" loading="lazy" />
+                ) : (
+                  <span class="bcard-photo-placeholder" aria-hidden="true"></span>
+                )}
+              </div>
+              <div class="bcard-plate">
+                <p class="bcard-name">{person.name}</p>
+                <p class="bcard-role">{person.role}</p>
+                <span class="bcard-cta" aria-hidden="true">{c.viewBio} &rarr;</span>
+              </div>
+              <span class="bcard-glare" aria-hidden="true"></span>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="on-dark on-soft section-tight team-cta">
+  <div class="container team-cta-inner reveal">
+    <h2 class="h2">{c.ctaA} <span class="hl">{c.ctaHl}</span> {c.ctaB}</h2>
+    <div class="cluster gap-3">
+      <a href={L("/partner-with-us/")} class="btn btn-steel-outline">{c.partner}</a>
+      <a href={L("/donate/")} class="btn btn-rust">{c.donate}</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // 3D tilt toward the pointer. Progressive enhancement: only for fine
+  // pointers and when the user hasn't asked for reduced motion; otherwise
+  // the cards stay as static 3D blocks.
+  const canTilt =
+    window.matchMedia("(pointer: fine)").matches &&
+    !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (canTilt) {
+    document.querySelectorAll<HTMLElement>(".bcard").forEach((card) => {
+      card.addEventListener("pointermove", (e) => {
+        const r = card.getBoundingClientRect();
+        const x = (e.clientX - r.left) / r.width - 0.5;
+        const y = (e.clientY - r.top) / r.height - 0.5;
+        card.style.setProperty("--ry", `${x * 16}deg`);
+        card.style.setProperty("--rx", `${-y * 12}deg`);
+        card.style.setProperty("--gx", `${(x + 0.5) * 100}%`);
+        card.style.setProperty("--gy", `${(y + 0.5) * 100}%`);
+        card.classList.add("is-tilting");
+      });
+      card.addEventListener("pointerleave", () => {
+        card.style.removeProperty("--ry");
+        card.style.removeProperty("--rx");
+        card.classList.remove("is-tilting");
+      });
+    });
+  }
+</script>
+
+<style>
+  /* ---------- Founder ---------- */
+
+  .founder {
+    padding-block: clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
+  .founder-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 340px) minmax(0, 1fr);
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+
+  .founder-media {
+    position: relative;
+    padding-bottom: 48px;
+  }
+
+  .founder-portrait {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: center 20%;
+    border-radius: var(--radius-md);
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  .founder-inset {
+    position: absolute;
+    right: -28px;
+    bottom: 0;
+    width: 52%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border: 3px solid var(--gold);
+    border-radius: var(--radius-md);
+  }
+
+  .founder-name {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(44px, 5.4vw, 80px);
+    line-height: 0.98;
+    margin: 0;
+  }
+
+  .founder-title {
+    margin: var(--space-3) 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .founder-statement {
+    margin: var(--space-5) 0;
+    padding-left: var(--space-4);
+    border-left: 3px solid var(--gold);
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.25;
+    max-width: none;
+  }
+
+  .founder-story {
+    columns: 2 300px;
+    column-gap: clamp(24px, 3vw, 44px);
+  }
+
+  .founder-story p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-fg-muted);
+    max-width: none;
+    break-inside: avoid-column;
+  }
+
+  .founder-story :global(strong) {
+    color: var(--ink-fg);
+  }
+
+  @media (max-width: 760px) {
+    .founder-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .founder-media {
+      max-width: 320px;
+    }
+  }
+
+  /* ---------- Board ---------- */
+
+  .board {
+    padding-block: clamp(var(--space-7), 6vw, var(--space-8));
+  }
+
+  .board-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-7);
+    margin-bottom: var(--space-7);
+  }
+
+  .board-head .h2 {
+    margin: 0;
+  }
+
+  .board-note {
+    max-width: 44ch;
+    margin: 0;
+    color: var(--fg-soft);
+  }
+
+  .board-row {
+    list-style: none;
+    margin: 0;
+    padding: 0 12px 12px 0; /* room for the extruded edge */
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: clamp(20px, 2.4vw, 32px);
+    align-items: stretch;
+  }
+
+  .board-row > li {
+    display: flex;
+  }
+
+  /* The card: a solid block. Depth comes from a stepped, extruded gold edge
+     (stacked hard shadows), so it reads as an object sitting in the row,
+     not a card hovering above it. */
+  .bcard {
+    --rx: 0deg;
+    --ry: 0deg;
+    --depth: 10px;
+    display: flex;
+    width: 100%;
+    color: inherit;
+    text-decoration: none;
+    perspective: 900px;
+    outline: none;
+  }
+
+  .bcard-body {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background: var(--ink);
+    border: 2px solid var(--ink);
+    border-radius: var(--radius-md);
+    transform-style: preserve-3d;
+    transform: rotateX(var(--rx)) rotateY(var(--ry));
+    transition: transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+    box-shadow:
+      1px 1px 0 #c99a14,
+      2px 2px 0 #c99a14,
+      3px 3px 0 #c99a14,
+      4px 4px 0 #c99a14,
+      5px 5px 0 #c99a14,
+      6px 6px 0 #b98c0f,
+      7px 7px 0 #b98c0f,
+      8px 8px 0 #b98c0f,
+      9px 9px 0 #a87e0b,
+      10px 10px 0 #a87e0b;
+  }
+
+  .bcard.is-tilting .bcard-body {
+    transition: transform 0.12s linear, box-shadow 0.6s var(--ease);
+  }
+
+  .bcard:focus-visible .bcard-body {
+    outline: 3px solid var(--gold);
+    outline-offset: 5px;
+  }
+
+  .bcard-photo {
+    position: relative;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: 1px 1px 0 0;
+    transform: translateZ(0);
+  }
+
+  .bcard-photo img,
+  .bcard-photo-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 22%;
+    filter: grayscale(0.35) contrast(1.04);
+    transition: filter 0.6s var(--ease), transform 0.8s var(--ease);
+  }
+
+  .bcard-photo-placeholder {
+    background: linear-gradient(160deg, var(--ink-soft), var(--ink-line));
+  }
+
+  .bcard:hover .bcard-photo img,
+  .bcard:focus-visible .bcard-photo img {
+    filter: grayscale(0) contrast(1);
+    transform: scale(1.04);
+  }
+
+  /* Name plate floats forward in Z when the card tilts. */
+  .bcard-plate {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-4) var(--space-4) var(--space-4);
+    background: var(--ink);
+    color: var(--ink-fg);
+    border-top: 3px solid var(--gold);
+    transform: translateZ(0);
+    transition: transform 0.6s var(--ease);
+  }
+
+  .bcard.is-tilting .bcard-plate {
+    transform: translateZ(28px);
+  }
+
+  .bcard-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(19px, 1.6vw, 23px);
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .bcard-role {
+    margin: var(--space-2) 0 var(--space-4);
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .bcard-cta {
+    margin-top: auto;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-fg-muted);
+    transition: color 0.3s var(--ease);
+  }
+
+  .bcard:hover .bcard-cta,
+  .bcard:focus-visible .bcard-cta {
+    color: var(--gold);
+  }
+
+  /* A soft glare that follows the pointer across the photo. */
+  .bcard-glare {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      circle at var(--gx, 50%) var(--gy, 0%),
+      rgba(255, 255, 255, 0.22),
+      transparent 45%
+    );
+    opacity: 0;
+    transform: translateZ(40px);
+    transition: opacity 0.4s var(--ease);
+  }
+
+  .bcard:hover .bcard-glare {
+    opacity: 1;
+  }
+
+  /* Hover/focus without tilt (keyboard, or no JS): lift the block. */
+  .bcard:hover .bcard-body,
+  .bcard:focus-visible .bcard-body {
+    box-shadow:
+      1px 1px 0 #c99a14,
+      2px 2px 0 #c99a14,
+      3px 3px 0 #c99a14,
+      4px 4px 0 #c99a14,
+      5px 5px 0 #c99a14,
+      6px 6px 0 #b98c0f,
+      7px 7px 0 #b98c0f,
+      8px 8px 0 #b98c0f,
+      9px 9px 0 #a87e0b,
+      10px 10px 0 #a87e0b,
+      12px 12px 0 #a87e0b;
+  }
+
+  @media (max-width: 1000px) {
+    .bcard-plate {
+      padding: var(--space-3);
+    }
+
+    .bcard-role {
+      font-size: 9.5px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .board-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bcard-photo {
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .board-row {
+      gap: 18px;
+    }
+
+    .bcard-plate {
+      padding: var(--space-3);
+    }
+
+    .bcard-name {
+      font-size: 16px;
+    }
+
+    .bcard-role {
+      font-size: 9px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bcard-body,
+    .bcard-photo img {
+      transition: none;
+    }
+  }
+
+  /* ---------- CTA ---------- */
+
+  .team-cta-inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+  }
+
+  .team-cta-inner .h2 {
+    margin: 0;
+    max-width: 22ch;
+  }
+</style>

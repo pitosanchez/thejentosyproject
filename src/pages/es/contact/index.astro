@@ -6,13 +6,22 @@ import NewsletterSignup from "../../../components/NewsletterSignup.astro";
 
 const accessKey = import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY;
 const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
+import { localeHref } from "../../../i18n/utils";
+const L = (p: string) => localeHref(p, "es");
 ---
 
 <BaseLayout title="Contacto" description="Ponte en contacto con The Jentosy Project.">
-  <PageHero eyebrow="Contacto" heading="Ponte en contacto." />
+  <PageHero
+    eyebrow="Contacto"
+    heading="Ponte en"
+    accent="contacto."
+    lede="Preguntas sobre nuestro trabajo, ideas de colaboración o tu propia historia — escríbenos aquí abajo."
+  />
 
-  <section class="on-light section">
-    <div class="container narrow">
+  <section class="on-light contact-section">
+    <div class="container contact-grid">
+      <div class="contact-form-col">
+        <h2 class="h2 contact-form-title">Envíanos <span class="hl">un mensaje</span></h2>
       {!accessKey && (
         <p class="form-unconfigured-note">
           Este formulario todavía no está conectado — configura <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code>
@@ -53,20 +62,92 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
           {accessKey ? "Enviar mensaje" : "Formulario aún no conectado"}
         </button>
       </form>
+      </div>
+      <aside class="contact-aside">
+        <p class="eyebrow">¿Buscas otra cosa?</p>
+        <ul class="contact-links">
+          <li><a href={L("/partner-with-us/")} class="contact-link"><span class="contact-link-term">Colabora con nosotros &rarr;</span><span class="contact-link-note">Financiadores, investigadores, sistemas de salud, responsables de políticas.</span></a></li>
+          <li><a href={L("/donate/")} class="contact-link"><span class="contact-link-term">Donar &rarr;</span><span class="contact-link-note">Financia educación renal en lenguaje claro.</span></a></li>
+          <li><a href={L("/the-need/")} class="contact-link"><span class="contact-link-term">Lo básico de la enfermedad renal &rarr;</span><span class="contact-link-note">Qué es, cómo se detecta, cómo se trata.</span></a></li>
+        </ul>
 
-      <SupportResources heading="¿Necesitas hablar con alguien antes de que te respondamos?" />
+        <SupportResources heading="¿Necesitas hablar con alguien antes de que te respondamos?" />
 
-      <NewsletterSignup
-        formId="contact-newsletter-form"
-        heading="¿Todavía no quieres enviar un mensaje? Mantente al tanto."
-      />
+        <NewsletterSignup
+          formId="contact-newsletter-form"
+          heading="¿Todavía no quieres enviar un mensaje? Mantente al tanto."
+        />
+      </aside>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .narrow {
-    max-width: 560px;
+  .contact-section {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .contact-form-col {
+    padding: clamp(var(--space-5), 3vw, var(--space-7));
+    background: var(--sage);
+    border-radius: var(--radius-md);
+    border-top: 4px solid var(--gold);
+  }
+
+  .contact-form-title {
+    margin-bottom: var(--space-5);
+  }
+
+  .contact-links {
+    list-style: none;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+  }
+
+  .contact-links li {
+    border-top: 1px solid var(--line);
+  }
+
+  .contact-links li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--space-4) 0;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .contact-link:hover {
+    transform: translateX(8px);
+  }
+
+  .contact-link-term {
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-link-note {
+    font-size: 14.5px;
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .inquiry-form {

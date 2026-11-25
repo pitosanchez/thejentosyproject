@@ -9,10 +9,17 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
 ---
 
 <BaseLayout title="Contact" description="Get in touch with The Jentosy Project.">
-  <PageHero eyebrow="Contact" heading="Get in touch." />
+  <PageHero
+    eyebrow="Contact"
+    heading="Get in"
+    accent="touch."
+    lede="Questions about our work, partnership ideas, or your own story — write to us below."
+  />
 
-  <section class="on-light section">
-    <div class="container narrow">
+  <section class="on-light contact-section">
+    <div class="container contact-grid">
+      <div class="contact-form-col">
+        <h2 class="h2 contact-form-title">Send us <span class="hl">a message</span></h2>
       {!accessKey && (
         <p class="form-unconfigured-note">
           This form isn't connected yet — set <code>PUBLIC_WEB3FORMS_ACCESS_KEY</code> to enable
@@ -53,20 +60,92 @@ const contactEmail = import.meta.env.PUBLIC_CONTACT_EMAIL;
           {accessKey ? "Send Message" : "Form not yet connected"}
         </button>
       </form>
+      </div>
+      <aside class="contact-aside">
+        <p class="eyebrow">Looking for something else?</p>
+        <ul class="contact-links">
+          <li><a href="/partner-with-us/" class="contact-link"><span class="contact-link-term">Partner with us &rarr;</span><span class="contact-link-note">Funders, researchers, health systems, policymakers.</span></a></li>
+          <li><a href="/donate/" class="contact-link"><span class="contact-link-term">Donate &rarr;</span><span class="contact-link-note">Fund plain-language kidney education.</span></a></li>
+          <li><a href="/the-need/" class="contact-link"><span class="contact-link-term">Kidney disease basics &rarr;</span><span class="contact-link-note">What it is, how it's found, how it's treated.</span></a></li>
+        </ul>
 
-      <SupportResources heading="Need to talk to someone before we get back to you?" />
+        <SupportResources heading="Need to talk to someone before we get back to you?" />
 
-      <NewsletterSignup
-        formId="contact-newsletter-form"
-        heading="Not ready to send a message yet? Stay in the loop instead."
-      />
+        <NewsletterSignup
+          formId="contact-newsletter-form"
+          heading="Not ready to send a message yet? Stay in the loop instead."
+        />
+      </aside>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .narrow {
-    max-width: 560px;
+  .contact-section {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .contact-form-col {
+    padding: clamp(var(--space-5), 3vw, var(--space-7));
+    background: var(--sage);
+    border-radius: var(--radius-md);
+    border-top: 4px solid var(--gold);
+  }
+
+  .contact-form-title {
+    margin-bottom: var(--space-5);
+  }
+
+  .contact-links {
+    list-style: none;
+    margin: 0 0 var(--space-6);
+    padding: 0;
+  }
+
+  .contact-links li {
+    border-top: 1px solid var(--line);
+  }
+
+  .contact-links li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-link {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--space-4) 0;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.45s var(--ease);
+  }
+
+  .contact-link:hover {
+    transform: translateX(8px);
+  }
+
+  .contact-link-term {
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: -0.01em;
+  }
+
+  .contact-link-note {
+    font-size: 14.5px;
+    color: var(--fg-muted);
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .inquiry-form {

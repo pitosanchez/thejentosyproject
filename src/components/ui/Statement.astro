@@ -1,0 +1,76 @@
+---
+/**
+ * The split statement band (black): a supporting paragraph on the left
+ * behind a gold rule, the thesis set huge in serif on the right with its
+ * last phrase in gold italic. One per page at most — it's the page's
+ * "say it out loud" moment.
+ */
+interface Props {
+  intro: string;
+  statement: string;
+  accent?: string;
+  eyebrow?: string;
+}
+const { intro, statement, accent, eyebrow } = Astro.props;
+---
+
+<section class="on-dark statement">
+  <div class="container statement-grid">
+    <div class="statement-left reveal">
+      {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+      <p class="statement-intro">{intro}</p>
+    </div>
+    <p class="statement-line reveal" style="--reveal-delay:0.1s">
+      {statement}{accent && " "}{accent && <em class="statement-accent">{accent}</em>}
+    </p>
+  </div>
+</section>
+
+<style>
+  .statement {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+    overflow: clip;
+  }
+
+  .statement-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: center;
+  }
+
+  .statement-intro {
+    margin: 0;
+    padding-left: var(--space-5);
+    border-left: 3px solid var(--gold);
+    font-size: clamp(17px, 1.5vw, 19px);
+    line-height: 1.8;
+    color: var(--ink-fg-muted);
+    max-width: 44ch;
+  }
+
+  .statement-line {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(38px, 5.4vw, 88px);
+    line-height: 1;
+    text-align: right;
+    max-width: none;
+    text-wrap: balance;
+  }
+
+  .statement-accent {
+    color: var(--gold);
+  }
+
+  @media (max-width: 860px) {
+    .statement-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .statement-line {
+      text-align: left;
+    }
+  }
+</style>

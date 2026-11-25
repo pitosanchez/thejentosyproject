@@ -1,4 +1,5 @@
 ---
+import ClosingCTA from "../../../components/ui/ClosingCTA.astro";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import PageHero from "../../../components/PageHero.astro";
 import Breadcrumb from "../../../components/Breadcrumb.astro";
@@ -92,6 +93,8 @@ const dataGapsWeak = [
     </div>
   </section>
 
+  <div class="clin">
+
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <div class="card card-rust">
@@ -107,9 +110,13 @@ const dataGapsWeak = [
   <!-- ============ START WITH KIDNEY DISEASE ============ -->
 
   <section id="start" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">Start With Kidney Disease</p>
       <h2 class="h2">One of the few direct Bronx measures we have.</h2>
+      </header>
+      <div class="clin-body">
+      </div>
     </div>
 
     <div class="container" style="margin-top:var(--space-5);">
@@ -255,9 +262,12 @@ const dataGapsWeak = [
   <!-- ============ APOL1 ============ -->
 
   <section id="apol1" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">APOL1: Genetics, Ancestry, and Kidney Health</p>
       <h2 class="h2">A gene, <span class="hl">not a group.</span></h2>
+      </header>
+      <div class="clin-body">
       <p>
         APOL1 is a gene. Certain APOL1 variants arose in populations with ancestry from regions of
         sub-Saharan Africa because they provided protection against some forms of African
@@ -278,6 +288,7 @@ const dataGapsWeak = [
         related, but they are not the same thing.
       </p>
       <p class="lede"><a href="/the-need/apol1/" class="linkline">Read the full APOL1 story &rarr;</a></p>
+      </div>
     </div>
   </section>
 
@@ -286,7 +297,7 @@ const dataGapsWeak = [
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="mini-tag" style="color:var(--rust); font-size:11px;">Bronx-Involved Research — Not Bronx Prevalence Data</p>
-      <h2 class="h3">What research including a Bronx cohort has found.</h2>
+      <h2 class="h2">What research including a Bronx cohort has found.</h2>
       <p>
         The NIH-supported Hispanic Community Health Study/Study of Latinos (HCHS/SOL) enrolled
         participants at four field centers — <strong>Bronx, New York</strong>; Chicago, Illinois;
@@ -319,7 +330,7 @@ const dataGapsWeak = [
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
     <div class="container narrow">
       <p class="mini-tag" style="color:var(--rust); font-size:11px;">Multi-City Research Including a Bronx Cohort</p>
-      <h2 class="h3">Puerto Rican background and CKD incidence.</h2>
+      <h2 class="h2">Puerto Rican background and CKD incidence.</h2>
       <p>
         Following 8,774 Hispanic/Latino adults, HCHS/SOL researchers reported an overall incident
         CKD rate of 10.6 cases per 1,000 person-years. The highest age- and sex-adjusted incidence
@@ -350,9 +361,12 @@ const dataGapsWeak = [
   <!-- ============ FSGS ============ -->
 
   <section id="fsgs" class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">FSGS: A Kidney Disease That Deserves Greater Attention</p>
       <h2 class="h2">A pattern of scarring, with more than one cause.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         Focal Segmental Glomerulosclerosis (FSGS) is a pattern of scarring in the kidney's
         filtering units, called glomeruli. It can result from different biological pathways and
@@ -377,15 +391,19 @@ const dataGapsWeak = [
       </p>
 
       <p class="lede"><a href="/the-need/fsgs/" class="linkline">Read the full FSGS story &rarr;</a></p>
+      </div>
     </div>
   </section>
 
   <!-- ============ HIV AND KIDNEY HEALTH ============ -->
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">HIV and Kidney Health</p>
-      <h2 class="h3">Why HIV belongs on a kidney-health page.</h2>
+      <h2 class="h2">Why HIV belongs on a kidney-health page.</h2>
+      </header>
+      <div class="clin-body">
       <p>
         HIV can affect kidney health both directly and indirectly — through the virus itself,
         through some medications used to treat it, and through related conditions. HIV-associated
@@ -398,6 +416,7 @@ const dataGapsWeak = [
         Bronx-specific HIV surveillance — we're not citing a specific current figure on this page
         until it can be linked directly to that report, rather than repeating a number secondhand.
       </p>
+      </div>
     </div>
   </section>
 
@@ -438,9 +457,12 @@ const dataGapsWeak = [
   <!-- ============ CONNECTION TO WHERE WE LIVE ============ -->
 
   <section class="on-light section-tight" style="border-top:1px solid var(--line);">
-    <div class="container narrow">
+    <div class="container narrow clin-split">
+      <header class="clin-head">
       <p class="eyebrow">What Comes Next</p>
       <h2 class="h2">The numbers tell part of the story. Place and people tell us more.</h2>
+      </header>
+      <div class="clin-body">
       <p class="lede" style="max-width:60ch;">
         The Jentosy Project's <strong>Where We Live</strong> initiative will examine how kidney
         disease, related health conditions, structural factors, geography, and lived experience
@@ -449,6 +471,7 @@ const dataGapsWeak = [
       <div class="cluster gap-3" style="margin-top:var(--space-6);">
         <a href="/where-we-live/" class="btn btn-rust">Explore Where We Live</a>
         <a href="/about/what-we-do/" class="btn btn-steel">Learn About Our Work</a>
+      </div>
       </div>
     </div>
   </section>
@@ -467,6 +490,9 @@ const dataGapsWeak = [
       <a href="/the-need/" class="btn btn-steel" style="margin-top:var(--space-6);">&larr; Back to Kidney Disease</a>
     </div>
   </section>
+  </div>
+
+  <ClosingCTA title="Help us reach people" accent="earlier." />
 </BaseLayout>
 
 <style>

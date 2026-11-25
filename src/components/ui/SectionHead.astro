@@ -1,0 +1,78 @@
+---
+/**
+ * The one way section titles are set site-wide.
+ *   layout="stack"  eyebrow / title / dek stacked (default)
+ *   layout="split"  eyebrow + title on the left, dek on the right
+ *   align="center"  centered stack
+ * `accent` is appended to the title with the gold highlighter stroke.
+ * Use at most one accent per title.
+ */
+interface Props {
+  eyebrow?: string;
+  title: string;
+  accent?: string;
+  after?: string;
+  dek?: string;
+  layout?: "stack" | "split";
+  align?: "start" | "center";
+  level?: "h2" | "h3";
+  id?: string;
+}
+const { eyebrow, title, accent, after, dek, layout = "stack", align = "start", level = "h2", id } = Astro.props;
+const Tag = level;
+---
+
+<header class={`shead shead-${layout} shead-${align}`} id={id}>
+  <div class="shead-main">
+    {eyebrow && <p class="eyebrow reveal">{eyebrow}</p>}
+    <Tag class="h2 shead-title reveal" style="--reveal-delay:0.05s">
+      {title}{accent && " "}{accent && <span class="hl">{accent}</span>}{after && ` ${after}`}
+    </Tag>
+  </div>
+  {dek && <p class="shead-dek reveal" style="--reveal-delay:0.1s">{dek}</p>}
+</header>
+
+<style>
+  .shead {
+    margin-bottom: clamp(var(--space-6), 4vw, var(--space-7));
+  }
+
+  .shead-title {
+    margin: 0;
+    max-width: 24ch;
+  }
+
+  .shead-dek {
+    margin: var(--space-4) 0 0;
+    font-size: clamp(17px, 1.5vw, 19px);
+    line-height: 1.7;
+    color: var(--fg-soft);
+    max-width: 58ch;
+  }
+
+  :global(.on-dark:not(.on-soft)) .shead-dek {
+    color: var(--ink-fg-muted);
+  }
+
+  .shead-split {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-4) var(--space-7);
+  }
+
+  .shead-split .shead-dek {
+    margin: 0;
+    max-width: 46ch;
+  }
+
+  .shead-center {
+    text-align: center;
+  }
+
+  .shead-center .shead-title,
+  .shead-center .shead-dek {
+    margin-inline: auto;
+  }
+</style>

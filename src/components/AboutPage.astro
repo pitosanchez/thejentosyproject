@@ -1,0 +1,305 @@
+---
+/**
+ * About — /about/ and /es/about/. Reference page for the site-wide section
+ * kit in src/components/ui/ (2026-11-24 consistency pass). Flow:
+ *   hero → founder's "why we exist" quote → image beat → statement band →
+ *   how we work (index) → the name (feature + video) → mission & vision
+ *   (locked copy, ticket 02) → closing CTA.
+ * Kept scannable on purpose: funders land here cold (see map.md).
+ */
+import PageHero from "./PageHero.astro";
+import Quote from "./ui/Quote.astro";
+import Bleed from "./ui/Bleed.astro";
+import Statement from "./ui/Statement.astro";
+import SectionHead from "./ui/SectionHead.astro";
+import IndexList from "./ui/IndexList.astro";
+import Feature from "./ui/Feature.astro";
+import ClosingCTA from "./ui/ClosingCTA.astro";
+import VideoSlot from "./VideoSlot.astro";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+const CBS = "https://www.cbsnews.com/newyork/news/kidney-transplant-kidney-chain-robert-sanchez-elizabeth-antosy/";
+
+const en = {
+  heroEyebrow: "About",
+  heroTitle: "Kidney health equity, starting",
+  heroAccent: "in the Bronx.",
+  heroLede:
+    "The Jentosy Project is a 501(c)(3) nonprofit educating underserved communities about rare kidney disease — founded by a two-time kidney transplant recipient.",
+  heroAlt: "An illustration of a community of people standing together",
+  whyEyebrow: "Why we exist",
+  whyQuote:
+    "I created The Jentosy Project because I know what it feels like to have kidney disease and not fully understand what is happening to you.",
+  whyBody:
+    "Too many people receive the information they need only after they are already facing serious disease. I believe communities deserve understandable information earlier — and that where people live, what they are exposed to, and what resources they can access must be part of how we understand kidney health.",
+  founderRole: "Founder & CEO",
+  portraitAlt: "Robert Sanchez, founder of The Jentosy Project",
+  press: "His story was independently reported by CBS News New York",
+  bleedAlt: "An illustration of people moving together toward a shared horizon",
+  bleedCap: "A movement, not a moment.",
+  stIntro:
+    "We bring together kidney-health education, data, geography, research, partnerships, and patient storytelling — to better understand where disparities exist and what communities need.",
+  stLine: "Where you live should never decide",
+  stAccent: "what you know.",
+  howEyebrow: "How we work",
+  howTitle: "Six kinds of knowledge,",
+  howAccent: "one clearer picture.",
+  method: [
+    { term: "Kidney-health education", note: "Plain-language explanations of what is actually happening in the body." },
+    { term: "Data", note: "Population-level surveillance — and the gaps in it." },
+    { term: "Geography", note: "Where disease burden, referrals, and resources cluster." },
+    { term: "Research", note: "What the peer-reviewed literature does and doesn't establish." },
+    { term: "Partnerships", note: "Researchers, health systems, and policymakers around one goal." },
+    { term: "Patient storytelling", note: "Lived experience as a form of evidence." },
+  ],
+  nameEyebrow: "The name",
+  nameTitle: "Named for two women who",
+  nameAccent: "wouldn't give up.",
+  nameBody:
+    "The Jentosy Project is named for <strong>Jen Keller</strong> and <strong>Elizabeth Antosy</strong> — two women whose decision to stay in a kidney exchange chain gave founder Robert Sanchez a second transplant, and gave eight strangers new kidneys.",
+  videoTitle: "Bronx man finally getting kidney transplant after years of waiting — CBS News New York",
+  videoCap: "Independently covered by CBS News New York.",
+  nameLinks: [
+    { href: "/about/team/", label: "Read the full story" },
+    { href: "/storytelling/", label: "Storytelling as Medicine" },
+  ],
+  mission: "Mission",
+  missionText:
+    "Advance health equity for underserved communities by educating people about rare kidney diseases — including FSGS and APOL1-mediated kidney disease — and building the partnerships needed to close the gap in kidney care.",
+  vision: "Vision",
+  visionText:
+    "A future where no one's zip code determines their access to kidney health education, early detection, or life-saving care.",
+  treeAlt: "Cupped hands cradling a tree that grows from a pair of kidneys",
+  ctaTitle: "Help advance",
+  ctaAccent: "health equity",
+  ctaAfter: "in kidney care.",
+};
+
+const es: typeof en = {
+  heroEyebrow: "Quiénes somos",
+  heroTitle: "Equidad en la salud renal, empezando",
+  heroAccent: "por el Bronx.",
+  heroLede:
+    "The Jentosy Project es una organización sin fines de lucro 501(c)(3) que educa a comunidades desatendidas sobre la enfermedad renal poco frecuente — fundada por un receptor de dos trasplantes de riñón.",
+  heroAlt: "Una ilustración de una comunidad de personas juntas",
+  whyEyebrow: "Por qué existimos",
+  whyQuote:
+    "Creé The Jentosy Project porque sé lo que se siente tener enfermedad renal y no entender del todo lo que te está pasando.",
+  whyBody:
+    "Demasiadas personas reciben la información que necesitan solo cuando ya enfrentan una enfermedad grave. Creo que las comunidades merecen información comprensible antes — y que el lugar donde vive la gente, aquello a lo que está expuesta y los recursos a los que puede acceder deben ser parte de cómo entendemos la salud renal.",
+  founderRole: "Fundador y director ejecutivo",
+  portraitAlt: "Robert Sanchez, fundador de The Jentosy Project",
+  press: "Su historia fue reportada de forma independiente por CBS News New York",
+  bleedAlt: "Una ilustración de personas que avanzan juntas hacia un horizonte compartido",
+  bleedCap: "Un movimiento, no un momento.",
+  stIntro:
+    "Reunimos educación sobre la salud renal, datos, geografía, investigación, alianzas y las historias de los pacientes — para entender mejor dónde existen las desigualdades y qué necesitan las comunidades.",
+  stLine: "El lugar donde vives nunca debería decidir",
+  stAccent: "lo que sabes.",
+  howEyebrow: "Cómo trabajamos",
+  howTitle: "Seis tipos de conocimiento,",
+  howAccent: "una imagen más clara.",
+  method: [
+    { term: "Educación sobre la salud renal", note: "Explicaciones en lenguaje claro de lo que de verdad ocurre en el cuerpo." },
+    { term: "Datos", note: "Vigilancia a nivel poblacional — y sus vacíos." },
+    { term: "Geografía", note: "Dónde se concentran la carga de enfermedad, las derivaciones y los recursos." },
+    { term: "Investigación", note: "Lo que la literatura revisada por pares establece y lo que no." },
+    { term: "Alianzas", note: "Investigadores, sistemas de salud y responsables de políticas en torno a una meta." },
+    { term: "Historias de los pacientes", note: "La experiencia vivida como una forma de evidencia." },
+  ],
+  nameEyebrow: "El nombre",
+  nameTitle: "Lleva el nombre de dos mujeres que",
+  nameAccent: "no se rindieron.",
+  nameBody:
+    "The Jentosy Project lleva el nombre de <strong>Jen Keller</strong> y <strong>Elizabeth Antosy</strong> — dos mujeres cuya decisión de permanecer en una cadena de intercambio de riñones le dio al fundador Robert Sanchez un segundo trasplante, y le dio a ocho desconocidos riñones nuevos.",
+  videoTitle: "Un hombre del Bronx por fin recibirá un trasplante de riñón tras años de espera — CBS News New York",
+  videoCap: "Cobertura independiente de CBS News New York.",
+  nameLinks: [
+    { href: "/about/team/", label: "Lee la historia completa" },
+    { href: "/storytelling/", label: "Las historias como medicina" },
+  ],
+  mission: "Misión",
+  missionText:
+    "Promover la equidad en salud para las comunidades desatendidas educando a las personas sobre las enfermedades renales poco frecuentes — incluidas la GEFS y la enfermedad renal mediada por APOL1 — y construyendo las alianzas necesarias para cerrar la brecha en la atención renal.",
+  vision: "Visión",
+  visionText:
+    "Un futuro en el que el código postal de nadie determine su acceso a la educación sobre la salud renal, la detección temprana o la atención que salva vidas.",
+  treeAlt: "Unas manos ahuecadas que sostienen un árbol que crece a partir de un par de riñones",
+  ctaTitle: "Ayuda a promover",
+  ctaAccent: "la equidad",
+  ctaAfter: "en la atención renal.",
+};
+
+const c = lang === "es" ? es : en;
+---
+
+<PageHero
+  eyebrow={c.heroEyebrow}
+  heading={c.heroTitle}
+  accent={c.heroAccent}
+  lede={c.heroLede}
+  image={{ src: "/images/safe.webp", alt: c.heroAlt, position: "center 30%" }}
+/>
+
+<!-- WHY WE EXIST — the founder's voice -->
+<section class="on-light about-section">
+  <div class="container">
+    <Quote
+      eyebrow={c.whyEyebrow}
+      quote={c.whyQuote}
+      body={c.whyBody}
+      name="Robert Sanchez"
+      role={c.founderRole}
+      photo="/images/founder-portrait.webp"
+      photoAlt={c.portraitAlt}
+    >
+      <a href={CBS} class="about-link">{c.press} &rarr;</a>
+    </Quote>
+  </div>
+</section>
+
+<Bleed src="/images/movement.webp" alt={c.bleedAlt} caption={c.bleedCap} position="center 35%" />
+
+<Statement intro={c.stIntro} statement={c.stLine} accent={c.stAccent} />
+
+<!-- HOW WE WORK -->
+<section class="on-light about-section">
+  <div class="container">
+    <SectionHead eyebrow={c.howEyebrow} title={c.howTitle} accent={c.howAccent} />
+    <IndexList items={c.method} columns={2} />
+  </div>
+</section>
+
+<!-- THE NAME -->
+<section class="on-dark on-soft about-section">
+  <div class="container">
+    <Feature eyebrow={c.nameEyebrow} title={c.nameTitle} accent={c.nameAccent} caption={c.videoCap}>
+      <p set:html={c.nameBody} />
+      <Fragment slot="actions">
+        <p class="about-links">
+          {c.nameLinks.map((l) => <a href={L(l.href)} class="about-link">{l.label} &rarr;</a>)}
+        </p>
+      </Fragment>
+      <div slot="media" class="about-video">
+        <VideoSlot src="/videos/where-the-name-comes-from.mp4" youtubeId="nsQ35ZgiWOk" ratio="16 / 9" title={c.videoTitle} />
+      </div>
+    </Feature>
+  </div>
+</section>
+
+<!-- MISSION + VISION — locked copy (ticket 02) -->
+<section class="on-light about-section mv">
+  <div class="container mv-grid">
+    <img class="mv-tree reveal" src="/images/treeoflife.webp" alt={c.treeAlt} loading="lazy" />
+    <div class="mv-col reveal">
+      <p class="mv-label">{c.mission}</p>
+      <p class="mv-text">{c.missionText}</p>
+    </div>
+    <div class="mv-col reveal" style="--reveal-delay:0.08s">
+      <p class="mv-label">{c.vision}</p>
+      <p class="mv-text">{c.visionText}</p>
+    </div>
+  </div>
+</section>
+
+<ClosingCTA title={c.ctaTitle} accent={c.ctaAccent} after={c.ctaAfter} />
+
+<style>
+  .about-section {
+    padding-block: clamp(var(--space-8), 8vw, 128px);
+  }
+
+  .about-link {
+    font-weight: 700;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+
+  .about-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+    margin: 0;
+  }
+
+  .about-video {
+    position: relative;
+  }
+
+  .about-video::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translate(18px, 18px);
+    border: 2px solid var(--gold);
+    border-radius: var(--radius-md);
+  }
+
+  .about-video :global(> *) {
+    position: relative;
+  }
+
+  /* Mission & vision */
+  .mv-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(28px, 4vw, 64px);
+    align-items: start;
+  }
+
+  .mv-tree {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+  }
+
+  .mv-col {
+    padding-top: var(--space-4);
+    border-top: 3px solid var(--ink);
+  }
+
+  .mv-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--rust);
+    margin: 0 0 var(--space-3);
+  }
+
+  .mv-text {
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 2.1vw, 30px);
+    line-height: 1.3;
+    margin: 0;
+    max-width: none;
+  }
+
+  @media (max-width: 900px) {
+    .mv-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .mv-tree {
+      grid-column: 1 / -1;
+      max-width: 200px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .mv-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,162 @@
+---
+/**
+ * Where We Live — the Rare Renal Equity Project (REP). /where-we-live/ + /es/.
+ * Status per founder (2026-11-25): the interactive map is IN DEVELOPMENT.
+ * The Bronx Data description was corrected to match the current
+ * /the-need/data/ page (audit 2026-11-25).
+ */
+import PageHero from "./PageHero.astro";
+import Feature from "./ui/Feature.astro";
+import ClosingCTA from "./ui/ClosingCTA.astro";
+import { localeHref } from "../i18n/utils";
+
+interface Props {
+  lang: "en" | "es";
+}
+const { lang } = Astro.props;
+const L = (p: string) => localeHref(p, lang);
+
+const en = {
+  heroEyebrow: "Where We Live",
+  heroTitle: "The Rare Renal Equity Project",
+  heroAccent: "(REP).",
+  heroLede:
+    "Place shapes kidney health as much as biology does. REP exists to make that visible — starting with the data we've already gathered on the Bronx.",
+  heroAlt: "Archival photograph of the Third Avenue El and the Cross Bronx Expressway, 1973",
+  rows: [
+    {
+      eyebrow: "What it is",
+      title: "Data, geography, and lived experience —",
+      accent: "together.",
+      body: [
+        "REP combines geographic data, social determinants of health, and patient storytelling to illustrate how place influences kidney health. Maps can identify neighborhoods with higher disease burden, fewer transplant referrals, or limited access to healthy food.",
+        "Patient stories reveal what those conditions feel like day to day, and why the structural inequities behind them matter. Together, data and narrative build a fuller picture than either could alone.",
+      ],
+      img: "/images/WhereWeLiveThumbNail.webp",
+      alt: "Preview of the Where We Live map and stories platform",
+      caption: "A preview of the Where We Live platform, now in development.",
+    },
+    {
+      eyebrow: "What exists today",
+      title: "The Bronx data",
+      accent: "behind it.",
+      body: [
+        "The place-based numbers REP builds on already live on Bronx Data You Should Know — chronic kidney disease, diabetes, and high blood pressure in the Bronx, how risk changes from neighborhood to neighborhood, and the social context around them, sourced from the CDC and the New York City and New York State health departments.",
+        "REP's job is to turn that data into a map you can actually see, not just read as a chart.",
+      ],
+      link: { href: "/the-need/data/", label: "See the Bronx data" },
+      img: "/images/NtX0s.webp",
+      alt: "A New York City subway sign reading Uptown & The Bronx Express, 4 and 5 trains",
+    },
+    {
+      eyebrow: "What's next",
+      title: "An interactive Bronx map —",
+      accent: "in development.",
+      body: [
+        "We're building an interactive map that overlays disease-burden data onto Bronx neighborhood geography, paired with the patient stories that give the numbers context.",
+        "It's an active initiative, not a finished product — partnership and funding move it forward directly.",
+      ],
+      img: "/images/archival/third-ave-el-cross-bronx-expwy-1973.jpg",
+      alt: "Archival photograph of the Bronx, 1973",
+    },
+  ],
+  ctaTitle: "Help us",
+  ctaAccent: "build the map.",
+};
+
+const es: typeof en = {
+  heroEyebrow: "Where We Live",
+  heroTitle: "The Rare Renal Equity Project",
+  heroAccent: "(REP).",
+  heroLede:
+    "El lugar donde vivimos moldea la salud renal tanto como la biología. REP existe para hacerlo visible — empezando por los datos que ya hemos reunido sobre el Bronx.",
+  heroAlt: "Fotografía de archivo del tren elevado de la Tercera Avenida y la autopista Cross Bronx, 1973",
+  rows: [
+    {
+      eyebrow: "Qué es",
+      title: "Datos, geografía y experiencia vivida —",
+      accent: "juntos.",
+      body: [
+        "REP combina datos geográficos, determinantes sociales de la salud y las historias de los pacientes para mostrar cómo el lugar influye en la salud renal. Los mapas pueden identificar vecindarios con mayor carga de enfermedad, menos derivaciones a trasplante o acceso limitado a alimentos saludables.",
+        "Las historias de los pacientes revelan cómo se viven esas condiciones día a día, y por qué importan las desigualdades estructurales que las provocan. Juntos, los datos y la narrativa construyen un panorama más completo que el que cualquiera de los dos podría ofrecer por sí solo.",
+      ],
+      img: "/images/WhereWeLiveThumbNail.webp",
+      alt: "Adelanto de la plataforma de mapas e historias de Where We Live",
+      caption: "Un adelanto de la plataforma Where We Live, ahora en desarrollo.",
+    },
+    {
+      eyebrow: "Qué existe hoy",
+      title: "Los datos del Bronx",
+      accent: "detrás de REP.",
+      body: [
+        "Las cifras según el lugar sobre las que se construye REP ya están en Datos del Bronx que debes conocer — la enfermedad renal crónica, la diabetes y la presión arterial alta en el Bronx, cómo cambia el riesgo de un vecindario a otro y el contexto social que las rodea, con datos de los CDC y de los departamentos de salud de la ciudad y del estado de Nueva York.",
+        "La labor de REP es convertir esos datos en un mapa que se pueda ver de verdad, no solo leer como un gráfico.",
+      ],
+      link: { href: "/the-need/data/", label: "Ver los datos del Bronx" },
+      img: "/images/NtX0s.webp",
+      alt: "Un letrero del metro de Nueva York que dice Uptown & The Bronx Express, trenes 4 y 5",
+    },
+    {
+      eyebrow: "Qué sigue",
+      title: "Un mapa interactivo del Bronx —",
+      accent: "en desarrollo.",
+      body: [
+        "Estamos construyendo un mapa interactivo que superpone los datos de carga de enfermedad sobre la geografía de los vecindarios del Bronx, junto con las historias de los pacientes que dan contexto a las cifras.",
+        "Es una iniciativa activa, no un producto terminado — las alianzas y el financiamiento la hacen avanzar directamente.",
+      ],
+      img: "/images/archival/third-ave-el-cross-bronx-expwy-1973.jpg",
+      alt: "Fotografía de archivo del Bronx, 1973",
+    },
+  ],
+  ctaTitle: "Ayúdanos a",
+  ctaAccent: "construir el mapa.",
+};
+
+const c = lang === "es" ? es : en;
+---
+
+<PageHero
+  eyebrow={c.heroEyebrow}
+  heading={c.heroTitle}
+  accent={c.heroAccent}
+  lede={c.heroLede}
+/>
+
+<section class="on-light wwl-section">
+  <div class="container">
+    {c.rows.map((r, i) => (
+      <Feature
+        eyebrow={r.eyebrow}
+        title={r.title}
+        accent={r.accent}
+        num={i + 1}
+        flip={i % 2 === 1}
+        img={r.img}
+        alt={r.alt}
+        caption={"caption" in r ? r.caption : undefined}
+      >
+        {r.body.map((p) => <p>{p}</p>)}
+        {"link" in r && r.link && (
+          <a slot="actions" href={L(r.link.href)} class="wwl-link">{r.link.label} &rarr;</a>
+        )}
+      </Feature>
+    ))}
+  </div>
+</section>
+
+<ClosingCTA title={c.ctaTitle} accent={c.ctaAccent} />
+
+<style>
+  .wwl-section {
+    padding-block: clamp(var(--space-8), 9vw, 140px);
+  }
+
+  .wwl-link {
+    font-weight: 700;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-decoration-thickness: 3px;
+    text-underline-offset: 6px;
+  }
+</style>

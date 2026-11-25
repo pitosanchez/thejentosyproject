@@ -16,8 +16,8 @@ const { lang } = Astro.props;
 const L = (p: string) => localeHref(p, lang);
 const hero =
   lang === "es"
-    ? { eyebrow: "Historias · Alianza", heading: "The Jentosy Project × StoryCorps", lede: "Porque cada historia renal merece ser escuchada — y preservada." }
-    : { eyebrow: "Storytelling · Partnership", heading: "The Jentosy Project × StoryCorps", lede: "Because every kidney story deserves to be heard — and kept." };
+    ? { eyebrow: "Historias · Alianza", heading: "The Jentosy Project × StoryCorps", lede: "Una alianza para grabar y preservar las voces de las personas que viven con enfermedad renal." }
+    : { eyebrow: "Storytelling · Partnership", heading: "The Jentosy Project × StoryCorps", lede: "A partnership to record and preserve the voices of people living with kidney disease." };
 const back = lang === "es" ? "Las historias como medicina" : "Storytelling as Medicine";
 const backEyebrow = lang === "es" ? "Sigue leyendo" : "Keep reading";
 ---
