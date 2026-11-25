@@ -330,8 +330,7 @@ const isActive = (href: string) =>
   /* Hover, keyboard focus, and the current page all light up in the same
      gold as the dropdown's hub label, with a gold bar on the left edge. */
   .desktop-nav-dropdown a:hover,
-  .desktop-nav-dropdown a:focus-visible,
-  .desktop-nav-dropdown a[aria-current="page"] {
+  .desktop-nav-dropdown a:focus-visible {
     color: var(--gold);
     background: var(--ink-soft);
     box-shadow: inset 3px 0 0 var(--gold);
@@ -343,10 +342,17 @@ const isActive = (href: string) =>
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: var(--eyebrow-accent);
+    color: var(--ink-fg-muted);
     border-bottom: 1px solid var(--ink-line);
     margin-bottom: var(--space-1);
     padding-bottom: 11px;
+  }
+
+  /* Only the item under the pointer is ever highlighted — no item stays
+     lit for being the current page or the menu's first entry. */
+  .desktop-nav-dropdown a.desktop-nav-dropdown-hub:hover,
+  .desktop-nav-dropdown a.desktop-nav-dropdown-hub:focus-visible {
+    color: var(--gold);
   }
 
   .menu-trigger {
@@ -428,8 +434,7 @@ const isActive = (href: string) =>
     transition: color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
   }
 
-  .site-menu-link:hover,
-  .site-menu-link[aria-current="page"] {
+  .site-menu-link:hover {
     color: var(--rust-on-dark);
     transform: translateX(10px);
   }
@@ -482,7 +487,6 @@ const isActive = (href: string) =>
     text-transform: uppercase;
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: var(--eyebrow-accent);
   }
 
   .site-menu-sublink {
@@ -495,8 +499,7 @@ const isActive = (href: string) =>
     transition: color var(--dur-fast) var(--ease);
   }
 
-  .site-menu-sublink:hover,
-  .site-menu-sublink[aria-current="page"] {
+  .site-menu-sublink:hover {
     color: var(--rust-on-dark);
   }
 

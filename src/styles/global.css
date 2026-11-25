@@ -1295,15 +1295,3 @@ p:last-child {
   padding-block: 10px;
 }
 
-/* Keep the gold underline on a top-level nav item while its dropdown is
-   open, and on the section you're currently in. */
-.desktop-nav-parent:hover > .nav-link,
-.desktop-nav-parent:focus-within > .nav-link {
-  color: var(--ink-fg);
-}
-
-.desktop-nav-parent:hover > .nav-link::after,
-.desktop-nav-parent:focus-within > .nav-link::after,
-.nav-link[aria-current="page"]::after {
-  width: 100%;
-}
