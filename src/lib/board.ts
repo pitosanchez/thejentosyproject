@@ -71,6 +71,15 @@ const board: BoardMember[] = [
     bio: "Glenda V. Roberts was diagnosed with kidney disease at 21 and told to start dialysis immediately. She asked for another option; diet and exercise, her doctor said, though it rarely worked. For her, it worked for 40 years — she went vegetarian, then vegan, and exercised daily, while her brother, diagnosed at the same age, began dialysis at once. Raised in Fort Worth's segregated Stop Six, she finished a mathematics degree at the University of Houston in three years, then rose over 36 years from software developer to leading multimillion-dollar business units at Shell, Johnson & Johnson, General Electric, and Microsoft — never disclosing her illness after a manager warned her in 2005 that mentioning it again would end her chances of promotion. She retired in 2006 at her physicians' urging, crashed into dialysis in 2010, and received a transplant the same year. As a patient advocate, she is one of two patient co-authors of the KDIGO guideline, the global standard of care for chronic kidney disease, and has co-authored more than 50 peer-reviewed publications since 2018. She is the first patient to receive both the ASN President's Medal and the NKF Celeste Castillo Lee Patient Engagement Award, the highest honors each organization gives a non-nephrologist. As one of only two patients on the NKF-ASN task force that removed race from kidney function estimates, her work restored waiting time to more than 21,000 Black transplant candidates — a median of 1.7 years each.",
     bioEs: "A Glenda V. Roberts le diagnosticaron enfermedad renal a los 21 años y le dijeron que empezara diálisis de inmediato. Ella pidió otra opción; dieta y ejercicio, dijo su médico, aunque rara vez funcionaba. Para ella funcionó durante 40 años — se hizo vegetariana, luego vegana, y hacía ejercicio a diario, mientras su hermano, diagnosticado a la misma edad, empezó la diálisis de inmediato. Criada en el segregado barrio de Stop Six, en Fort Worth, terminó una licenciatura en matemáticas en la Universidad de Houston en tres años, y luego ascendió a lo largo de 36 años de desarrolladora de software a dirigir unidades de negocio multimillonarias en Shell, Johnson & Johnson, General Electric y Microsoft — sin revelar nunca su enfermedad después de que un gerente le advirtiera en 2005 que volver a mencionarla acabaría con sus posibilidades de ascenso. Se jubiló en 2006 por recomendación de sus médicos, entró de urgencia en diálisis en 2010 y recibió un trasplante ese mismo año. Como defensora de los pacientes, es una de las dos pacientes coautoras de la guía KDIGO, el estándar mundial de atención para la enfermedad renal crónica, y ha sido coautora de más de 50 publicaciones revisadas por pares desde 2018. Es la primera paciente en recibir tanto la Medalla del Presidente de la ASN como el Premio Celeste Castillo Lee a la Participación de Pacientes de la NKF, los máximos honores que cada organización otorga a una persona que no es nefróloga. Como una de las solo dos pacientes en el grupo de trabajo NKF-ASN que eliminó la raza de las estimaciones de la función renal, su trabajo restituyó tiempo de espera a más de 21,000 candidatos negros a trasplante — una mediana de 1.7 años cada uno.",
   },
+  {
+    slug: "dinushika-mohottige",
+    name: "Dinushika Mohottige, MD, MPH",
+    role: "Assistant Professor, Institute for Health Equity Research, Icahn School of Medicine at Mount Sinai",
+    roleEs: "Profesora asistente, Institute for Health Equity Research, Icahn School of Medicine at Mount Sinai",
+    photo: "/dinu.jpg",
+    bio: "Dinushika Mohottige is Assistant Professor in the Institute for Health Equity Research at the Icahn School of Medicine at Mount Sinai and the Barbara T. Murphy Division of Nephrology. She received a B.A. in Public Policy and a Health Policy Certificate from Duke University in 2006, where she was a Robertson Scholar. She then earned an MPH in Health Behavior/Health Education from the UNC Gillings School of Global Public Health and a medical degree from the University of North Carolina at Chapel Hill School of Medicine, followed by Internal Medicine/Chief Residency and Nephrology training at Duke University. She engages in patient and community-centered, inequity-focused research around the impact of socio-structural factors/racialized medicine on kidney health and kidney transplantation.",
+    bioEs: "Dinushika Mohottige es profesora asistente en el Institute for Health Equity Research de la Icahn School of Medicine at Mount Sinai y en la División de Nefrología Barbara T. Murphy. En 2006 obtuvo una licenciatura en Políticas Públicas y un certificado en Políticas de Salud en la Universidad de Duke, donde fue becaria Robertson. Luego obtuvo una maestría en Salud Pública (MPH) en Conducta y Educación para la Salud en la UNC Gillings School of Global Public Health y se graduó en Medicina en la Universidad de Carolina del Norte en Chapel Hill. En la Universidad de Duke completó la residencia en Medicina Interna, ejerció como jefa de residentes y se especializó en Nefrología. Su investigación se centra en los pacientes y las comunidades y estudia las inequidades y el impacto de los factores socioestructurales y la medicina racializada en la salud renal y el trasplante de riñón.",
+  },
 ];
 
 /**
@@ -88,12 +97,12 @@ export function getBoard(lang: "en" | "es" = "en") {
 
 export default board;
 
-const ABBREVIATIONS = /\b(?:Ms|Mr|Mrs|Dr|Sr|Sra|Srta|St)\.$/;
+const ABBREVIATIONS = /\b(?:(?:Ms|Mr|Mrs|Dr|Sr|Sra|Srta|St)\.|(?:[A-Z]\.)+)$/;
 
 /**
  * Split a one-string bio into readable paragraphs of ~`perParagraph`
- * sentences. Sentence breaks after honorifics ("Ms.", "Dr.", "Sra.") are
- * rejoined so a name is never split from its title.
+ * sentences. Rejoin false breaks after honorifics, initials, and degrees
+ * such as "Ms.", "T.", and "B.A.".
  */
 export function bioParagraphs(bio: string, perParagraph = 3): string[] {
   const raw = bio.split(/(?<=[.!?])\s+(?=[A-ZÁÉÍÓÚÑ"“])/u);

@@ -5,7 +5,7 @@
  *
  *  - Founder: name-first header, portrait + podium inset, story set in two
  *    columns on wide screens instead of one long single column.
- *  - Board: one aligned row (4 across on desktop), each card a solid 3D
+ *  - Board: five cards across on wide screens, each card a solid 3D
  *    block — an extruded gold edge instead of a floating drop shadow — that
  *    tilts toward the pointer with its name plate lifted forward in Z.
  *    Static (still 3D, no tilt) for touch and prefers-reduced-motion.
@@ -296,14 +296,26 @@ const c = lang === "es" ? es : en;
     list-style: none;
     margin: 0;
     padding: 0 12px 12px 0; /* room for the extruded edge */
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(20px, 2.4vw, 32px);
+    /* Center each wrapped row of cards. */
+    --cols: 5;
+    --gap: clamp(18px, 2vw, 28px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap);
     align-items: stretch;
   }
 
   .board-row > li {
     display: flex;
+    flex: 0 0 calc((100% - (var(--cols) - 1) * var(--gap)) / var(--cols));
+    min-width: 0;
+  }
+
+  @media (max-width: 1100px) {
+    .board-row {
+      --cols: 3;
+    }
   }
 
   /* The card: a solid block. Depth comes from a stepped, extruded gold edge
@@ -416,10 +428,6 @@ const c = lang === "es" ? es : en;
     line-height: 1.5;
     text-transform: uppercase;
     color: var(--gold);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
   }
 
   .bcard-cta {
@@ -478,37 +486,19 @@ const c = lang === "es" ? es : en;
     .bcard-plate {
       padding: var(--space-3);
     }
-
-    .bcard-role {
-      font-size: 9.5px;
-    }
   }
 
-  @media (max-width: 720px) {
+  @media (max-width: 660px) {
     .board-row {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      --cols: 1;
+    }
+
+    .board-row > li {
+      max-width: 340px;
     }
 
     .bcard-photo {
       aspect-ratio: 1 / 1;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .board-row {
-      gap: 18px;
-    }
-
-    .bcard-plate {
-      padding: var(--space-3);
-    }
-
-    .bcard-name {
-      font-size: 16px;
-    }
-
-    .bcard-role {
-      font-size: 9px;
     }
   }
 

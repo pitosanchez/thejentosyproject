@@ -16,6 +16,7 @@ export const translatedPaths: ReadonlySet<string> = new Set([
   "/about/team/junelle-speller/",
   "/about/team/josh-fessel/",
   "/about/team/glenda-roberts/",
+  "/about/team/dinushika-mohottige/",
   "/about/what-we-do/",
   "/storytelling/",
   "/storytelling/storycorps/",
